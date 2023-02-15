@@ -2,12 +2,6 @@
 import './App.css';
 import Navbar from './Components/Navbar';
 import Home from './Pages/Home';
-import About from './Pages/About';
-import Events from './Pages/Events';
-import Matrimonial from './Pages/Matrimonial';
-import Jobs from './Pages/Jobs';
-import ContactUs from './Pages/ContactUs';
-import Profile from './Pages/Profile';
 import { Routes, Route } from "react-router-dom"
 
 function App() {
