@@ -13,7 +13,8 @@ const Navbar = () => {
 
         <h2>
             
-          <span>V.S.V</span> <span>G</span>nati   <span>S</span>amta
+          <span>V.S.V</span> <span>G</span>nati  
+          <span>S</span>amta
         </h2>
       </div>
 
