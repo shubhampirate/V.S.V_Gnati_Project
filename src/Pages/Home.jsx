@@ -1,6 +1,9 @@
 import React from 'react'
 import { Grid } from '@mui/material';
 import { Box } from '@mui/system';
+import events from "../Images/events.png";
+import jobsite from "../Images/jobsite.png";
+import matrimonial from "../Images/matrimonial.png";
 const Home = () => {
   return (
     <Box sx={{ paddingLeft: "1.2rem" }}>
@@ -61,10 +64,9 @@ const Home = () => {
                     </Grid>
                   </Grid>
                 </Grid>
+                <Grid item xs={12} md={5} sm={12}>
+                </Grid>
               </Grid>
-            </Grid>
-            <Grid item xs={12} md={5} sm={12}>
-
             </Grid>
           </Grid>
         </Grid>
@@ -118,7 +120,7 @@ const Home = () => {
                     <Grid item xs={12}>
                       <Grid container spacing={1}>
                         <Grid item xs={12} md={6} sm={12} sx={{ paddingLeft: "2rem", paddingRight: "0.8rem" }}>
-                          <div style={{ border: "1px solid black", height: "2.6rem", borderRadius: "1vh"}}>
+                          <div style={{ border: "1px solid black", height: "2.6rem", borderRadius: "1vh" }}>
                             <div style={{ marginTop: "0.5rem", fontSize: "1.2rem" }}>Register Now </div>
                           </div>
                         </Grid>
