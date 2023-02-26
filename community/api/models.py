@@ -80,3 +80,20 @@ class User(AbstractUser):
     def token(self):
         token = Token.objects.get(user=User.objects.get(self.id))
         return token
+    
+class Event(models.Model):
+    name = models.CharField(max_length=80)
+    about = models.TextField(max_length=255)
+    date = models.DateField()
+    venue = models.CharField(max_length=1000, default="N/A")
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+    #photos = models.URLField(blank = True, null=True)
+    picture = models.ImageField(upload_to = f'events/{name}/',blank = True, null=True)
+
+    def __str__(self):
+        return self.name
+    
+class EventImage(models.Model):
+    event = models.ForeignKey(Event, related_name='photos', on_delete=models.CASCADE)
+    picture = models.ImageField(upload_to = f'events/{event.name}/',blank = True, null=True)

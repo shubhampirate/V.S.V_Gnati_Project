@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Family, OccupationAddress
+from .models import User, Family, OccupationAddress, Event, EventImage
 
 class LoginSerializer(serializers.ModelSerializer):
     password=serializers.CharField(max_length=32,min_length=8,write_only = True)
@@ -21,4 +21,15 @@ class FamilySerializer(serializers.ModelSerializer):
 class OccupationAddressSerializer(serializers.ModelSerializer):
 	class Meta:
 		model =  OccupationAddress
+		fields = '__all__'
+
+class EventSerializer(serializers.ModelSerializer):
+	class Meta:
+		model =  Event
+		fields = '__all__'
+
+class EventImageSerializer(serializers.ModelSerializer):
+	event = EventSerializer()
+	class Meta:
+		model =  EventImage
 		fields = '__all__'

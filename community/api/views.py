@@ -43,7 +43,10 @@ class MemberListAPI(GenericAPIView):
 	def post(self,request):
 		try:
 			filter_data = request.data
-			if filter_data['name'] == 'all':
+			filters = filter_data['filters']
+			if 'gender' not in filters:
+				pass
+			'''if filter_data['name'] == 'all':
 				if filter_data['city'] != 'all' and filter_data['village'] != 'all' and filter_data['gender'] != 'all':
 					users = User.objects.filter(city__icontains = filter_data['city'], village__in = filter_data['village'], gender__in =  filter_data['gender'])
 				elif filter_data['city'] == 'all' and filter_data['village'] != 'all' and filter_data['gender'] != 'all':
@@ -97,7 +100,7 @@ class MemberListAPI(GenericAPIView):
 					elif filter_data['city'] != 'all' and filter_data['village'] == 'all' and filter_data['gender'] == 'all':
 						users = User.objects.filter(Q(name__icontains = fname) | Q(name__icontains = lname), city__icontains = filter_data['city']) | User.objects.filter(first_name__icontains = lname, last_name__icontains = fname, city__icontains = filter_data['city'])
 					else:
-						users = User.objects.filter(Q(name__icontains = fname) | Q(name__icontains = lname))
+						users = User.objects.filter(Q(name__icontains = fname) | Q(name__icontains = lname))'''
 				
 			serializer = self.serializer_class(users, many=True)
 			return Response({"status" : True ,"data" : serializer.data, "message" : "Success"}, status=status.HTTP_200_OK)
