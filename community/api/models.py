@@ -65,6 +65,7 @@ class User(AbstractUser):
     gender = models.CharField(default = 'Male',max_length = 10)
     blood_group=models.CharField(max_length=50)
     maritial_status = models.CharField(default = 'Single',max_length = 10)
+    related_family = models.ForeignKey(Family, on_delete=models.PROTECT, blank=True, null=True)
     #profile_pic = models.ImageField(upload_to = 'users/',blank = True)
 
     USERNAME_FIELD = 'username'

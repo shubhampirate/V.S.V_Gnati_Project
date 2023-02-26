@@ -7,3 +7,18 @@ class LoginSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['username','password']
+
+class MemberSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = User
+		fields = '__all__'
+
+class FamilySerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Family
+		fields = '__all__'
+
+class OccupationAddressSerializer(serializers.ModelSerializer):
+	class Meta:
+		model =  OccupationAddress
+		fields = '__all__'
