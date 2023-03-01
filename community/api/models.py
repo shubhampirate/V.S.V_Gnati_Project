@@ -80,7 +80,12 @@ class User(AbstractUser):
     def token(self):
         token = Token.objects.get(user=User.objects.get(self.id))
         return token
-    
+
+def upload_path_handler(instance, filename):
+    return "events/{name}/{file}".format(
+        name=instance.event.name, file=filename
+    )
+
 class Event(models.Model):
     name = models.CharField(max_length=80)
     about = models.TextField(max_length=255)
@@ -88,12 +93,52 @@ class Event(models.Model):
     venue = models.CharField(max_length=1000, default="N/A")
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
-    #photos = models.URLField(blank = True, null=True)
-    picture = models.ImageField(upload_to = f'events/{name}/',blank = True, null=True)
+    photos_drive = models.URLField(blank = True, null=True)
+    picture = models.ImageField(upload_to = upload_path_handler,blank = True, null=True)
+
+    def __str__(self):
+        return self.name
+
+class Company(models.Model):
+    posted_by = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    email = models.EmailField(blank = True, null=True)
+    address = models.TextField(max_length=1000, default = 'N/A')
+    picture = models.ImageField(upload_to = 'company/',blank = True, null=True)
+
+    class Meta:
+        verbose_name_plural = 'Companies'
 
     def __str__(self):
         return self.name
     
-class EventImage(models.Model):
-    event = models.ForeignKey(Event, related_name='photos', on_delete=models.CASCADE)
-    picture = models.ImageField(upload_to = f'events/{event.name}/',blank = True, null=True)
+class Job(models.Model):
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    type = models.CharField(max_length=50)
+    details = models.TextField(max_length=1000, default = 'N/A')
+    phone = models.BigIntegerField(default=0000000000)
+
+    def __str__(self):
+        return self.title
+
+def upload_matrimony(instance, filename):
+    return "matrimony/{name}/{file}".format(
+        name=instance.name, file=filename
+    )
+
+class Matrimony(models.Model):
+    uploaded_by = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    about = models.TextField(max_length=1000, default = 'N/A')
+    phone = models.BigIntegerField(default=0000000000)
+    fathers_name = models.CharField(max_length=100)
+    gender = models.CharField(default = 'Male',max_length = 10)
+    picture = models.ImageField(upload_to = upload_matrimony,blank = True, null=True)
+    biodata = models.FileField(upload_to = upload_matrimony,blank = True, null=True)
+
+    class Meta:
+        verbose_name_plural = 'Matrimonies'
+
+    def __str__(self):
+        return self.name
