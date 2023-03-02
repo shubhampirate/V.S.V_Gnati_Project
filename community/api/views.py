@@ -20,10 +20,26 @@ class LoginAPI(GenericAPIView):
 		username = request.data.get('username',None)
 		password = request.data.get('password',None)
 		user = authenticate(username = username, password = password)
+		# user = User.objects.get(username = username)
+		# user.set_password(password)
+		# user.save()
 		if user :
 			serializer = self.serializer_class(user)
-			token = Token.objects.get(user=user)
-			return Response({"status" : True ,"data" : {'token' : token.key,'email' : user.username}, "message" : 'Login Success'},status = status.HTTP_200_OK)
+			token,k = Token.objects.get_or_create(user=user)
+			if not user.related_family:
+				family = Family.objects.create(head = user)
+				family.save()
+				user.related_family = family
+				user.save()
+			if not user.related_company:
+				company = "None"
+			else:
+				company = user.related_company.id
+			if not user.related_matrimony:
+				matrimony = "None"
+			else:
+				matrimony = user.related_matrimony.id
+			return Response({"status" : True ,"data" : {'token' : token.key,'username' : user.username,'family' : user.related_family.id,'company' : company,'matrimony' : matrimony}, "message" : 'Login Success'},status = status.HTTP_200_OK)
 		return Response({"status" : False ,"data" : {}, "message" : 'Invalid Credentials'},status = status.HTTP_401_UNAUTHORIZED)
 	
 class MemberListAPI(GenericAPIView):
@@ -164,6 +180,16 @@ class FamilyAPI(GenericAPIView):
 			return Response({"status" : True ,"data" : {}, "message" : "Success"}, status=status.HTTP_200_OK)
 		except:
 			return Response({"status" : False ,"data" : {}, "message" : "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+		
+	def delete(self,request,pk):
+		try:
+			occ = OccupationAddress.objects.get(id = pk)
+			if request.user.is_staff == False:
+				return Response({"status" : False ,"data" : {}, "message" : "Sorry, only admin can edit this page"}, status=status.HTTP_200_OK)
+			occ.delete()
+			return Response({"status" : True ,"data" : {}, "message" : "Success"}, status=status.HTTP_200_OK)
+		except:
+			return Response({"status" : False ,"data" : {}, "message" : "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 	
 class MemberAPI(GenericAPIView):
 	
@@ -185,10 +211,11 @@ class MemberAPI(GenericAPIView):
 			family = Family.objects.get(id = pk)
 			if request.user != family.head:
 				return Response({"status" : False ,"data" : {}, "message" : "Only head of family can add member"}, status=status.HTTP_400_BAD_REQUEST)
-			data['password'] = data['name'][:10]+str(random.randint(1000,9999))
+			data['password'] = (data['name'][:10]+str(random.randint(1000,9999))).replace(' ',"_")
 			#data['native_village'] = family.head.village
 			data['related_family'] = family.id
 			data['username'] = data['password']
+			print(data['username'])
 			serializer = MemberSerializer(data=data)
 			if serializer.is_valid(raise_exception=True):
 				serializer.save()
@@ -215,11 +242,11 @@ class MemberAPI(GenericAPIView):
 		
 	def delete(self,request,pk):
 		try:
-			email = request.data['email']
+			username = request.data['username']
 			family = Family.objects.get(id = pk)
 			if request.user != family.head:
 				return Response({"status" : False ,"data" : {}, "message" : "Only head of family can delete member"}, status=status.HTTP_400_BAD_REQUEST)
-			user = User.objects.get(email = email)
+			user = User.objects.get(username = username)
 			user.delete()
 			return Response({"status" : True ,"data" : {}, "message" : "Success"}, status=status.HTTP_200_OK)
 		except:
@@ -362,11 +389,12 @@ class CompanyListAPI(GenericAPIView):
 		try:
 			company = self.get_queryset()
 			serializer = self.serializer_class(company,many = True)
-			data = dict(serializer.data)
+			data = dict()
+			data['companies'] = serializer.data
 			if request.user.is_staff or request.user != company.posted_by:
-				data['can_add'] = True
+				data['can_edit'] = True
 			else:
-				data['can_add'] = False
+				data['can_edit'] = False
 			return Response({"status" : True ,"data" : data, "message" : "Success"}, status=status.HTTP_200_OK)
 		except:
 			return Response({"status" : False ,"data" : {}, "message" : "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -378,6 +406,9 @@ class CompanyListAPI(GenericAPIView):
 			serializer = self.serializer_class(data = request.data)
 			if serializer.is_valid(raise_exception=True):
 				serializer.save(posted_by = request.user)
+				company = Company.objects.get(id = serializer.data['id'])
+				request.user.related_company = company
+				request.user.save()
 			data = serializer.data
 			return Response({"status" : True ,"data" : data, "message" : "Success"}, status=status.HTTP_200_OK)
 		except:
@@ -432,7 +463,8 @@ class JobListAPI(GenericAPIView):
 		try:
 			job = self.get_queryset()
 			serializer = self.serializer_class(job,many = True)
-			data = dict(serializer.data)
+			data = dict()
+			data['jobs'] = serializer.data
 			if request.user.is_staff or request.user != job.company.posted_by:
 				data['can_add'] = True
 			else:
@@ -501,9 +533,12 @@ class MatrimonyListAPI(GenericAPIView):
 
 	def get(self,request):
 		try:
-			matrimony = self.get_queryset()
+			gender = self.request.query_params['gender']
+			#matrimony = self.get_queryset()
+			matrimony = Matrimony.objects.filter(gender = gender)
 			serializer = self.serializer_class(matrimony,many = True)
-			data = dict(serializer.data)
+			data = dict()
+			data["matrimonies"] = serializer.data
 			if request.user.is_staff or request.user != matrimony.uploaded_by:
 				data['can_add'] = True
 			else:
@@ -519,6 +554,9 @@ class MatrimonyListAPI(GenericAPIView):
 			serializer = self.serializer_class(data = request.data)
 			if serializer.is_valid(raise_exception=True):
 				serializer.save(uploaded_by = request.user)
+				matrimony = Matrimony.objects.get(id = serializer.data['id'])
+				request.user.related_matrimony = matrimony
+				request.user.save()
 			data = serializer.data
 			return Response({"status" : True ,"data" : data, "message" : "Success"}, status=status.HTTP_200_OK)
 		except:
