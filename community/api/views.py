@@ -38,7 +38,8 @@ class LoginAPI(GenericAPIView):
 			if not user.related_matrimony:
 				matrimony = "None"
 			else:
-				matrimony = user.related_matrimony.id
+				#matrimony = user.related_matrimony.id
+				matrimony = Matrimony.objects.filter(uploaded_by = user).values_list('id',flat=True)
 			return Response({"status" : True ,"data" : {'token' : token.key,'username' : user.username,'family' : user.related_family.id,'company' : company,'matrimony' : matrimony}, "message" : 'Login Success'},status = status.HTTP_200_OK)
 		return Response({"status" : False ,"data" : {}, "message" : 'Invalid Credentials'},status = status.HTTP_401_UNAUTHORIZED)
 	
@@ -375,6 +376,16 @@ class JobAPI(GenericAPIView):
 			return Response({"status" : True ,"data" : data, "message" : "Success"}, status=status.HTTP_200_OK)
 		except:
 			return Response({"status" : False ,"data" : {}, "message" : "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+		
+	def post(self,request,pk):
+		try:
+			data = dict(request.data)
+			job_type = data['type']
+			jobs = Job.objects.filter(type__icontains = job_type)
+			serializer = JobSerializer(jobs,many = True)
+			return Response({"status" : True ,"data" : serializer.data, "message" : "Success"}, status=status.HTTP_200_OK)
+		except:
+			return Response({"status" : False ,"data" : {}, "message" : "Internal Server Error"}, status=status.HTTP_400_BAD_REQUEST)
 		
 	def put(self,request,pk):
 		try:
