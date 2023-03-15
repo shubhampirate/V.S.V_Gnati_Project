@@ -33,7 +33,7 @@ const validationSchema = yup.object({
         .string(`Enter your Father's Name`)
         .required(`Father's Name is required`),
     date: yup
-        .string('Enter your Date of Birth')
+        .date('Enter your Date of Birth')
         .required('Date of birth is required'),
     gender: yup
         .string('Enter your Gender')
@@ -47,7 +47,7 @@ const Login = () => {
         initialValues: {
             name: '',
             desc: '',
-            date: '2017-05-24',
+            date: new Date(),
             email: '',
             gender: '',
             father_name: '',
@@ -55,21 +55,19 @@ const Login = () => {
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            console.log(values, biodata);
+            console.log(values, biodata.name);
             navigate('/matrimonial')
         }
     });
 
     return (
         <div>
-            <Grid container spacing={2} style={{ marginLeft: "-1.5rem" }}>
+            <Grid container spacing={2} style={{ padding:"2rem" }}>
                 <Grid item xs={12} md={2} sm={12}></Grid>
                 <Grid item xs={12} md={8} sm={12} style={{ marginBottom: "8rem " }}>
-                    <div style={{ fontSize: "2.7rem" }} className="top-marg">
-                        Registration for Matrimonial Platform
-                    </div>
+                    <div style={{ fontSize: "3rem", fontWeight: "700" }}>Matrimonial</div>
                     <div>
-                        <form onSubmit={formik.handleSubmit} style={{ marginLeft: "1.2rem" }}>
+                        <form onSubmit={formik.handleSubmit} >
                             <Grid container spacing={2} marginTop={2}>
                                 <Grid item xs={12} md={6} sm={12}>
                                     <TextField
@@ -181,7 +179,7 @@ const Login = () => {
                                 </Grid>
                                 <Grid item xs={12} md={6} sm={12}>
                                     <Button color="success" variant="contained" type="submit"
-                                        sx={{ width: "100%",height:"3.5rem", fontSize: "1.1rem" }}>
+                                        sx={{ width: "100%", height: "3.5rem", fontSize: "1.1rem" }}>
                                         Submit
                                     </Button>
                                 </Grid>
