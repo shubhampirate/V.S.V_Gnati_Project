@@ -6,23 +6,23 @@ from rest_framework.response import Response
 from django.contrib.auth import authenticate
 
 from .models import User, Family, OccupationAddress, Event, Company, Job, Matrimony
-from .serializers import LoginSerializer, MemberSerializer, FamilySerializer, OccupationAddressSerializer, EventSerializer, CompanySerializer, JobSerializer, MatrimonySerializer
+from .serializers import LoginSerializer, MemberSerializer, FamilySerializer, OccupationAddressSerializer, EventSerializer, CompanySerializer, JobSerializer, MatrimonySerializer, MemberListSerializer
 
 from django.db.models import Q
 import random
 
 # Create your views here.
 class LoginAPI(GenericAPIView):
-	
+
 	serializer_class = LoginSerializer
-	
+
 	def post(self,request,*args,**kwargs ):
 		username = request.data.get('username',None)
 		password = request.data.get('password',None)
 		user = authenticate(username = username, password = password)
-		# user = User.objects.get(username = username)
-		# user.set_password(password)
-		# user.save()
+		#user = User.objects.get(username = username)
+		#user.set_password(password)
+		#user.save()
 		if user :
 			serializer = self.serializer_class(user)
 			token,k = Token.objects.get_or_create(user=user)
@@ -42,10 +42,10 @@ class LoginAPI(GenericAPIView):
 				matrimony = Matrimony.objects.filter(uploaded_by = user).values_list('id',flat=True)
 			return Response({"status" : True ,"data" : {'token' : token.key,'username' : user.username,'family' : user.related_family.id,'company' : company,'matrimony' : matrimony}, "message" : 'Login Success'},status = status.HTTP_200_OK)
 		return Response({"status" : False ,"data" : {}, "message" : 'Invalid Credentials'},status = status.HTTP_401_UNAUTHORIZED)
-	
+
 class MemberListAPI(GenericAPIView):
-	
-	serializer_class = MemberSerializer
+
+	serializer_class = MemberListSerializer
 	queryset = User.objects.all()
 	permission_classes = [permissions.IsAuthenticated,]
 
@@ -56,7 +56,7 @@ class MemberListAPI(GenericAPIView):
 			return Response({"status" : True ,"data" : serializer.data, "message" : "Success"}, status=status.HTTP_200_OK)
 		except:
 			return Response({"status" : False ,"data" : {}, "message" : "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-		
+
 	def post(self,request):
 		try:
 			name_list = request.data["name"].split(" ")
@@ -68,7 +68,7 @@ class MemberListAPI(GenericAPIView):
 			return Response({"status" : True ,"data" : serializer.data, "message" : "Success"}, status=status.HTTP_200_OK)
 		except:
 			return Response({"status" : False ,"data" : {}, "message" : "Invalid filter"}, status=status.HTTP_400_BAD_REQUEST)
-		
+
 class FamilyAPI(GenericAPIView):
 	serializer_class = FamilySerializer
 	queryset = Family.objects.all()
@@ -125,7 +125,7 @@ class FamilyAPI(GenericAPIView):
 			return Response({"status" : True ,"data" : {}, "message" : "Success"}, status=status.HTTP_200_OK)
 		except:
 			return Response({"status" : False ,"data" : {}, "message" : "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-		
+
 	def delete(self,request,pk):
 		try:
 			occ = OccupationAddress.objects.get(id = pk)
@@ -135,9 +135,9 @@ class FamilyAPI(GenericAPIView):
 			return Response({"status" : True ,"data" : {}, "message" : "Success"}, status=status.HTTP_200_OK)
 		except:
 			return Response({"status" : False ,"data" : {}, "message" : "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-	
+
 class MemberAPI(GenericAPIView):
-	
+
 	serializer_class = MemberSerializer
 	queryset = User.objects.all()
 	permission_classes = [permissions.IsAuthenticated,]
@@ -167,7 +167,7 @@ class MemberAPI(GenericAPIView):
 			return Response({"status" : True ,"data" : serializer.data, "message" : "Success"}, status=status.HTTP_200_OK)
 		except:
 			return Response({"status" : False ,"data" : {}, "message" : "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-	
+
 	def put(self,request,pk):
 		try:
 			data = dict(request.data)
@@ -184,7 +184,7 @@ class MemberAPI(GenericAPIView):
 			return Response({"status" : True ,"data" : serializer.data, "message" : "Success"}, status=status.HTTP_200_OK)
 		except:
 			return Response({"status" : False ,"data" : {}, "message" : "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-		
+
 	def delete(self,request,pk):
 		try:
 			username = request.data['username']
@@ -196,7 +196,7 @@ class MemberAPI(GenericAPIView):
 			return Response({"status" : True ,"data" : {}, "message" : "Success"}, status=status.HTTP_200_OK)
 		except:
 			return Response({"status" : False ,"data" : {}, "message" : "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-		
+
 class EventAPI(GenericAPIView):
 
 	serializer_class = EventSerializer
@@ -214,7 +214,7 @@ class EventAPI(GenericAPIView):
 			return Response({"status" : True ,"data" : data, "message" : "Success"}, status=status.HTTP_200_OK)
 		except:
 			return Response({"status" : False ,"data" : {}, "message" : "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-		
+
 	def post(self,request,pk):
 		try:
 			event = Event.objects.filter(date__year=pk)
@@ -228,7 +228,7 @@ class EventAPI(GenericAPIView):
 			return Response({"status" : True ,"data" : data, "message" : "Success"}, status=status.HTTP_200_OK)
 		except:
 			return Response({"status" : False ,"data" : {}, "message" : "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-		
+
 	def put(self,request,pk):
 		try:
 			event = Event.objects.get(id = pk)
@@ -240,7 +240,7 @@ class EventAPI(GenericAPIView):
 			return Response({"status" : True ,"data" : serializer.data, "message" : "Success"}, status=status.HTTP_200_OK)
 		except:
 			return Response({"status" : False ,"data" : {}, "message" : "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-		
+
 	def delete(self,request,pk):
 		try:
 			event = Event.objects.get(id = pk)
@@ -250,7 +250,7 @@ class EventAPI(GenericAPIView):
 			return Response({"status" : True ,"data" : {}, "message" : "Success"}, status=status.HTTP_200_OK)
 		except:
 			return Response({"status" : False ,"data" : {}, "message" : "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-		
+
 class EventListAPI(GenericAPIView):
 	serializer_class = EventSerializer
 	permission_classes = [permissions.IsAuthenticated,]
@@ -269,7 +269,7 @@ class EventListAPI(GenericAPIView):
 			return Response({"status" : True ,"data" : data, "message" : "Success"}, status=status.HTTP_200_OK)
 		except:
 			return Response({"status" : False ,"data" : {}, "message" : "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-		
+
 	def post(self,request):
 		try:
 			if request.user.is_staff == False:
@@ -281,7 +281,7 @@ class EventListAPI(GenericAPIView):
 			return Response({"status" : True ,"data" : data, "message" : "Success"}, status=status.HTTP_200_OK)
 		except:
 			return Response({"status" : False ,"data" : {}, "message" : "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-		
+
 class CompanyAPI(GenericAPIView):
 
 	serializer_class = CompanySerializer
@@ -302,7 +302,7 @@ class CompanyAPI(GenericAPIView):
 			return Response({"status" : True ,"data" : data, "message" : "Success"}, status=status.HTTP_200_OK)
 		except:
 			return Response({"status" : False ,"data" : {}, "message" : "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-		
+
 	def put(self,request,pk):
 		try:
 			company = Company.objects.get(id = pk)
@@ -314,7 +314,7 @@ class CompanyAPI(GenericAPIView):
 			return Response({"status" : True ,"data" : serializer.data, "message" : "Success"}, status=status.HTTP_200_OK)
 		except:
 			return Response({"status" : False ,"data" : {}, "message" : "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-		
+
 	def delete(self,request,pk):
 		try:
 			company = Company.objects.get(id = pk)
@@ -324,7 +324,7 @@ class CompanyAPI(GenericAPIView):
 			return Response({"status" : True ,"data" : {}, "message" : "Success"}, status=status.HTTP_200_OK)
 		except:
 			return Response({"status" : False ,"data" : {}, "message" : "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-		
+
 class CompanyListAPI(GenericAPIView):
 	serializer_class = CompanySerializer
 	permission_classes = [permissions.IsAuthenticated,]
@@ -336,14 +336,14 @@ class CompanyListAPI(GenericAPIView):
 			serializer = self.serializer_class(company,many = True)
 			data = dict()
 			data['companies'] = serializer.data
-			if request.user.is_staff or request.user != company.posted_by:
+			if request.user.is_staff:
 				data['can_edit'] = True
 			else:
 				data['can_edit'] = False
 			return Response({"status" : True ,"data" : data, "message" : "Success"}, status=status.HTTP_200_OK)
 		except:
 			return Response({"status" : False ,"data" : {}, "message" : "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-		
+
 	def post(self,request):
 		try:
 			#if request.user.is_staff == False:
@@ -358,7 +358,7 @@ class CompanyListAPI(GenericAPIView):
 			return Response({"status" : True ,"data" : data, "message" : "Success"}, status=status.HTTP_200_OK)
 		except:
 			return Response({"status" : False ,"data" : {}, "message" : "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-		
+
 class JobAPI(GenericAPIView):
 
 	serializer_class = JobSerializer
@@ -376,7 +376,7 @@ class JobAPI(GenericAPIView):
 			return Response({"status" : True ,"data" : data, "message" : "Success"}, status=status.HTTP_200_OK)
 		except:
 			return Response({"status" : False ,"data" : {}, "message" : "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-		
+
 	def post(self,request,pk):
 		try:
 			data = dict(request.data)
@@ -386,7 +386,7 @@ class JobAPI(GenericAPIView):
 			return Response({"status" : True ,"data" : serializer.data, "message" : "Success"}, status=status.HTTP_200_OK)
 		except:
 			return Response({"status" : False ,"data" : {}, "message" : "Internal Server Error"}, status=status.HTTP_400_BAD_REQUEST)
-		
+
 	def put(self,request,pk):
 		try:
 			job = Job.objects.get(id = pk)
@@ -398,7 +398,7 @@ class JobAPI(GenericAPIView):
 			return Response({"status" : True ,"data" : serializer.data, "message" : "Success"}, status=status.HTTP_200_OK)
 		except:
 			return Response({"status" : False ,"data" : {}, "message" : "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-		
+
 	def delete(self,request,pk):
 		try:
 			job = Job.objects.get(id = pk)
@@ -408,7 +408,7 @@ class JobAPI(GenericAPIView):
 			return Response({"status" : True ,"data" : {}, "message" : "Success"}, status=status.HTTP_200_OK)
 		except:
 			return Response({"status" : False ,"data" : {}, "message" : "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-		
+
 class JobListAPI(GenericAPIView):
 	serializer_class = JobSerializer
 	permission_classes = [permissions.IsAuthenticated,]
@@ -420,27 +420,27 @@ class JobListAPI(GenericAPIView):
 			serializer = self.serializer_class(job,many = True)
 			data = dict()
 			data['jobs'] = serializer.data
-			if request.user.is_staff or request.user != job.company.posted_by:
+			if request.user.is_staff:
 				data['can_add'] = True
 			else:
 				data['can_add'] = False
 			return Response({"status" : True ,"data" : data, "message" : "Success"}, status=status.HTTP_200_OK)
 		except:
 			return Response({"status" : False ,"data" : {}, "message" : "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-		
+
 	def post(self,request):
 		try:
 			#if request.user.is_staff == False:
 				#return Response({"status" : False ,"data" : {}, "message" : "Sorry, only admin can edit this page"}, status=status.HTTP_200_OK)
 			serializer = self.serializer_class(data = request.data)
-			company = Company.objects.get(posted_by = request.user)
+			company = Company.objects.filter(posted_by = request.user).last()
 			if serializer.is_valid(raise_exception=True):
 				serializer.save(company = company)
 			data = serializer.data
 			return Response({"status" : True ,"data" : data, "message" : "Success"}, status=status.HTTP_200_OK)
 		except:
 			return Response({"status" : False ,"data" : {}, "message" : "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-		
+
 class MatrimonyAPI(GenericAPIView):
 
 	serializer_class = MatrimonySerializer
@@ -458,7 +458,7 @@ class MatrimonyAPI(GenericAPIView):
 			return Response({"status" : True ,"data" : data, "message" : "Success"}, status=status.HTTP_200_OK)
 		except:
 			return Response({"status" : False ,"data" : {}, "message" : "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-		
+
 	def put(self,request,pk):
 		try:
 			matrimony = Matrimony.objects.get(id = pk)
@@ -470,7 +470,7 @@ class MatrimonyAPI(GenericAPIView):
 			return Response({"status" : True ,"data" : serializer.data, "message" : "Success"}, status=status.HTTP_200_OK)
 		except:
 			return Response({"status" : False ,"data" : {}, "message" : "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-		
+
 	def delete(self,request,pk):
 		try:
 			matrimony = Matrimony.objects.get(id = pk)
@@ -480,7 +480,7 @@ class MatrimonyAPI(GenericAPIView):
 			return Response({"status" : True ,"data" : {}, "message" : "Success"}, status=status.HTTP_200_OK)
 		except:
 			return Response({"status" : False ,"data" : {}, "message" : "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-		
+
 class MatrimonyListAPI(GenericAPIView):
 	serializer_class = MatrimonySerializer
 	permission_classes = [permissions.IsAuthenticated,]
@@ -494,14 +494,14 @@ class MatrimonyListAPI(GenericAPIView):
 			serializer = self.serializer_class(matrimony,many = True)
 			data = dict()
 			data["matrimonies"] = serializer.data
-			if request.user.is_staff or request.user != matrimony.uploaded_by:
+			if request.user.is_staff:
 				data['can_add'] = True
 			else:
 				data['can_add'] = False
 			return Response({"status" : True ,"data" : data, "message" : "Success"}, status=status.HTTP_200_OK)
 		except:
 			return Response({"status" : False ,"data" : {}, "message" : "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-		
+
 	def post(self,request):
 		try:
 			#if request.user.is_staff == False:
