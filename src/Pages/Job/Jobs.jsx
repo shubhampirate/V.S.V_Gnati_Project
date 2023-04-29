@@ -1,117 +1,184 @@
-import React, { useState } from 'react'
-import { Box, Grid, Button } from '@mui/material'
-import Carousel from "react-multi-carousel";
-import jobimage from "../../Images/jobimage.webp"
+/* eslint-disable jsx-a11y/alt-text */
+import React, { useState, useEffect } from "react";
+import { Box, Grid } from "@mui/material";
+import EmailIcon from '@mui/icons-material/Email';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
+import PhoneIcon from '@mui/icons-material/Phone';
+
+import "./Job.css";
+import axios from "axios";
+
 const Jobs = () => {
-  const responsive = {
-    superLargeDesktop: {
-      // the naming can be any, depends on you.
-      breakpoint: { max: 4000, min: 3000 },
-      items: 1
-    },
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 1
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 1
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 1
-    }
+
+  const [load, setLoad] = useState([]);
+  const [loadcompany, setCompany] = useState([]);
+  const [showMoreCompany, setShowMoreCompany] = useState(false);
+  const [jobid, setJobid] = useState([]);
+ 
+  useEffect(() => {
+    loadList();
+  }, []);
+
+
+
+  const loadList = async () => {
+    //const token = localStorage.getItem("token")
+    const result = await axios.get(
+      "http://jenilsavla.pythonanywhere.com/api/jobs",
+      {
+        headers: {
+          Authorization: "Token ebeb63c068b02f00c0797a0c8edc06575c139fbb",
+        },
+      }
+    );
+    setLoad(result.data.data.jobs);
   };
 
-  const [visible, setVisible] = useState(4);
+  //console.log(load);
+  const loadcompanyfunc = async (id) => {
+    //const token = localStorage.getItem("token")
+    const result = await axios.get(
+      `http://jenilsavla.pythonanywhere.com/api/company/${id}`,
+      {
+        headers: {
+          Authorization: "Token ebeb63c068b02f00c0797a0c8edc06575c139fbb",
+        },
+      }
+    );
+    setCompany(result.data.data);
+  };
 
-  const showMore = () => {
-    setVisible((preVisible) => preVisible + 4);
-  }
-
-  const upcoming = [
-    { name: "Job Title", type: "job type", company: "Company Name", address: "address", email: "dsfhsgj@gmail.com", phone: "98745162309", desc: "Lorem ipsum dolor sit amet, consectetur  ajsvjsbvjbsbjd Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet, consectetur  ajsvjsbvjbsbjd Lorem ipsum dolor sit amet" },
-    { name: "Job Title", type: "job type", company: "Company Name", address: "address", email: "dsfhsgj@gmail.com", phone: "98745162309", desc: "Lorem ipsum dolor sit amet, consectetur  ajsvjsbvjbsbjd Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet, consectetur  ajsvjsbvjbsbjd Lorem ipsum dolor sit amet" },
-    { name: "Job Title", type: "job type", company: "Company Name", address: "address", email: "dsfhsgj@gmail.com", phone: "98745162309", desc: "Lorem ipsum dolor sit amet, consectetur  ajsvjsbvjbsbjd Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet, consectetur  ajsvjsbvjbsbjd Lorem ipsum dolor sit amet" },
-    { name: "Job Title", type: "job type", company: "Company Name", address: "address", email: "dsfhsgj@gmail.com", phone: "98745162309", desc: "Lorem ipsum dolor sit amet, consectetur  ajsvjsbvjbsbjd Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet, consectetur  ajsvjsbvjbsbjd Lorem ipsum dolor sit amet" },
-    { name: "Job Title", type: "job type", company: "Company Name", address: "address", email: "dsfhsgj@gmail.com", phone: "98745162309", desc: "Lorem ipsum dolor sit amet, consectetur  ajsvjsbvjbsbjd Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet, consectetur  ajsvjsbvjbsbjd Lorem ipsum dolor sit amet" },
-    { name: "Job Title", type: "job type", company: "Company Name", address: "address", email: "dsfhsgj@gmail.com", phone: "98745162309", desc: "Lorem ipsum dolor sit amet, consectetur  ajsvjsbvjbsbjd Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet, consectetur  ajsvjsbvjbsbjd Lorem ipsum dolor sit amet" },
-    { name: "Job Title", type: "job type", company: "Company Name", address: "address", email: "dsfhsgj@gmail.com", phone: "98745162309", desc: "Lorem ipsum dolor sit amet, consectetur  ajsvjsbvjbsbjd Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet, consectetur  ajsvjsbvjbsbjd Lorem ipsum dolor sit amet" },
-    { name: "Job Title", type: "job type", company: "Company Name", address: "address", email: "dsfhsgj@gmail.com", phone: "98745162309", desc: "Lorem ipsum dolor sit amet, consectetur  ajsvjsbvjbsbjd Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet, consectetur  ajsvjsbvjbsbjd Lorem ipsum dolor sit amet" },
-    { name: "Job Title", type: "job type", company: "Company Name", address: "address", email: "dsfhsgj@gmail.com", phone: "98745162309", desc: "Lorem ipsum dolor sit amet, consectetur  ajsvjsbvjbsbjd Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet, consectetur  ajsvjsbvjbsbjd Lorem ipsum dolor sit amet" },
-    { name: "Job Title", type: "job type", company: "Company Name", address: "address", email: "dsfhsgj@gmail.com", phone: "98745162309", desc: "Lorem ipsum dolor sit amet, consectetur  ajsvjsbvjbsbjd Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet, consectetur  ajsvjsbvjbsbjd Lorem ipsum dolor sit amet" }
-  ];
+  const companyDetails = (id, job) => {
+    loadcompanyfunc(id);
+    setJobid(job);
+    setShowMoreCompany(!showMoreCompany);
+  };
+  //console.log(loadcompany);
 
   return (
     <Box>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Grid container spacing={2} sx={{ padding: '0.5rem' }}>
+          <Grid container spacing={2} sx={{ paddingLeft: "5%", paddingRight: "3%", }}>
             <Grid item xs={12} sx={{ marginTop: "2.5rem" }}>
-              <div style={{ fontSize: "3rem", fontWeight: "700" }}>Job Opportunity</div>
+              <div style={{ fontSize: "3rem", fontWeight: "700" }}>
+                Job Opportunity
+              </div>
             </Grid>
             <Grid item xs={12}>
-              <div style={{ fontSize: "2rem", marginBottom: "1.5rem" }}>One Step closer to your new Job</div>
-            </Grid>
-            {/*<Grid item xs={12} md={8} sm={12}>
-              <div style={{ textAlign: "left", fontSize: "2rem", marginBottom: "1rem" }}>
+              <div style={{ fontSize: "2rem", marginBottom: "1.5rem" }}>
                 One Step closer to your new Job
               </div>
-              <div style={{ fontSize: "1.5rem", textAlign: "left" }}>
-                Lorem ipsum dolor sit amet, consectetur  ajsvjsbvjbsbjd Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet, consectetur  ajsvjsbvjbsbjd Lorem ipsum dolor sit amet
-              </div>
             </Grid>
-            <Grid item xs={12} md={4} sm={12} style={{ padding: "0.5rem" }}>
-              <Carousel
-                responsive={responsive}
-                removeArrowOnDeviceType={["tablet", "mobile"]}
-                infinite={true}
-                transitionDuration={500}
-                autoPlaySpeed={10000}
-                autoPlay={true}
-                arrows={false}
-              >
-                <div style={{ height: "30vh", width: "100%", backgroundColor: "greenyellow" }}>Item 1</div>
-                <div style={{ height: "30vh", width: "100%", backgroundColor: "greenyellow" }}>Item 2</div>
-                <div style={{ height: "30vh", width: "100%", backgroundColor: "greenyellow" }}>Item 3</div>
-                <div style={{ height: "30vh", width: "100%", backgroundColor: "greenyellow" }}> Item 4</div>
-              </Carousel>
-            </Grid>*/}
+            <Grid item xs={12}>
+              <Grid container spacing={2} style={{textAlign:"center"}}>
+                <Grid item xs={8}>
+
+                </Grid>
+                <Grid item xs={4}>
+
+                </Grid>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
         <Grid item xs={12}>
           <Grid container spacing={2}>
-            {upcoming.slice(0, visible).map((item) => {
+            {load.map((item) => {
               return (
-                <Grid item xs={12} md={3} sm={12}>
+                <Grid item xs={12} md={4} sm={6} style={{
+                  paddingLeft: "5%", paddingRight: "2.5%",
+                }}>
                   <Grid container spacing={2} sx={{ borderRadius: "2vh", padding: "1rem" }}>
-                    <Grid item xs={12}>
-                      <img src={jobimage} style={{ width: "100%", height: "35vh", borderRadius: "1.5vh" }} />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Grid item xs={12}>
-                        <Grid container spacing={1} sx={{ textAlign: "left" }}>
-                          <Grid item xs={12}>
-                            <div style={{ fontSize: "2rem", fontWeight: "700" }}>{item.name} &nbsp;
-                              <span style={{ fontSize: "1.5rem", fontWeight: "400" }}> {item.type}</span>
-                            </div>
-                          </Grid>
-                          <Grid item xs={12}>
-                            <div style={{ fontSize: "1.1rem" }}>{item.company}</div>
-                          </Grid>
-                          <Grid item xs={12}>
-                            <div style={{ fontSize: "1.1rem", marginTop: "-0.4rem" }}>{item.email}</div>
-                          </Grid>
-                          <Grid item xs={12}>
-                            <div style={{ fontSize: "1.1rem", marginTop: "-0.4rem" }}>+91 {item.phone}</div>
-                          </Grid>
-                          <Grid item xs={12}>
-                            <div style={{ fontSize: "1.1rem" }}>{item.desc}</div>
-                          </Grid>
-                          <Grid item xs={12}>
-                            <u style={{ fontSize: "1.3rem" }}>{item.address}</u>
+                    <Grid item xs={12}
+                      style={{
+                        padding: "1rem", marginLeft: "16px", marginTop: "-0.75rem", color: "#E0E1DC",
+                        borderRadius: "1.5vh", backgroundColor: "#018d8d"
+                      }}>
+                      <Grid container spacing={1} sx={{ textAlign: "left", marginTop: "0.5vh" }}>
+                        <Grid item xs={12}>
+                          <div style={{ fontSize: "1.1rem" }}>{item.type}</div>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <div style={{ fontSize: "2rem", fontWeight: "700" }}>{item.title}</div>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <Grid container spacing={2}>
+                            <Grid item xs={2}>
+                              <PhoneIcon style={{ fontSize: "5vh", color: "#E0E1DC" }} />
+                            </Grid>
+                            <Grid item xs={5} >
+                              <div style={{ fontSize: "1.25rem", marginTop: "0.5rem" }}>{item.phone}</div>
+                            </Grid>
+                            <Grid item xs={5} style={{ marginTop: "0.3rem", textAlign: "right" }}>
+                              <PhotoCameraIcon style={{
+                                fontSize: "3.5vh", color: "#E0E1DC", cursor: "pointer",
+                                backgroundColor: "grey", padding: "0.25rem", borderRadius: "0.5rem 0rem 0rem 0.5rem"
+                              }}
+                                onClick={() =>
+                                  companyDetails(item.company, item.id)
+                                } />
+                              <KeyboardDoubleArrowRightIcon style={{
+                                fontSize: "3.5vh", color: "#E0E1DC",
+                                backgroundColor: "grey", padding: "0.25rem", borderRadius: "0rem 0.5rem 0.5rem 0rem"
+                              }} />
+                            </Grid>
                           </Grid>
                         </Grid>
+                        {showMoreCompany && jobid === item.id ? (
+                          <>
+                            {loadcompany ? (
+                              <>
+                                <hr style={{
+                                  border: "1px solid #E0E1DC", width: "100%",
+                                  borderRadius: "5px", marginLeft: "0.5rem"
+                                }} />
+                                {/*<Grid item xs={12}>
+                                  <img src={`http://jenilsavla.pythonanywhere.com` + loadcompany.picture}
+                                    style={{ width: "100%", height: "35vh", borderRadius: "1.5vh " }} />
+                              </Grid>
+                              */}
+                                <Grid item xs={12}>
+                                  <Grid container spacing={2}>
+                                    <Grid item xs={9}>
+                                      <div style={{ fontSize: "2rem", fontWeight: "700" }}>{loadcompany.name}</div>
+                                    </Grid>
+                                    <Grid item xs={3} style={{ textAlign: "right" }}>
+                                      <img src={`http://jenilsavla.pythonanywhere.com` + loadcompany.picture}
+                                        style={{ width: "5vh", height: "5vh", borderRadius: "0.5vh " }} />
+                                    </Grid>
+                                  </Grid>
+                                </Grid>
+                                <Grid item xs={12}>
+                                  <Grid container spacing={2}>
+                                    <Grid item xs={2}>
+                                      <LocationOnIcon style={{ fontSize: "5vh", color: "#E0E1DC" }} />
+                                    </Grid>
+                                    <Grid item xs={10} >
+                                      <div style={{ fontSize: "1.25rem", marginTop: "0.5rem" }}>{loadcompany.address}</div>
+                                    </Grid>
+                                  </Grid>
+                                </Grid>
+                                <Grid item xs={12}>
+                                  <Grid container spacing={2}>
+                                    <Grid item xs={2}>
+                                      <EmailIcon style={{ fontSize: "5vh", color: "#E0E1DC" }} />
+                                    </Grid>
+                                    <Grid item xs={10} >
+                                      <div style={{ fontSize: "1.25rem", marginTop: "0.5rem" }}>{loadcompany.email}</div>
+                                    </Grid>
+                                  </Grid>
+                                </Grid>
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                          </>
+                        ) : (
+                          <></>
+                        )}
                       </Grid>
                     </Grid>
                   </Grid>
@@ -119,59 +186,10 @@ const Jobs = () => {
               )
             })}
           </Grid>
-          <Grid item xs={12} style={{ marginBottom: "2rem", marginTop: "1rem" }}>
-            <button onClick={showMore} variant="outlined" style={{ fontSize: "1.25rem", borderRadius: "1vh" }}>Load More</button>
-          </Grid>
-        </Grid >
-        {/*<Grid item xs={12}>
-          <Grid container spacing={2}>
-            {upcoming.slice(0, visible).map((item) => {
-              return (
-                <Grid item xs={12} md={3} sm={6}>
-                  <Grid container spacing={2} sx={{ borderRadius: "2vh", padding: "1rem" }}>
-                    <Grid item xs={12} style={{ height: "30vh", backgroundColor: "greenyellow", borderRadius: "2vh" }}>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Grid container spacing={1} sx={{ textAlign: "left" }}>
-                        <Grid item xs={12}>
-                          <div style={{ fontSize: "2rem", fontWeight: "700" }}>{item.name},
-                            <span style={{ fontSize: "1.5rem", fontWeight: "400" }}> {item.type}</span>
-                          </div>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <div style={{ fontSize: "1.1rem" }}>{item.company}</div>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <div style={{ fontSize: "1.1rem", marginTop: "-0.4rem" }}>{item.email}</div>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <div style={{ fontSize: "1.1rem", marginTop: "-0.4rem" }}>+91 {item.phone}</div>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <div style={{ fontSize: "1.1rem" }}>{item.desc}</div>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <u style={{ fontSize: "1.3rem" }}>{item.address}</u>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <button
-                        style={{ backgroundColor: "transparent", borderColor: "red", borderRadius: "0.5vh", width: "100%" }}>
-                        Apply Now</button>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              )
-            })}
-            <Grid item xs={12}>
-              <Button onClick={showMore} variant="outlined">Load mOre</Button>
-            </Grid>
-          </Grid>
-        </Grid> */}
-      </Grid >
+        </Grid>
+      </Grid>
     </Box >
-  )
-}
+  );
+};
 
-export default Jobs
+export default Jobs;

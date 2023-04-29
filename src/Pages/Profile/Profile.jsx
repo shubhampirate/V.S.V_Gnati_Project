@@ -2,71 +2,22 @@ import {
   Box, Grid, TableBody, TablePagination,
   TableCell, Table, TableRow, TableContainer, TableHead
 } from '@mui/material'
-import React from 'react'
-
+import React,{useState,useEffect} from 'react'
+import axios from 'axios';
 const columns = [
   { id: 'name', label: 'Family Head & Other Family Members' },
   { id: 'relation', label: 'Relation with Family Head' },
-  { id: 'address', label: 'Residential Address' },
-  { id: 'mobile', label: 'Tel No./Mobile No.' },
-  { id: 'birth', label: 'Date of Birth' },
+  { id: 'home_address', label: 'Residential Address' },
+  { id: 'phone', label: 'Tel No./Mobile No.' },
+  { id: 'dob', label: 'Date of Birth' },
   { id: 'education', label: 'Education' },
   { id: 'gotrej', label: 'Gotrej' },
-  { id: 'marital', label: 'Marital Status' },
-  { id: 'profession', label: 'Professional Status (Business/Job)' },
-  { id: 'details', label: 'Details of Profession Name & Address' },
+  { id: 'maritial_status', label: 'Marital Status' },
+  { id: 'profession_status', label: 'Professional Status (Business/Job)' },
+  { id: 'profession_name', label: 'Details of Profession Name & Address' },
 ];
 
-const rows = [
-  {
-    name: "qwert", relation: "qwert", address: "qwert", mobile: "qwert", birth: "qwert",
-    education: "qwert", gotrej: "qwert", marital: "qwert", profession: "qwert", details: "qwert"
-  },
-  {
-    name: "qwert", relation: "qwert", address: "qwert", mobile: "qwert", birth: "qwert",
-    education: "qwert", gotrej: "qwert", marital: "qwert", profession: "qwert", details: "qwert"
-  },
-  {
-    name: "qwert", relation: "qwert", address: "qwert", mobile: "qwert", birth: "qwert",
-    education: "qwert", gotrej: "qwert", marital: "qwert", profession: "qwert", details: "qwert"
-  },
-  {
-    name: "qwert", relation: "qwert", address: "qwert", mobile: "qwert", birth: "qwert",
-    education: "qwert", gotrej: "qwert", marital: "qwert", profession: "qwert", details: "qwert"
-  },
-  {
-    name: "qwert", relation: "qwert", address: "qwert", mobile: "qwert", birth: "qwert",
-    education: "qwert", gotrej: "qwert", marital: "qwert", profession: "qwert", details: "qwert"
-  },
-  {
-    name: "qwert", relation: "qwert", address: "qwert", mobile: "qwert", birth: "qwert",
-    education: "qwert", gotrej: "qwert", marital: "qwert", profession: "qwert", details: "qwert"
-  },
-  {
-    name: "qwert", relation: "qwert", address: "qwert", mobile: "qwert", birth: "qwert",
-    education: "qwert", gotrej: "qwert", marital: "qwert", profession: "qwert", details: "qwert"
-  },
-  {
-    name: "qwert", relation: "qwert", address: "qwert", mobile: "qwert", birth: "qwert",
-    education: "qwert", gotrej: "qwert", marital: "qwert", profession: "qwert", details: "qwert"
-  },
-  {
-    name: "qwert", relation: "qwert", address: "qwert", mobile: "qwert", birth: "qwert",
-    education: "qwert", gotrej: "qwert", marital: "qwert", profession: "qwert", details: "qwert"
-  },
-  {
-    name: "qwert", relation: "qwert", address: "qwert", mobile: "qwert", birth: "qwert",
-    education: "qwert", gotrej: "qwert", marital: "qwert", profession: "qwert", details: "qwert"
-  },
-  {
-    name: "qwert", relation: "qwert", address: "qwert", mobile: "qwert", birth: "qwert",
-    education: "qwert", gotrej: "qwert", marital: "qwert", profession: "qwert", details: "qwert"
-  },
-  {
-    name: "qwert", relation: "qwert", address: "qwert", mobile: "qwert", birth: "qwert",
-    education: "qwert", gotrej: "qwert", marital: "qwert", profession: "qwert", details: "qwert"
-  },
-];
+
 
 const Profile = () => {
 
@@ -82,6 +33,20 @@ const Profile = () => {
     setPage(0);
   };
 
+  const [load, setLoad] = useState([]);
+  useEffect(() => {
+    loadList();
+  }, []);
+
+  const loadList = async () => {
+    //const token = localStorage.getItem("token")
+    const result = await axios.get("http://jenilsavla.pythonanywhere.com/api/members", {
+      headers: { "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb` },
+    });
+    setLoad(result.data.data);
+
+  };
+  console.log(load);
 
   return (
     <Box>
@@ -118,7 +83,7 @@ const Profile = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {rows
+                    {load
                       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                       .map((row) => {
                         return (
@@ -142,7 +107,7 @@ const Profile = () => {
               <TablePagination
                 rowsPerPageOptions={10}
                 component="div"
-                count={rows.length}
+                count={load.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}

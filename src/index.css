@@ -9,7 +9,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   font-size: 1rem;
-  background-color: #f7f7f7;
+  background-image: url(../src/Images/bg2.webp);
+  
+  background-size: cover;
+  background-color: #EEE7E5;
 }
 
 code {

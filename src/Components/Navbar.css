@@ -1,5 +1,5 @@
 
-@import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100&display=swap");
+/*@import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100&display=swap");
 
 a {
   text-decoration: none;
@@ -12,7 +12,7 @@ li {
 /* 
  
 
-/* navbar style start  */
+/* navbar style start  
 
 .main-nav {
   width: 100%;
@@ -23,7 +23,7 @@ li {
 
 .logo {
   display: grid;
-  /* background-color: #3b5998; */
+  /* background-color: #3b5998; 
   grid-column: 2/3;
   justify-content: start;
   align-items: center;
@@ -70,7 +70,7 @@ button {
   justify-content: center;
 }
 
-/* ----------- Grid part ends ----------------- */
+/* ----------- Grid part ends ----------------- 
 
 .logo h2 {
   font-size: 2.5rem;
@@ -108,7 +108,7 @@ button {
   display: none;
 }
 
-/* hero section   */
+/* hero section   
 
 .hero-section {
   height: 80vh;
@@ -129,7 +129,7 @@ button {
   text-align: center;
 }
 
-/* responsive css style  */
+/* responsive css style  
 @media (max-width: 1080px) {
   .main-nav {
     height: 8rem;
@@ -143,7 +143,7 @@ button {
   }
 }
 
-/* responsive css style  */
+/* responsive css style  
 @media (max-width: 998px) {
   .main-nav {
     height: 7rem;
@@ -267,9 +267,178 @@ button {
     font-size: 2.5rem;
   }
 
-  /* hero section  */
+  /* hero section  
 
   .hero-section h1 {
     font-size: 3.8rem;
   }
+}
+*/
+
+h1 {
+  margin-top: 100px;
+  text-align: center;
+  font-size: 60px;
+  line-height: 70px;
+  font-family: 'roboto', sans-serif;
+}
+
+p { text-align: center; }
+ .toggle, [id^=drop] {
+ display: none;
+}
+
+nav {
+  margin: 0;
+  padding: 0;
+  background-color: #254441;
+}
+
+#logo {
+  display: block;
+  padding: 0 30px;
+  float: right;
+  font-size: 20px;
+  line-height: 60px;
+}
+
+nav:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+nav ul {
+  float: right;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  position: relative;
+}
+
+nav ul li {
+  margin: 0px;
+  display: inline-block;
+  float: left;
+  background-color: #254441;
+}
+
+nav a {
+  display: block;
+  padding: 0 20px;
+  color: #FFF;
+  font-size: 20px;
+  line-height: 60px;
+  text-decoration: none;
+}
+
+nav ul li ul li:hover { background: #000000; }
+
+nav a:hover { background-color: #000000; }
+
+nav ul ul {
+  display: none;
+  position: absolute;
+  top: 60px;
+}
+
+nav ul li:hover > ul { display: inherit; }
+
+nav ul ul li {
+  width: 170px;
+  float: none;
+  display: list-item;
+  position: relative;
+}
+
+nav ul ul ul li {
+  position: relative;
+  top: -60px;
+  left: 170px;
+}
+
+li > a:after { content: ' +'; }
+
+li > a:only-child:after { content: ''; }
+
+
+/* Media Queries
+--------------------------------------------- */
+
+@media all and (max-width : 768px) {
+
+#logo {
+  display: block;
+  padding: 0;
+  width: 100%;
+  text-align: right;
+  float: none;
+}
+
+nav { margin: 0; }
+
+.toggle + a,
+ .menu { display: none; }
+
+.toggle{
+  display: block;
+  background-color: #254441;
+  padding: 0 20px;
+  color: #FFF;
+  text-align: left;
+  font-size: 22px;
+  /*font-weight:bold;*/
+  line-height: 60px;
+  text-decoration: none;
+  border: none;
+}
+
+
+.toggle:hover { background-color: #000000; }
+
+[id^=drop]:checked + ul { display: block; }
+
+nav ul li {
+  display: block;
+  width: 100%;
+  text-align: left;
+}
+
+nav ul ul .toggle,
+ nav ul ul a { padding: 0 40px; }
+
+nav ul ul ul a { padding: 0 80px; }
+
+nav a:hover,
+ nav ul ul ul a { background-color: #000000; }
+
+nav ul li ul li .toggle,
+ nav ul ul a { background-color: #212121; }
+
+nav ul ul {
+  float: none;
+  position: static;
+  color: #ffffff;
+}
+
+nav ul ul li:hover > ul,
+nav ul li:hover > ul { display: none; }
+
+nav ul ul li {
+  display: block;
+  width: 100%;
+}
+
+nav ul ul ul li { position: static;
+
+}
+}
+
+@media all and (max-width : 330px) {
+
+nav ul li {
+  display: block;
+  width: 94%;
+}
+
 }

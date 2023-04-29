@@ -11,6 +11,7 @@ import Profile from './Pages/Profile/Profile';
 import { Routes, Route } from "react-router-dom"
 import Register from './Pages/Matrimonial/Register';
 import Jobadmin from './Pages/Job/Jobadmin';
+import Family from './Pages/Profile/Family';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
       <Route path="/jobs/recruiter" element={<><Navbar/><Jobadmin/></>} />
       <Route path="/contact" element={<><Navbar/><ContactUs/></>}/>
       <Route path="/profile" element={<><Navbar/><Profile/></>}/>
+      <Route path="/family" element={<><Navbar/><Family/></>} />
       </Routes>
 
   );

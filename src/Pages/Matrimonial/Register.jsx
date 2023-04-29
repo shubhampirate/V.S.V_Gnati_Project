@@ -1,13 +1,13 @@
 import {
-    Grid, InputAdornment,
-    TextField, Button, InputLabel, Select, MenuItem
+    Grid,
+    TextField, Button,
 } from '@mui/material'
 import React, { useState, useEffect } from 'react'
 import { useFormik } from "formik";
 import * as yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
-
-
+import Select from 'react-select';
+import Swal from 'sweetalert2';
 const SUPPORTED_FORMATS = [
     "image/jpg",
     "image/jpeg",
@@ -35,13 +35,17 @@ const validationSchema = yup.object({
     date: yup
         .date('Enter your Date of Birth')
         .required('Date of birth is required'),
-    gender: yup
-        .string('Enter your Gender')
-        .required('Gender is required'),
 });
 
+const options = [
+    { value: 'Male', label: 'Male' },
+    { value: 'Female', label: 'Female' },
+];
+
 const Login = () => {
-    const [biodata, setBiodata] = useState(null)
+    const [biodata, setBiodata] = useState(null);
+    const [gender, setGender] = useState(null);
+    const [profile, setProfile] = useState(null);
     const navigate = useNavigate();
     const formik = useFormik({
         initialValues: {
@@ -49,20 +53,46 @@ const Login = () => {
             desc: '',
             date: new Date(),
             email: '',
-            gender: '',
             father_name: '',
             phone: '',
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            console.log(values, biodata.name);
-            navigate('/matrimonial')
+            console.log(values, biodata, gender, profile);
+            const formData = new FormData();
+            formData.append("name", values.name);
+            formData.append("about", values.desc);
+            formData.append("dob", values.date);
+            formData.append("phone", values.phone);
+            formData.append("fathers_name", values.father_name);
+            formData.append("gender", gender.value);
+            formData.append("picture", profile);
+            formData.append("biodata", biodata);
+            fetch("http://jenilsavla.pythonanywhere.com/api/matrimonies/", {
+                method: "POST",
+                headers: {
+                    "Authorization": "Token ebeb63c068b02f00c0797a0c8edc06575c139fbb",
+                },
+                body: formData,
+            })
+                .then((result) => {
+                    console.log(result)
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Successfully Added the Job',
+                        showConfirmButton: false,
+                        timer: 4000
+                    })
+                })
+                .catch(() => {
+                    alert('Error in the Code');
+                });
         }
     });
 
     return (
         <div>
-            <Grid container spacing={2} style={{ padding:"2rem" }}>
+            <Grid container spacing={2} style={{ padding: "2rem" }}>
                 <Grid item xs={12} md={2} sm={12}></Grid>
                 <Grid item xs={12} md={8} sm={12} style={{ marginBottom: "8rem " }}>
                     <div style={{ fontSize: "3rem", fontWeight: "700" }}>Matrimonial</div>
@@ -95,7 +125,7 @@ const Login = () => {
                                         sx={{ width: "100%" }}
                                     />
                                 </Grid>
-                                <Grid item xs={12}>
+                                <Grid item xs={12} md={6} sm={12}>
                                     <TextField
                                         id="desc"
                                         name="desc"
@@ -108,6 +138,18 @@ const Login = () => {
                                         error={formik.touched.desc && Boolean(formik.errors.desc)}
                                         helperText={formik.touched.desc && formik.errors.desc}
                                         sx={{ width: "100%" }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} md={6} sm={12}>
+                                    <TextField
+                                        id="profile"
+                                        name="profile"
+                                        type="file"
+                                        sx={{ width: "100%", fontSize: "1.5rem", color: "red" }}
+                                        color='success'
+                                        onChange={(e) => setProfile(e.target.files[0])}
+                                        error={formik.touched.profile && Boolean(formik.errors.profile)}
+                                        helperText={formik.touched.profile && formik.errors.profile}
                                     />
                                 </Grid>
                                 <Grid item xs={12} md={6} sm={12}>
@@ -165,16 +207,11 @@ const Login = () => {
                                     />
                                 </Grid>
                                 <Grid item xs={12} md={6} sm={12}>
-                                    <TextField
-                                        id="gender"
-                                        name="gender"
-                                        label="Gender"
-                                        color='success'
-                                        value={formik.values.gender}
-                                        onChange={formik.handleChange}
-                                        error={formik.touched.gender && Boolean(formik.errors.gender)}
-                                        helperText={formik.touched.gender && formik.errors.gender}
-                                        sx={{ width: "100%" }}
+                                    <Select
+                                        defaultValue={setGender}
+                                        onChange={setGender}
+                                        options={options}
+                                        styles={{ borderColor: "green", height: "3.5rem" }}
                                     />
                                 </Grid>
                                 <Grid item xs={12} md={6} sm={12}>
