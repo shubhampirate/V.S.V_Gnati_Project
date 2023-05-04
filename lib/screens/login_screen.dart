@@ -1,9 +1,12 @@
 import 'dart:developer';
 
-import 'package:community/constants/constants.dart';
+import 'package:community/constants/colors.dart';
+import 'package:community/provider/toggle_state_provider.dart';
 import 'package:community/screens/home_screen.dart';
+import 'package:community/provider/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = '/login';
@@ -17,40 +20,45 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController userNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool obscureText = false;
-  InputDecoration _commonInputDecoration([String? inputText]) => InputDecoration(
-        suffixIcon: inputText == "password"
-            ? InkWell(
-                child: Icon(obscureText ? Icons.visibility_off : Icons.visibility),
-                onTap: () {
-                  setState(() {
-                    obscureText = !obscureText;
-                  });
-                },
-              )
-            : null,
+  final _formKey = GlobalKey<FormState>();
 
-        // isDense: true,
-        contentPadding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-          borderSide: BorderSide(color: ktextInputBorderColor, width: 2.0),
-        ),
-        focusedErrorBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          borderSide: BorderSide(color: Colors.red, width: 2.0),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-          borderSide: BorderSide(color: ktextInputBorderColor, width: 2.0),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-          borderSide: BorderSide(color: ktextInputBorderColor, width: 2.0),
-        ),
-      );
+  InputDecoration _commonInputDecoration(BuildContext context, [String? inputText]) {
+    final toggleStateService = Provider.of<ToggleStateProvider>(context);
+    return InputDecoration(
+      suffixIcon: inputText == "password"
+          ? InkWell(
+              child: Icon(toggleStateService.state ? Icons.visibility_off : Icons.visibility),
+              onTap: () {
+                toggleStateService.toggle();
+              },
+            )
+          : null,
+
+      // isDense: true,
+      contentPadding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+        borderSide: BorderSide(color: ktextInputBorderColor, width: 2.0),
+      ),
+      focusedErrorBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        borderSide: BorderSide(color: Colors.red, width: 2.0),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+        borderSide: BorderSide(color: ktextInputBorderColor, width: 2.0),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+        borderSide: BorderSide(color: ktextInputBorderColor, width: 2.0),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthServiceProvider>(context);
+    final toggleStateService = Provider.of<ToggleStateProvider>(context);
     return Scaffold(
       body: ListView(
         children: [
@@ -80,73 +88,105 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 22.0, left: 25),
-            child: Row(
-              children: [
-                SvgPicture.asset(
-                  "assets/images/account.svg",
-                  height: 25,
-                  width: 25,
+          Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(top: 22.0, left: 25),
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(
+                        "assets/images/account.svg",
+                        height: 25,
+                        width: 25,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 14.0),
+                        child: Text(
+                          "Username",
+                          style: TextStyle(
+                            fontFamily: "Inter",
+                            fontSize: 15,
+                            fontWeight: FontWeight.w400,
+                            color: ktextColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 14.0),
-                  child: Text(
-                    "Username",
-                    style: TextStyle(
-                      fontFamily: "Inter",
-                      fontSize: 15,
-                      fontWeight: FontWeight.w400,
-                      color: ktextColor,
+                  padding: const EdgeInsets.only(left: 25.0, right: 25, top: 10),
+                  child: Container(
+                    height: 40,
+                    child: TextFormField(
+                      controller: userNameController,
+                      decoration: _commonInputDecoration(context),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your password';
+                        }
+                        return null;
+                      },
+                      // onSaved: (value) {
+                      //   _password = value!;
+                      // },
                     ),
                   ),
                 ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 25.0, right: 25, top: 10),
-            child: Container(
-              height: 40,
-              child: TextField(
-                controller: passwordController,
-                decoration: _commonInputDecoration(),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 22.0, left: 25),
-            child: Row(
-              children: [
-                SvgPicture.asset(
-                  "assets/images/lock.svg",
-                  height: 25,
-                  width: 25,
+
+                Padding(
+                  padding: const EdgeInsets.only(top: 22.0, left: 25),
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(
+                        "assets/images/lock.svg",
+                        height: 25,
+                        width: 25,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 14.0),
+                        child: Text(
+                          "Password",
+                          style: TextStyle(
+                            fontFamily: "Inter",
+                            fontSize: 15,
+                            fontWeight: FontWeight.w400,
+                            color: ktextColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 14.0),
-                  child: Text(
-                    "Password",
-                    style: TextStyle(
-                      fontFamily: "Inter",
-                      fontSize: 15,
-                      fontWeight: FontWeight.w400,
-                      color: ktextColor,
+                  padding: const EdgeInsets.only(left: 25.0, right: 25, top: 10),
+                  child: Container(
+                    height: 40,
+                    child: TextFormField(
+                      obscureText: toggleStateService.state,
+                      controller: passwordController,
+                      decoration: _commonInputDecoration(context, "password"),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your email';
+                        }
+                        return null;
+                      },
+                      // onSaved: (value) {
+                      //   _email = value!;
+                      // },
                     ),
                   ),
                 ),
+                // TextFormField(
+                //   obscureText: true,
+                //   decoration: InputDecoration(labelText: 'Password'),
+
+                // ),
               ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 25.0, right: 25, top: 10),
-            child: Container(
-              height: 40,
-              child: TextField(
-                obscureText: obscureText,
-                controller: userNameController,
-                decoration: _commonInputDecoration("password"),
-              ),
             ),
           ),
           Container(
@@ -157,10 +197,20 @@ class _LoginScreenState extends State<LoginScreen> {
               borderRadius: const BorderRadius.all(Radius.circular(5.0)),
             ),
             child: InkWell(
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return HomeScreen();
-                }));
+              onTap: () async {
+                if (_formKey.currentState!.validate()) {
+                  _formKey.currentState!.save();
+                  try {
+                    print("hello");
+                    await authService.signInWithEmailAndPassword(userNameController.text, passwordController.text);
+                    // navigate to home page
+                    // Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    //   return HomeScreen();
+                    // }));
+                  } catch (error) {
+                    // display error message
+                  }
+                }
               },
               child: Center(
                 child: Text(
@@ -175,6 +225,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
+          if (authService.loading) const Center(child: CircularProgressIndicator()),
           Padding(
             padding: const EdgeInsets.only(top: 8.0, bottom: 20),
             child: Center(
