@@ -11,3 +11,4 @@ Color kblackColor = const Color(0xFF000000);
 Color kbrownColor = const Color(0xFF583C26);
 Color kyellowColor = const Color(0xFFE99B01).withOpacity(0.5);
 Color kborderColor = const Color(0xFFE99B01);
+Color kpurpleColor = const Color(0XFF6A2364).withOpacity(0.2);
