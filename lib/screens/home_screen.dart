@@ -5,7 +5,7 @@ import 'package:community/screens/tabs_screen/account_screen.dart';
 import 'package:community/screens/tabs_screen/events.dart';
 import 'package:community/screens/tabs_screen/family_details_screen.dart';
 import 'package:community/screens/tabs_screen/home.dart';
-import 'package:community/screens/tabs_screen/matrimonymony.dart';
+import 'package:community/screens/tabs_screen/matrimony.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';

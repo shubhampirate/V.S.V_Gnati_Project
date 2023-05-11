@@ -129,6 +129,202 @@ class Matrimony extends StatelessWidget {
                     ],
                   ),
                 ),
+                // FutureBuilder(
+                //   future: matrimonyService.myMatrimonyDetails == null
+                //       ? Provider.of<MatrimonyDetailProvider>(context,
+                //               listen: false)
+                //           .getMyMatrimonyDetails()
+                //       : null,
+                //   builder: (context, snapshot) {
+                //     if (snapshot.connectionState == ConnectionState.waiting) {
+                //       return Column(
+                //         children: [
+                //           const SizedBox(height: 60),
+                //           Center(
+                //               child: CircularProgressIndicator(
+                //             color: kpurpleColor,
+                //           )),
+                //           const SizedBox(height: 60),
+                //         ],
+                //       );
+                //     } else if (snapshot.hasError) {
+                //       return const Center(
+                //           child: Text(
+                //               "An error occurred while fetching matrimony data"));
+                //     } else {
+                //       return Container(
+                //         padding: const EdgeInsets.symmetric(
+                //             horizontal: 10, vertical: 10),
+                //         margin: EdgeInsets.symmetric(
+                //           horizontal: 20,
+                //           vertical: 20,
+                //         ),
+                //         decoration: BoxDecoration(
+                //           color: kwhiteColor,
+                //           borderRadius: BorderRadius.circular(10.0),
+                //           border: Border.all(
+                //             color: kpurpleColor,
+                //           ),
+                //         ),
+                //         child: Column(
+                //           crossAxisAlignment: CrossAxisAlignment.start,
+                //           children: [
+                //             Row(
+                //               crossAxisAlignment: CrossAxisAlignment.start,
+                //               children: [
+                //                 Icon(
+                //                   Icons.person,
+                //                   color: kpurpleColor,
+                //                   size: 70,
+                //                 ),
+                //                 SizedBox(
+                //                   width: 10,
+                //                 ),
+                //                 Column(
+                //                   crossAxisAlignment: CrossAxisAlignment.start,
+                //                   children: [
+                //                     Text(
+                //                       matrimonyService
+                //                           .myMatrimonyDetails['name'],
+                //                       style: TextStyle(
+                //                         fontFamily: 'Roboto',
+                //                         fontSize: 15,
+                //                         color: kblackColor,
+                //                         fontWeight: FontWeight.w400,
+                //                       ),
+                //                     ),
+                //                     Text(
+                //                       matrimonyService
+                //                           .myMatrimonyDetails['phone']
+                //                           .toString(),
+                //                       style: TextStyle(
+                //                         fontFamily: 'Roboto',
+                //                         fontSize: 12,
+                //                         color: kblackColor,
+                //                         fontWeight: FontWeight.w400,
+                //                       ),
+                //                     ),
+                //                   ],
+                //                 )
+                //               ],
+                //             ),
+                //             Row(
+                //               children: [
+                //                 Column(
+                //                   crossAxisAlignment: CrossAxisAlignment.start,
+                //                   children: [
+                //                     Row(
+                //                       children: [
+                //                         Icon(
+                //                           Icons.calendar_today_outlined,
+                //                           color: kpurpleColor,
+                //                           size: 20,
+                //                         ),
+                //                         SizedBox(
+                //                           width: 10,
+                //                         ),
+                //                         Text(
+                //                           matrimonyService.myMatrimonyDetails[
+                //                               'fathers_name'],
+                //                           style: TextStyle(
+                //                             fontFamily: 'Roboto',
+                //                             fontSize: 12,
+                //                             color: kblackColor,
+                //                             fontWeight: FontWeight.w400,
+                //                           ),
+                //                         ),
+                //                       ],
+                //                     ),
+                //                     SizedBox(
+                //                       height: 10,
+                //                     ),
+                //                     Row(
+                //                       children: [
+                //                         Icon(
+                //                           Icons.calendar_today_outlined,
+                //                           color: kpurpleColor,
+                //                           size: 20,
+                //                         ),
+                //                         SizedBox(
+                //                           width: 10,
+                //                         ),
+                //                         Text(
+                //                           matrimonyService.myMatrimonyDetails[
+                //                                   'biodata'] ??
+                //                               'No data',
+                //                           style: TextStyle(
+                //                             fontFamily: 'Roboto',
+                //                             fontSize: 12,
+                //                             color: kblackColor,
+                //                             fontWeight: FontWeight.w400,
+                //                           ),
+                //                         ),
+                //                       ],
+                //                     )
+                //                   ],
+                //                 ),
+                //                 SizedBox(
+                //                   width: 30,
+                //                 ),
+                //                 Column(
+                //                   crossAxisAlignment: CrossAxisAlignment.start,
+                //                   children: [
+                //                     Row(
+                //                       children: [
+                //                         Icon(
+                //                           Icons.calendar_today_outlined,
+                //                           color: kpurpleColor,
+                //                           size: 20,
+                //                         ),
+                //                         SizedBox(
+                //                           width: 10,
+                //                         ),
+                //                         Text(
+                //                           'Father Name',
+                //                           style: TextStyle(
+                //                             fontFamily: 'Roboto',
+                //                             fontSize: 12,
+                //                             color: kblackColor,
+                //                             fontWeight: FontWeight.w400,
+                //                           ),
+                //                         ),
+                //                       ],
+                //                     ),
+                //                     SizedBox(
+                //                       height: 10,
+                //                     ),
+                //                     Row(
+                //                       children: [
+                //                         Icon(
+                //                           Icons.calendar_today_outlined,
+                //                           color: kpurpleColor,
+                //                           size: 20,
+                //                         ),
+                //                         SizedBox(
+                //                           width: 10,
+                //                         ),
+                //                         Text(
+                //                           'Bio Data',
+                //                           style: TextStyle(
+                //                             fontFamily: 'Roboto',
+                //                             fontSize: 12,
+                //                             color: kblackColor,
+                //                             fontWeight: FontWeight.w400,
+                //                           ),
+                //                         ),
+                //                       ],
+                //                     )
+                //                   ],
+                //                 )
+                //               ],
+                //             )
+                //           ],
+                //         ),
+                //       );
+                //     }
+                //   },
+                // ),
+
                 Theme(
                   data: Theme.of(context)
                       .copyWith(dividerColor: Colors.transparent),
@@ -234,9 +430,6 @@ class Matrimony extends StatelessWidget {
                   child: Container(
                     margin: EdgeInsets.only(top: 15),
                     padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-                    // width: 250,
-                    // height: 25,
-                    // margin: EdgeInsets.symmetric(horizontal: ),
                     decoration: BoxDecoration(
                       color: kpurpleColor,
                       borderRadius: BorderRadius.circular(5.0),
@@ -272,7 +465,7 @@ class Matrimony extends StatelessWidget {
                     } else if (snapshot.hasError) {
                       return const Center(
                           child: Text(
-                              "An error occurred while fetching events data."));
+                              "An error occurred while fetching matrimony data"));
                     } else {
                       // final eventsData = snapshot.data;
                       return ListView.builder(
