@@ -13,12 +13,12 @@ class Matrimony extends StatelessWidget {
     final matrimonyService = Provider.of<MatrimonyDetailProvider>(context);
 
     return Scaffold(
-      appBar: AppBar(backgroundColor: kwhiteColor, elevation: 0, actions: [
-        Padding(
-          padding: const EdgeInsets.only(right: 15.0, top: 15),
-          child: SvgPicture.asset("assets/images/forward.svg"),
-        ),
-      ]),
+      // appBar: AppBar(backgroundColor: kwhiteColor, elevation: 0, actions: [
+      //   Padding(
+      //     padding: const EdgeInsets.only(right: 15.0, top: 15),
+      //     child: SvgPicture.asset("assets/images/forward.svg"),
+      //   ),
+      // ]),
       body: Container(
         color: kwhiteColor,
         child: ListView(
@@ -41,8 +41,7 @@ class Matrimony extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) {
                       return EditMatrimonyDetailsForm();
                     }));
                   },
@@ -59,16 +58,12 @@ class Matrimony extends StatelessWidget {
                     child: Text(
                       "Register for Matrimonial",
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontFamily: 'Roboto',
-                          fontSize: 15,
-                          color: kwhiteColor),
+                      style: TextStyle(fontFamily: 'Roboto', fontSize: 15, color: kwhiteColor),
                     ),
                   ),
                 ),
                 Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   margin: EdgeInsets.symmetric(
                     horizontal: 20,
                     vertical: 20,
@@ -130,8 +125,7 @@ class Matrimony extends StatelessWidget {
                   ),
                 ),
                 Theme(
-                  data: Theme.of(context)
-                      .copyWith(dividerColor: Colors.transparent),
+                  data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
                   child: ExpansionTile(
                     title: Text(
                       "Filter",
@@ -144,8 +138,7 @@ class Matrimony extends StatelessWidget {
                     ),
                     children: [
                       Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                         width: MediaQuery.of(context).size.width * 0.8,
                         decoration: BoxDecoration(
                           color: kwhiteColor,
@@ -158,8 +151,7 @@ class Matrimony extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 11.0, top: 3, bottom: 3),
+                              padding: const EdgeInsets.only(left: 11.0, top: 3, bottom: 3),
                               child: Text('Gender',
                                   style: TextStyle(
                                     fontFamily: 'Inter',
@@ -171,10 +163,8 @@ class Matrimony extends StatelessWidget {
                             Row(
                               children: [
                                 Checkbox(
-                                  side:
-                                      BorderSide(color: kpurpleColor, width: 2),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5)),
+                                  side: BorderSide(color: kpurpleColor, width: 2),
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                                   visualDensity: VisualDensity.compact,
                                   checkColor: kwhiteColor,
                                   activeColor: kpurpleColor,
@@ -197,10 +187,8 @@ class Matrimony extends StatelessWidget {
                             Row(
                               children: [
                                 Checkbox(
-                                  side:
-                                      BorderSide(color: kpurpleColor, width: 2),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5)),
+                                  side: BorderSide(color: kpurpleColor, width: 2),
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                                   visualDensity: VisualDensity.compact,
                                   value: matrimonyService.malevalue,
                                   checkColor: kwhiteColor,
@@ -244,18 +232,13 @@ class Matrimony extends StatelessWidget {
                     child: Text(
                       "Search",
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontFamily: 'Roboto',
-                          fontSize: 15,
-                          color: kwhiteColor),
+                      style: TextStyle(fontFamily: 'Roboto', fontSize: 15, color: kwhiteColor),
                     ),
                   ),
                 ),
                 FutureBuilder(
                   future: matrimonyService.matrimonyData.isEmpty
-                      ? Provider.of<MatrimonyDetailProvider>(context,
-                              listen: false)
-                          .getMatrimonies()
+                      ? Provider.of<MatrimonyDetailProvider>(context, listen: false).getMatrimonies()
                       : null,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
@@ -270,9 +253,7 @@ class Matrimony extends StatelessWidget {
                         ],
                       );
                     } else if (snapshot.hasError) {
-                      return const Center(
-                          child: Text(
-                              "An error occurred while fetching events data."));
+                      return const Center(child: Text("An error occurred while fetching events data."));
                     } else {
                       // final eventsData = snapshot.data;
                       return ListView.builder(
@@ -281,8 +262,7 @@ class Matrimony extends StatelessWidget {
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
                             return Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 10),
+                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                               margin: EdgeInsets.symmetric(
                                 horizontal: 20,
                                 vertical: 20,
@@ -298,8 +278,7 @@ class Matrimony extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Icon(
                                         Icons.person,
@@ -310,12 +289,10 @@ class Matrimony extends StatelessWidget {
                                         width: 10,
                                       ),
                                       Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            matrimonyService
-                                                .matrimonyData[index]['name'],
+                                            matrimonyService.matrimonyData[index]['name'],
                                             style: TextStyle(
                                               fontFamily: 'Roboto',
                                               fontSize: 15,
@@ -324,9 +301,7 @@ class Matrimony extends StatelessWidget {
                                             ),
                                           ),
                                           Text(
-                                            matrimonyService
-                                                .matrimonyData[index]['phone']
-                                                .toString(),
+                                            matrimonyService.matrimonyData[index]['phone'].toString(),
                                             style: TextStyle(
                                               fontFamily: 'Roboto',
                                               fontSize: 12,
@@ -341,8 +316,7 @@ class Matrimony extends StatelessWidget {
                                   Row(
                                     children: [
                                       Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Row(
                                             children: [
@@ -355,9 +329,7 @@ class Matrimony extends StatelessWidget {
                                                 width: 10,
                                               ),
                                               Text(
-                                                matrimonyService
-                                                        .matrimonyData[index]
-                                                    ['fathers_name'],
+                                                matrimonyService.matrimonyData[index]['fathers_name'],
                                                 style: TextStyle(
                                                   fontFamily: 'Roboto',
                                                   fontSize: 12,
@@ -381,9 +353,7 @@ class Matrimony extends StatelessWidget {
                                                 width: 10,
                                               ),
                                               Text(
-                                                matrimonyService.matrimonyData[
-                                                        index]['biodata'] ??
-                                                    'No data',
+                                                matrimonyService.matrimonyData[index]['biodata'] ?? 'No data',
                                                 style: TextStyle(
                                                   fontFamily: 'Roboto',
                                                   fontSize: 12,
@@ -399,8 +369,7 @@ class Matrimony extends StatelessWidget {
                                         width: 30,
                                       ),
                                       Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Row(
                                             children: [

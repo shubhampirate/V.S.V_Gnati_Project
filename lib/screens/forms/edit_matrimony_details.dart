@@ -1,8 +1,11 @@
 import 'package:community/constants/colors.dart';
+import 'package:community/provider/family_detail_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class EditMatrimonyDetailsForm extends StatelessWidget {
-  const EditMatrimonyDetailsForm({super.key});
+  EditMatrimonyDetailsForm({super.key});
 
   final TextEditingController homeAddressController = TextEditingController();
   final TextEditingController gotrejController = TextEditingController();
@@ -65,8 +68,7 @@ class EditMatrimonyDetailsForm extends StatelessWidget {
           child: Text(
             "Edit Family Details",
             // textAlign: TextAlign.center,
-            style: TextStyle(
-                fontFamily: 'Roboto', fontSize: 18, color: kblackColor),
+            style: TextStyle(fontFamily: 'Roboto', fontSize: 18, color: kblackColor),
           ),
         ),
       ),
@@ -87,10 +89,7 @@ class EditMatrimonyDetailsForm extends StatelessWidget {
                     margin: const EdgeInsets.only(top: 25),
                     child: Text(
                       "Home Address: ",
-                      style: TextStyle(
-                          fontFamily: 'Roboto',
-                          fontSize: 16,
-                          color: kblackColor),
+                      style: TextStyle(fontFamily: 'Roboto', fontSize: 16, color: kblackColor),
                     ),
                   ),
                   Container(
@@ -115,10 +114,7 @@ class EditMatrimonyDetailsForm extends StatelessWidget {
                     margin: const EdgeInsets.only(top: 15),
                     child: Text(
                       "Gotrej: ",
-                      style: TextStyle(
-                          fontFamily: 'Roboto',
-                          fontSize: 16,
-                          color: kblackColor),
+                      style: TextStyle(fontFamily: 'Roboto', fontSize: 16, color: kblackColor),
                     ),
                   ),
                   Container(
@@ -160,9 +156,7 @@ class EditMatrimonyDetailsForm extends StatelessWidget {
                           // height: 40,
                           child: TextFormField(
                             // controller: gotrejController,
-                            initialValue:
-                                familyDetailService.occupationAddreess[index]
-                                    ["occupation_address"],
+                            initialValue: familyDetailService.occupationAddreess[index]["occupation_address"],
                             decoration: _commonInputDecoration(context),
                             maxLines: 2,
                             // validator: (value) {
