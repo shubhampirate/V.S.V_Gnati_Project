@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
 import { Box, Button, Grid } from '@mui/material'
-import mainevent from '../Images/eventsmain.jpg'
+import mainevent from '../images/eventsmain.jpg'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import EventIcon from '@mui/icons-material/Event';
 import LocationOnIcon from '@mui/icons-material/LocationOn';

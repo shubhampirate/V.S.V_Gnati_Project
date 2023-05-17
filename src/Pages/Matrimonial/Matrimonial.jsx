@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Box, Button, Grid } from '@mui/material'
-import mainevent from '../../Images/eventsmain.jpg'
+import mainevent from '../../images/eventsmain.jpg'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Modal } from "react-responsive-modal";
 import { Link } from 'react-router-dom';
-import girl from "../../Images/girl.webp"
-import boy from "../../Images/boy.webp"
+import girl from "../../images/girl.webp"
+import boy from "../../images/boy.webp"
 import EventIcon from '@mui/icons-material/Event';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';

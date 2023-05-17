@@ -1,10 +1,10 @@
 import React from 'react'
 import { Button, Grid } from '@mui/material';
 import { Box } from '@mui/system';
-import events from "../Images/mainpage.jpg";
-import jobsite from "../Images/jobsite.webp";
-import matrimonial from "../Images/couple.png";
-import family from "../Images/family.webp"
+import events from "../images/mainpage.jpg";
+import jobsite from "../images/jobsite.webp";
+import matrimonial from "../images/couple.png";
+import family from "../images/family.webp"
 const Home = () => {
   return (
     <Box sx={{ paddingLeft: "1.2rem" }}>
