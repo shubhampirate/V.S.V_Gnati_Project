@@ -54,7 +54,7 @@ const Navbar = () => {
             <input type="checkbox" id="drop-2" />
             <ul>
               <li>
-                <NavLink to="/family">Profile</NavLink>
+                <NavLink to="/family">Family</NavLink>
               </li>
             </ul>
           </li>
