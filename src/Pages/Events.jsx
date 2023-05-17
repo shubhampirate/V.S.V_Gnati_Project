@@ -94,7 +94,7 @@ const Events = () => {
                                 <Grid item xs={12}
                                   style={{
                                     padding: "1rem", marginLeft: "16px", marginTop: "-0.75rem",
-                                    borderRadius: "0vh 0vh 1.5vh 1.5vh", backgroundColor: "#FB9D06"
+                                    borderRadius: "0vh 0vh 1.5vh 1.5vh", backgroundColor: "#90CFD3"
                                   }}>
                                   <Grid container spacing={1} sx={{ textAlign: "left", marginTop: "0.5vh" }}>
                                     <Grid item xs={12}>

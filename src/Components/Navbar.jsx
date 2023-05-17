@@ -47,10 +47,19 @@ const Navbar = () => {
             </ul>
           </li>
           <li>
-            <NavLink to="/contact">Contact Us</NavLink>
+            <label for="drop-2" class="toggle">
+              Profile
+            </label>
+            <NavLink to="/profile">Members</NavLink>
+            <input type="checkbox" id="drop-2" />
+            <ul>
+              <li>
+                <NavLink to="/family">Profile</NavLink>
+              </li>
+            </ul>
           </li>
           <li>
-            <NavLink to="/profile">Profile</NavLink>
+            <NavLink to="/contact">Contact Us</NavLink>
           </li>
         </ul>
       </nav>

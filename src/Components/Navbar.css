@@ -291,7 +291,7 @@ p { text-align: center; }
 nav {
   margin: 0;
   padding: 0;
-  background-color: #254441;
+  background-color: #ecf6ff;
 }
 
 #logo {
@@ -320,21 +320,21 @@ nav ul li {
   margin: 0px;
   display: inline-block;
   float: left;
-  background-color: #254441;
+  background-color: #ecf6ff;
 }
 
 nav a {
   display: block;
   padding: 0 20px;
-  color: #FFF;
+  color: #000;
   font-size: 20px;
   line-height: 60px;
   text-decoration: none;
 }
 
-nav ul li ul li:hover { background: #000000; }
+nav ul li ul li:hover { background: #ffffffb8; }
 
-nav a:hover { background-color: #000000; }
+nav a:hover { background-color: #ffffffb8; }
 
 nav ul ul {
   display: none;
@@ -382,19 +382,18 @@ nav { margin: 0; }
 
 .toggle{
   display: block;
-  background-color: #254441;
+  background-color: #ecf6ff;
   padding: 0 20px;
-  color: #FFF;
+  color: #000;
   text-align: left;
   font-size: 22px;
-  /*font-weight:bold;*/
   line-height: 60px;
   text-decoration: none;
   border: none;
 }
 
 
-.toggle:hover { background-color: #000000; }
+.toggle:hover { background-color: #fff; }
 
 [id^=drop]:checked + ul { display: block; }
 
@@ -410,10 +409,10 @@ nav ul ul .toggle,
 nav ul ul ul a { padding: 0 80px; }
 
 nav a:hover,
- nav ul ul ul a { background-color: #000000; }
+ nav ul ul ul a { background-color: #fff; }
 
 nav ul li ul li .toggle,
- nav ul ul a { background-color: #212121; }
+ nav ul ul a { background-color: #ecf6ff; }
 
 nav ul ul {
   float: none;

@@ -1,9 +1,21 @@
 import { Grid, TextField, Button } from '@mui/material'
 import React, { useState, useEffect } from 'react'
-import { useFormik } from "formik";
+import { useFormik, ErrorMessage } from "formik";
 import * as yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
 import PostAddIcon from '@mui/icons-material/PostAdd';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
+import PersonIcon from '@mui/icons-material/Person';
+import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+import DescriptionIcon from '@mui/icons-material/Description';
+import WomanIcon from '@mui/icons-material/Woman';
+import HomeWorkIcon from '@mui/icons-material/HomeWork';
+import BloodtypeIcon from '@mui/icons-material/Bloodtype';
+import ManIcon from '@mui/icons-material/Man';
+import WorkIcon from '@mui/icons-material/Work';
+import EventIcon from '@mui/icons-material/Event';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import Select from 'react-select';
@@ -40,6 +52,15 @@ const Family = () => {
         date: yup
             .date('Enter your Date of Birth')
             .required('Date of birth is required'),
+        gender: yup
+            .string()
+            .required('Gender is required'),
+        blood_group: yup
+            .string()
+            .required('Blood Group is required'),
+        maritial_status: yup
+            .string()
+            .required('Maritial Status is required'),
     });
     const blood_group_options = [
         { value: 'A+', label: 'A+' },
@@ -64,9 +85,6 @@ const Family = () => {
     const showComponent = (e) => { setShow(!show) }
     const [showmember, setShowmember] = useState(false);
     const showComponentmember = (e) => { setShowmember(!showmember) }
-    const [gender, setGender] = useState(null);
-    const [blood, setBlood] = useState(null);
-    const [maritial, setMaritial] = useState(null);
     const formik = useFormik({
         initialValues: {
             occupation: '',
@@ -103,28 +121,31 @@ const Family = () => {
         initialValues: {
             name: '',
             relation: '',
-            date: new Date(),
+            date: '',
             phone: '',
-            profession_name:'',
-            profession_status:'',
-            education:'',
-            native_village:'',
+            profession_name: '',
+            profession_status: '',
+            education: '',
+            native_village: '',
+            gender: null,
+            blood_group: null,
+            maritial_status: null,
         },
         validationSchema: validationSchemamember,
         onSubmit: (values) => {
-            console.log(values,blood.value,gender.value,maritial.value);
+            console.log(values);
             const formData = new FormData();
             formData.append("name", values.name);
             formData.append("relation", values.relation);
             formData.append("dob", "2023-02-05");
             formData.append("phone", values.phone);
             formData.append("education", values.education);
-            formData.append("maritial_status", maritial.value);
-            formData.append("blood_group", blood.value);
+            formData.append("maritial_status", values.maritial_status);
+            formData.append("blood_group", values.blood_group);
             formData.append("native_village", values.native_village);
             formData.append("profession_name", values.profession_name);
             formData.append("profession_status", values.profession_status);
-            formData.append("gender", gender.value);
+            formData.append("gender", values.gender);
             fetch("http://jenilsavla.pythonanywhere.com/api/add-member/1", {
                 method: "POST",
                 headers: {
@@ -170,31 +191,35 @@ const Family = () => {
         control: base => ({
             ...base,
             height: 55,
-            minHeight: 55
+            minHeight: 55,
+            zindex: 15,
+            backgroundColor: "transparent"
         })
     };
 
     return (
         <div>
-            <Grid container spacing={2} sx={{ padding: "3rem" }}>
+            <Grid container spacing={2}>
                 {load ? <>
-                    <Grid item xs={12} sx={{ fontSize: "3rem", textAlign: "left" }}>
+                    <Grid item xs={12} sx={{ fontSize: "3rem", textAlign: "left" }}
+                        style={{ paddingLeft: "5%", paddingRight: "2.5%" }}>
                         Family {load.id} &nbsp;&nbsp;&nbsp;
                         <span style={{ fontSize: "2rem", textAlign: "left" }}>{load.gotrej}</span>
                     </Grid>
-                    <Grid item xs={12} md={6} sm={12}>
+                    <Grid item xs={12} md={6} sm={12}
+                        style={{ paddingLeft: "5%", paddingRight: "2.5%" }}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sx={{ fontSize: "1.75rem", textAlign: "left" }}>
                                 Home Address
                             </Grid>
-                            <Grid item xs={12} sx={{ fontSize: "1.25rem", textAlign: "left" }}>
+                            <Grid item xs={12} sx={{ fontSize: "1.15rem", textAlign: "left" }}>
                                 {load.home_address}
                             </Grid>
                         </Grid>
                     </Grid>
                 </>
                     : <></>}
-                <Grid item xs={12} md={6} sm={12}>
+                <Grid item xs={12} md={6} sm={12} style={{ paddingLeft: "5%", paddingRight: "2.5%" }}>
                     <Grid container spacing={2}>
                         <Grid item xs={10} sx={{ fontSize: "1.75rem", textAlign: "left" }}>
                             Occupation Address
@@ -234,7 +259,7 @@ const Family = () => {
                         </Grid>
                         {loadoccupation.map((item) => {
                             return (
-                                <Grid item xs={12} sx={{ fontSize: "1.25rem", textAlign: "left", marginLeft: "0.25rem" }}>
+                                <Grid item xs={12} sx={{ fontSize: "1.15rem", textAlign: "left", marginLeft: "0.25rem" }}>
                                     {item.id}. &nbsp;{item.occupation_address}
                                 </Grid>
                             )
@@ -242,14 +267,16 @@ const Family = () => {
                         }
                     </Grid>
                 </Grid>
-                <Grid item xs={10} sx={{ fontSize: "2rem", textAlign: "left" }}>
+                <Grid item xs={10} sx={{ fontSize: "2rem", textAlign: "left" }}
+                    style={{ paddingLeft: "5%", paddingRight: "2.5%" }}>
                     Members
                 </Grid>
-                <Grid item xs={2} sx={{ textAlign: "right", marginTop: "-0.5rem" }}>
+                <Grid item xs={2} sx={{ textAlign: "right", marginTop: "-0.5rem" }}
+                    style={{ paddingLeft: "5%", paddingRight: "2.5%" }}>
                     <PostAddIcon sx={{ fontSize: "2.5rem", cursor: "pointer" }} onClick={showComponentmember} />
                 </Grid>
                 <Grid item xs={12}><hr /></Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} style={{ paddingLeft: "5%", paddingRight: "2.5%" }}>
                     {showmember ?
                         <>
                             <div>
@@ -283,11 +310,19 @@ const Family = () => {
                                         </Grid>
                                         <Grid item xs={12} md={4} sm={6}>
                                             <Select
-                                                defaultValue={setGender}
-                                                onChange={setGender}
+                                                id="gender"
+                                                name="gender"
+                                                value={gender_options.find((option) => option.value === formikmember.values.gender)}
+                                                defaultValue={formikmember.values.gender}
+                                                onChange={(selectedOption) => formikmember.setFieldValue('gender', selectedOption.value)}
                                                 options={gender_options}
                                                 styles={customStyles}
                                             />
+                                            {formikmember.touched.gender && formikmember.errors.gender ? (
+                                                <div style={{ color: "#d65a5a", fontSize: "13px", textAlign: "left", marginLeft: "15px", marginTop: "2px" }}>
+                                                    {formikmember.errors.gender}
+                                                </div>
+                                            ) : null}
                                         </Grid>
                                         <Grid item xs={12} md={4} sm={12}>
                                             <TextField
@@ -317,11 +352,19 @@ const Family = () => {
                                         </Grid>
                                         <Grid item xs={12} md={4} sm={6}>
                                             <Select
-                                                defaultValue={setBlood}
-                                                onChange={setBlood}
+                                                id="blood_group"
+                                                name="blood_group"
+                                                value={blood_group_options.find((option) => option.value === formikmember.values.blood_group)}
+                                                defaultValue={formikmember.values.blood_group}
+                                                onChange={(selectedOption) => formikmember.setFieldValue('blood_group', selectedOption.value)}
                                                 options={blood_group_options}
                                                 styles={customStyles}
                                             />
+                                            {formikmember.touched.blood_group && formikmember.errors.blood_group ? (
+                                                <div style={{ color: "#d65a5a", fontSize: "13px", textAlign: "left", marginLeft: "15px", marginTop: "2px" }}>
+                                                    {formikmember.errors.blood_group}
+                                                </div>
+                                            ) : null}
                                         </Grid>
                                         <Grid item xs={12} md={4} sm={12}>
                                             <TextField
@@ -338,11 +381,19 @@ const Family = () => {
                                         </Grid>
                                         <Grid item xs={12} md={4} sm={12}>
                                             <Select
-                                                defaultValue={setMaritial}
-                                                onChange={setMaritial}
+                                                id="maritial_status"
+                                                name="maritial_status"
+                                                value={maritial_status_options.find((option) => option.value === formikmember.values.maritial_status)}
+                                                defaultValue={formikmember.values.maritial_status}
+                                                onChange={(selectedOption) => formikmember.setFieldValue('maritial_status', selectedOption.value)}
                                                 options={maritial_status_options}
                                                 styles={customStyles}
                                             />
+                                            {formikmember.touched.maritial_status && formikmember.errors.maritial_status ? (
+                                                <div style={{ color: "#d65a5a", fontSize: "13px", textAlign: "left", marginLeft: "15px", marginTop: "2px" }}>
+                                                    {formikmember.errors.maritial_status}
+                                                </div>
+                                            ) : null}
                                         </Grid>
                                         <Grid item xs={12} md={4} sm={12}>
                                             <TextField
@@ -351,14 +402,19 @@ const Family = () => {
                                                 type="date"
                                                 sx={{ width: "100%", fontSize: "1.5rem", color: "red" }}
                                                 color='success'
-                                                value={formik.values.date}
-                                                onChange={formik.handleChange}
-                                                error={formik.touched.date && Boolean(formik.errors.date)}
-                                                helperText={formik.touched.date && formik.errors.date}
-                                                InputLabelProps={{
-                                                    shrink: true,
-                                                }}
+                                                value={formikmember.values.date}
+                                                onChange={formikmember.handleChange}
+                                            //error={formikmember.touched.date && Boolean(formikmember.errors.date)}
+                                            //helperText={formikmember.touched.date && formikmember.errors.date}
+                                            //InputLabelProps={{
+                                            //  shrink: true,
+                                            //}}
                                             />
+                                            {formikmember.touched.date && formikmember.errors.date ? (
+                                                <div style={{ color: "#d65a5a", fontSize: "13px", textAlign: "left", marginLeft: "15px", marginTop: "2px" }}>
+                                                    {formikmember.errors.date}
+                                                </div>
+                                            ) : null}
                                         </Grid>
                                         <Grid item xs={12} md={6} sm={12}>
                                             <TextField
@@ -398,31 +454,108 @@ const Family = () => {
                         </> : <>&nbsp;</>}
                 </Grid>
                 <Grid item xs={12}>
-                    <Grid container spacing={12}>
+                    <Grid container spacing={12}
+                        style={{ paddingLeft: "2%", paddingRight: "2.5%", marginTop: "1vh" }}>
                         {loadmember.map((item1) => {
                             return (
-                                <Grid item xs={12} md={4} sm={12}>
-                                    <Grid container spacing={2}>
-                                        <Grid item xs={12} sx={{ fontSize: "1.75rem", textAlign: "left" }}>
-                                            {item1.name} &nbsp;
-                                            <span style={{ fontSize: "1.25rem", textAlign: "left" }}>
-                                                {item1.relation} &nbsp; {item1.blood_group}
-                                            </span>
-                                        </Grid>
-                                        <Grid item xs={12} sx={{ fontSize: "1.25rem", textAlign: "left", marginTop: "-0.75rem" }}>
-                                            {item1.native_village}
-                                        </Grid>
-                                        <Grid item xs={12} sx={{ fontSize: "1.25rem", textAlign: "left", marginTop: "-0.75rem" }}>
-                                            +91 {item1.phone}
-                                        </Grid>
-                                        <Grid item xs={12} sx={{ fontSize: "1.25rem", textAlign: "left", marginTop: "-0.75rem" }}>
-                                            {item1.dob} &nbsp; {item1.maritial_status}
-                                        </Grid>
-                                        <Grid item xs={12} sx={{ fontSize: "1.25rem", textAlign: "left", marginTop: "-0.75rem" }}>
-                                            {item1.profession_status}
-                                        </Grid>
-                                        <Grid item xs={12} sx={{ fontSize: "1.25rem", textAlign: "left", marginTop: "-0.75rem" }}>
-                                            {item1.profession_name}
+                                <Grid item xs={12} md={4} sm={6}>
+                                    <Grid container spacing={2} sx={{ borderRadius: "2vh", padding: "1rem" }}>
+                                        <Grid item xs={12}
+                                            style={{
+                                                padding: "1rem", marginLeft: "16px", marginTop: "-0.75rem",
+                                                borderRadius: "1.4.75vh", backgroundColor: "#90CFD3"
+                                            }}>
+                                            <Grid container spacing={1} sx={{ textAlign: "left", marginTop: "0.4.75vh" }}>
+                                                <Grid item xs={12}>
+                                                    <div style={{ fontSize: "2rem", fontWeight: "700" }}>{item1.name}</div>
+                                                </Grid>
+                                                <Grid item xs={6}>
+                                                    <div style={{ fontSize: "1.1rem" }}>{item1.relation}</div>
+                                                </Grid>
+                                                <Grid item xs={6}>
+                                                    <div style={{ fontSize: "1.1rem", textAlign:"right" }}>{item1.dob}</div>
+                                                </Grid>
+                                                <hr style={{ border: "1px solid #E0E1DC", width: "100%", borderRadius: "5px" }} />
+                                                <Grid item xs={12}>
+                                                    <Grid container spacing={2}>
+                                                        <Grid item xs={2}>
+                                                            <WorkIcon style={{ fontSize: "4.75vh", color: "#E0E1DC" }} />
+                                                        </Grid>
+                                                        <Grid item xs={10} >
+                                                            <div style={{ fontSize: "1.15rem", marginTop: "0.7rem" }}>{item1.education}</div>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    <Grid container spacing={2}>
+                                                        <Grid item xs={2}>
+                                                            <HomeWorkIcon style={{ fontSize: "4.75vh", color: "#E0E1DC" }} />
+                                                        </Grid>
+                                                        <Grid item xs={4} >
+                                                            <div style={{ fontSize: "1.15rem", marginTop: "0.7rem" }}>{item1.profession_name}</div>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    <Grid container spacing={2}>
+                                                        <Grid item xs={2}>
+                                                            <LocationOnIcon style={{ fontSize: "4.75vh", color: "#E0E1DC" }} />
+                                                        </Grid>
+                                                        <Grid item xs={10} md={4} sm={4}>
+                                                            <div style={{ fontSize: "1.15rem", marginTop: "0.7rem" }}>{item1.native_village}</div>
+                                                        </Grid>
+                                                        <Grid item xs={2}>
+                                                            <LocalPhoneIcon style={{ fontSize: "4.75vh", color: "#E0E1DC" }} />
+                                                        </Grid>
+                                                        <Grid item xs={4} >
+                                                            <div style={{ fontSize: "1.15rem", marginTop: "0.7rem" }}>{item1.phone}</div>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    <Grid container spacing={2}>
+                                                        <Grid item xs={2}>
+                                                            <BloodtypeIcon style={{ fontSize: "4.75vh", color: "#E0E1DC" }} />
+                                                        </Grid>
+                                                        <Grid item xs={4} >
+                                                            <div style={{ fontSize: "1.15rem", marginTop: "0.7rem" }}>{item1.blood_group}</div>
+                                                        </Grid>
+                                                        {item1.gender == "Male" ? <>
+                                                            <Grid item xs={2}>
+                                                                <ManIcon style={{ fontSize: "4.75vh", color: "#E0E1DC" }} />
+                                                            </Grid>
+
+                                                            <Grid item xs={4}>
+                                                                <div style={{ fontSize: "1.15rem", marginTop: "0.7rem" }}>{item1.gender}</div>
+                                                            </Grid>
+                                                        </> : <>
+                                                            <Grid item xs={2}>
+                                                                <WomanIcon style={{ fontSize: "4.75vh", color: "#E0E1DC" }} />
+                                                            </Grid>
+
+                                                            <Grid item xs={4}>
+                                                                <div style={{ fontSize: "1.15rem", marginTop: "0.7rem" }}>{item1.gender}</div>
+                                                            </Grid></>}
+                                                    </Grid>
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    <Grid container spacing={2}>
+                                                        <Grid item xs={2}>
+                                                            <PersonIcon style={{ fontSize: "4.75vh", color: "#E0E1DC" }} />
+                                                        </Grid>
+                                                        <Grid item xs={4} >
+                                                            <div style={{ fontSize: "1.15rem", marginTop: "0.7rem" }}>{item1.maritial_status}</div>
+                                                        </Grid>
+                                                        <Grid item xs={2}>
+                                                            <WorkIcon style={{ fontSize: "4.75vh", color: "#E0E1DC" }} />
+                                                        </Grid>
+                                                        <Grid item xs={4} >
+                                                            <div style={{ fontSize: "1.15rem", marginTop: "0.7rem" }}>{item1.profession_status}</div>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Grid>
+                                                
+                                            </Grid>
                                         </Grid>
                                     </Grid>
                                 </Grid>

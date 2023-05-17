@@ -42,6 +42,14 @@ const options = [
     { value: 'Female', label: 'Female' },
 ];
 
+const customStyles = {
+    control: base => ({
+        ...base,
+        height: 55,
+        minHeight: 55
+    })
+};
+
 const Login = () => {
     const [biodata, setBiodata] = useState(null);
     const [gender, setGender] = useState(null);
@@ -211,7 +219,7 @@ const Login = () => {
                                         defaultValue={setGender}
                                         onChange={setGender}
                                         options={options}
-                                        styles={{ borderColor: "green", height: "3.5rem" }}
+                                        styles={customStyles}
                                     />
                                 </Grid>
                                 <Grid item xs={12} md={6} sm={12}>

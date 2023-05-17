@@ -6,6 +6,10 @@ import { Modal } from "react-responsive-modal";
 import { Link } from 'react-router-dom';
 import girl from "../../Images/girl.webp"
 import boy from "../../Images/boy.webp"
+import EventIcon from '@mui/icons-material/Event';
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
+import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+import DescriptionIcon from '@mui/icons-material/Description';
 import axios from 'axios';
 const Matrimonial = () => {
 
@@ -51,15 +55,19 @@ const Matrimonial = () => {
     <Box>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
+          <Grid container spacing={2} style={{ paddingLeft: "5%", paddingRight: "2.5%" }}>
+            <Grid item xs={12} sx={{ marginTop: "2.5rem" }}>
               <div style={{ fontSize: "3rem", fontWeight: "700" }}>Matrimonial</div>
             </Grid>
-            <Grid item xs={12} sx={{ marginTop: "-1rem" }}>
-              <div style={{ fontSize: "2rem", fontWeight: "600" }}>Your life partner search ends here</div>
-            </Grid>
             <Grid item xs={12}>
-              <Tabs>
+              <div style={{ fontSize: "2rem", marginBottom: "1.5rem" }}>Your life partner search ends here</div>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+            <Tabs>
                 <TabList style={{ border: "none", fontSize: "1.3rem", marginBottom: "2rem" }}>
                   <Tab style={{ backgroundColor: "transparent", border: "none" }}>Male</Tab>
                   <Tab style={{ backgroundColor: "transparent", border: "none" }}>Female</Tab>
@@ -73,30 +81,56 @@ const Matrimonial = () => {
                             <Grid container spacing={2}>
                               {loadFemale.slice(0, visible).map((item) => {
                                 return (
-                                  <Grid item xs={12} md={3} sm={6}>
+                                  <Grid item xs={12} md={4} sm={6} style={{
+                                    paddingLeft: "5%", paddingRight: "2.5%",
+                                  }}>
                                     <Grid container spacing={2} sx={{ borderRadius: "2vh", padding: "1rem" }}>
-                                      <Grid item xs={12} style={{ height: "35vh" }}>
-                                        <img src={girl} style={{ width: "100%", borderRadius: "1.5vh" }} />
-                                      </Grid>
                                       <Grid item xs={12}>
-                                        <Grid container spacing={1} sx={{ textAlign: "left" }}>
+                                        <img src={girl}
+                                          style={{ width: "100%", height: "35vh", borderRadius: "1.5vh 1.5vh 0vh 0vh" }} />
+                                      </Grid>
+                                      <Grid item xs={12}
+                                        style={{
+                                          padding: "1rem", marginLeft: "16px", marginTop: "-0.75rem",
+                                          borderRadius: "0vh 0vh 1.5vh 1.5vh", backgroundColor: "#BDB4E9"
+                                        }}>
+                                        <Grid container spacing={1} sx={{ textAlign: "left", marginTop: "0.5vh" }}>
                                           <Grid item xs={12}>
-                                            <div style={{ fontSize: "2rem", fontWeight: "700", marginTop: "0.5rem" }}>{item.name}</div>
-                                          </Grid>
-                                          <Grid item xs={12} md={6} sm={12}>
-                                            <div style={{ fontSize: "1.1rem" }}>{item.fathers_name}</div>
-                                          </Grid>
-                                          <Grid item xs={12} md={6} sm={12}>
-                                            <div style={{ fontSize: "1.1rem" }}>+91 {item.phone}</div>
-                                          </Grid>
-                                          <Grid item xs={12}>
-                                            <div style={{ fontSize: "1.1rem" }}>{item.dob}</div>
+                                            <div style={{ fontSize: "2rem", fontWeight: "700" }}>{item.name}</div>
                                           </Grid>
                                           <Grid item xs={12}>
                                             <div style={{ fontSize: "1.1rem" }}>{item.about}</div>
                                           </Grid>
+                                          <hr style={{ border: "1px solid #E0E1DC", width: "100%", borderRadius: "5px" }} />
                                           <Grid item xs={12}>
-                                            <div style={{ fontSize: "1.1rem" }}>{item.biodata}</div>
+                                            <Grid container spacing={2}>
+                                              <Grid item xs={2}>
+                                                <LocalPhoneIcon style={{ fontSize: "5vh", color: "#E0E1DC" }} />
+                                              </Grid>
+                                              <Grid item xs={10} >
+                                                <div style={{ fontSize: "1.25rem", marginTop: "0.7rem" }}>{item.phone}</div>
+                                              </Grid>
+                                            </Grid>
+                                          </Grid>
+                                          <Grid item xs={12}>
+                                            <Grid container spacing={2}>
+                                              <Grid item xs={2}>
+                                                <EventIcon style={{ fontSize: "5vh", color: "#E0E1DC" }} />
+                                              </Grid>
+                                              <Grid item xs={5} >
+                                                <div style={{ fontSize: "1.25rem", marginTop: "0.7rem" }}>{item.dob}</div>
+                                              </Grid>
+                                              <Grid item xs={5} style={{ marginTop: "0.3rem", textAlign: "right" }}>
+                                                <DescriptionIcon style={{
+                                                  fontSize: "3.5vh", color: "#E0E1DC",
+                                                  backgroundColor: "grey", padding: "0.25rem", borderRadius: "0.5rem 0rem 0rem 0.5rem"
+                                                }} />
+                                                <KeyboardDoubleArrowRightIcon style={{
+                                                  fontSize: "3.5vh", color: "#E0E1DC",
+                                                  backgroundColor: "grey", padding: "0.25rem", borderRadius: "0rem 0.5rem 0.5rem 0rem"
+                                                }} />
+                                              </Grid>
+                                            </Grid>
                                           </Grid>
                                         </Grid>
                                       </Grid>
@@ -104,9 +138,6 @@ const Matrimonial = () => {
                                   </Grid>
                                 )
                               })}
-                              <Grid item xs={12} style={{ marginBottom: "2rem", marginTop: "1rem" }}>
-                                <button onClick={showMore} variant="outlined" style={{ fontSize: "1.25rem", borderRadius: "1vh" }}>Load More</button>
-                              </Grid>
                             </Grid>
                           </TabPanel>
                         </> :
@@ -115,30 +146,56 @@ const Matrimonial = () => {
                             <Grid container spacing={2}>
                               {loadMale.slice(0, visible).map((item) => {
                                 return (
-                                  <Grid item xs={12} md={3} sm={6}>
+                                  <Grid item xs={12} md={4} sm={6} style={{
+                                    paddingLeft: "5%", paddingRight: "2.5%",
+                                  }}>
                                     <Grid container spacing={2} sx={{ borderRadius: "2vh", padding: "1rem" }}>
-                                      <Grid item xs={12} style={{ height: "35vh" }}>
-                                        <img src={boy} style={{ width: "100%", borderRadius: "1.5vh" }} />
-                                      </Grid>
                                       <Grid item xs={12}>
-                                        <Grid container spacing={1} sx={{ textAlign: "left" }}>
+                                        <img src={boy}
+                                          style={{ width: "100%", height: "35vh", borderRadius: "1.5vh 1.5vh 0vh 0vh" }} />
+                                      </Grid>
+                                      <Grid item xs={12}
+                                        style={{
+                                          padding: "1rem", marginLeft: "16px", marginTop: "-0.75rem",
+                                          borderRadius: "0vh 0vh 1.5vh 1.5vh", backgroundColor: "#BDB4E9"
+                                        }}>
+                                        <Grid container spacing={1} sx={{ textAlign: "left", marginTop: "0.5vh" }}>
                                           <Grid item xs={12}>
-                                            <div style={{ fontSize: "2rem", fontWeight: "700", marginTop: "0.5rem" }}>{item.name}</div>
-                                          </Grid>
-                                          <Grid item xs={12} md={6} sm={12}>
-                                            <div style={{ fontSize: "1.1rem" }}>{item.fathers_name}</div>
-                                          </Grid>
-                                          <Grid item xs={12} md={6} sm={12}>
-                                            <div style={{ fontSize: "1.1rem" }}>+91 {item.phone}</div>
-                                          </Grid>
-                                          <Grid item xs={12}>
-                                            <div style={{ fontSize: "1.1rem" }}>{item.dob}</div>
+                                            <div style={{ fontSize: "2rem", fontWeight: "700" }}>{item.name}</div>
                                           </Grid>
                                           <Grid item xs={12}>
                                             <div style={{ fontSize: "1.1rem" }}>{item.about}</div>
                                           </Grid>
+                                          <hr style={{ border: "1px solid #E0E1DC", width: "100%", borderRadius: "5px" }} />
                                           <Grid item xs={12}>
-                                            <u style={{ fontSize: "1.3rem" }}>{item.biodata}</u>
+                                            <Grid container spacing={2}>
+                                              <Grid item xs={2}>
+                                                <LocalPhoneIcon style={{ fontSize: "5vh", color: "#E0E1DC" }} />
+                                              </Grid>
+                                              <Grid item xs={10} >
+                                                <div style={{ fontSize: "1.25rem", marginTop: "0.7rem" }}>{item.phone}</div>
+                                              </Grid>
+                                            </Grid>
+                                          </Grid>
+                                          <Grid item xs={12}>
+                                            <Grid container spacing={2}>
+                                              <Grid item xs={2}>
+                                                <EventIcon style={{ fontSize: "5vh", color: "#E0E1DC" }} />
+                                              </Grid>
+                                              <Grid item xs={5} >
+                                                <div style={{ fontSize: "1.25rem", marginTop: "0.7rem" }}>{item.dob}</div>
+                                              </Grid>
+                                              <Grid item xs={5} style={{ marginTop: "0.3rem", textAlign: "right" }}>
+                                                <DescriptionIcon style={{
+                                                  fontSize: "3.5vh", color: "#E0E1DC",
+                                                  backgroundColor: "grey", padding: "0.25rem", borderRadius: "0.5rem 0rem 0rem 0.5rem"
+                                                }} />
+                                                <KeyboardDoubleArrowRightIcon style={{
+                                                  fontSize: "3.5vh", color: "#E0E1DC",
+                                                  backgroundColor: "grey", padding: "0.25rem", borderRadius: "0rem 0.5rem 0.5rem 0rem"
+                                                }} />
+                                              </Grid>
+                                            </Grid>
                                           </Grid>
                                         </Grid>
                                       </Grid>
@@ -146,9 +203,6 @@ const Matrimonial = () => {
                                   </Grid>
                                 )
                               })}
-                              <Grid item xs={12} style={{ marginBottom: "2rem", marginTop: "1rem" }}>
-                                <button onClick={showMore} variant="outlined" style={{ fontSize: "1.25rem", borderRadius: "1vh" }}>Load More</button>
-                              </Grid>
                             </Grid>
                           </TabPanel>
                         </>
@@ -156,12 +210,11 @@ const Matrimonial = () => {
                   )
                 })}
               </Tabs>
-            </Grid>
+              </Grid>
+              </Grid>
           </Grid>
         </Grid>
-      </Grid>
-
-    </Box >
+    </Box>
   )
 }
 
