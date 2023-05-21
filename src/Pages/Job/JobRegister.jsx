@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import {
     Grid, InputAdornment,
-    TextField, Button, InputLabel, Select, MenuItem
+    TextField, Button,
 } from '@mui/material'
 import React, { useState, useEffect } from 'react'
 import { useFormik } from "formik";
@@ -12,7 +12,8 @@ import axios from 'axios';
 import '../../Components/Table.css'
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
-
+import DomainAddIcon from '@mui/icons-material/DomainAdd';
+import Select from 'react-select';
 
 const validationSchemaJob = yup.object({
     details: yup
@@ -24,18 +25,31 @@ const validationSchemaJob = yup.object({
     job_title: yup
         .string('Enter Job Title you')
         .required('Job Title is required'),
-
     job_type: yup
-        .string('Enter Job Type')
+        .string()
         .required('Job Type is required'),
 });
+
+const customStyles = {
+    control: base => ({
+        ...base,
+        height: 55,
+        minHeight: 55,
+        zindex: 15,
+        backgroundColor: "transparent"
+    }),
+    placeholder: (provided, state) => ({
+        ...provided,
+        textAlign: 'left', // Align the placeholder text to the left
+    }),
+};
 
 const Jobadmin = () => {
     const formikJob = useFormik({
         initialValues: {
             details: '',
             job_type: '',
-            job_title: '',
+            job_title: null,
             phone: '',
         },
         validationSchema: validationSchemaJob,
@@ -69,11 +83,10 @@ const Jobadmin = () => {
         }
     });
 
-    const [visible, setVisible] = useState(4);
-
-    const showMore = () => {
-        setVisible((preVisible) => preVisible + 4);
-    }
+    const job_type_options = [
+        { value: 'Business', label: 'Business' },
+        { value: 'Jib', label: 'Job' },
+    ];
 
     const [loadjob, setLoadjob] = useState([]);
     useEffect(() => {
@@ -97,21 +110,31 @@ const Jobadmin = () => {
             <Grid container spacing={2} style={{ marginLeft: "-0.5rem", padding: "2%" }}>
                 <Grid item xs={12} style={{ marginBottom: "1rem" }}>
                     <Grid container spacing={2}>
-                        <Grid item xs={10}>
-                            <div style={{ fontSize: "2.7rem", textAlign: "left"}} className="top-marg">
-                                Add New Job Details
-                            </div>
-                        </Grid>
-                        <Grid item xs={2} sx={{ textAlign: "right" }}>
-                            <PostAddIcon sx={{ fontSize: "3rem", cursor: "pointer" }} onClick={showComponentJob} />
+                        <Grid container sapcing={2}>
+                            <Grid item xs={1}>
+                                <DomainAddIcon style={{
+                                    fontSize: "5vh", color: "#018d8d", marginLeft: "30%",
+                                    paddingLeft: "20%", paddingRight: "2.5%", marginTop: "-5%",
+                                    textAlign: "right", cursor: "pointer"
+                                }} onClick={showComponentJob} />
+                            </Grid>
+                            <Grid item xs={11}>
+                                <div
+                                    style={{
+                                        fontSize: "1.8rem", fontWeight: "500", textAlign: "left", paddingLeft: "5vh",
+                                    }}>Job Details</div>
+                            </Grid>
                         </Grid>
                     </Grid>
                     {showJob ?
                         <>
                             <div>
                                 <form onSubmit={formikJob.handleSubmit} >
-                                    <Grid container spacing={2} marginTop={2}>
-                                        <Grid item xs={12} md={6} sm={12}>
+                                    <Grid container spacing={2} marginTop={2}
+                                        sx={{
+                                            paddingLeft: "4%", paddingRight: "3.5%"
+                                        }}>
+                                        <Grid item xs={12} md={4} sm={12}>
                                             <TextField
                                                 id="job_title"
                                                 name="job_title"
@@ -124,20 +147,37 @@ const Jobadmin = () => {
                                                 sx={{ width: "100%" }}
                                             />
                                         </Grid>
-                                        <Grid item xs={12} md={6} sm={12}>
-                                            <TextField
+                                        <Grid item xs={12} md={4} sm={12}>
+                                            <Select
                                                 id="job_type"
                                                 name="job_type"
-                                                label="Job Type"
+                                                placeholder="Job Type"
+                                                value={job_type_options.find((option) => option.value === formikJob.values.job_type)}
+                                                defaultValue={formikJob.values.job_type}
+                                                onChange={(selectedOption) => formikJob.setFieldValue('job_type', selectedOption.value)}
+                                                options={job_type_options}
+                                                styles={customStyles}
+                                            />
+                                            {formikJob.touched.job_type && formikJob.errors.job_type ? (
+                                                <div style={{ color: "#d65a5a", fontSize: "13px", textAlign: "left", marginLeft: "15px", marginTop: "2px" }}>
+                                                    {formikJob.errors.job_type}
+                                                </div>
+                                            ) : null}
+                                        </Grid>
+                                        <Grid item xs={12} md={4} sm={12}>
+                                            <TextField
+                                                id="phone"
+                                                name="phone"
+                                                label="Mobile Number"
                                                 color='success'
-                                                value={formikJob.values.job_type}
+                                                value={formikJob.values.phone}
                                                 onChange={formikJob.handleChange}
-                                                error={formikJob.touched.job_type && Boolean(formikJob.errors.job_type)}
-                                                helperText={formikJob.touched.job_type && formikJob.errors.job_type}
+                                                error={formikJob.touched.phone && Boolean(formikJob.errors.phone)}
+                                                helperText={formikJob.touched.phone && formikJob.errors.phone}
                                                 sx={{ width: "100%" }}
                                             />
                                         </Grid>
-                                        <Grid item xs={12}>
+                                        <Grid item xs={12} md={6} sm={12}>
                                             <TextField
                                                 id="details"
                                                 name="details"
@@ -153,21 +193,15 @@ const Jobadmin = () => {
                                             />
                                         </Grid>
                                         <Grid item xs={12} md={6} sm={12}>
-                                            <TextField
-                                                id="phone"
-                                                name="phone"
-                                                label="Mobile Number"
-                                                color='success'
-                                                value={formikJob.values.phone}
-                                                onChange={formikJob.handleChange}
-                                                error={formikJob.touched.phone && Boolean(formikJob.errors.phone)}
-                                                helperText={formikJob.touched.phone && formikJob.errors.phone}
-                                                sx={{ width: "100%" }}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={12} md={6} sm={12}>
-                                            <Button color="success" variant="contained" type="submit"
-                                                sx={{ width: "100%", height: "3.5rem", fontSize: "1.1rem" }}>
+                                            <Button variant="contained" type="submit"
+                                                sx={{
+                                                    width: "100%", height: "3.5rem", fontSize: "1.1rem",
+                                                    backgroundColor: "#018d8d", boxShadow: "none", color: "white"
+                                                    , "&:hover": {
+                                                        backgroundColor: "#018d8d", boxShadow: "none", color: "white",
+                                                        fontSize: "1.3rem",
+                                                    }
+                                                }}>
                                                 Submit
                                             </Button>
                                         </Grid>
@@ -179,37 +213,40 @@ const Jobadmin = () => {
                 </Grid>
                 <Grid item xs={12}>
                     <Grid container spacing={2} >
-                        <Grid item xs={12} style={{ fontSize: "1.5rem", textAlign: "left" }}>
+                        <Grid item xs={12} style={{
+                            fontSize: "2.3vh", textAlign: "left",
+                            paddingLeft: "5%", paddingRight: "3.5%"
+                        }}>
                             <Table>
                                 <Thead>
                                     <Tr>
                                         <Th style={{
-                                            fontWeight: "bold",
-                                            backgroundColor: "#000",
+                                            fontWeight: "600",
+                                            backgroundColor: "#018d8d",
                                             color: "#fff",
                                             border: "1px solid #000",
                                             padding: "0.75rem",
                                             textAlign: "left"
                                         }}>Job Name</Th>
                                         <Th style={{
-                                            fontWeight: "bold",
-                                            backgroundColor: "#000",
+                                            fontWeight: "600",
+                                            backgroundColor: "#018d8d",
                                             color: "#fff",
                                             border: "1px solid #000",
                                             padding: "0.75rem",
                                             textAlign: "left"
                                         }}>Job Type</Th>
                                         <Th style={{
-                                            fontWeight: "bold",
-                                            backgroundColor: "#000",
+                                            fontWeight: "600",
+                                            backgroundColor: "#018d8d",
                                             color: "#fff",
                                             border: "1px solid #000",
                                             padding: "0.75rem",
                                             textAlign: "left"
                                         }}>Job Number</Th>
                                         <Th style={{
-                                            fontWeight: "bold",
-                                            backgroundColor: "#000",
+                                            fontWeight: "600",
+                                            backgroundColor: "#018d8d",
                                             color: "#fff",
                                             border: "1px solid #000",
                                             padding: "0.75rem",

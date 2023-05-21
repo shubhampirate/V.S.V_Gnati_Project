@@ -4,6 +4,7 @@ import { Box, Grid } from "@mui/material";
 import EmailIcon from '@mui/icons-material/Email';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
+import HomeWorkIcon from '@mui/icons-material/HomeWork';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import PhoneIcon from '@mui/icons-material/Phone';
 
@@ -113,16 +114,16 @@ const Jobs = () => {
                               <div style={{ fontSize: "1.25rem", marginTop: "0.5rem" }}>{item.phone}</div>
                             </Grid>
                             <Grid item xs={5} style={{ marginTop: "0.3rem", textAlign: "right" }}>
-                              <PhotoCameraIcon style={{
-                                fontSize: "3.5vh", color: "#E0E1DC", cursor: "pointer",
-                                backgroundColor: "grey", padding: "0.25rem", borderRadius: "0.5rem 0rem 0rem 0.5rem"
+                              <HomeWorkIcon style={{
+                                fontSize: "3.5vh", color: "#018d8d", cursor: "pointer",
+                                backgroundColor: "#90cfd3", padding: "0.25rem", borderRadius: "0.5rem 0rem 0rem 0.5rem"
                               }}
                                 onClick={() =>
                                   companyDetails(item.company, item.id)
                                 } />
                               <KeyboardDoubleArrowRightIcon style={{
-                                fontSize: "3.5vh", color: "#E0E1DC",
-                                backgroundColor: "grey", padding: "0.25rem", borderRadius: "0rem 0.5rem 0.5rem 0rem"
+                                fontSize: "3.5vh", color: "#018d8d",
+                                backgroundColor: "#90cfd3", padding: "0.25rem", borderRadius: "0rem 0.5rem 0.5rem 0rem"
                               }} />
                             </Grid>
                           </Grid>

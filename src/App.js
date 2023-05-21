@@ -12,11 +12,13 @@ import { Routes, Route } from "react-router-dom"
 import Register from './Pages/Matrimonial/Register';
 import Jobadmin from './Pages/Job/Jobadmin';
 import Family from './Pages/Profile/Family';
+import Login from './Pages/Login';
 
 function App() {
   return (
     
     <Routes>
+      <Route path="/login" element={<><Login/></>} />
       <Route path="/" element={<><Navbar/><Home/></>}/>
       <Route path="/about" element={<><Navbar/><About/></>}/>
       <Route path="/events" element={<><Navbar/><Events/></>}/>

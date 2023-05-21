@@ -103,11 +103,11 @@ const Events = () => {
                                     <Grid item xs={12}>
                                       <div style={{ fontSize: "1.1rem" }}>lorem-ipsum.paragraph</div>
                                     </Grid>
-                                    <hr style={{ border: "1px solid #E0E1DC", width: "100%", borderRadius: "5px" }} />
+                                    <hr style={{ border: "1px solid #018d8d", width: "100%", borderRadius: "5px" }} />
                                     <Grid item xs={12}>
                                       <Grid container spacing={2}>
                                         <Grid item xs={2}>
-                                          <LocationOnIcon style={{ fontSize: "5vh", color: "#E0E1DC" }} />
+                                          <LocationOnIcon style={{ fontSize: "5vh", color: "#018d8d" }} />
                                         </Grid>
                                         <Grid item xs={10} >
                                           <div style={{ fontSize: "1.25rem", marginTop: "0.7rem" }}>{item.venue}</div>
@@ -117,7 +117,7 @@ const Events = () => {
                                     <Grid item xs={12}>
                                       <Grid container spacing={2}>
                                         <Grid item xs={2}>
-                                          <EventIcon style={{ fontSize: "5vh", color: "#E0E1DC" }} />
+                                          <EventIcon style={{ fontSize: "5vh", color: "#018d8d" }} />
                                         </Grid>
                                         <Grid item xs={5} >
                                           <div style={{ fontSize: "1.25rem", marginTop: "0.7rem" }}>{item.date}</div>
@@ -125,11 +125,11 @@ const Events = () => {
                                         <Grid item xs={5} style={{ marginTop: "0.3rem", textAlign: "right" }}>
                                           <PhotoCameraIcon style={{
                                             fontSize: "3.5vh", color: "#E0E1DC",
-                                            backgroundColor: "grey", padding: "0.25rem", borderRadius: "0.5rem 0rem 0rem 0.5rem"
+                                            backgroundColor: "#018d8d", padding: "0.25rem", borderRadius: "0.5rem 0rem 0rem 0.5rem"
                                           }} />
                                           <KeyboardDoubleArrowRightIcon style={{
                                             fontSize: "3.5vh", color: "#E0E1DC",
-                                            backgroundColor: "grey", padding: "0.25rem", borderRadius: "0rem 0.5rem 0.5rem 0rem"
+                                            backgroundColor: "#018d8d", padding: "0.25rem", borderRadius: "0rem 0.5rem 0.5rem 0rem"
                                           }} />
                                         </Grid>
                                       </Grid>

@@ -21,7 +21,7 @@ const Home = () => {
         </Grid>
         <Grid item xs={12} md={4} sm={12}>
           <Grid container spacing={2} sx={{ padding: "0.5rem" }}>
-            <Grid item xs={12} style={{ backgroundColor: "white" }}>
+            <Grid item xs={12} style={{ backgroundColor: "#f6f8fa", borderRadius:"2vh" }}>
               <Grid container spacing={2}>
                 <Grid item xs={12} sx={{ fontSize: "2rem", fontWeight: "700", marginBottom: "1rem" }}>
                   Family Profile
@@ -41,7 +41,7 @@ const Home = () => {
         </Grid>
         <Grid item xs={12} md={8} sm={12}>
           <Grid container spacing={2} sx={{ padding: "0.5rem" }}>
-            <Grid item xs={12} style={{ backgroundColor: "#f6f8fa" }}>
+            <Grid item xs={12} style={{ backgroundColor: "#f6f8fa", borderRadius:"2vh" }}>
               <Grid container spacing={2}>
                 <Grid item xs={12} md={7} sm={12}>
                   <Grid container spacing={2}>
@@ -87,7 +87,7 @@ const Home = () => {
         </Grid>
         <Grid item xs={12} md={6} sm={12}>
           <Grid container spacing={2} sx={{ padding: "0.5rem" }}>
-            <Grid item xs={12} style={{ backgroundColor: "white" }}>
+            <Grid item xs={12} style={{ backgroundColor: "#f6f8fa", borderRadius:"2vh" }}>
               <Grid container spacing={2}>
                 <Grid item xs={12} md={7} sm={12}>
                   <Grid container spacing={2}>

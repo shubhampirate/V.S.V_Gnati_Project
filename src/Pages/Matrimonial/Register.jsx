@@ -26,6 +26,9 @@ const validationSchema = yup.object({
         .string('Enter your email address')
         .email('Enter a valid email address')
         .required('Email address is required'),
+    gender: yup
+        .string()
+        .required('Gender is required'),
     phone: yup
         .string('Enter your Phone Number')
         .required('Phone Number is required'),
@@ -33,11 +36,31 @@ const validationSchema = yup.object({
         .string(`Enter your Father's Name`)
         .required(`Father's Name is required`),
     date: yup
-        .date('Enter your Date of Birth')
+        .date()
         .required('Date of birth is required'),
+    biodata: yup
+        .mixed()
+        .test('fileType', 'Invalid file format. Only PDFs are allowed.', (value) => {
+            if (value && value.length) {
+                const fileType = value[0].type;
+                return fileType === 'application/pdf';
+            }
+            return true;
+        })
+        .required('Biodata is required'),
+    profile: yup
+        .mixed()
+        .test('fileType', 'Invalid file format. Only images are allowed.', (value) => {
+            if (value && value.length) {
+                const fileType = value[0].type;
+                return fileType.startsWith('image/');
+            }
+            return true;
+        })
+        .required('Profile picture is required'),
 });
 
-const options = [
+const gender_options = [
     { value: 'Male', label: 'Male' },
     { value: 'Female', label: 'Female' },
 ];
@@ -46,36 +69,42 @@ const customStyles = {
     control: base => ({
         ...base,
         height: 55,
-        minHeight: 55
-    })
+        minHeight: 55,
+        zindex: 15,
+        backgroundColor: "transparent"
+    }),
+    placeholder: (provided, state) => ({
+        ...provided,
+        textAlign: 'left', // Align the placeholder text to the left
+    }),
 };
 
 const Login = () => {
-    const [biodata, setBiodata] = useState(null);
-    const [gender, setGender] = useState(null);
-    const [profile, setProfile] = useState(null);
     const navigate = useNavigate();
     const formik = useFormik({
         initialValues: {
             name: '',
             desc: '',
-            date: new Date(),
+            date: '',
             email: '',
             father_name: '',
             phone: '',
+            gender: null,
+            biodata: null,
+            profile: null,
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            console.log(values, biodata, gender, profile);
+            console.log(values, values.biodata[0].name, values.profile[0].name);
             const formData = new FormData();
             formData.append("name", values.name);
             formData.append("about", values.desc);
             formData.append("dob", values.date);
             formData.append("phone", values.phone);
             formData.append("fathers_name", values.father_name);
-            formData.append("gender", gender.value);
-            formData.append("picture", profile);
-            formData.append("biodata", biodata);
+            formData.append("gender", values.gender);
+            formData.append("picture", values.profile);
+            formData.append("biodata", values.biodata);
             fetch("http://jenilsavla.pythonanywhere.com/api/matrimonies/", {
                 method: "POST",
                 headers: {
@@ -150,15 +179,19 @@ const Login = () => {
                                 </Grid>
                                 <Grid item xs={12} md={6} sm={12}>
                                     <TextField
+                                        type="file"
                                         id="profile"
                                         name="profile"
-                                        type="file"
-                                        sx={{ width: "100%", fontSize: "1.5rem", color: "red" }}
-                                        color='success'
-                                        onChange={(e) => setProfile(e.target.files[0])}
-                                        error={formik.touched.profile && Boolean(formik.errors.profile)}
-                                        helperText={formik.touched.profile && formik.errors.profile}
+                                        accept="image/*"
+                                        onChange={(event) => formik.setFieldValue('profile', event.currentTarget.files)}
+                                        onBlur={formik.handleBlur}
+                                        sx={{ width: "100%", fontSize: "1.5rem" }}
                                     />
+                                    {formik.touched.profile && formik.errors.profile ? (
+                                        <div style={{ color: "#d65a5a", fontSize: "13px", textAlign: "left", marginLeft: "15px", marginTop: "2px" }}>
+                                            {formik.errors.profile}
+                                        </div>
+                                    ) : null}
                                 </Grid>
                                 <Grid item xs={12} md={6} sm={12}>
                                     <TextField
@@ -191,19 +224,34 @@ const Login = () => {
                                         id="date"
                                         name="date"
                                         type="date"
+                                        placeholder='Date of Birth'
                                         sx={{ width: "100%", fontSize: "1.5rem", color: "red" }}
                                         color='success'
                                         value={formik.values.date}
                                         onChange={formik.handleChange}
-                                        error={formik.touched.date && Boolean(formik.errors.date)}
-                                        helperText={formik.touched.date && formik.errors.date}
-                                        InputLabelProps={{
-                                            shrink: true,
-                                        }}
                                     />
+                                    {formik.touched.date && formik.errors.date ? (
+                                        <div style={{ color: "#d65a5a", fontSize: "13px", textAlign: "left", marginLeft: "15px", marginTop: "2px" }}>
+                                            {formik.errors.date}
+                                        </div>
+                                    ) : null}
                                 </Grid>
                                 <Grid item xs={12} md={6} sm={12}>
                                     <TextField
+                                        type="file"
+                                        id="biodata"
+                                        name="biodata"
+                                        accept=".pdf"
+                                        onChange={(event) => formik.setFieldValue('biodata', event.currentTarget.files)}
+                                        onBlur={formik.handleBlur}
+                                        sx={{ width: "100%", fontSize: "1.5rem" }}
+                                    />
+                                    {formik.touched.biodata && formik.errors.biodata ? (
+                                        <div style={{ color: "#d65a5a", fontSize: "13px", textAlign: "left", marginLeft: "15px", marginTop: "2px" }}>
+                                            {formik.errors.biodata}
+                                        </div>
+                                    ) : null}
+                                    {/*<TextField
                                         id="biodata"
                                         name="biodata"
                                         type="file"
@@ -212,25 +260,43 @@ const Login = () => {
                                         onChange={(e) => setBiodata(e.target.files[0])}
                                         error={formik.touched.biodata && Boolean(formik.errors.biodata)}
                                         helperText={formik.touched.biodata && formik.errors.biodata}
-                                    />
+                                    />*/}
                                 </Grid>
                                 <Grid item xs={12} md={6} sm={12}>
                                     <Select
-                                        defaultValue={setGender}
-                                        onChange={setGender}
-                                        options={options}
+                                        id="gender"
+                                        name="gender"
+                                        placeholder="Gender"
+                                        value={gender_options.find((option) => option.value === formik.values.gender)}
+                                        defaultValue={formik.values.gender}
+                                        onChange={(selectedOption) => formik.setFieldValue('gender', selectedOption.value)}
+                                        options={gender_options}
                                         styles={customStyles}
                                     />
+                                    {formik.touched.gender && formik.errors.gender ? (
+                                        <div style={{ color: "#d65a5a", fontSize: "13px", textAlign: "left", marginLeft: "15px", marginTop: "2px" }}>
+                                            {formik.errors.gender}
+                                        </div>
+                                    ) : null}
                                 </Grid>
                                 <Grid item xs={12} md={6} sm={12}>
-                                    <Button color="success" variant="contained" type="submit"
-                                        sx={{ width: "100%", height: "3.5rem", fontSize: "1.1rem" }}>
-                                        Submit
-                                    </Button>
+                                    <Grid item xs={12}>
+                                        <Button variant="contained" type="submit"
+                                            sx={{
+                                                width: "100%", height: "3.45rem", fontSize: "1.1rem",
+                                                backgroundColor: "#90CFD3", boxShadow: "none", color: "black"
+                                                , "&:hover": {
+                                                    backgroundColor: "#90CFD3", boxShadow: "none", color: "black",
+                                                    fontSize: "1.3rem",
+                                                }
+                                            }}>
+                                            Submit
+                                        </Button>
+                                    </Grid>
                                 </Grid>
                             </Grid>
-                            <div style={{ marginTop: "1.1rem", fontSize: "1.1rem" }}>
-                                <Link to="/matrimonial" style={{ textDecoration: "none", color: "green" }}>Already Registered</Link>
+                            <div style={{ marginTop: "2rem", fontSize: "1.3rem" }}>
+                                <Link to="/matrimonial" style={{ textDecoration: "none", color:"black" }}>Already Registered ? Back to Matrimonial Page</Link>
                             </div>
                         </form>
                     </div>

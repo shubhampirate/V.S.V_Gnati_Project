@@ -30,6 +30,7 @@
     "react-super-responsive-table": "^5.2.1",
     "react-tabs": "^6.0.0",
     "slick-carousel": "^1.8.1",
+    "styled-components": "^5.3.10",
     "sweetalert2": "^11.7.1",
     "web-vitals": "^2.1.4",
     "yup": "^1.0.0"

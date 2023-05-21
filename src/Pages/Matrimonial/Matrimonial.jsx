@@ -17,9 +17,12 @@ const Matrimonial = () => {
 
   const events = ["Male", "Female"]
 
-  const showMore = () => {
-    setVisible((preVisible) => preVisible + 4);
-  }
+  const handleDownload = (fileUrl) => {
+    const link = document.createElement('a');
+    link.href = fileUrl;
+    link.download = true;
+    link.click();
+  };
 
 
   const [loadMale, setLoadMale] = useState([]);
@@ -38,7 +41,7 @@ const Matrimonial = () => {
 
   };
   console.log(loadMale);
-  
+
   const loadListFemale = async () => {
     //const token = localStorage.getItem("token")
     const result = await axios.get(`http://jenilsavla.pythonanywhere.com/api/matrimonies?gender=Female`, {
@@ -67,7 +70,7 @@ const Matrimonial = () => {
         <Grid item xs={12}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-            <Tabs>
+              <Tabs>
                 <TabList style={{ border: "none", fontSize: "1.3rem", marginBottom: "2rem" }}>
                   <Tab style={{ backgroundColor: "transparent", border: "none" }}>Male</Tab>
                   <Tab style={{ backgroundColor: "transparent", border: "none" }}>Female</Tab>
@@ -85,10 +88,17 @@ const Matrimonial = () => {
                                     paddingLeft: "5%", paddingRight: "2.5%",
                                   }}>
                                     <Grid container spacing={2} sx={{ borderRadius: "2vh", padding: "1rem" }}>
-                                      <Grid item xs={12}>
-                                        <img src={girl}
-                                          style={{ width: "100%", height: "35vh", borderRadius: "1.5vh 1.5vh 0vh 0vh" }} />
-                                      </Grid>
+                                      {item.picture == null ? <>
+                                        <Grid item xs={12}>
+                                          <img src={girl}
+                                            style={{ width: "100%", height: "35vh", borderRadius: "1.5vh 1.5vh 0vh 0vh" }} />
+                                        </Grid>
+                                      </> : <>
+                                        <Grid item xs={12}>
+                                          <img src={`http://jenilsavla.pythonanywhere.com` + item.picture}
+                                            style={{ width: "100%", height: "35vh", borderRadius: "1.5vh 1.5vh 0vh 0vh" }} />
+                                        </Grid>
+                                      </>}
                                       <Grid item xs={12}
                                         style={{
                                           padding: "1rem", marginLeft: "16px", marginTop: "-0.75rem",
@@ -101,11 +111,11 @@ const Matrimonial = () => {
                                           <Grid item xs={12}>
                                             <div style={{ fontSize: "1.1rem" }}>{item.about}</div>
                                           </Grid>
-                                          <hr style={{ border: "1px solid #E0E1DC", width: "100%", borderRadius: "5px" }} />
+                                          <hr style={{ border: "1px solid #582C6F", width: "100%", borderRadius: "5px" }} />
                                           <Grid item xs={12}>
                                             <Grid container spacing={2}>
                                               <Grid item xs={2}>
-                                                <LocalPhoneIcon style={{ fontSize: "5vh", color: "#E0E1DC" }} />
+                                                <LocalPhoneIcon style={{ fontSize: "5vh", color: "#582C6F" }} />
                                               </Grid>
                                               <Grid item xs={10} >
                                                 <div style={{ fontSize: "1.25rem", marginTop: "0.7rem" }}>{item.phone}</div>
@@ -115,19 +125,20 @@ const Matrimonial = () => {
                                           <Grid item xs={12}>
                                             <Grid container spacing={2}>
                                               <Grid item xs={2}>
-                                                <EventIcon style={{ fontSize: "5vh", color: "#E0E1DC" }} />
+                                                <EventIcon style={{ fontSize: "5vh", color: "#582C6F" }} />
                                               </Grid>
                                               <Grid item xs={5} >
                                                 <div style={{ fontSize: "1.25rem", marginTop: "0.7rem" }}>{item.dob}</div>
                                               </Grid>
-                                              <Grid item xs={5} style={{ marginTop: "0.3rem", textAlign: "right" }}>
+                                              <Grid item xs={5} style={{ marginTop: "0.3rem", textAlign: "right", cursor: "pointer" }}
+                                              onClick={() => handleDownload(`http://jenilsavla.pythonanywhere.com` + item.biodata)}>
                                                 <DescriptionIcon style={{
-                                                  fontSize: "3.5vh", color: "#E0E1DC",
-                                                  backgroundColor: "grey", padding: "0.25rem", borderRadius: "0.5rem 0rem 0rem 0.5rem"
+                                                  fontSize: "3.5vh", color: "#582C6F",
+                                                  backgroundColor: "#C4CFFE", padding: "0.25rem", borderRadius: "0.5rem 0rem 0rem 0.5rem",
                                                 }} />
                                                 <KeyboardDoubleArrowRightIcon style={{
-                                                  fontSize: "3.5vh", color: "#E0E1DC",
-                                                  backgroundColor: "grey", padding: "0.25rem", borderRadius: "0rem 0.5rem 0.5rem 0rem"
+                                                  fontSize: "3.5vh", color: "#582C6F",
+                                                  backgroundColor: "#C4CFFE", padding: "0.25rem", borderRadius: "0rem 0.5rem 0.5rem 0rem"
                                                 }} />
                                               </Grid>
                                             </Grid>
@@ -150,10 +161,17 @@ const Matrimonial = () => {
                                     paddingLeft: "5%", paddingRight: "2.5%",
                                   }}>
                                     <Grid container spacing={2} sx={{ borderRadius: "2vh", padding: "1rem" }}>
-                                      <Grid item xs={12}>
-                                        <img src={boy}
-                                          style={{ width: "100%", height: "35vh", borderRadius: "1.5vh 1.5vh 0vh 0vh" }} />
-                                      </Grid>
+                                      {item.picture == null ? <>
+                                        <Grid item xs={12}>
+                                          <img src={boy}
+                                            style={{ width: "100%", height: "35vh", borderRadius: "1.5vh 1.5vh 0vh 0vh" }} />
+                                        </Grid>
+                                      </> : <>
+                                        <Grid item xs={12}>
+                                          <img src={`http://jenilsavla.pythonanywhere.com` + item.picture}
+                                            style={{ width: "100%", height: "35vh", borderRadius: "1.5vh 1.5vh 0vh 0vh" }} />
+                                        </Grid>
+                                      </>}
                                       <Grid item xs={12}
                                         style={{
                                           padding: "1rem", marginLeft: "16px", marginTop: "-0.75rem",
@@ -166,11 +184,11 @@ const Matrimonial = () => {
                                           <Grid item xs={12}>
                                             <div style={{ fontSize: "1.1rem" }}>{item.about}</div>
                                           </Grid>
-                                          <hr style={{ border: "1px solid #E0E1DC", width: "100%", borderRadius: "5px" }} />
+                                          <hr style={{ border: "1px solid #582C6F", width: "100%", borderRadius: "5px" }} />
                                           <Grid item xs={12}>
                                             <Grid container spacing={2}>
                                               <Grid item xs={2}>
-                                                <LocalPhoneIcon style={{ fontSize: "5vh", color: "#E0E1DC" }} />
+                                                <LocalPhoneIcon style={{ fontSize: "5vh", color: "#582C6F" }} />
                                               </Grid>
                                               <Grid item xs={10} >
                                                 <div style={{ fontSize: "1.25rem", marginTop: "0.7rem" }}>{item.phone}</div>
@@ -180,19 +198,20 @@ const Matrimonial = () => {
                                           <Grid item xs={12}>
                                             <Grid container spacing={2}>
                                               <Grid item xs={2}>
-                                                <EventIcon style={{ fontSize: "5vh", color: "#E0E1DC" }} />
+                                                <EventIcon style={{ fontSize: "5vh", color: "#582C6F" }} />
                                               </Grid>
                                               <Grid item xs={5} >
                                                 <div style={{ fontSize: "1.25rem", marginTop: "0.7rem" }}>{item.dob}</div>
                                               </Grid>
-                                              <Grid item xs={5} style={{ marginTop: "0.3rem", textAlign: "right" }}>
+                                              <Grid item xs={5} style={{ marginTop: "0.3rem", textAlign: "right" , cursor: "pointer" }}
+                                              onClick={() => handleDownload(`http://jenilsavla.pythonanywhere.com` + item.biodata)}>
                                                 <DescriptionIcon style={{
-                                                  fontSize: "3.5vh", color: "#E0E1DC",
-                                                  backgroundColor: "grey", padding: "0.25rem", borderRadius: "0.5rem 0rem 0rem 0.5rem"
+                                                  fontSize: "3.5vh", color: "#582C6F",
+                                                  backgroundColor: "#C4CFFE", padding: "0.25rem", borderRadius: "0.5rem 0rem 0rem 0.5rem"
                                                 }} />
                                                 <KeyboardDoubleArrowRightIcon style={{
-                                                  fontSize: "3.5vh", color: "#E0E1DC",
-                                                  backgroundColor: "grey", padding: "0.25rem", borderRadius: "0rem 0.5rem 0.5rem 0rem"
+                                                  fontSize: "3.5vh", color: "#582C6F",
+                                                  backgroundColor: "#C4CFFE", padding: "0.25rem", borderRadius: "0rem 0.5rem 0.5rem 0rem"
                                                 }} />
                                               </Grid>
                                             </Grid>
@@ -210,10 +229,10 @@ const Matrimonial = () => {
                   )
                 })}
               </Tabs>
-              </Grid>
-              </Grid>
+            </Grid>
           </Grid>
         </Grid>
+      </Grid>
     </Box>
   )
 }
