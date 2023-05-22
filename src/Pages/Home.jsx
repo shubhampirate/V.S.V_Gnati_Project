@@ -1,18 +1,21 @@
 import React from 'react'
 import { Button, Grid } from '@mui/material';
 import { Box } from '@mui/system';
-import events from "../images/mainpage.jpg";
+import events from "../images/events.jpg";
 import jobsite from "../images/jobsite.webp";
 import matrimonial from "../images/couple.png";
 import family from "../images/family.webp"
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import PinDropIcon from '@mui/icons-material/PinDrop';
+import ScheduleIcon from '@mui/icons-material/Schedule';
 const Home = () => {
   return (
     <Box sx={{ paddingLeft: "1.2rem" }}>
       <Grid container spacing={5}>
-        <Grid item xs={12} style={{ backgroundImage: `url()`, padding: "8rem 2rem" }}>
+        <Grid item xs={12} style={{ padding: "8rem 0.5rem 8rem 2rem" }}>
           <Grid container spacing={2}>
-            <Grid item xs={12} style={{fontSize:"2.5rem"}} >
-              Welcome to 
+            <Grid item xs={12} style={{ fontSize: "2.5rem" }} >
+              Welcome to
             </Grid>
             <Grid item xs={12} style={{ fontSize: "4.5rem", textAlign: "center", fontWeight: "700" }}>
               V.S.V Gnati Samasta
@@ -21,19 +24,46 @@ const Home = () => {
         </Grid>
         <Grid item xs={12} md={4} sm={12}>
           <Grid container spacing={2} sx={{ padding: "0.5rem" }}>
-            <Grid item xs={12} style={{ backgroundColor: "#f6f8fa", borderRadius:"2vh" }}>
+            <Grid item xs={12} style={{ backgroundColor: "#f6f8fa", borderRadius: "2vh" }}>
               <Grid container spacing={2}>
                 <Grid item xs={12} sx={{ fontSize: "2rem", fontWeight: "700", marginBottom: "1rem" }}>
                   Family Profile
                 </Grid>
-                <Grid item xs={12} sx={{ border: "2px solid #E99B01", margin: "0.8rem", width: "10rem", height: "3rem", borderRadius: "1vh" }}>
-                  <div style={{ marginTop: "-0.5rem", fontSize: "1.2rem", color: "#E99B01" }}>View all members </div>
+                <Grid item xs={12} sx={{
+                  border: "2px solid #E99B01", margin: "0.8rem", width: "10rem",
+                  height: "3rem", borderRadius: "1vh",
+                  color: "#E99B01",
+                  "&:hover": {
+                    backgroundColor: "#E99B01", color: "black"
+                  }
+                }}>
+                  <div style={{
+                    marginTop: "-0.5rem", fontSize: "1.2rem"
+                  }}>View all members </div>
                 </Grid>
-                <Grid item xs={12} sx={{ border: "2px solid #E99B01", margin: "0.8rem", width: "10rem", height: "3rem", borderRadius: "1vh" }}>
-                  <div style={{ marginTop: "-0.5rem", fontSize: "1.2rem", color: "#E99B01" }}>Edit Family details </div>
+                <Grid item xs={12} sx={{
+                  border: "2px solid #E99B01", margin: "0.8rem", width: "10rem",
+                  height: "3rem", borderRadius: "1vh",
+                  color: "#E99B01",
+                  "&:hover": {
+                    backgroundColor: "#E99B01", color: "black"
+                  }
+                }}>
+                  <div style={{
+                    marginTop: "-0.5rem", fontSize: "1.2rem"
+                  }}>Edit Family details </div>
                 </Grid>
-                <Grid item xs={12} sx={{ border: "2px solid #E99B01", margin: "0.8rem", width: "10rem", height: "3rem", borderRadius: "1vh" }}>
-                  <div style={{ marginTop: "-0.5rem", fontSize: "1.2rem", color: "#E99B01" }}>Search Family Details</div>
+                <Grid item xs={12} sx={{
+                  border: "2px solid #E99B01", margin: "0.8rem", width: "10rem",
+                  height: "3rem", borderRadius: "1vh",
+                  color: "#E99B01",
+                  "&:hover": {
+                    backgroundColor: "#E99B01", color: "black"
+                  }
+                }}>
+                  <div style={{
+                    marginTop: "-0.5rem", fontSize: "1.2rem"
+                  }}>Search Family Details</div>
                 </Grid>
               </Grid>
             </Grid>
@@ -41,7 +71,7 @@ const Home = () => {
         </Grid>
         <Grid item xs={12} md={8} sm={12}>
           <Grid container spacing={2} sx={{ padding: "0.5rem" }}>
-            <Grid item xs={12} style={{ backgroundColor: "#f6f8fa", borderRadius:"2vh" }}>
+            <Grid item xs={12} style={{ backgroundColor: "#f6f8fa", borderRadius: "2vh" }}>
               <Grid container spacing={2}>
                 <Grid item xs={12} md={7} sm={12}>
                   <Grid container spacing={2}>
@@ -58,7 +88,8 @@ const Home = () => {
                       <Grid container spacing={1}>
                         <Grid item xs={12} md={4} sm={12} sx={{ paddingLeft: "2rem", paddingRight: "0.8rem" }}>
                           <div style={{
-                            border: "2px solid #018D8D", height: "2.6rem", borderRadius: "1vh"}}>
+                            border: "2px solid #018D8D", height: "2.6rem", borderRadius: "1vh"
+                          }}>
                             <div style={{ marginTop: "0.5rem", fontSize: "1.2rem", color: "#018D8D" }}>Register Now </div>
                           </div>
                         </Grid>
@@ -77,17 +108,64 @@ const Home = () => {
                   </Grid>
                 </Grid>
                 <Grid item xs={12} md={5} sm={12}>
-                  <img src={jobsite} style={{ width: "100%",marginLeft:"-4%" , marginTop:"-2%", borderRadius:"1vh"}} />
+                  <img src={jobsite} style={{ width: "100%", marginLeft: "-4%", marginTop: "-2%", borderRadius: "1vh" }} />
                 </Grid>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
         <Grid item xs={12} md={6} sm={12}>
+          <Grid container spacing={2} sx={{ padding: "0.5rem" }}>
+            <Grid item xs={12} style={{ backgroundColor: "#97ddfe", borderRadius: "2vh"}}>
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={5} sm={12}>
+                  <img src={events} style={{ width: "78%" }} />
+                </Grid>
+                <Grid item xs={12} md={7} sm={12}>
+                  <Grid container spacing={2} sx={{marginBottom:"1.2rem"}}>
+                    <Grid item xs={12} sx={{ fontSize: "1.5rem", textAlign: "left" }}>
+                      <Grid container spacing={2} >
+                        <Grid item xs={2}>
+                          <CalendarMonthIcon sx={{fontSize:"2.5rem",marginTop:"-0.5vh", color:"#1A5EB7"}} />
+                        </Grid>
+                        <Grid item xs={10}>Upcoming Event Name</Grid>
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={12} sx={{ fontSize: "1.5rem", fontWeight: "500", textAlign: "left" }}>
+                      <Grid container spacing={2} >
+                        <Grid item xs={2}>
+                          <PinDropIcon sx={{fontSize:"2.5rem",marginTop:"-0.5vh", color:"#1A5EB7"}} />
+                        </Grid>
+                        <Grid item xs={10}>Kandivali, Mumbai</Grid>
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={12} sx={{ fontSize: "1.5rem", fontWeight: "500", textAlign: "left" }}>
+                      <Grid container spacing={2} >
+                        <Grid item xs={2}>
+                          <ScheduleIcon sx={{fontSize:"2.5rem",marginTop:"-0.5vh", color:"#1A5EB7"}} />
+                        </Grid>
+                        <Grid item xs={10}>Monday &nbsp; 22/6/2023</Grid>
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Grid container spacing={1}>
+                        <Grid item xs={12} md={6} sm={12} sx={{ paddingLeft: "2rem", paddingRight: "0.8rem" }}>
+                          <div style={{ border: "2px solid #1A5EB7", height: "2.6rem", borderRadius: "1vh" }}>
+                            <div style={{ marginTop: "0.5rem", fontSize: "1.2rem", color:"#1A5EB7"}}>View More Events</div>
+                          </div>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Grid>
+
+              </Grid>
+            </Grid>
+          </Grid>
         </Grid>
         <Grid item xs={12} md={6} sm={12}>
           <Grid container spacing={2} sx={{ padding: "0.5rem" }}>
-            <Grid item xs={12} style={{ backgroundColor: "#f6f8fa", borderRadius:"2vh" }}>
+            <Grid item xs={12} style={{ backgroundColor: "#f6f8fa", borderRadius: "2vh" }}>
               <Grid container spacing={2}>
                 <Grid item xs={12} md={7} sm={12}>
                   <Grid container spacing={2}>
