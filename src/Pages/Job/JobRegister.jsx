@@ -48,8 +48,8 @@ const Jobadmin = () => {
     const formikJob = useFormik({
         initialValues: {
             details: '',
-            job_type: '',
-            job_title: null,
+            job_type: null,
+            job_title: '',
             phone: '',
         },
         validationSchema: validationSchemaJob,
@@ -85,7 +85,7 @@ const Jobadmin = () => {
 
     const job_type_options = [
         { value: 'Business', label: 'Business' },
-        { value: 'Jib', label: 'Job' },
+        { value: 'Job', label: 'Job' },
     ];
 
     const [loadjob, setLoadjob] = useState([]);

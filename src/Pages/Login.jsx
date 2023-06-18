@@ -44,7 +44,7 @@ const Login = () => {
                 .then(data => {
                     Swal.fire({
                         icon: 'success',
-                        title: 'Successfully Added the Job',
+                        title: 'Successfully Logged In',
                         showConfirmButton: false,
                         timer: 4000
                     })
@@ -128,16 +128,22 @@ const Login = () => {
                                                     width: '50%', // Width for sm and md breakpoints
                                                 }
                                             }}>
-                                        Submit
-                                    </Button>
+                                            Submit
+                                        </Button>
+                                    </Grid>
                                 </Grid>
                             </Grid>
-                        </Grid>
-                    </form>
-                </div>
+                        </form>
+                        <div style={{ marginTop: "2.5rem", fontSize: "1.3rem" }}>
+                            <Link to="/" style={{ textDecoration: "none", color: "black" }}>New user ? Register Now</Link>
+                        </div>
+                        <div style={{ marginTop: "1rem", fontSize: "1.3rem" }}>
+                            <Link to="/" style={{ textDecoration: "none", color: "black" }}>Change passowrd</Link>
+                        </div>
+                    </div>
+                </Grid>
+                <Grid item xs={12} md={2} sm={12}></Grid>
             </Grid>
-            <Grid item xs={12} md={2} sm={12}></Grid>
-        </Grid>
         </div >
     )
 }

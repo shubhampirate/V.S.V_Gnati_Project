@@ -14,11 +14,11 @@ const Home = () => {
       <Grid container spacing={5}>
         <Grid item xs={12} style={{ padding: "8rem 0.5rem 8rem 2rem" }}>
           <Grid container spacing={2}>
-            <Grid item xs={12} style={{ fontSize: "2.5rem" }} >
-              Welcome to
+            <Grid item xs={12} style={{ fontSize: "3.5rem" }} >
+              Shri Visa Soarathia
             </Grid>
             <Grid item xs={12} style={{ fontSize: "4.5rem", textAlign: "center", fontWeight: "700" }}>
-              V.S.V Gnati Samasta
+              Vanika Gnati Samasta
             </Grid>
           </Grid>
         </Grid>
@@ -116,17 +116,17 @@ const Home = () => {
         </Grid>
         <Grid item xs={12} md={6} sm={12}>
           <Grid container spacing={2} sx={{ padding: "0.5rem" }}>
-            <Grid item xs={12} style={{ backgroundColor: "#97ddfe", borderRadius: "2vh"}}>
+            <Grid item xs={12} style={{ backgroundColor: "#97ddfe", borderRadius: "2vh" }}>
               <Grid container spacing={2}>
                 <Grid item xs={12} md={5} sm={12}>
                   <img src={events} style={{ width: "78%" }} />
                 </Grid>
                 <Grid item xs={12} md={7} sm={12}>
-                  <Grid container spacing={2} sx={{marginBottom:"1.2rem"}}>
+                  <Grid container spacing={2} sx={{ marginBottom: "1.2rem" }}>
                     <Grid item xs={12} sx={{ fontSize: "1.5rem", textAlign: "left" }}>
                       <Grid container spacing={2} >
                         <Grid item xs={2}>
-                          <CalendarMonthIcon sx={{fontSize:"2.5rem",marginTop:"-0.5vh", color:"#1A5EB7"}} />
+                          <CalendarMonthIcon sx={{ fontSize: "2.5rem", marginTop: "-0.5vh", color: "#1A5EB7" }} />
                         </Grid>
                         <Grid item xs={10}>Upcoming Event Name</Grid>
                       </Grid>
@@ -134,7 +134,7 @@ const Home = () => {
                     <Grid item xs={12} sx={{ fontSize: "1.5rem", fontWeight: "500", textAlign: "left" }}>
                       <Grid container spacing={2} >
                         <Grid item xs={2}>
-                          <PinDropIcon sx={{fontSize:"2.5rem",marginTop:"-0.5vh", color:"#1A5EB7"}} />
+                          <PinDropIcon sx={{ fontSize: "2.5rem", marginTop: "-0.5vh", color: "#1A5EB7" }} />
                         </Grid>
                         <Grid item xs={10}>Kandivali, Mumbai</Grid>
                       </Grid>
@@ -142,7 +142,7 @@ const Home = () => {
                     <Grid item xs={12} sx={{ fontSize: "1.5rem", fontWeight: "500", textAlign: "left" }}>
                       <Grid container spacing={2} >
                         <Grid item xs={2}>
-                          <ScheduleIcon sx={{fontSize:"2.5rem",marginTop:"-0.5vh", color:"#1A5EB7"}} />
+                          <ScheduleIcon sx={{ fontSize: "2.5rem", marginTop: "-0.5vh", color: "#1A5EB7" }} />
                         </Grid>
                         <Grid item xs={10}>Monday &nbsp; 22/6/2023</Grid>
                       </Grid>
@@ -151,7 +151,7 @@ const Home = () => {
                       <Grid container spacing={1}>
                         <Grid item xs={12} md={6} sm={12} sx={{ paddingLeft: "2rem", paddingRight: "0.8rem" }}>
                           <div style={{ border: "2px solid #1A5EB7", height: "2.6rem", borderRadius: "1vh" }}>
-                            <div style={{ marginTop: "0.5rem", fontSize: "1.2rem", color:"#1A5EB7"}}>View More Events</div>
+                            <div style={{ marginTop: "0.5rem", fontSize: "1.2rem", color: "#1A5EB7" }}>View More Events</div>
                           </div>
                         </Grid>
                       </Grid>

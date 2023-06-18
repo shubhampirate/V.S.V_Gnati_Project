@@ -13,6 +13,7 @@ import Register from './Pages/Matrimonial/Register';
 import Jobadmin from './Pages/Job/Jobadmin';
 import Family from './Pages/Profile/Family';
 import Login from './Pages/Login';
+import Donate from './Pages/Donation/Donate';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
       <Route path="/contact" element={<><Navbar/><ContactUs/></>}/>
       <Route path="/profile" element={<><Navbar/><Profile/></>}/>
       <Route path="/family" element={<><Navbar/><Family/></>} />
+      <Route path="/donate" element={<><Navbar/><Donate/></>}/>
       </Routes>
 
   );
