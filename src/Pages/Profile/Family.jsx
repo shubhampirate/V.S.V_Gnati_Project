@@ -1,6 +1,6 @@
-import { Grid, TextField, Button } from '@mui/material'
+import { Grid, TextField, Button, Modal, FormHelperText } from '@mui/material'
 import React, { useState, useEffect } from 'react'
-import { useFormik, ErrorMessage } from "formik";
+import { useFormik, ErrorMessage, } from "formik";
 import * as yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -134,9 +134,31 @@ const Family = () => {
     const showHomeEditComponent = (e) => { setShowHomeedit(!showHomeEdit) }
     const [showNativeEdit, setShowNativeedit] = useState(false);
     const showEditNativeComponent = (e) => { setShowNativeedit(!showNativeEdit) }
+    const [showOccupationEdit, setShowOccupationedit] = useState(false);
+    const showEditOccupationComponent = (e) => { setShowOccupationedit(!showOccupationEdit) }
     const [homeedit, setHomeedit] = useState('');
     const [gotrejedit, setGotrejedit] = useState('');
     const [nativeedit, setNativeedit] = useState('');
+    const [occedit, setOccuedit] = useState('');
+    const [memedit, setMemid] = useState('');
+    const [useridocc, setUseridocc] = useState('');
+    const [isOpen, setIsOpen] = useState(false);
+    const [editphone, setEditphone] = useState('');
+    const [editname, setEditname] = useState('');
+    const [editrelation, setEditrelation] = useState('');
+    const [editdob, setEditdob] = useState('');
+    const [editeducation, setEditeducation] = useState('');
+    const [editprofstatus, setEditprofstatus] = useState('');
+    const [editprofname, setEditprofname] = useState('');
+    const [editgender, setEditgender] = useState('');
+    const [editbg, setEditbg] = useState('');
+    const [editemail, setEditemail] = useState('');
+    const [editmaritialstatus, setEditmaritialstatus] = useState('');
+    const [usernamemem, setUsernamemem] = useState('');
+
+    const handleClose = () => {
+        setIsOpen(false);
+    };
 
     const formik = useFormik({
         initialValues: {
@@ -355,19 +377,48 @@ const Family = () => {
                 console.log(data);
                 loadList();
                 loadList();
+                setShowOccupationedit(false);
             })
             .catch((error) => {
                 console.error(error);
             });
     }
 
-    const handleEdit = async (id) => {
+    const handleDeleteoccupation = async (id) => {
         console.log(id);
-        const searchData = {
-            username: id,
-        };
-        fetch('http://jenilsavla.pythonanywhere.com/api/add-member/1', {
+        fetch(`http://jenilsavla.pythonanywhere.com/api/family/${id}`, {
             method: 'DELETE',
+            headers: {
+                "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb`,
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                loadList();
+                loadList();
+                setShowOccupationedit(false);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    const handleeditoccupation = async (iduser) => {
+        console.log(iduser);
+        setUseridocc(iduser);
+        const searchData = {
+            occupations: [
+                {
+                    id: useridocc,
+                    occupation_address: occedit,
+                    member: memedit
+                }
+            ]
+        };
+        fetch('http://jenilsavla.pythonanywhere.com/api/family/1', {
+            method: 'PUT',
             headers: {
                 "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb`,
                 'Content-Type': 'application/json',
@@ -384,6 +435,64 @@ const Family = () => {
                 console.error(error);
             });
     }
+
+    const handleeditmember = async (id) => {
+        console.log(id);
+        setUsernamemem(id);
+        setIsOpen(true);
+        const result = await axios.get(`http://jenilsavla.pythonanywhere.com/api/add-member/${id}`, {
+            headers: { "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb` },
+        });
+        console.log(result.data.data);
+        setEditbg(result.data.data.blood_group);
+        setEditdob(result.data.data.dob);
+        setEditeducation(result.data.data.education);
+        setEditname(result.data.data.name);
+        setEditrelation(result.data.data.relation);
+        setEditemail(result.data.data.email_address);
+        setEditprofname(result.data.data.profession_name);
+        setEditphone(result.data.data.phone);
+        setEditgender(result.data.data.gender);
+        setEditmaritialstatus(result.data.data.maritial_status);
+        setEditprofstatus(result.data.data.profession_status);
+
+    }
+
+    const handleeditaddmember = async () => {
+
+        const searchData = {
+            username: usernamemem,
+            phone: editphone,
+            name: editname,
+            relation: editrelation.value,
+            dob: editdob,
+            education: editeducation,
+            profession_status: editprofstatus.value,
+            profession_name: editprofname.value,
+            gender: editgender.value,
+            blood_group: editbg.value,
+            maritial_status: editmaritialstatus.value,
+            email_address: editemail
+        };
+        fetch('http://jenilsavla.pythonanywhere.com/api/add-member/1', {
+            method: 'PUT',
+            headers: {
+                "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(searchData),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                loadList();
+                loadList();
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
 
     const customStyles = {
         control: base => ({
@@ -628,9 +737,10 @@ const Family = () => {
                                             <Grid container spacing={2} marginTop={1}
                                                 sx={{
 
-                                                    paddingLeft: "5%", paddingRight: "2.5%", marginTop: "-3%",
+                                                    paddingLeft: "6%", paddingRight: "2.5%", marginTop: "-3%",
+                                                    marginBottom: "2rem"
                                                 }}>
-                                                <Grid item xs={12} md={5} sm={12}>
+                                                <Grid item xs={12} md={7} sm={12}>
                                                     <TextField
                                                         id="occupation"
                                                         name="occupation"
@@ -647,7 +757,7 @@ const Family = () => {
                                                         }}
                                                     />
                                                 </Grid>
-                                                <Grid item xs={12} md={5} sm={12}>
+                                                <Grid item xs={12} md={3} sm={12}>
                                                     <TextField
                                                         id="member"
                                                         name="member"
@@ -681,17 +791,84 @@ const Family = () => {
                                     </div>
                                 </> : <></>}
                         </Grid>
+                        {showOccupationEdit ?
+                            <>
+                                <Grid container spacing={2} marginTop={1}
+                                    sx={{
+                                        paddingLeft: "7.5%", paddingRight: "2.5%", marginTop: "-3%",
+                                        marginBottom: "2rem"
+                                    }}>
+                                    <Grid item xs={12} md={7} sm={12}>
+                                        <TextField
+                                            id="occupation"
+                                            name="occupation"
+                                            label="Occupation"
+                                            color='success'
+                                            value={occedit}
+                                            onChange={(e) => setOccuedit(e.target.value)}
+                                            sx={{
+                                                width: "100%", "& .MuiInputBase-root": {
+                                                    height: 50
+                                                }
+                                            }}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} md={3} sm={12}>
+                                        <TextField
+                                            id="member"
+                                            name="member"
+                                            label="Member"
+                                            color='success'
+                                            value={memedit}
+                                            onChange={(e) => setMemid(e.target.value)}
+                                            sx={{
+                                                width: "100%", "& .MuiInputBase-root": {
+                                                    height: 50
+                                                }
+                                            }}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} md={2} sm={12}>
+                                        <Button variant="contained" type="submit"
+                                            sx={{
+                                                width: "100%", height: "3.1rem", fontSize: "1.1rem",
+                                                backgroundColor: "#90CFD3", boxShadow: "none", color: "black", "&:hover": {
+                                                    backgroundColor: "#90CFD3", boxShadow: "none", color: "black",
+                                                    fontSize: "1.3rem"
+                                                }
+                                            }} onClick={() => handleeditoccupation(useridocc)}>
+                                            Edit
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            </> : <>
+
+                            </>
+                        }
                         {loadoccupation.map((item) => {
                             return (
-                                <Grid item xs={12}>
-                                    <div
-                                        style={{
-                                            fontSize: "1.5rem",
-                                            paddingLeft: "6%",
-                                            paddingRight: "2.5%",
-                                            textAlign: "left",
-                                        }}>{item.id}. &nbsp;{item.occupation_address} &nbsp; - &nbsp;{item.member}</div>
+
+                                <Grid container spacing={2} style={{ paddingLeft: "4%" }}>
+                                    <Grid item xs={8}>
+                                        <div
+                                            style={{
+                                                fontSize: "1.5rem",
+                                                paddingLeft: "6%",
+                                                paddingRight: "2.5%",
+                                                textAlign: "left",
+                                            }}>{item.id}. &nbsp;{item.occupation_address} &nbsp; - &nbsp;{item.member}</div>
+                                    </Grid>
+                                    <Grid item xs={2}>
+                                        <EditIcon style={{ fontSize: "4.75vh", color: "#018d8d", textAlign: "right" }}
+                                            onClick={() => { showEditOccupationComponent(); handleeditoccupation(item.id) }} />
+                                    </Grid>
+                                    <Grid item xs={2}>
+                                        <DeleteIcon style={{ fontSize: "4.75vh", color: "#018d8d", textAlign: "right" }}
+                                            onClick={() => handleDeleteoccupation(item.id)} />
+                                    </Grid>
+
                                 </Grid>
+
                             )
                         })
                         }
@@ -929,7 +1106,8 @@ const Family = () => {
                                                     <div style={{ fontSize: "2rem", fontWeight: "700" }}>{item1.name}</div>
                                                 </Grid>
                                                 <Grid item xs={2} style={{ textAlign: "right" }}>
-                                                    <EditIcon style={{ fontSize: "4.75vh", color: "#018d8d", textAlign: "right" }} />
+                                                    <EditIcon style={{ fontSize: "4.75vh", color: "#018d8d", textAlign: "right" }}
+                                                        onClick={() => handleeditmember(item1.username)} />
                                                 </Grid>
                                                 <Grid item xs={2} style={{ textAlign: "right" }}>
                                                     <DeleteIcon style={{ fontSize: "4.75vh", color: "#018d8d", textAlign: "right" }}
@@ -1031,6 +1209,158 @@ const Family = () => {
                     </Grid>
                 </Grid>
             </Grid>
+            <Modal
+                open={isOpen}
+                onClose={handleClose}
+                aria-labelledby="modal-title"
+                style={{ backgroundColor: "white", paddingBottom: "2rem", overflow: "scroll" }}
+            >
+                <div>
+                    <div style={{ fontSize: "2rem", fontWeight: "700", backgroundColor: "white" }}>Edit Details</div>
+                    <Grid container spacing={2} marginTop={2}
+                        style={{
+                            backgroundColor: "white", paddingLeft: "5%", paddingRight: "3.5%",
+                            paddingBottom: "1.5rem"
+                        }}>
+                        <Grid item xs={12} md={6} sm={12}>
+                            <TextField
+                                id="name_edit"
+                                name="name_edit"
+                                label="Full Name"
+                                value={editname}
+                                onChange={(e) => setEditname(e.target.value)}
+                                sx={{ width: "100%" }}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={6} sm={12}>
+                            <TextField
+                                id="education"
+                                name="education"
+                                label="Education"
+                                multiline
+                                maxRows={3}
+                                value={editeducation}
+                                onChange={(e) => setEditeducation(e.target.value)}
+                                sx={{ width: "100%" }}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={6} sm={12}>
+                            <TextField
+                                id="email_id"
+                                name="email_id"
+                                type="email"
+                                label="Email Address"
+                                value={editemail}
+                                onChange={(e) => setEditemail(e.target.value)}
+                                sx={{ width: "100%" }}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={6} sm={12}>
+                            <Select
+                                options={gender_options}
+                                value={editgender}
+                                styles={customStyles}
+                                onChange={(selectedOption) => setEditgender(selectedOption)}
+                            />
+                            <FormHelperText>
+                                Edit Gender
+                            </FormHelperText>
+                        </Grid>
+                        <Grid item xs={12} md={6} sm={12}>
+                            <Select
+                                options={profession_name_options}
+                                value={editprofname}
+                                styles={customStyles}
+                                onChange={(selectedOption) => setEditprofname(selectedOption)}
+                            />
+                            <FormHelperText>
+                                Edit Profession Name
+                            </FormHelperText>
+                        </Grid>
+                        <Grid item xs={12} md={6} sm={12}>
+                            <Select
+                                options={profession_status_options}
+                                value={editprofstatus}
+                                styles={customStyles}
+                                onChange={(selectedOption) => setEditprofstatus(selectedOption)}
+                            />
+                            <FormHelperText>
+                                Edit Profession Status
+                            </FormHelperText>
+                        </Grid>
+                        <Grid item xs={12} md={6} sm={12}>
+                            <Select
+                                options={relation_options}
+                                value={editrelation}
+                                styles={customStyles}
+                                onChange={(selectedOption) => setEditrelation(selectedOption)}
+                            />
+                            <FormHelperText>
+                                Edit Relation
+                            </FormHelperText>
+                        </Grid>
+                        <Grid item xs={12} md={6} sm={12}>
+                            <Select
+                                options={blood_group_options}
+                                value={editbg}
+                                styles={customStyles}
+                                onChange={(selectedOption) => setEditbg(selectedOption)}
+                            />
+                            <FormHelperText>
+                                Edit BloodGroup
+                            </FormHelperText>
+                        </Grid>
+                        <Grid item xs={12} md={6} sm={12}>
+                            <Select
+                                options={maritial_status_options}
+                                value={editmaritialstatus}
+                                styles={customStyles}
+                                onChange={(selectedOption) => setEditmaritialstatus(selectedOption)}
+                            />
+                            <FormHelperText>
+                                Maritial Status
+                            </FormHelperText>
+                        </Grid>
+                        <Grid item xs={12} md={6} sm={12}>
+                            <TextField
+                                id="phone_edit"
+                                name="phone_edit"
+                                label="Mobile Number"
+                                value={editphone}
+                                onChange={(e) => setEditphone(e.target.value)}
+                                sx={{ width: "100%" }}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={6} sm={12}>
+                            <TextField
+                                id="dob_edit"
+                                name="dob_edit"
+                                type="date"
+                                value={editdob}
+                                onChange={(e) => setEditdob(e.target.value)}
+                                sx={{ width: "100%" }}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={6} sm={12}>
+                            <Grid item xs={12}>
+                                <Button variant="contained" type="submit"
+                                    sx={{
+                                        width: "100%", height: "3.45rem", fontSize: "1.1rem",
+                                        backgroundColor: "#C4CFFE", boxShadow: "none", color: "black"
+                                        , "&:hover": {
+                                            backgroundColor: "#C4CFFE", boxShadow: "none", color: "black",
+                                            fontSize: "1.3rem",
+                                        }
+                                    }} onClick={() => handleeditaddmember()}
+                                    onClose={handleClose}
+                                >
+                                    Submit
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </div>
+            </Modal>
         </div >
     )
 }

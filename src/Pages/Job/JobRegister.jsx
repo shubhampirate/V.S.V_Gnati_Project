@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import {
     Grid, InputAdornment,
-    TextField, Button,
+    TextField, Button, Modal
 } from '@mui/material'
 import React, { useState, useEffect } from 'react'
 import { useFormik } from "formik";
@@ -86,9 +86,25 @@ const Jobadmin = () => {
     const job_type_options = [
         { value: 'Business', label: 'Business' },
         { value: 'Job', label: 'Job' },
+        { value: 'Full-Time', label: 'Full-Time' },
+        { value: 'Internship', label: 'Internship' }
     ];
 
+
+    const [editArray, setEditArray] = useState([]);
+    const [edittype, setEdittype] = useState('');
+    const [edittitle, setEdittitle] = useState('');
+    const [editdetail, setEditdetails] = useState('');
+    const [editphone, setEditphone] = useState('');
+    const [idjob, setidjob] = useState('');
+    const [isOpen, setIsOpen] = useState(false);
+
+    const handleClose = () => {
+        setIsOpen(false);
+    };
+
     const [loadjob, setLoadjob] = useState([]);
+
     useEffect(() => {
         loadListjob();
     }, []);
@@ -102,6 +118,67 @@ const Jobadmin = () => {
 
     };
     console.log(loadjob);
+
+    const handleedit = async (id) => {
+        console.log(id);
+        setidjob(id);
+        setIsOpen(true);
+        const result = await axios.get(`http://jenilsavla.pythonanywhere.com/api/job/${id}`, {
+            headers: { "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb` },
+        });
+        console.log(result.data.data);
+        setEditArray(result.data.data);
+        setEdittype(result.data.data.type);
+        setEdittitle(result.data.data.title);
+        setEditphone(result.data.data.phone);
+        setEditdetails(result.data.data.details);
+    }
+    const handledelete = async (id) => {
+        console.log(id);
+        fetch(`http://jenilsavla.pythonanywhere.com/api/job/${id}`, {
+            method: 'DELETE',
+            headers: {
+                "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb`,
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                loadListjob();
+                loadListjob();
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    const handleEditsubmit = async () => {
+        const searchData = {
+            title: edittitle,
+            type: edittype.value,
+            phone: editphone,
+            details: editdetail,
+        };
+        fetch(`http://jenilsavla.pythonanywhere.com/api/job/${idjob}`, {
+            method: 'PUT',
+            headers: {
+                "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(searchData),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+        loadListjob();
+        loadListjob();
+        setIsOpen(false);
+    }
 
     const [showJob, setShowJob] = useState(false);
     const showComponentJob = (e) => { setShowJob(!showJob) }
@@ -252,6 +329,14 @@ const Jobadmin = () => {
                                             padding: "0.75rem",
                                             textAlign: "left"
                                         }}>Job Details</Th>
+                                        <Th style={{
+                                            fontWeight: "600",
+                                            backgroundColor: "#018d8d",
+                                            color: "#fff",
+                                            border: "1px solid #000",
+                                            padding: "0.75rem",
+                                            textAlign: "left"
+                                        }}>Action</Th>
                                     </Tr>
                                 </Thead>
                                 {loadjob.map((item) => {
@@ -278,11 +363,90 @@ const Jobadmin = () => {
                                                     padding: "0.75rem",
                                                     textAlign: "left"
                                                 }}>{item.details}</Td>
+                                                <Td style={{
+                                                    border: "1px solid #000",
+                                                    padding: "0.75rem",
+                                                    textAlign: "left"
+                                                }}>
+                                                    <span onClick={() => handleedit(item.id)}> Edit </span> /
+                                                    <span onClick={() => handledelete(item.id)}> Delete </span>
+                                                </Td>
                                             </Tr>
                                         </Tbody>
                                     )
                                 })}
                             </Table>
+                            <Modal
+                                open={isOpen}
+                                onClose={handleClose}
+                                aria-labelledby="modal-title"
+                                style={{ backgroundColor: "white", paddingBottom: "2rem" }}
+                            >
+                                <div>
+                                    <div style={{ fontSize: "2rem", fontWeight: "700", backgroundColor: "white" }}>Edit Details</div>
+                                    <Grid container spacing={2} marginTop={2}
+                                        style={{
+                                            backgroundColor: "white", paddingLeft: "5%", paddingRight: "3.5%",
+                                            paddingBottom: "1.5rem"
+                                        }}>
+                                        <Grid item xs={12} md={6} sm={12}>
+                                            <TextField
+                                                id="title_edit"
+                                                name="tile_edit"
+                                                label="Title"
+                                                value={edittitle}
+                                                onChange={(e) => setEdittitle(e.target.value)}
+                                                sx={{ width: "100%" }}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} md={6} sm={12}>
+                                            <TextField
+                                                id="detail_edit"
+                                                name="detail_edit"
+                                                label="Details"
+                                                multiline
+                                                maxRows={3}
+                                                value={editdetail}
+                                                onChange={(e) => setEditdetails(e.target.value)}
+                                                sx={{ width: "100%" }}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} md={4} sm={12}>
+                                            <Select
+                                                options={job_type_options}
+                                                value={edittype}
+                                                styles={customStyles}
+                                                onChange={(selectedOption) => setEdittype(selectedOption)}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} md={4} sm={12}>
+                                            <TextField
+                                                id="phone_edit"
+                                                name="phone_edit"
+                                                label="Mobile Number"
+                                                value={editphone}
+                                                onChange={(e) => setEditphone(e.target.value)}
+                                                sx={{ width: "100%" }}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} md={4} sm={12}>
+                                            <Grid item xs={12}>
+                                                <Button variant="contained" type="submit"
+                                                    sx={{
+                                                        width: "100%", height: "3.45rem", fontSize: "1.1rem",
+                                                        backgroundColor: "#C4CFFE", boxShadow: "none", color: "black"
+                                                        , "&:hover": {
+                                                            backgroundColor: "#C4CFFE", boxShadow: "none", color: "black",
+                                                            fontSize: "1.3rem",
+                                                        }
+                                                    }} onClick={() => handleEditsubmit()}>
+                                                    Submit
+                                                </Button>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                </div>
+                            </Modal>
                         </Grid>
                     </Grid>
                 </Grid>

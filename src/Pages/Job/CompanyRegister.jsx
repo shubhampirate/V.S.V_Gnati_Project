@@ -93,10 +93,10 @@ const CompanyRegister = () => {
     }, []);
 
     const loadListcompany = async () => {
-        const result = await axios.get("http://jenilsavla.pythonanywhere.com/api/companies", {
+        const result = await axios.get("http://jenilsavla.pythonanywhere.com/api/company/1", {
             headers: { "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb` },
         });
-        setLoadCompany(result.data.data.companies.slice(-1));
+        setLoadCompany(result.data.data.companies);
 
     };
     console.log(loadcompany);

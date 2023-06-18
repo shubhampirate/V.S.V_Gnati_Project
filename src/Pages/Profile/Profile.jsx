@@ -53,8 +53,9 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    handleSubmitName();
-    loadList();
+    //handleSubmitName();
+    //loadList();
+    print();
   }, []);
 
   const handleChangePage = (event, newPage) => {
@@ -95,119 +96,139 @@ const Profile = () => {
   
   */
 
-  let filteredlist;
+  //let filteredlist;
   const handleFilter = () => {
     console.log(professionFilter.value, genderFilter.value, maritialFilter.value, gotrej.value)
 
-    console.log(filteredlist)
 
-    if (professionFilter === ' ' && genderFilter === ' ' && gotrej === ' ' && maritialFilter !== ' ') {
-      filteredlist = load.filter((item) =>
-        item.maritial_status === maritialFilter.value);
+    if (professionFilter === '' && genderFilter === '' && gotrej === '' && maritialFilter !== '') {
+      const filteredlist = load.filter((item) => item.maritial_status === maritialFilter.value);
+      setFilterList(filteredlist);
     }
 
-    console.log(filteredlist);
-    if (professionFilter === ' ' && genderFilter === ' ' && gotrej !== ' ' && maritialFilter === ' ') {
-      filteredlist = load.filter((item) =>
+
+    if (professionFilter === '' && genderFilter === '' && gotrej !== '' && maritialFilter === '') {
+      const filteredlist = load.filter((item) =>
         item.gotrej === gotrej.value);
+      setFilterList(filteredlist);
     }
-    console.log(filteredlist);
-    if (professionFilter === ' ' && genderFilter === ' ' && gotrej !== ' ' && maritialFilter !== ' ') {
-      filteredlist = load.filter((item) =>
+
+    if (professionFilter === '' && genderFilter === '' && gotrej !== '' && maritialFilter !== '') {
+      const filteredlist = load.filter((item) =>
         item.gotrej === gotrej.value &&
         item.maritial_status === maritialFilter.value);
+      setFilterList(filteredlist);
     }
-    console.log(filteredlist);
-    if (professionFilter === ' ' && genderFilter !== ' ' && gotrej === ' ' && maritialFilter === ' ') {
-      filteredlist = load.filter((item) =>
+
+    if (professionFilter === '' && genderFilter !== '' && gotrej === '' && maritialFilter === '') {
+      const filteredlist = load.filter((item) =>
         item.gender === genderFilter.value);
+      setFilterList(filteredlist);
     }
-    console.log(filteredlist);
-    if (professionFilter === ' ' && genderFilter !== ' ' && gotrej === ' ' && maritialFilter !== ' ') {
-      filteredlist = load.filter((item) =>
+
+    if (professionFilter === '' && genderFilter !== '' && gotrej === '' && maritialFilter !== '') {
+      const filteredlist = load.filter((item) =>
         item.gender === genderFilter.value &&
         item.maritial_status === maritialFilter.value);
+      setFilterList(filteredlist);
     }
-    console.log(filteredlist);
-    if (professionFilter === ' ' && genderFilter !== ' ' && gotrej !== ' ' && maritialFilter === ' ') {
-      filteredlist = load.filter((item) =>
+
+    if (professionFilter === '' && genderFilter !== '' && gotrej !== '' && maritialFilter === '') {
+      const filteredlist = load.filter((item) =>
         item.gender === genderFilter.value &&
         item.gotrej === gotrej.value);
+      setFilterList(filteredlist);
     }
-    console.log(filteredlist);
-    if (professionFilter === ' ' && genderFilter !== ' ' && gotrej !== ' ' && maritialFilter !== ' ') {
-      filteredlist = load.filter((item) =>
+
+    if (professionFilter === '' && genderFilter !== '' && gotrej !== '' && maritialFilter !== '') {
+      const filteredlist = load.filter((item) =>
         item.gender === genderFilter.value &&
         item.gotrej === gotrej.value &&
         item.maritial_status === maritialFilter.value);
+      setFilterList(filteredlist);
     }
-    console.log(filteredlist);
-    if (professionFilter !== ' ' && genderFilter === ' ' && gotrej === ' ' && maritialFilter === ' ') {
-      filteredlist = load.filter((item) =>
+
+    if (professionFilter !== '' && genderFilter === '' && gotrej === '' && maritialFilter === '') {
+      const filteredlist = load.filter((item) =>
         item.profession_name === professionFilter.value);
+      setFilterList(filteredlist);
     }
-    console.log(filteredlist);
+
     if (professionFilter !== '' && genderFilter === '' && gotrej === '' && maritialFilter !== '') {
 
-      filteredlist = load.filter((item) =>
+      const filteredlist = load.filter((item) =>
         item.profession_name === professionFilter.value &&
         item.maritial_status === maritialFilter.value);
-      localStorage.setItem("vsvfiltersearch", filteredlist);
-      console.log(filteredlist)
+      // localStorage.setItem("vsvfiltersearch", filteredlist);
+      setFilterList(filteredlist);
     }
-    console.log(filteredlist);
-    if (professionFilter !== ' ' && genderFilter === ' ' && gotrej !== ' ' && maritialFilter === ' ') {
-      filteredlist = load.filter((item) =>
+
+
+    if (professionFilter !== '' && genderFilter === '' && gotrej !== '' && maritialFilter === '') {
+      const filteredlist = load.filter((item) =>
         item.profession_name === professionFilter.value &&
         item.gotrej === gotrej.value);
+      setFilterList(filteredlist);
     }
-    console.log(filteredlist);
-    if (professionFilter !== ' ' && genderFilter === ' ' && gotrej !== ' ' && maritialFilter !== ' ') {
-      filteredlist = load.filter((item) =>
+
+    if (professionFilter !== '' && genderFilter === '' && gotrej !== '' && maritialFilter !== '') {
+      const filteredlist = load.filter((item) =>
         item.profession_name === professionFilter.value &&
         item.gotrej === gotrej.value &&
         item.maritial_status === maritialFilter.value);
+      setFilterList(filteredlist);
     }
-    console.log(filteredlist);
-    if (professionFilter !== ' ' && genderFilter !== ' ' && gotrej === ' ' && maritialFilter === ' ') {
-      filteredlist = load.filter((item) =>
+
+    if (professionFilter !== '' && genderFilter !== '' && gotrej === '' && maritialFilter === '') {
+      const filteredlist = load.filter((item) =>
         item.profession_name === professionFilter.value &&
         item.gender === genderFilter.value);
+      setFilterList(filteredlist);
     }
-    console.log(filteredlist);
-    if (professionFilter !== ' ' && genderFilter !== ' ' && gotrej === ' ' && maritialFilter !== ' ') {
-      filteredlist = load.filter((item) =>
+
+    if (professionFilter !== '' && genderFilter !== '' && gotrej === '' && maritialFilter !== '') {
+      const filteredlist = load.filter((item) =>
         item.profession_name === professionFilter.value &&
         item.gender === genderFilter.value &&
         item.maritial_status === maritialFilter.value);
+      setFilterList(filteredlist);
     }
-    console.log(filteredlist);
-    if (professionFilter !== ' ' && genderFilter !== ' ' && gotrej !== ' ' && maritialFilter === ' ') {
-      filteredlist = load.filter((item) =>
+
+    if (professionFilter !== '' && genderFilter !== '' && gotrej !== '' && maritialFilter === '') {
+      const filteredlist = load.filter((item) =>
         item.profession_name === professionFilter.value &&
         item.gender === genderFilter.value &&
         item.gotrej === gotrej.value);
+      setFilterList(filteredlist);
     }
-    console.log(filteredlist);
+
     if (professionFilter !== '' && genderFilter !== '' && gotrej !== '' && maritialFilter !== '') {
       // console.log(professionFilter, genderFilter, maritialFilter, searchName, gotrej);
-      filteredlist = load.filter((item) =>
+      const filteredlist = load.filter((item) =>
         item.profession_name === professionFilter.value &&
         item.gender === genderFilter.value &&
         item.gotrej === gotrej.value &&
         item.maritial_status === maritialFilter.value);
       setFilterList(filteredlist);
     }
-    console.log(filteredlist);
+
+    console.log(filterList);
+    // console.log(filteredlist);
     print();
 
-    console.log(filteredlist);
+    // console.log(filteredlist);
 
   }
   //console.log(filteredlist)
 
   const print = async () => {
-    console.log(filteredlist);
+    console.log(filterList);
+    if (filterList.length === 0) {
+      loadList();
+    }
+    else {
+      setLoad(filterList);
+    }
 
   }
 
@@ -215,14 +236,14 @@ const Profile = () => {
 
 
   const genderOptions = [
-    { value: '', label: 'All' },
+    { value: ' ', label: 'All' },
     { value: 'Male', label: 'Male' },
     { value: 'Female', label: 'Female' },
   ];
 
   // Options for the profession dropdown
   const professionOptions = [
-    { value: '', label: 'All' },
+    { value: ' ', label: 'All' },
     { value: 'CA', label: 'CA' },
     { value: 'Engineer', label: 'Engineer' },
     { value: 'Student', label: 'Student' },
@@ -236,14 +257,14 @@ const Profile = () => {
   ];
 
   const maritialOptions = [
-    { value: '', label: 'All' },
+    { value: ' ', label: 'All' },
     { value: 'Single', label: 'Single' },
     { value: 'Married', label: 'Married' },
   ];
 
   // Options for the profession dropdown
   const gotrejOptions = [
-    { value: '', label: 'All' },
+    { value: ' ', label: 'All' },
     { value: 'doctor', label: 'Doctor' },
     { value: 'engineer', label: 'Engineer' },
     { value: 'teacher', label: 'Teacher' },

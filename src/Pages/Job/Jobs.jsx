@@ -77,7 +77,8 @@ const Jobs = () => {
   const job_type_options = [
     { value: 'Business', label: 'Business' },
     { value: 'Job', label: 'Job' },
-    { value: 'Full-Time', label: 'Full-Time' }
+    { value: 'Full-Time', label: 'Full-Time' },
+    { value: 'Internship', label: 'Internship' }
   ];
 
   console.log(load)
