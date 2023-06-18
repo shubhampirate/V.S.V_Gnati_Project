@@ -27,6 +27,7 @@ const Matrimonial = () => {
 
   const [loadMale, setLoadMale] = useState([]);
   const [loadFemale, setLoadFemale] = useState([]);
+
   useEffect(() => {
     loadListMale();
     loadListFemale();
@@ -34,7 +35,7 @@ const Matrimonial = () => {
 
   const loadListMale = async () => {
     //const token = localStorage.getItem("token")
-    const result = await axios.get(`http://jenilsavla.pythonanywhere.com/api/matrimonies?gender=Male`, {
+    const result = await axios.get('http://jenilsavla.pythonanywhere.com/api/matrimonies?gender=Male', {
       headers: { "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb` },
     });
     setLoadMale(result.data.data.matrimonies);
@@ -44,7 +45,7 @@ const Matrimonial = () => {
 
   const loadListFemale = async () => {
     //const token = localStorage.getItem("token")
-    const result = await axios.get(`http://jenilsavla.pythonanywhere.com/api/matrimonies?gender=Female`, {
+    const result = await axios.get("http://jenilsavla.pythonanywhere.com/api/matrimonies?gender=Female", {
       headers: { "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb` },
     });
     setLoadFemale(result.data.data.matrimonies);
@@ -131,7 +132,7 @@ const Matrimonial = () => {
                                                 <div style={{ fontSize: "1.25rem", marginTop: "0.7rem" }}>{item.dob}</div>
                                               </Grid>
                                               <Grid item xs={5} style={{ marginTop: "0.3rem", textAlign: "right", cursor: "pointer" }}
-                                              onClick={() => handleDownload(`http://jenilsavla.pythonanywhere.com` + item.biodata)}>
+                                                onClick={() => handleDownload(`http://jenilsavla.pythonanywhere.com` + item.biodata)}>
                                                 <DescriptionIcon style={{
                                                   fontSize: "3.5vh", color: "#582C6F",
                                                   backgroundColor: "#C4CFFE", padding: "0.25rem", borderRadius: "0.5rem 0rem 0rem 0.5rem",
@@ -203,8 +204,8 @@ const Matrimonial = () => {
                                               <Grid item xs={5} >
                                                 <div style={{ fontSize: "1.25rem", marginTop: "0.7rem" }}>{item.dob}</div>
                                               </Grid>
-                                              <Grid item xs={5} style={{ marginTop: "0.3rem", textAlign: "right" , cursor: "pointer" }}
-                                              onClick={() => handleDownload(`http://jenilsavla.pythonanywhere.com` + item.biodata)}>
+                                              <Grid item xs={5} style={{ marginTop: "0.3rem", textAlign: "right", cursor: "pointer" }}
+                                                onClick={() => handleDownload(`http://jenilsavla.pythonanywhere.com` + item.biodata)}>
                                                 <DescriptionIcon style={{
                                                   fontSize: "3.5vh", color: "#582C6F",
                                                   backgroundColor: "#C4CFFE", padding: "0.25rem", borderRadius: "0.5rem 0rem 0rem 0.5rem"
