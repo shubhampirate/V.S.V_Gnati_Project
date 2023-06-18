@@ -95,7 +95,7 @@ const Login = () => {
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            console.log(values, values.biodata[0].name, values.profile[0].name);
+            console.log(values);
             const formData = new FormData();
             formData.append("name", values.name);
             formData.append("about", values.desc);
@@ -127,6 +127,10 @@ const Login = () => {
         }
     });
 
+
+
+
+
     return (
         <div>
             <Grid container spacing={2} style={{ padding: "2rem" }}>
@@ -153,7 +157,7 @@ const Login = () => {
                                     <TextField
                                         id="email"
                                         name="email"
-                                        label="Email Addtess"
+                                        label="Email Address"
                                         color='success'
                                         value={formik.values.email}
                                         onChange={formik.handleChange}
@@ -183,7 +187,7 @@ const Login = () => {
                                         id="profile"
                                         name="profile"
                                         accept="image/*"
-                                        onChange={(event) => formik.setFieldValue('profile', event.currentTarget.files)}
+                                        onChange={(event) => formik.setFieldValue('profile', event.currentTarget.files[0])}
                                         onBlur={formik.handleBlur}
                                         sx={{ width: "100%", fontSize: "1.5rem" }}
                                     />
@@ -242,7 +246,7 @@ const Login = () => {
                                         id="biodata"
                                         name="biodata"
                                         accept=".pdf"
-                                        onChange={(event) => formik.setFieldValue('biodata', event.currentTarget.files)}
+                                        onChange={(event) => formik.setFieldValue('biodata', event.currentTarget.files[0])}
                                         onBlur={formik.handleBlur}
                                         sx={{ width: "100%", fontSize: "1.5rem" }}
                                     />
@@ -284,9 +288,9 @@ const Login = () => {
                                         <Button variant="contained" type="submit"
                                             sx={{
                                                 width: "100%", height: "3.45rem", fontSize: "1.1rem",
-                                                backgroundColor: "#90CFD3", boxShadow: "none", color: "black"
+                                                backgroundColor: "#C4CFFE", boxShadow: "none", color: "black"
                                                 , "&:hover": {
-                                                    backgroundColor: "#90CFD3", boxShadow: "none", color: "black",
+                                                    backgroundColor: "#C4CFFE", boxShadow: "none", color: "black",
                                                     fontSize: "1.3rem",
                                                 }
                                             }}>
@@ -296,7 +300,7 @@ const Login = () => {
                                 </Grid>
                             </Grid>
                             <div style={{ marginTop: "2rem", fontSize: "1.3rem" }}>
-                                <Link to="/matrimonial" style={{ textDecoration: "none", color:"black" }}>Already Registered ? Back to Matrimonial Page</Link>
+                                <Link to="/matrimonial" style={{ textDecoration: "none", color: "black" }}>Already Registered ? Back to Matrimonial Page</Link>
                             </div>
                         </form>
                     </div>

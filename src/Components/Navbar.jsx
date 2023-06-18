@@ -30,7 +30,7 @@ const Navbar = () => {
             </label>
             {tokenvsv !== null ?
               <>
-                <NavLink to="/jobs">Jobs</NavLink>
+                <NavLink to="/jobs"> Jobs </NavLink>
                 <input type="checkbox" id="drop-1" />
                 <ul>
                   <li>
@@ -86,6 +86,9 @@ const Navbar = () => {
           </li>
           <li>
             <NavLink to="/contact">Contact Us</NavLink>
+          </li>
+          <li>
+            <NavLink to="/donate">Donate</NavLink>
           </li>
         </ul>
       </nav>
