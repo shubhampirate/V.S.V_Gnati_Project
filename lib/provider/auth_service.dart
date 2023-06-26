@@ -12,7 +12,8 @@ class AuthServiceProvider with ChangeNotifier {
   bool get loading => _loading;
   User? get user => _user;
 
-  Future<void> signInWithEmailAndPassword(String username, String password) async {
+  Future<void> signInWithEmailAndPassword(
+      String username, String password) async {
     _loading = true;
     notifyListeners();
     try {
@@ -39,8 +40,17 @@ class AuthServiceProvider with ChangeNotifier {
       GetStorage().write('familyId', familyId);
       GetStorage().write('companyId', companyId);
 
+      List<int> ids = [];
+      for (var i in responseData['data']['matrimony']) {
+        ids.add(i);
+        print(i);
+      }
+
+      GetStorage().write('matrimonyIds', ids);
+
       _loading = false;
       notifyListeners();
+      print('logged in');
     } catch (error) {
       rethrow;
     }

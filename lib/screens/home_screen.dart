@@ -2,11 +2,13 @@ import 'package:community/constants/colors.dart';
 import 'package:community/provider/event_service.dart';
 import 'package:community/provider/home_service.dart';
 import 'package:community/screens/tabs_screen/account_screen.dart';
+import 'package:community/screens/tabs_screen/donation_screen.dart';
 import 'package:community/screens/tabs_screen/events.dart';
 import 'package:community/screens/tabs_screen/family_details_screen.dart';
 import 'package:community/screens/tabs_screen/home.dart';
 import 'package:community/screens/tabs_screen/jobs_screen.dart';
 import 'package:community/screens/tabs_screen/matrimony.dart';
+import 'package:community/screens/tabs_screen/members_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -33,16 +35,13 @@ class _HomeScreenState extends State<HomeScreen> {
   static final List<Widget> _pages = <Widget>[
     const HomeTabScreen(),
     const EventsScreen(),
-
-    const Matrimony(),
+    MembersList(),
     const JobsScreen(),
+    const Matrimony(),
+    const DonationScreen(),
     const FamilyDetailsScreen(),
-    Container(
-      color: Colors.lightGreenAccent,
-    ),
-    const AccountScreen()
-    // Camera page
-    // Chats page
+
+    // const AccountScreen()
   ];
 
   @override
