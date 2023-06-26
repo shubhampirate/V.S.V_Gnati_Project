@@ -123,7 +123,7 @@ class MembersList extends StatelessWidget {
                                   visualDensity: VisualDensity.compact,
                                   checkColor: kwhiteColor,
                                   activeColor: kborderColor,
-                                  value: membersService.femaleValue,
+                                  value: membersService.femaleValue ?? false,
                                   onChanged: (bool? value) {
                                     membersService.setGenderFemale(value!);
                                   },
@@ -147,11 +147,12 @@ class MembersList extends StatelessWidget {
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(5)),
                                   visualDensity: VisualDensity.compact,
-                                  value: membersService.maleValue,
+                                  value: membersService.maleValue ?? false,
                                   checkColor: kwhiteColor,
                                   activeColor: kborderColor,
                                   onChanged: (bool? value) {
                                     membersService.setGenderMale(value!);
+                                    print('setted gender m to $value');
                                   },
                                 ),
                                 Text(
@@ -204,8 +205,9 @@ class MembersList extends StatelessWidget {
                                   visualDensity: VisualDensity.compact,
                                   checkColor: kwhiteColor,
                                   activeColor: kborderColor,
-                                  value:
-                                      membersService.maritalStatusMarriedValue,
+                                  value: membersService
+                                          .maritalStatusMarriedValue ??
+                                      false,
                                   onChanged: (bool? value) {
                                     membersService
                                         .setMaritalStatusMarried(value!);
@@ -231,7 +233,8 @@ class MembersList extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(5)),
                                   visualDensity: VisualDensity.compact,
                                   value: membersService
-                                      .maritalStatusUnmarriedValue,
+                                          .maritalStatusUnmarriedValue ??
+                                      false,
                                   checkColor: kwhiteColor,
                                   activeColor: kborderColor,
                                   onChanged: (bool? value) {
@@ -570,7 +573,7 @@ class MembersList extends StatelessWidget {
                   ),
                 ),
                 FutureBuilder(
-                  future: membersService.membersList.isEmpty
+                  future: membersService.originalMembersList.isEmpty
                       ? Provider.of<MembersListProvider>(context, listen: false)
                           .getMemberList()
                       : null,

@@ -5,17 +5,17 @@ import 'dart:convert';
 import 'dart:io';
 
 class MembersListProvider extends ChangeNotifier {
-  bool _female = false;
-  bool _male = false;
+  bool? _female;
+  bool? _male;
 
-  bool _maritalStatusMarried = false;
-  bool _maritalStatusUnmarried = false;
+  bool? _maritalStatusMarried;
+  bool? _maritalStatusUnmarried;
 
   bool _profBusiness = false;
   bool _profJob = false;
 
-  bool get femaleValue => _female;
-  bool get maleValue => _male;
+  bool? get femaleValue => _female;
+  bool? get maleValue => _male;
 
   void setGenderFemale(bool value) {
     _female = value;
@@ -27,8 +27,8 @@ class MembersListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool get maritalStatusMarriedValue => _maritalStatusMarried;
-  bool get maritalStatusUnmarriedValue => _maritalStatusUnmarried;
+  bool? get maritalStatusMarriedValue => _maritalStatusMarried;
+  bool? get maritalStatusUnmarriedValue => _maritalStatusUnmarried;
 
   void setMaritalStatusMarried(bool value) {
     _maritalStatusMarried = value;
@@ -96,6 +96,7 @@ class MembersListProvider extends ChangeNotifier {
   List _originalMembersList = []; // to store all members
 
   List get membersList => _membersList;
+  List get originalMembersList => _originalMembersList;
 
   void setMembersList(List membersList) {
     _membersList = membersList;
@@ -132,12 +133,21 @@ class MembersListProvider extends ChangeNotifier {
       return;
     }
 
+    print('before filter ');
+    print(_originalMembersList.length);
+
     // _membersList.clear();
     List newlist = [];
 
     _originalMembersList.forEach((element) {
-      bool condition1 = element["name"].toString().toLowerCase().contains(membername.toLowerCase()) &&
-          element["education"].toString().toLowerCase().contains(education.toLowerCase()) &&
+      bool condition1 = element["name"]
+              .toString()
+              .toLowerCase()
+              .contains(membername.toLowerCase()) &&
+          element["education"]
+              .toString()
+              .toLowerCase()
+              .contains(education.toLowerCase()) &&
           // element["phone"]
           //     .toString()
           //     .toLowerCase()
@@ -146,28 +156,76 @@ class MembersListProvider extends ChangeNotifier {
           //     .toString()
           //     .toLowerCase()
           //     .contains(profession.toLowerCase()) &&
-          element["gotrej"].toString().toLowerCase().contains(gotRej.toLowerCase()) &&
-          element["native_village"].toString().toLowerCase().contains(native.toLowerCase());
+          element["gotrej"]
+              .toString()
+              .toLowerCase()
+              .contains(gotRej.toLowerCase()) &&
+          element["native_village"]
+              .toString()
+              .toLowerCase()
+              .contains(native.toLowerCase());
 
       bool condition2 = () {
-        if (!_female && element["gender"] == "Female") {
-          return false;
+        print('co2');
+        print(_female);
+        print(_male);
+
+        if (_male != null &&
+            _female != null &&
+            _male == true &&
+            _female == true) return true; // edge case if both are selected
+
+        if (_male != null &&
+            _female != null &&
+            _male == false &&
+            _female == false)
+          return true; // if none are selected display both male and female
+
+        if (_female != null) {
+          if (!_female! && element["gender"] == "Female") {
+            print('p1');
+            return false;
+          }
         }
-        if (!_male && element["gender"] == "Male") {
-          return false;
+        if (_male != null) {
+          if (!_male! && element["gender"] == "Male") {
+            print('p2');
+            return false;
+          }
         }
 
-        if (!_maritalStatusMarried && element["marital_status"] == "Married") {
-          return false;
-        }
-        if (!_maritalStatusUnmarried && element["marital_status"] == "Unmarried") {
-          return false;
-        }
+        // if (!_maritalStatusMarried && element["marital_status"] == "Married") {
+        //   return false;
+        // }
+        // if (!_maritalStatusUnmarried &&
+        //     element["marital_status"] == "Unmarried") {
+        //   return false;
+        // }
 
         return true;
       }();
 
       bool condition3 = () {
+        if (_maritalStatusMarried != null &&
+            _maritalStatusUnmarried != null &&
+            _maritalStatusMarried == _maritalStatusUnmarried) {
+          return true;
+        }
+
+        if (_maritalStatusMarried != null) {
+          if (_maritalStatusMarried == true &&
+              element["marital_status"] != "Single") return false;
+        }
+
+        if (_maritalStatusUnmarried != null) {
+          if (_maritalStatusUnmarried == true &&
+              element["marital_status"] == "Single") return false;
+        }
+
+        return true;
+      }();
+
+      bool condition4 = () {
         if (profession == "All" || profession == "") {
           return true;
         }
@@ -179,10 +237,18 @@ class MembersListProvider extends ChangeNotifier {
         return false;
       }();
 
-      if (condition1 && condition2 && condition3) {
+      print(element["name"]);
+      print(condition1);
+      print(condition2);
+      print(condition4);
+
+      if (condition1 && condition2 && condition3 && condition4) {
         newlist.add(element);
       }
     });
+
+    print('after filter ');
+    print(newlist.length);
 
     _membersList = newlist;
 

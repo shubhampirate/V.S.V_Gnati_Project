@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:community/constants/colors.dart';
+import 'package:community/constants/colors.dart'; //ok
 import 'package:community/constants/paths.dart';
 import 'package:community/provider/family_detail_service.dart';
 import 'package:community/provider/matrimony_service.dart';
@@ -16,7 +16,8 @@ class EditMatrimonyDetailsForm extends StatefulWidget {
   final dynamic preFilledData;
 
   @override
-  State<EditMatrimonyDetailsForm> createState() => _EditMatrimonyDetailsFormState();
+  State<EditMatrimonyDetailsForm> createState() =>
+      _EditMatrimonyDetailsFormState();
 }
 
 class _EditMatrimonyDetailsFormState extends State<EditMatrimonyDetailsForm> {
@@ -30,7 +31,8 @@ class _EditMatrimonyDetailsFormState extends State<EditMatrimonyDetailsForm> {
   final TextEditingController genderController = TextEditingController();
 
   // final TextEditingController occupation
-  InputDecoration _commonInputDecoration(BuildContext context, {String? hintText}) {
+  InputDecoration _commonInputDecoration(BuildContext context,
+      {String? hintText}) {
     // final toggleStateService = Provider.of<ToggleStateProvider>(context);
     return InputDecoration(
       // suffixIcon: inputText == "password"
@@ -92,7 +94,8 @@ class _EditMatrimonyDetailsFormState extends State<EditMatrimonyDetailsForm> {
 
   @override
   Widget build(BuildContext context) {
-    final matrimonyDetailService = Provider.of<MatrimonyDetailProvider>(context);
+    final matrimonyDetailService =
+        Provider.of<MatrimonyDetailProvider>(context);
     return WillPopScope(
       onWillPop: () async {
         matrimonyDetailService.clearMyMartrimonyData();
@@ -118,7 +121,11 @@ class _EditMatrimonyDetailsFormState extends State<EditMatrimonyDetailsForm> {
             padding: const EdgeInsets.only(top: 15.0),
             child: Text(
               "Matrimony Details",
-              style: TextStyle(fontFamily: 'Raleway', fontSize: 18, color: kbrownColor, fontWeight: FontWeight.w700),
+              style: TextStyle(
+                  fontFamily: 'Raleway',
+                  fontSize: 18,
+                  color: kbrownColor,
+                  fontWeight: FontWeight.w700),
             ),
           ),
         ),
@@ -143,7 +150,10 @@ class _EditMatrimonyDetailsFormState extends State<EditMatrimonyDetailsForm> {
                           children: [
                             Text(
                               "Photo",
-                              style: TextStyle(fontFamily: 'Roboto', fontSize: 15, color: kblackColor),
+                              style: TextStyle(
+                                  fontFamily: 'Roboto',
+                                  fontSize: 15,
+                                  color: kblackColor),
                             ),
                           ],
                         ),
@@ -152,7 +162,8 @@ class _EditMatrimonyDetailsFormState extends State<EditMatrimonyDetailsForm> {
                         onTap: () async {
                           final ImagePicker picker = ImagePicker();
                           // Pick an image.
-                          final XFile? xFile = await picker.pickImage(source: ImageSource.gallery);
+                          final XFile? xFile = await picker.pickImage(
+                              source: ImageSource.gallery);
                           if (xFile == null) return;
                           final File file = await xFileToImage(xFile);
 
@@ -160,26 +171,31 @@ class _EditMatrimonyDetailsFormState extends State<EditMatrimonyDetailsForm> {
                         },
                         child: Container(
                           alignment: Alignment.center,
-                          child: matrimonyDetailService.getMyProfileImage != null
-                              ? Image.file(
-                                  matrimonyDetailService.getMyProfileImage!,
-                                )
-                              : widget.preFilledData?["picture"] != null
-                                  ? Image.network(
-                                      kbaseUrlImage + widget.preFilledData["picture"],
-                                      width: 100,
+                          child:
+                              matrimonyDetailService.getMyProfileImage != null
+                                  ? Image.file(
+                                      matrimonyDetailService.getMyProfileImage!,
                                     )
-                                  : Image.asset(
-                                      'assets/images/profile_icon.png',
-                                      width: 100,
-                                    ),
+                                  : widget.preFilledData?["picture"] != null
+                                      ? Image.network(
+                                          kbaseUrlImage +
+                                              widget.preFilledData["picture"],
+                                          width: 100,
+                                        )
+                                      : Image.asset(
+                                          'assets/images/profile_icon.png',
+                                          width: 100,
+                                        ),
                         ),
                       ),
                       Container(
                         margin: const EdgeInsets.only(top: 15),
                         child: Text(
                           "Name",
-                          style: TextStyle(fontFamily: 'Roboto', fontSize: 16, color: kblackColor),
+                          style: TextStyle(
+                              fontFamily: 'Roboto',
+                              fontSize: 16,
+                              color: kblackColor),
                         ),
                       ),
                       Container(
@@ -191,7 +207,8 @@ class _EditMatrimonyDetailsFormState extends State<EditMatrimonyDetailsForm> {
                           maxLines: 1,
                           controller: nameController,
                           onChanged: (value) {
-                            matrimonyDetailService.setMatrimonyData("name", value);
+                            matrimonyDetailService.setMatrimonyData(
+                                "name", value);
                           },
 
                           validator: (value) {
@@ -211,7 +228,10 @@ class _EditMatrimonyDetailsFormState extends State<EditMatrimonyDetailsForm> {
                         margin: const EdgeInsets.only(top: 15),
                         child: Text(
                           "About you",
-                          style: TextStyle(fontFamily: 'Roboto', fontSize: 16, color: kblackColor),
+                          style: TextStyle(
+                              fontFamily: 'Roboto',
+                              fontSize: 16,
+                              color: kblackColor),
                         ),
                       ),
                       Container(
@@ -223,7 +243,8 @@ class _EditMatrimonyDetailsFormState extends State<EditMatrimonyDetailsForm> {
                           maxLines: 1,
                           controller: aboutController,
                           onChanged: (value) {
-                            matrimonyDetailService.setMatrimonyData("about", value);
+                            matrimonyDetailService.setMatrimonyData(
+                                "about", value);
                           },
                           // validator: (value) {
                           //   if (value == null || value.isEmpty) {
@@ -240,7 +261,10 @@ class _EditMatrimonyDetailsFormState extends State<EditMatrimonyDetailsForm> {
                         margin: const EdgeInsets.only(top: 15),
                         child: Text(
                           "Birth date",
-                          style: TextStyle(fontFamily: 'Roboto', fontSize: 16, color: kblackColor),
+                          style: TextStyle(
+                              fontFamily: 'Roboto',
+                              fontSize: 16,
+                              color: kblackColor),
                         ),
                       ),
                       Container(
@@ -248,12 +272,14 @@ class _EditMatrimonyDetailsFormState extends State<EditMatrimonyDetailsForm> {
                         // height: 40,
                         child: TextFormField(
                           // initialValue: matrimonyDetailService.myMatrinomyData["a"],
-                          decoration: _commonInputDecoration(context, hintText: "YYYY-MM-DD"),
+                          decoration: _commonInputDecoration(context,
+                              hintText: "YYYY-MM-DD"),
                           maxLines: 1,
 
                           controller: dobController,
                           onChanged: (value) {
-                            matrimonyDetailService.setMatrimonyData("dob", value.toString());
+                            matrimonyDetailService.setMatrimonyData(
+                                "dob", value.toString());
                           },
                           // validator: (value) {
                           //   if (value == null || value.isEmpty) {
@@ -270,7 +296,10 @@ class _EditMatrimonyDetailsFormState extends State<EditMatrimonyDetailsForm> {
                         margin: const EdgeInsets.only(top: 15),
                         child: Text(
                           "Phone Number",
-                          style: TextStyle(fontFamily: 'Roboto', fontSize: 16, color: kblackColor),
+                          style: TextStyle(
+                              fontFamily: 'Roboto',
+                              fontSize: 16,
+                              color: kblackColor),
                         ),
                       ),
                       Container(
@@ -282,7 +311,8 @@ class _EditMatrimonyDetailsFormState extends State<EditMatrimonyDetailsForm> {
                           maxLines: 1,
                           controller: phoneController,
                           onChanged: (value) {
-                            matrimonyDetailService.setMatrimonyData("phone", value);
+                            matrimonyDetailService.setMatrimonyData(
+                                "phone", value);
                           },
                           // validator: (value) {
                           //   if (value == null || value.isEmpty) {
@@ -299,7 +329,10 @@ class _EditMatrimonyDetailsFormState extends State<EditMatrimonyDetailsForm> {
                         margin: const EdgeInsets.only(top: 15),
                         child: Text(
                           "Fathers Name",
-                          style: TextStyle(fontFamily: 'Roboto', fontSize: 16, color: kblackColor),
+                          style: TextStyle(
+                              fontFamily: 'Roboto',
+                              fontSize: 16,
+                              color: kblackColor),
                         ),
                       ),
                       Container(
@@ -311,7 +344,8 @@ class _EditMatrimonyDetailsFormState extends State<EditMatrimonyDetailsForm> {
                           maxLines: 1,
                           controller: fathersNameController,
                           onChanged: (value) {
-                            matrimonyDetailService.setMatrimonyData("fathers_name", value);
+                            matrimonyDetailService.setMatrimonyData(
+                                "fathers_name", value);
                           },
                           // validator: (value) {
                           //   if (value == null || value.isEmpty) {
@@ -328,7 +362,10 @@ class _EditMatrimonyDetailsFormState extends State<EditMatrimonyDetailsForm> {
                         margin: const EdgeInsets.only(top: 15),
                         child: Text(
                           "Gender",
-                          style: TextStyle(fontFamily: 'Roboto', fontSize: 16, color: kblackColor),
+                          style: TextStyle(
+                              fontFamily: 'Roboto',
+                              fontSize: 16,
+                              color: kblackColor),
                         ),
                       ),
                       Container(
@@ -336,7 +373,8 @@ class _EditMatrimonyDetailsFormState extends State<EditMatrimonyDetailsForm> {
                         // height: 40,
                         child: TextFormField(
                           // initialValue: matrimonyDetailService.myMatrinomyData["a"],
-                          decoration: _commonInputDecoration(context, hintText: "Male/Female"),
+                          decoration: _commonInputDecoration(context,
+                              hintText: "Male/Female"),
                           maxLines: 1,
                           controller: genderController,
                           onChanged: (value) {
@@ -349,7 +387,8 @@ class _EditMatrimonyDetailsFormState extends State<EditMatrimonyDetailsForm> {
                               gender = "Female";
                               genderController.text = "Female";
                             }
-                            matrimonyDetailService.setMatrimonyData('gender', gender);
+                            matrimonyDetailService.setMatrimonyData(
+                                'gender', gender);
                           },
                           // validator: (value) {
                           //   if (value == null || value.isEmpty) {
@@ -367,15 +406,26 @@ class _EditMatrimonyDetailsFormState extends State<EditMatrimonyDetailsForm> {
                         margin: const EdgeInsets.only(top: 15),
                         child: Text(
                           "Bio Data",
-                          style: TextStyle(fontFamily: 'Roboto', fontSize: 16, color: kblackColor),
+                          style: TextStyle(
+                              fontFamily: 'Roboto',
+                              fontSize: 16,
+                              color: kblackColor),
                         ),
                       ),
 
                       InkWell(
                         onTap: () async {
-                          FilePickerResult? file = await FilePicker.platform.pickFiles(
+                          FilePickerResult? file =
+                              await FilePicker.platform.pickFiles(
                             type: FileType.custom,
-                            allowedExtensions: ['pdf', 'doc', 'docx', 'png', 'jpg', 'jpeg'],
+                            allowedExtensions: [
+                              'pdf',
+                              'doc',
+                              'docx',
+                              'png',
+                              'jpg',
+                              'jpeg'
+                            ],
                           );
 
                           if (file != null) {
@@ -385,17 +435,25 @@ class _EditMatrimonyDetailsFormState extends State<EditMatrimonyDetailsForm> {
                         },
                         child: Container(
                           alignment: Alignment.center,
-                          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 10, vertical: 7),
                           decoration: BoxDecoration(
-                            border: Border.all(color: ktextInputBorderColor, width: 2),
+                            border: Border.all(
+                                color: ktextInputBorderColor, width: 2),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           margin: EdgeInsets.only(top: 5),
-                          child: Text(matrimonyDetailService.getMyBioData != null
-                              ? matrimonyDetailService.getMyBioData!.path.split("/").last
-                              : widget.preFilledData?["biodata"] != null
-                                  ? widget.preFilledData["biodata"].toString().split("/").last
-                                  : "Upload Bio Data"),
+                          child: Text(
+                              matrimonyDetailService.getMyBioData != null
+                                  ? matrimonyDetailService.getMyBioData!.path
+                                      .split("/")
+                                      .last
+                                  : widget.preFilledData?["biodata"] != null
+                                      ? widget.preFilledData["biodata"]
+                                          .toString()
+                                          .split("/")
+                                          .last
+                                      : "Upload Bio Data"),
                         ),
                       ),
                       SizedBox(
@@ -415,7 +473,10 @@ class _EditMatrimonyDetailsFormState extends State<EditMatrimonyDetailsForm> {
                                 SnackBar(
                                   content: Text(
                                     "Please Enter Valid Date of Birth in YYYY-MM-DD format",
-                                    style: TextStyle(fontFamily: 'Roboto', fontSize: 16, color: kwhiteColor),
+                                    style: TextStyle(
+                                        fontFamily: 'Roboto',
+                                        fontSize: 16,
+                                        color: kwhiteColor),
                                   ),
                                   duration: Duration(seconds: 10),
                                 ),
@@ -429,7 +490,10 @@ class _EditMatrimonyDetailsFormState extends State<EditMatrimonyDetailsForm> {
                                   SnackBar(
                                     content: Text(
                                       "Please Enter Valid Date of Birth in YYYY-MM-DD in numbers only",
-                                      style: TextStyle(fontFamily: 'Roboto', fontSize: 16, color: kwhiteColor),
+                                      style: TextStyle(
+                                          fontFamily: 'Roboto',
+                                          fontSize: 16,
+                                          color: kwhiteColor),
                                     ),
                                     duration: Duration(seconds: 10),
                                   ),
@@ -443,31 +507,42 @@ class _EditMatrimonyDetailsFormState extends State<EditMatrimonyDetailsForm> {
                                 SnackBar(
                                   content: Text(
                                     "Please Enter Valid DOB Year",
-                                    style: TextStyle(fontFamily: 'Roboto', fontSize: 16, color: kwhiteColor),
+                                    style: TextStyle(
+                                        fontFamily: 'Roboto',
+                                        fontSize: 16,
+                                        color: kwhiteColor),
                                   ),
                                 ),
                               );
                               return;
                             }
 
-                            if (int.parse(dobList[1]) < 1 || int.parse(dobList[1]) > 12) {
+                            if (int.parse(dobList[1]) < 1 ||
+                                int.parse(dobList[1]) > 12) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
                                     "Please Enter Valid DOB Month",
-                                    style: TextStyle(fontFamily: 'Roboto', fontSize: 16, color: kwhiteColor),
+                                    style: TextStyle(
+                                        fontFamily: 'Roboto',
+                                        fontSize: 16,
+                                        color: kwhiteColor),
                                   ),
                                 ),
                               );
                               return;
                             }
 
-                            if (int.parse(dobList[2]) < 1 || int.parse(dobList[2]) > 31) {
+                            if (int.parse(dobList[2]) < 1 ||
+                                int.parse(dobList[2]) > 31) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
                                     "Please Enter Valid DOB Date",
-                                    style: TextStyle(fontFamily: 'Roboto', fontSize: 16, color: kwhiteColor),
+                                    style: TextStyle(
+                                        fontFamily: 'Roboto',
+                                        fontSize: 16,
+                                        color: kwhiteColor),
                                   ),
                                 ),
                               );
@@ -479,7 +554,10 @@ class _EditMatrimonyDetailsFormState extends State<EditMatrimonyDetailsForm> {
                                 SnackBar(
                                   content: Text(
                                     "Please Enter Name",
-                                    style: TextStyle(fontFamily: 'Roboto', fontSize: 16, color: kwhiteColor),
+                                    style: TextStyle(
+                                        fontFamily: 'Roboto',
+                                        fontSize: 16,
+                                        color: kwhiteColor),
                                   ),
                                 ),
                               );
@@ -491,7 +569,10 @@ class _EditMatrimonyDetailsFormState extends State<EditMatrimonyDetailsForm> {
                                 SnackBar(
                                   content: Text(
                                     "Please Enter About You",
-                                    style: TextStyle(fontFamily: 'Roboto', fontSize: 16, color: kwhiteColor),
+                                    style: TextStyle(
+                                        fontFamily: 'Roboto',
+                                        fontSize: 16,
+                                        color: kwhiteColor),
                                   ),
                                 ),
                               );
@@ -503,19 +584,26 @@ class _EditMatrimonyDetailsFormState extends State<EditMatrimonyDetailsForm> {
                                 SnackBar(
                                   content: Text(
                                     "Please Enter Phone Number",
-                                    style: TextStyle(fontFamily: 'Roboto', fontSize: 16, color: kwhiteColor),
+                                    style: TextStyle(
+                                        fontFamily: 'Roboto',
+                                        fontSize: 16,
+                                        color: kwhiteColor),
                                   ),
                                 ),
                               );
                               return;
                             }
 
-                            if (phoneController.text.length != 10 || int.tryParse(phoneController.text) == null) {
+                            if (phoneController.text.length != 10 ||
+                                int.tryParse(phoneController.text) == null) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
                                     "Please Enter Valid Phone Number without +91",
-                                    style: TextStyle(fontFamily: 'Roboto', fontSize: 16, color: kwhiteColor),
+                                    style: TextStyle(
+                                        fontFamily: 'Roboto',
+                                        fontSize: 16,
+                                        color: kwhiteColor),
                                   ),
                                 ),
                               );
@@ -527,19 +615,26 @@ class _EditMatrimonyDetailsFormState extends State<EditMatrimonyDetailsForm> {
                                 SnackBar(
                                   content: Text(
                                     "Please Enter Father's Name",
-                                    style: TextStyle(fontFamily: 'Roboto', fontSize: 16, color: kwhiteColor),
+                                    style: TextStyle(
+                                        fontFamily: 'Roboto',
+                                        fontSize: 16,
+                                        color: kwhiteColor),
                                   ),
                                 ),
                               );
                               return;
                             }
 
-                            if (genderController.text != "Male" && genderController.text != "Female") {
+                            if (genderController.text != "Male" &&
+                                genderController.text != "Female") {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
                                     "Gender can be \"Male\" or \"Female\" only",
-                                    style: TextStyle(fontFamily: 'Roboto', fontSize: 16, color: kwhiteColor),
+                                    style: TextStyle(
+                                        fontFamily: 'Roboto',
+                                        fontSize: 16,
+                                        color: kwhiteColor),
                                   ),
                                 ),
                               );
@@ -561,7 +656,10 @@ class _EditMatrimonyDetailsFormState extends State<EditMatrimonyDetailsForm> {
                                   SnackBar(
                                     content: Text(
                                       "Details Added Successfully",
-                                      style: TextStyle(fontFamily: 'Roboto', fontSize: 16, color: kwhiteColor),
+                                      style: TextStyle(
+                                          fontFamily: 'Roboto',
+                                          fontSize: 16,
+                                          color: kwhiteColor),
                                     ),
                                   ),
                                 );
@@ -572,31 +670,44 @@ class _EditMatrimonyDetailsFormState extends State<EditMatrimonyDetailsForm> {
                                   SnackBar(
                                     content: Text(
                                       "Error Adding Details",
-                                      style: TextStyle(fontFamily: 'Roboto', fontSize: 16, color: kwhiteColor),
+                                      style: TextStyle(
+                                          fontFamily: 'Roboto',
+                                          fontSize: 16,
+                                          color: kwhiteColor),
                                     ),
                                   ),
                                 );
                               }
                             } else {
-                              matrimonyDetailService.setMatrimonyData("name", nameController.text);
-                              matrimonyDetailService.setMatrimonyData("about", aboutController.text);
-                              matrimonyDetailService.setMatrimonyData("fathers_name", fathersNameController.text);
-                              matrimonyDetailService.setMatrimonyData("phone", phoneController.text);
-                              matrimonyDetailService.setMatrimonyData("gender", genderController.text);
-                              matrimonyDetailService.setMatrimonyData("dob", dobController.text);
+                              matrimonyDetailService.setMatrimonyData(
+                                  "name", nameController.text);
+                              matrimonyDetailService.setMatrimonyData(
+                                  "about", aboutController.text);
+                              matrimonyDetailService.setMatrimonyData(
+                                  "fathers_name", fathersNameController.text);
+                              matrimonyDetailService.setMatrimonyData(
+                                  "phone", phoneController.text);
+                              matrimonyDetailService.setMatrimonyData(
+                                  "gender", genderController.text);
+                              matrimonyDetailService.setMatrimonyData(
+                                  "dob", dobController.text);
 
                               // if(nameController.text)
 
                               int id = widget.preFilledData["id"];
 
-                              bool res = await matrimonyDetailService.editMatrimony(id);
+                              bool res = await matrimonyDetailService
+                                  .editMatrimony(id);
 
                               if (res) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(
                                       "Details Edited Successfully",
-                                      style: TextStyle(fontFamily: 'Roboto', fontSize: 16, color: kwhiteColor),
+                                      style: TextStyle(
+                                          fontFamily: 'Roboto',
+                                          fontSize: 16,
+                                          color: kwhiteColor),
                                     ),
                                   ),
                                 );
@@ -607,7 +718,10 @@ class _EditMatrimonyDetailsFormState extends State<EditMatrimonyDetailsForm> {
                                   SnackBar(
                                     content: Text(
                                       "Error Editing Details",
-                                      style: TextStyle(fontFamily: 'Roboto', fontSize: 16, color: kwhiteColor),
+                                      style: TextStyle(
+                                          fontFamily: 'Roboto',
+                                          fontSize: 16,
+                                          color: kwhiteColor),
                                     ),
                                   ),
                                 );
@@ -617,7 +731,8 @@ class _EditMatrimonyDetailsFormState extends State<EditMatrimonyDetailsForm> {
                           child: Container(
                             width: MediaQuery.of(context).size.width - 20,
                             margin: EdgeInsets.only(top: 15),
-                            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 12),
                             decoration: BoxDecoration(
                               color: kpurpleColor,
                               borderRadius: BorderRadius.circular(10.0),
@@ -625,7 +740,10 @@ class _EditMatrimonyDetailsFormState extends State<EditMatrimonyDetailsForm> {
                             child: Text(
                               "Add Details",
                               textAlign: TextAlign.center,
-                              style: TextStyle(fontFamily: 'Roboto', fontSize: 15, color: kwhiteColor),
+                              style: TextStyle(
+                                  fontFamily: 'Roboto',
+                                  fontSize: 15,
+                                  color: kwhiteColor),
                             ),
                           ),
                         ),

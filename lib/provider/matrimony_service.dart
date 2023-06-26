@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'; //ok
 import 'package:http/http.dart' as http;
 import 'package:get_storage/get_storage.dart';
 
@@ -66,16 +66,20 @@ class MatrimonyDetailProvider extends ChangeNotifier {
     try {
       String url = 'https://jenilsavla.pythonanywhere.com/api/matrimonies/';
 
-      http.MultipartRequest request = http.MultipartRequest('POST', Uri.parse(url));
+      http.MultipartRequest request =
+          http.MultipartRequest('POST', Uri.parse(url));
 
-      request.headers.addAll({"Authorization": "Token ${GetStorage().read('token')}"});
+      request.headers
+          .addAll({"Authorization": "Token ${GetStorage().read('token')}"});
 
       if (myProfileImage != null) {
-        request.files.add(await http.MultipartFile.fromPath('picture', myProfileImage!.path));
+        request.files.add(
+            await http.MultipartFile.fromPath('picture', myProfileImage!.path));
       }
 
       if (myBioData != null) {
-        request.files.add(await http.MultipartFile.fromPath('biodata', myBioData!.path));
+        request.files
+            .add(await http.MultipartFile.fromPath('biodata', myBioData!.path));
       }
 
       request.fields['name'] = myMatrinomyData['name'];
@@ -161,7 +165,8 @@ class MatrimonyDetailProvider extends ChangeNotifier {
   Future<void> getMyMatrimonyDetails() async {
     print('family id is ${GetStorage().read('familyId')}');
     // return;
-    String url = 'https://jenilsavla.pythonanywhere.com/api/matrimony/${GetStorage().read('familyId')}';
+    String url =
+        'https://jenilsavla.pythonanywhere.com/api/matrimony/${GetStorage().read('familyId')}';
 
     final response = await http.get(
       Uri.parse(url),
@@ -228,7 +233,8 @@ class MatrimonyDetailProvider extends ChangeNotifier {
 
     // // TODO
 
-    String url = 'https://jenilsavla.pythonanywhere.com/api/matrimonies?gender=$gender';
+    String url =
+        'https://jenilsavla.pythonanywhere.com/api/matrimonies?gender=$gender';
 
     final response = await http.get(
       Uri.parse(url),
@@ -264,11 +270,13 @@ class MatrimonyDetailProvider extends ChangeNotifier {
     request.headers['Authorization'] = "Token ${GetStorage().read('token')}";
 
     if (myProfileImage != null) {
-      request.files.add(await http.MultipartFile.fromPath('picture', myProfileImage!.path));
+      request.files.add(
+          await http.MultipartFile.fromPath('picture', myProfileImage!.path));
     }
 
     if (myBioData != null) {
-      request.files.add(await http.MultipartFile.fromPath('biodata', myBioData!.path));
+      request.files
+          .add(await http.MultipartFile.fromPath('biodata', myBioData!.path));
     }
 
     final response1 = await request.send();
