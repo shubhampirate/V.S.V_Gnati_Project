@@ -2,10 +2,12 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:community/constants/colors.dart';
 import 'package:community/constants/paths.dart';
 import 'package:community/provider/event_service.dart';
+import 'package:community/screens/tabs_screen/event_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class EventsScreen extends StatefulWidget {
   const EventsScreen({Key? key}) : super(key: key);
@@ -20,26 +22,29 @@ class _EventsScreenState extends State<EventsScreen> {
     final eventService = Provider.of<EventProvider>(context);
     return Scaffold(
       backgroundColor: kwhiteColor,
-      appBar: AppBar(backgroundColor: kwhiteColor, elevation: 0, actions: [
-        Padding(
-          padding: const EdgeInsets.only(right: 15.0, top: 15),
-          child: SvgPicture.asset(
-            "assets/images/forward.svg",
-          ),
-        ),
-      ]),
+      // appBar: AppBar(backgroundColor: kwhiteColor, elevation: 0, actions: [
+      //   Padding(
+      //     padding: const EdgeInsets.only(right: 15.0, top: 15),
+      //     child: SvgPicture.asset(
+      //       "assets/images/forward.svg",
+      //     ),
+      //   ),
+      // ]),
       body: ListView(
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
         children: [
-          Text(
-            "Events",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: kbrownColor,
-              fontFamily: "Raleway",
-              fontWeight: FontWeight.w700,
-              fontSize: 24,
+          Container(
+            margin: const EdgeInsets.only(top: 30),
+            child: Text(
+              "Events",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: kbrownColor,
+                fontFamily: "Raleway",
+                fontWeight: FontWeight.w700,
+                fontSize: 24,
+              ),
             ),
           ),
           Container(
@@ -155,7 +160,13 @@ class _EventsScreenState extends State<EventsScreen> {
                                     ),
                                     Container(
                                       child: InkWell(
-                                        onTap: () {},
+                                        onTap: () async {
+                                          if (!await launchUrl(
+                                              Uri.parse(eventService.eventData[index]["photos_drive"]))) {
+                                            throw Exception(
+                                                'Could not launch "${eventService.eventData[index]["photos_drive"]}"');
+                                          }
+                                        },
                                         child: Row(
                                           children: [
                                             SvgPicture.asset(
@@ -212,30 +223,46 @@ class _EventsScreenState extends State<EventsScreen> {
                                         ],
                                       ),
                                     ),
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-                                      decoration: BoxDecoration(
-                                        color: kyellowColor,
-                                        borderRadius: BorderRadius.circular(10.0),
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            "Know More",
-                                            textAlign: TextAlign.start,
-                                            style: TextStyle(
-                                              color: kblackColor,
-                                              fontFamily: "Roboto",
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 15,
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                          return EventDetailsScreen(
+                                            eventName: eventService.eventData[index]["name"],
+                                            eventAbout: eventService.eventData[index]["about"],
+                                            eventDate: eventService.eventData[index]["date"],
+                                            eventVenue: eventService.eventData[index]["venue"],
+                                            eventStartTime: eventService.eventData[index]["start_time"],
+                                            eventEndTime: eventService.eventData[index]["end_time"],
+                                            eventPhotos: eventService.eventData[index]["photos_drive"],
+                                            eventPicture: eventService.eventData[index]["picture"],
+                                          );
+                                        }));
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                                        decoration: BoxDecoration(
+                                          color: kyellowColor,
+                                          borderRadius: BorderRadius.circular(10.0),
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              "Know More",
+                                              textAlign: TextAlign.start,
+                                              style: TextStyle(
+                                                color: kblackColor,
+                                                fontFamily: "Roboto",
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 15,
+                                              ),
                                             ),
-                                          ),
-                                          SvgPicture.asset(
-                                            "assets/images/export.svg",
-                                            height: 25,
-                                            width: 25,
-                                          ),
-                                        ],
+                                            SvgPicture.asset(
+                                              "assets/images/export.svg",
+                                              height: 25,
+                                              width: 25,
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ],

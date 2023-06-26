@@ -31,10 +31,13 @@ class AuthServiceProvider with ChangeNotifier {
       }
       final token = responseData['data']['token'];
       final familyId = responseData['data']['family'];
+
+      final companyId = responseData['data']['company'];
       print(token);
       _user = User.fromJson(responseData['data'], token);
       GetStorage().write('token', token);
       GetStorage().write('familyId', familyId);
+      GetStorage().write('companyId', companyId);
 
       _loading = false;
       notifyListeners();

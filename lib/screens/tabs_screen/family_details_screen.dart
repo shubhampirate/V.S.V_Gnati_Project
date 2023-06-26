@@ -49,6 +49,8 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
     );
   }
 
+  List editOccupationAddress = [];
+
   @override
   Widget build(BuildContext context) {
     final familyDetailService = Provider.of<FamilyDetailProvider>(context);
@@ -192,8 +194,16 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
                         ),
                         InkWell(
                           onTap: () {
+                            // setState(() {
+                            // editOccupationAddress =
+                            // });
+
                             Navigator.push(context, MaterialPageRoute(builder: (context) {
-                              return EditFamilyDetailsForm();
+                              return EditFamilyDetailsForm(
+                                editOccupationAddress: List.of(familyDetailService.occupationAddreess),
+                                editHomeAddress: familyDetailService.homeAddress,
+                                editGotrej: familyDetailService.gotrej,
+                              );
                             }));
                           },
                           child: Container(

@@ -5,7 +5,8 @@ import 'package:community/screens/tabs_screen/account_screen.dart';
 import 'package:community/screens/tabs_screen/events.dart';
 import 'package:community/screens/tabs_screen/family_details_screen.dart';
 import 'package:community/screens/tabs_screen/home.dart';
-import 'package:community/screens/tabs_screen/matrimonymony.dart';
+import 'package:community/screens/tabs_screen/jobs_screen.dart';
+import 'package:community/screens/tabs_screen/matrimony.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -34,10 +35,8 @@ class _HomeScreenState extends State<HomeScreen> {
     const EventsScreen(),
 
     const Matrimony(),
-    Container(
-      color: Colors.yellow,
-    ),
-    FamilyDetailsScreen(),
+    const JobsScreen(),
+    const FamilyDetailsScreen(),
     Container(
       color: Colors.lightGreenAccent,
     ),
@@ -78,9 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             icon: homeService.selectedIndex == 1
                 ? Container(
-                    decoration: BoxDecoration(
-                        color: Color(0xFFE99B01).withOpacity(0.5),
-                        shape: BoxShape.circle),
+                    decoration: BoxDecoration(color: Color(0xFFE99B01).withOpacity(0.5), shape: BoxShape.circle),
                     padding: EdgeInsets.all(3.0),
                     child: Icon(
                       Icons.calendar_month,
@@ -98,9 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             icon: homeService.selectedIndex == 2
                 ? Container(
-                    decoration: BoxDecoration(
-                        color: Color(0xFFE99B01).withOpacity(0.5),
-                        shape: BoxShape.circle),
+                    decoration: BoxDecoration(color: Color(0xFFE99B01).withOpacity(0.5), shape: BoxShape.circle),
                     padding: EdgeInsets.all(3.0),
                     child: Icon(
                       Icons.person_search_outlined,
@@ -118,9 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             icon: homeService.selectedIndex == 3
                 ? Container(
-                    decoration: BoxDecoration(
-                        color: Color(0xFFE99B01).withOpacity(0.5),
-                        shape: BoxShape.circle),
+                    decoration: BoxDecoration(color: Color(0xFFE99B01).withOpacity(0.5), shape: BoxShape.circle),
                     padding: EdgeInsets.all(3.0),
                     child: Icon(
                       CupertinoIcons.briefcase,
@@ -138,9 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             icon: homeService.selectedIndex == 4
                 ? Container(
-                    decoration: BoxDecoration(
-                        color: Color(0xFFE99B01).withOpacity(0.5),
-                        shape: BoxShape.circle),
+                    decoration: BoxDecoration(color: Color(0xFFE99B01).withOpacity(0.5), shape: BoxShape.circle),
                     padding: EdgeInsets.all(3.0),
                     child: Icon(
                       Icons.people_alt_outlined,
@@ -158,9 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             icon: homeService.selectedIndex == 5
                 ? Container(
-                    decoration: BoxDecoration(
-                        color: Color(0xFFE99B01).withOpacity(0.5),
-                        shape: BoxShape.circle),
+                    decoration: BoxDecoration(color: Color(0xFFE99B01).withOpacity(0.5), shape: BoxShape.circle),
                     padding: EdgeInsets.all(3.0),
                     child: Icon(
                       Icons.info_outline,
@@ -178,9 +167,7 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             icon: homeService.selectedIndex == 6
                 ? Container(
-                    decoration: BoxDecoration(
-                        color: Color(0xFFE99B01).withOpacity(0.5),
-                        shape: BoxShape.circle),
+                    decoration: BoxDecoration(color: Color(0xFFE99B01).withOpacity(0.5), shape: BoxShape.circle),
                     padding: EdgeInsets.all(3.0),
                     child: Icon(
                       CupertinoIcons.person_crop_circle,

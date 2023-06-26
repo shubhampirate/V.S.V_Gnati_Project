@@ -1,6 +1,8 @@
+import 'package:community/provider/company_details_provider.dart';
 import 'package:community/provider/event_service.dart';
 import 'package:community/provider/family_detail_service.dart';
 import 'package:community/provider/home_service.dart';
+import 'package:community/provider/job_service.dart';
 import 'package:community/provider/matrimony_service.dart';
 import 'package:community/provider/toggle_state_provider.dart';
 import 'package:community/screens/home_screen.dart';
@@ -14,8 +16,7 @@ import 'package:get_storage/get_storage.dart';
 
 void main() async {
   await GetStorage.init();
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-      overlays: [SystemUiOverlay.bottom]);
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.bottom]);
   print('token is ${GetStorage().read('token')}');
 
   runApp(const MyApp());
@@ -34,7 +35,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: ((context) => HomeProvider())),
         ChangeNotifierProvider(create: ((context) => EventProvider())),
         ChangeNotifierProvider(create: ((context) => FamilyDetailProvider())),
-        ChangeNotifierProvider(create: ((context) => MatrimonyDetailProvider()))
+        ChangeNotifierProvider(create: ((context) => MatrimonyDetailProvider())),
+        ChangeNotifierProvider(create: ((context) => JobDetailProvider())),
+        ChangeNotifierProvider(create: ((context) => CompanyDetailsProvider())),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
