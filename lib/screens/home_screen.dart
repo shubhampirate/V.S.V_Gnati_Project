@@ -2,10 +2,12 @@ import 'package:community/constants/colors.dart';
 import 'package:community/provider/event_service.dart';
 import 'package:community/provider/home_service.dart';
 import 'package:community/screens/tabs_screen/account_screen.dart';
+import 'package:community/screens/tabs_screen/donation_screen.dart';
 import 'package:community/screens/tabs_screen/events.dart';
 import 'package:community/screens/tabs_screen/family_details_screen.dart';
 import 'package:community/screens/tabs_screen/home.dart';
 import 'package:community/screens/tabs_screen/matrimony.dart';
+import 'package:community/screens/tabs_screen/members_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -34,13 +36,9 @@ class _HomeScreenState extends State<HomeScreen> {
     const EventsScreen(),
 
     const Matrimony(),
-    Container(
-      color: Colors.yellow,
-    ),
+    MembersList(),
     FamilyDetailsScreen(),
-    Container(
-      color: Colors.lightGreenAccent,
-    ),
+    DonationScreen(),
     const AccountScreen()
     // Camera page
     // Chats page
