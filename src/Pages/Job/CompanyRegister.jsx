@@ -25,6 +25,16 @@ const validationSchema = yup.object({
     addressCompany: yup
         .string('Enter your Company Address you')
         .required('Company Address is required'),
+    profile: yup
+        .mixed()
+        .test('fileType', 'Invalid file format. Only images are allowed.', (value) => {
+            if (value && value.length) {
+                const fileType = value[0].type;
+                return fileType.startsWith('image/');
+            }
+            return true;
+        })
+        .required('Profile picture is required'),
 });
 
 const customStyles = {
@@ -43,12 +53,17 @@ const customStyles = {
 
 const CompanyRegister = () => {
     const [companylogo, setLogo] = useState(null);
+    const [editemail, setEditemail] = useState("");
+    const [editname, setEditname] = useState("");
+    const [editAddress, setEditaddress] = useState("");
+
     const navigate = useNavigate();
     const formikCompany = useFormik({
         initialValues: {
             nameCompany: '',
             addressCompany: '',
             emailCompany: '',
+            profile: null,
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
@@ -57,7 +72,7 @@ const CompanyRegister = () => {
             formData.append("email", values.emailCompany);
             formData.append("name", values.nameCompany);
             formData.append("address", values.addressCompany);
-            formData.append("picture", companylogo);
+            formData.append("picture", values.profile);
             fetch("http://jenilsavla.pythonanywhere.com/api/companies/", {
                 method: "POST",
                 headers: {
@@ -65,14 +80,15 @@ const CompanyRegister = () => {
                 },
                 body: formData,
             })
-                .then((result) => {
-                    console.log(result)
+                .then(response => response.json())
+                .then(data => {
                     Swal.fire({
                         icon: 'success',
-                        title: 'Successfully Added the Company',
+                        title: 'Successfully Logged In',
                         showConfirmButton: false,
                         timer: 4000
                     })
+                    console.log(data);
                     loadListcompany();
                 })
                 .catch(() => {
@@ -80,6 +96,56 @@ const CompanyRegister = () => {
                 });
         }
     });
+
+
+    const handledelete = async (id) => {
+        // console.log(id);
+        // fetch(`http://jenilsavla.pythonanywhere.com/api/job/${id}`, {
+        //     method: 'DELETE',
+        //     headers: {
+        //         "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb`,
+        //         'Content-Type': 'application/json',
+        //     },
+        // })
+        //     .then((response) => response.json())
+        //     .then((data) => {
+        //         console.log(data);
+        //         loadListcompany();
+        //         loadListcompany();
+        //     })
+        //     .catch((error) => {
+        //         console.error(error);
+        //     });
+    }
+
+    // const handleEditsubmit = async () => {
+    //     const searchData = {
+    //         name: editname,
+    //         email: editemail,
+    //         address: editAddress,
+    //     };
+    //     fetch(`http://jenilsavla.pythonanywhere.com/api/job/${idjob}`, {
+    //         method: 'PUT',
+    //         headers: {
+    //             "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb`,
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify(searchData),
+    //     })
+    //         .then((response) => response.json())
+    //         .then((data) => {
+    //             console.log(data);
+    //         })
+    //         .catch((error) => {
+    //             console.error(error);
+    //         });
+    //     loadListcompany();
+    //     loadListcompany();
+    //     setIsOpen(false);
+    // }
+
+
+
 
     const [visible, setVisible] = useState(4);
 
@@ -93,11 +159,13 @@ const CompanyRegister = () => {
     }, []);
 
     const loadListcompany = async () => {
-        const result = await axios.get("http://jenilsavla.pythonanywhere.com/api/company/1", {
+        const result = await axios.get("http://jenilsavla.pythonanywhere.com/api/companies/", {
             headers: { "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb` },
         });
         setLoadCompany(result.data.data.companies);
-
+        setEditemail(result.data.data.email);
+        setEditname(result.data.data.name);
+        setEditaddress(result.data.data.address);
     };
     console.log(loadcompany);
 
@@ -132,7 +200,7 @@ const CompanyRegister = () => {
                                         sx={{
                                             paddingLeft: "4%", paddingRight: "3.5%", marginBottom: "2rem"
                                         }}>
-                                        <Grid item xs={12} md={6} sm={12}>
+                                        <Grid item xs={12} md={4} sm={12}>
                                             <TextField
                                                 id="nameCompany"
                                                 name="nameCompany"
@@ -145,7 +213,7 @@ const CompanyRegister = () => {
                                                 sx={{ width: "100%" }}
                                             />
                                         </Grid>
-                                        <Grid item xs={12} md={6} sm={12}>
+                                        <Grid item xs={12} md={4} sm={12}>
                                             <TextField
                                                 id="emailCompany"
                                                 name="emailCompany"
@@ -157,6 +225,22 @@ const CompanyRegister = () => {
                                                 helperText={formikCompany.touched.emailCompany && formikCompany.errors.emailCompany}
                                                 sx={{ width: "100%" }}
                                             />
+                                        </Grid>
+                                        <Grid item xs={12} md={4} sm={12}>
+                                            <TextField
+                                                type="file"
+                                                id="profile"
+                                                name="profile"
+                                                accept="image/*"
+                                                onChange={(event) => formikCompany.setFieldValue('profile', event.currentTarget.files[0])}
+                                                onBlur={formikCompany.handleBlur}
+                                                sx={{ width: "100%", fontSize: "1.5rem" }}
+                                            />
+                                            {formikCompany.touched.profile && formikCompany.errors.profile ? (
+                                                <div style={{ color: "#d65a5a", fontSize: "13px", textAlign: "left", marginLeft: "15px", marginTop: "2px" }}>
+                                                    {formikCompany.errors.profile}
+                                                </div>
+                                            ) : null}
                                         </Grid>
                                         <Grid item xs={12} md={6} sm={12}>
                                             <TextField
@@ -224,6 +308,15 @@ const CompanyRegister = () => {
                                                 padding: "0.75rem",
                                                 textAlign: "left"
                                             }}>Address</Th>
+                                            <Th style={{
+                                                fontWeight: "600",
+                                                backgroundColor: "#018d8d",
+                                                color: "#fff",
+                                                border: "1px solid #000",
+                                                padding: "0.75rem",
+                                                textAlign: "left"
+                                            }}>Action</Th>
+
                                         </Tr>
                                     </Thead>
                                     {loadcompany.map((item) => {
@@ -245,6 +338,14 @@ const CompanyRegister = () => {
                                                         padding: "0.75rem",
                                                         textAlign: "left"
                                                     }}>{item.address}</Td>
+                                                    <Td style={{
+                                                        border: "1px solid #000",
+                                                        padding: "0.75rem",
+                                                        textAlign: "left"
+                                                    }}>
+                                                        <span /*onClick={() => handleedit(item.id)}*/> Edit </span> /
+                                                        <span /*onClick={() => handledelete(item.id)}*/> Delete </span>
+                                                    </Td>
                                                 </Tr>
                                             </Tbody>
                                         )

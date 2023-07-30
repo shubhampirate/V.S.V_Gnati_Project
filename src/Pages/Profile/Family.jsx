@@ -1366,3 +1366,53 @@ const Family = () => {
 }
 
 export default Family
+
+/*
+
+[
+    {
+        pagename : "a",
+        id:1,
+        pages:[
+            {
+                pagename:"tyuio",
+                pageid:0
+            },
+            {
+                pagename:"tyuioh",
+                pageid:1
+            },
+
+        ]
+    }
+]
+
+[
+    {
+        pagename : "a",
+        id:1,
+        pages:[
+            {
+                pagename:"tyuio",
+                pageid:0,
+                status : "default"
+            }
+        ]
+    },
+        {
+        pagename : "bc",
+        id:1,
+        pages:[
+            {
+                pagename:"tyuioh",
+                pageid:1,
+                status : "moved"
+            },
+
+        ]
+    }
+]
+
+
+
+*/
