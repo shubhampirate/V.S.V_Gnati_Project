@@ -456,3 +456,114 @@ const Jobadmin = () => {
 }
 
 export default Jobadmin
+
+
+{/*
+convert 
+[{
+    identified:[
+    {
+        {
+            name:ajbdjf,
+            pages:{
+                {
+                    pagename:ndnsddsk,
+                    pageurl : fcgvhbjnkm
+                }
+            }
+        },
+        {
+            name:ajbdjf,
+            pages:{
+                {
+                    pagename:ndnsddsk,
+                    pageurl : fcgvhbjnkm
+                }
+            }
+        },
+
+    },
+]},
+{
+nonidentified:[
+    {
+        {
+            name:ajbdjf,
+            pages:{
+                {
+                    pagename:ndnsddsk,
+                    pageurl : fcgvhbjnkm
+                }
+            }
+        },
+        {
+            name:ajbdjf,
+            pages:{
+                {
+                    pagename:ndnsddsk,
+                    pageurl : fcgvhbjnkm
+                }
+            }
+        },
+
+    },
+]
+ into this 
+[
+    {
+        requestId: "dfbsdfb",
+        "originid": "dsfsffsmsn"
+    }
+    {
+            name:ajbdjf,
+            pages:{
+                {
+                    pagename:ndnsddsk
+                }
+            }
+        },
+        {
+            name:ajbdjf,
+            pages:{
+                {
+                    pagename:ndnsddsk
+                }
+            }
+        },
+    {
+            name:ajbdjf,
+            pages:{
+                {
+                    pagename:ndnsddsk
+                }
+            }
+        },
+        {
+            name:ajbdjf,
+            pages:{
+                {
+                    pagename:ndnsddsk
+                }
+            }
+        },
+
+],
+
+
+treee structure to be converted in is :
+
+identified 
+    hfbs,
+    hfbs,
+    hfbs,
+    hfbs,
+nonidentified
+    identified 
+    hfbs,
+    hfbs,
+    hfbs,
+    hfbs,
+
+
+
+*/}
