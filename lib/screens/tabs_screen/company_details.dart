@@ -53,12 +53,14 @@ class _CompanyDetailsState extends State<CompanyDetails> {
       ),
       body: FutureBuilder(
           future: companyDetailService.companyJobs.isEmpty
-              ? Provider.of<CompanyDetailsProvider>(context, listen: false).fetchCompanyDetails()
+              ? Provider.of<CompanyDetailsProvider>(context, listen: false)
+                  .fetchCompanyDetails()
               : null,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Container(
-                  margin: const EdgeInsets.only(top: 20), child: const Center(child: CircularProgressIndicator()));
+                  margin: const EdgeInsets.only(top: 20),
+                  child: const Center(child: CircularProgressIndicator()));
             } else if (snapshot.hasError) {
               return Center(
                   child: Text(
@@ -71,7 +73,8 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                 margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
                 child: ListView(
                   shrinkWrap: true,
-                  physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                  physics: BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics()),
                   children: [
                     Row(
                       children: [
@@ -94,7 +97,8 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                         )
                       ],
                     ),
-                    companyDetailService.companyPhoto != "" || companyDetailService.companyPhoto != null
+                    companyDetailService.companyPhoto != "" ||
+                            companyDetailService.companyPhoto != null
                         ? Image.network(
                             "${kbaseUrlImage}${companyDetailService.companyPhoto}",
                             height: 100,
@@ -112,7 +116,10 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                           margin: EdgeInsets.only(left: 3, top: 20.0),
                           child: Text(
                             "Company Name",
-                            style: TextStyle(color: kbrownColor, fontFamily: "Roboto", fontSize: 15.0),
+                            style: TextStyle(
+                                color: kbrownColor,
+                                fontFamily: "Roboto",
+                                fontSize: 15.0),
                           ),
                         ),
                         Container(
@@ -135,7 +142,10 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                           margin: EdgeInsets.only(left: 3, top: 30.0),
                           child: Text(
                             "Company Email Address",
-                            style: TextStyle(color: kbrownColor, fontFamily: "Roboto", fontSize: 15.0),
+                            style: TextStyle(
+                                color: kbrownColor,
+                                fontFamily: "Roboto",
+                                fontSize: 15.0),
                           ),
                         ),
                         Container(
@@ -158,7 +168,10 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                           margin: EdgeInsets.only(left: 3, top: 30.0),
                           child: Text(
                             "Company Address",
-                            style: TextStyle(color: kbrownColor, fontFamily: "Roboto", fontSize: 15.0),
+                            style: TextStyle(
+                                color: kbrownColor,
+                                fontFamily: "Roboto",
+                                fontSize: 15.0),
                           ),
                         ),
                         Container(
@@ -176,8 +189,14 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) {
-                          return EditCompanyDetails();
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return EditCompanyDetails(preFilledData: {
+                            'name': companyDetailService.companyName,
+                            'email': companyDetailService.companyEmail,
+                            'address': companyDetailService.companyAddress,
+                            'companyPhoto': companyDetailService.companyPhoto,
+                          });
                         }));
                       },
                       child: Container(
@@ -223,7 +242,8 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                           )),
                           InkWell(
                             onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
                                 return const AddJobsForm(
                                   jobTitle: "",
                                   jobDetails: "",
@@ -235,7 +255,8 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                             },
                             child: Container(
                               // margin: const EdgeInsets.only(right: 20),
-                              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 10),
                               decoration: BoxDecoration(
                                 color: kblueButtonColor,
                                 borderRadius: BorderRadius.circular(5.0),
@@ -264,7 +285,8 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                       physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
                         return Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 10),
                           margin: EdgeInsets.only(bottom: 20),
                           // height: 500,
                           decoration: BoxDecoration(
@@ -280,12 +302,15 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                               Row(
                                 // mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     children: [
                                       companyDetailService.companyPhoto != "" ||
-                                              companyDetailService.companyPhoto != null
+                                              companyDetailService
+                                                      .companyPhoto !=
+                                                  null
                                           ? Image.network(
                                               "${kbaseUrlImage}${companyDetailService.companyPhoto}",
                                               height: 45.0,
@@ -299,13 +324,17 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                       Container(
                                         margin: EdgeInsets.only(left: 20.0),
                                         child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           // mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
                                             Container(
-                                              margin: EdgeInsets.only(bottom: 5.0),
+                                              margin:
+                                                  EdgeInsets.only(bottom: 5.0),
                                               child: Text(
-                                                companyDetailService.companyJobs[index]["title"],
+                                                companyDetailService
+                                                        .companyJobs[index]
+                                                    ["title"],
                                                 style: TextStyle(
                                                   fontFamily: "Roboto",
                                                   color: kblackColor,
@@ -315,7 +344,9 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                               ),
                                             ),
                                             Text(
-                                              companyDetailService.companyName ?? "Company Name",
+                                              companyDetailService
+                                                      .companyName ??
+                                                  "Company Name",
                                               style: TextStyle(
                                                 fontFamily: "Roboto",
                                                 color: kblackColor,
@@ -329,27 +360,39 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                   ),
                                   InkWell(
                                     onTap: () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) {
                                         return AddJobsForm(
-                                          jobTitle: companyDetailService.companyJobs[index]["title"],
-                                          jobDetails: companyDetailService.companyJobs[index]["details"],
-                                          jobType: companyDetailService.companyJobs[index]["type"],
-                                          phoneNumber: companyDetailService.companyJobs[index]["phone"].toString(),
-                                          jobId: companyDetailService.companyJobs[index]["id"],
+                                          jobTitle: companyDetailService
+                                              .companyJobs[index]["title"],
+                                          jobDetails: companyDetailService
+                                              .companyJobs[index]["details"],
+                                          jobType: companyDetailService
+                                              .companyJobs[index]["type"],
+                                          phoneNumber: companyDetailService
+                                              .companyJobs[index]["phone"]
+                                              .toString(),
+                                          jobId: companyDetailService
+                                              .companyJobs[index]["id"],
                                         );
                                       }));
                                     },
                                     child: Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 20, vertical: 4),
                                       decoration: BoxDecoration(
                                         color: kblueButtonColor,
-                                        borderRadius: BorderRadius.circular(5.0),
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
                                       ),
                                       child: Row(
                                         children: [
                                           Text(
                                             "Edit",
-                                            style: TextStyle(fontFamily: 'Roboto', fontSize: 12, color: kwhiteColor),
+                                            style: TextStyle(
+                                                fontFamily: 'Roboto',
+                                                fontSize: 12,
+                                                color: kwhiteColor),
                                           ),
                                           const SizedBox(
                                             width: 5,
@@ -376,11 +419,15 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                     margin: EdgeInsets.only(bottom: 8.0),
                                     child: Row(
                                       children: [
-                                        SvgPicture.asset("assets/images/professional_name.svg"),
+                                        SvgPicture.asset(
+                                            "assets/images/professional_name.svg"),
                                         Container(
                                           margin: EdgeInsets.only(left: 5),
                                           child: Text(
-                                            companyDetailService.companyJobs[index]["type"] ?? "Job Type",
+                                            companyDetailService
+                                                        .companyJobs[index]
+                                                    ["type"] ??
+                                                "Job Type",
                                             style: TextStyle(
                                               fontFamily: "Roboto",
                                               color: kblackColor,
@@ -403,7 +450,10 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                         Container(
                                           margin: EdgeInsets.only(left: 5),
                                           child: Text(
-                                            companyDetailService.companyJobs[index]["details"] ?? "Details",
+                                            companyDetailService
+                                                        .companyJobs[index]
+                                                    ["details"] ??
+                                                "Details",
                                             style: TextStyle(
                                               fontFamily: "Roboto",
                                               color: kblackColor,
@@ -422,7 +472,9 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                         Container(
                                           margin: EdgeInsets.only(left: 5),
                                           child: Text(
-                                            companyDetailService.companyJobs[index]["phone"].toString() ??
+                                            companyDetailService
+                                                    .companyJobs[index]["phone"]
+                                                    .toString() ??
                                                 "Phone Number",
                                             style: TextStyle(
                                               fontFamily: "Roboto",

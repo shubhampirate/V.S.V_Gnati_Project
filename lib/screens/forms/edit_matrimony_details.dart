@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:community/constants/colors.dart'; //ok
+import 'package:community/constants/colors.dart';
 import 'package:community/constants/paths.dart';
 import 'package:community/provider/family_detail_service.dart';
 import 'package:community/provider/matrimony_service.dart';
