@@ -5,6 +5,7 @@ import * as yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import NavBar from "../Components/Navbar.jsx"
 
 const validationSchema = yup.object({
     name: yup
@@ -61,6 +62,8 @@ const Login = () => {
 
     return (
         <div>
+
+            <NavBar />
             <Grid container spacing={2} style={{ padding: "2rem" }}>
                 <Grid item xs={12} md={2} sm={12}></Grid>
                 <Grid item xs={12} md={8} sm={12} style={{ marginBottom: "8rem", marginTop: "10rem" }}>

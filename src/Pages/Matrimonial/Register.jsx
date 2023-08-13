@@ -9,7 +9,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import Swal from 'sweetalert2';
 import axios from 'axios';
-import '../../Components/Table.css'
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 const SUPPORTED_FORMATS = [

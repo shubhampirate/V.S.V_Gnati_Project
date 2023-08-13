@@ -1,5 +1,5 @@
 
-/*@import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100&display=swap");
 
 a {
   text-decoration: none;
@@ -275,7 +275,7 @@ button {
 }
 */
 
-h1 {
+ h1 {
   margin-top: 100px;
   text-align: center;
   font-size: 60px;
@@ -309,7 +309,7 @@ nav:after {
 }
 
 nav ul {
-  float: right;
+  float: center;
   padding: 0;
   margin: 0;
   list-style: none;
@@ -319,7 +319,7 @@ nav ul {
 nav ul li {
   margin: 0px;
   display: inline-block;
-  float: left;
+  float: center;
   background-color: #ecf6ff;
 }
 
@@ -362,8 +362,6 @@ li > a:after { content: ' +'; }
 li > a:only-child:after { content: ''; }
 
 
-/* Media Queries
---------------------------------------------- */
 
 @media all and (max-width : 768px) {
 
@@ -441,3 +439,5 @@ nav ul li {
 }
 
 }
+
+

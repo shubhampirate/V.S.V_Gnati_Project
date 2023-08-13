@@ -9,7 +9,6 @@ import * as yup from 'yup';
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import Swal from 'sweetalert2';
 import axios from 'axios';
-import '../../Components/Table.css'
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import DomainAddIcon from '@mui/icons-material/DomainAdd';
