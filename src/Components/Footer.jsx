@@ -31,10 +31,10 @@ const Footer = () => {
                 </Grid>
                 <Grid item xs={12} md={4} sm={6}>
                     <Grid container spacing={2}>
-                        <Grid item xs={12} style={{ fontSize: "1.3rem", marginTop: "1rem" }}>
+                        <Grid item xs={12} style={{ fontSize: "1.2rem", marginTop: "1rem" }}>
                             Quick Links
                         </Grid>
-                        <Grid item xs={12} style={{ textAlign: "center", fontSize: "1.3rem" }}>
+                        <Grid item xs={12} style={{ textAlign: "center", fontSize: "1.2rem" }}>
                             <Grid container spacing={2}>
                                 <Grid item xs={4}>
                                     <NavLink to="/"
@@ -87,7 +87,7 @@ const Footer = () => {
                 </Grid >
                 <Grid item xs={12} md={4} sm={12}>
                     <Grid container spacing={2}>
-                        <Grid item xs={12} style={{ fontSize: "1.3rem", marginTop: "1rem" }}>
+                        <Grid item xs={12} style={{ fontSize: "1.2rem", marginTop: "1rem" }}>
                             Contact Us
                         </Grid>
                         <Grid item xs={12}>
@@ -95,15 +95,15 @@ const Footer = () => {
                                 <ul style={{ listStyle: 'none', paddingLeft: 10 }}>
                                     <li style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
                                         <PhoneIcon style={{ fontSize: "1.7rem" }} /> &nbsp;
-                                        <span style={{ marginLeft: '10px', fontSize: "1.25rem" }}> +1234567890</span>
+                                        <span style={{ marginLeft: '10px', fontSize: "1.2rem" }}> +1234567890</span>
                                     </li>
                                     <li style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
                                         <EmailIcon style={{ fontSize: "1.7rem" }} /> &nbsp;
-                                        <span style={{ marginLeft: '10px', fontSize: "1.25rem" }}> example@example.com</span>
+                                        <span style={{ marginLeft: '10px', fontSize: "1.2rem" }}> example@example.com</span>
                                     </li>
                                     <li style={{ display: 'flex', alignItems: 'center' }}>
                                         <LocationOnIcon style={{ fontSize: "1.7rem" }} /> &nbsp;
-                                        <span style={{ marginLeft: '10px', fontSize: "1.25rem" }}> 803, Natraj Society, Sodawala Lane, Borivali (W), Mumbai - 400092</span>
+                                        <span style={{ marginLeft: '10px', fontSize: "1.2rem" }}> 803, Natraj Society, Sodawala Lane, Borivali (W), Mumbai - 400092</span>
                                     </li>
                                     {/* <li>
                                         <iframe
