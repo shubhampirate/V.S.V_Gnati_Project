@@ -34,9 +34,10 @@ const Matrimonial = () => {
   }, []);
 
   const loadListMale = async () => {
-    //const token = localStorage.getItem("token")
+    const token = localStorage.getItem("tokenvsv")
+    const family = localStorage.getItem("familyid")
     const result = await axios.get('http://jenilsavla.pythonanywhere.com/api/matrimonies?gender=Male', {
-      headers: { "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb` },
+      headers: { "Authorization": `Token ${token}` },
     });
     setLoadMale(result.data.data.matrimonies);
 
@@ -44,9 +45,10 @@ const Matrimonial = () => {
   console.log(loadMale);
 
   const loadListFemale = async () => {
-    //const token = localStorage.getItem("token")
+    const token = localStorage.getItem("tokenvsv")
+    const family = localStorage.getItem("familyid")
     const result = await axios.get("http://jenilsavla.pythonanywhere.com/api/matrimonies?gender=Female", {
-      headers: { "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb` },
+      headers: { "Authorization": `Token ${token}` },
     });
     setLoadFemale(result.data.data.matrimonies);
 
