@@ -44,6 +44,8 @@ const customStyles = {
 };
 
 const Jobadmin = () => {
+    const token = localStorage.getItem("tokenvsv")
+    const family = localStorage.getItem("familyid")
     const formikJob = useFormik({
         initialValues: {
             details: '',
@@ -62,7 +64,7 @@ const Jobadmin = () => {
             fetch("http://jenilsavla.pythonanywhere.com/api/jobs/", {
                 method: "POST",
                 headers: {
-                    "Authorization": "Token ebeb63c068b02f00c0797a0c8edc06575c139fbb",
+                    "Authorization": `Token ${token}`,
                 },
                 body: formData,
             })
@@ -111,7 +113,7 @@ const Jobadmin = () => {
     const loadListjob = async () => {
         //const token = localStorage.getItem("token")
         const result = await axios.get("http://jenilsavla.pythonanywhere.com/api/jobs", {
-            headers: { "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb` },
+            headers: { "Authorization": `Token ${token}` },
         });
         setLoadjob(result.data.data.jobs);
 
@@ -123,7 +125,7 @@ const Jobadmin = () => {
         setidjob(id);
         setIsOpen(true);
         const result = await axios.get(`http://jenilsavla.pythonanywhere.com/api/job/${id}`, {
-            headers: { "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb` },
+            headers: { "Authorization": `Token ${token}` },
         });
         console.log(result.data.data);
         setEditArray(result.data.data);
@@ -137,7 +139,7 @@ const Jobadmin = () => {
         fetch(`http://jenilsavla.pythonanywhere.com/api/job/${id}`, {
             method: 'DELETE',
             headers: {
-                "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb`,
+                "Authorization": `Token ${token}`,
                 'Content-Type': 'application/json',
             },
         })
@@ -162,7 +164,7 @@ const Jobadmin = () => {
         fetch(`http://jenilsavla.pythonanywhere.com/api/job/${idjob}`, {
             method: 'PUT',
             headers: {
-                "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb`,
+                "Authorization": `Token ${token}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(searchData),

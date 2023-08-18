@@ -138,7 +138,7 @@ const ContactUs = () => {
                           type="submit"
                           color="primary"
                           fullWidth
-                          style={{ backgroundColor: "#018d8d", fontSize: "1.05rem", marginTop: "1rem" }}
+                          style={{ backgroundColor: "#018d8d", fontSize: "1.05rem", marginTop: "1rem", height: "2.5rem" }}
                         >
                           Submit
                         </Button>

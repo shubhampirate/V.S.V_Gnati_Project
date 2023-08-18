@@ -9,6 +9,7 @@ import CarouselAd from '../Components/CarouselAd';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
+import { NavLink } from 'react-router-dom';
 // import "../Components/Carouselstyles.css"
 
 const Home = () => {
@@ -106,24 +107,18 @@ const Home = () => {
               </div>
             </Grid>
             <Grid item xs={12}>
-              <div style={{ fontSize: "1.35rem", marginBottom: "1.5rem", textAlign: "justify", marginRight: "1.2rem" }}>
+              <div style={{ fontSize: "1.35rem", marginBottom: "1.5rem", textAlign: "justify", marginRight: "1.2rem", marginBottom: "2rem" }}>
                 Your donation to our society is greatly appreciated.
                 It enables us to make a meaningful impact on our community by supporting education,
                 healthcare, poverty alleviation, and environmental conservation. Your contribution helps
                 uplift the underprivileged, empower marginalized groups, and foster unity. We ensure
                 transparency and accountability in handling your donation, and every amount, no matter
                 how small, makes a difference. With your support, we can create a better future and
-                bring hope to many lives.
+                bring hope to many lives. &nbsp; &nbsp;
+                <NavLink to="/donate"
+                  style={{ fontSize: "1.5rem", color: "#582c6f", textDecoration: "none", borderBottom: "1.5px solid #bdb4e9 " }}>
+                  Donate today</NavLink>
               </div>
-              <Grid item xs={12}>
-                <Button variant="contained"
-                  style={{
-                    marginLeft: "-1.1rem", boxShadow: "none", fontWeight: "600", color: "#582c6f",
-                    fontSize: "1.3rem", marginBottom: "2.5rem", backgroundColor: "#bdb4e9"
-                  }}>
-                  Donate Now
-                </Button>
-              </Grid>
             </Grid>
           </Grid>
         </Grid>

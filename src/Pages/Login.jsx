@@ -51,6 +51,7 @@ const Login = () => {
                     })
                     console.log(data);
                     localStorage.setItem("tokenvsv", data.data.token);
+                    localStorage.setItem("familyid", data.data.family);
                     navigate(-1);
                 })
                 .catch((error) => {

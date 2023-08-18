@@ -56,7 +56,8 @@ const CompanyRegister = () => {
     const [editemail, setEditemail] = useState("");
     const [editname, setEditname] = useState("");
     const [editAddress, setEditaddress] = useState("");
-
+    const token = localStorage.getItem("tokenvsv")
+    const family = localStorage.getItem("familyid")
     const navigate = useNavigate();
     const formikCompany = useFormik({
         initialValues: {
@@ -76,7 +77,7 @@ const CompanyRegister = () => {
             fetch("http://jenilsavla.pythonanywhere.com/api/companies/", {
                 method: "POST",
                 headers: {
-                    "Authorization": "Token ebeb63c068b02f00c0797a0c8edc06575c139fbb",
+                    "Authorization": `Token ${token}`,
                 },
                 body: formData,
             })
@@ -159,8 +160,10 @@ const CompanyRegister = () => {
     }, []);
 
     const loadListcompany = async () => {
+        const token = localStorage.getItem("tokenvsv")
+        const family = localStorage.getItem("familyid")
         const result = await axios.get("http://jenilsavla.pythonanywhere.com/api/companies/", {
-            headers: { "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb` },
+            headers: { "Authorization": `Token ${token}` },
         });
         setLoadCompany(result.data.data.companies);
         setEditemail(result.data.data.email);

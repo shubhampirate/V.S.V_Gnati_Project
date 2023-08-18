@@ -24,7 +24,8 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 import Select from 'react-select';
 const Family = () => {
-
+    const token = localStorage.getItem("tokenvsv")
+    const family = localStorage.getItem("familyid")
     const validationSchema = yup.object({
         occupation: yup
             .string('Enter your Occupation')
@@ -168,10 +169,10 @@ const Family = () => {
         validationSchema: validationSchema,
         onSubmit: (values) => {
             console.log(values);
-            fetch("http://jenilsavla.pythonanywhere.com/api/family/1", {
+            fetch(`http://jenilsavla.pythonanywhere.com/api/family/${family}`, {
                 method: "POST",
                 headers: {
-                    "Authorization": "Token ebeb63c068b02f00c0797a0c8edc06575c139fbb",
+                    "Authorization": `Token ${token}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ occupation_address: values.occupation, member: values.member }),
@@ -222,10 +223,10 @@ const Family = () => {
             formData.append("profession_name", values.profession_name);
             formData.append("profession_status", values.profession_status);
             formData.append("gender", values.gender);*/
-            fetch("http://jenilsavla.pythonanywhere.com/api/add-member/1", {
+            fetch(`http://jenilsavla.pythonanywhere.com/api/add-member/${family}`, {
                 method: "POST",
                 headers: {
-                    "Authorization": "Token ebeb63c068b02f00c0797a0c8edc06575c139fbb",
+                    "Authorization": `Token ${token}`,
                     'Content-Type': 'application/json'
                 },
                 data: JSON.stringify({
@@ -262,15 +263,15 @@ const Family = () => {
     const [load, setLoad] = useState([]);
     const [loadoccupation, setLoadOccupation] = useState([]);
     const [loadmember, setLoadmember] = useState([]);
-
     useEffect(() => {
         loadList();
     }, []);
 
     const loadList = async () => {
-        //const token = localStorage.getItem("token")
-        const result = await axios.get(`http://jenilsavla.pythonanywhere.com/api/family/1`, {
-            headers: { "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb` },
+        const token = localStorage.getItem("tokenvsv")
+        const family = localStorage.getItem("familyid")
+        const result = await axios.get(`http://jenilsavla.pythonanywhere.com/api/family/${family}`, {
+            headers: { "Authorization": `Token ${token}` },
         });
         setLoad(result.data.data);
         setLoadOccupation(result.data.data.occupations);
@@ -286,10 +287,10 @@ const Family = () => {
             native_village: load.native_village,
             occupations: [],
         };
-        fetch('http://jenilsavla.pythonanywhere.com/api/family/1', {
+        fetch(`http://jenilsavla.pythonanywhere.com/api/family/${family}`, {
             method: 'PUT',
             headers: {
-                "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb`,
+                "Authorization": `Token ${token}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(searchData),
@@ -313,10 +314,10 @@ const Family = () => {
             native_village: load.native_village,
             occupations: [],
         };
-        fetch('http://jenilsavla.pythonanywhere.com/api/family/1', {
+        fetch(`http://jenilsavla.pythonanywhere.com/api/family/${family}`, {
             method: 'PUT',
             headers: {
-                "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb`,
+                "Authorization": `Token ${token}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(searchData),
@@ -340,10 +341,10 @@ const Family = () => {
             native_village: nativeedit,
             occupations: [],
         };
-        fetch('http://jenilsavla.pythonanywhere.com/api/family/1', {
+        fetch(`http://jenilsavla.pythonanywhere.com/api/family/${family}`, {
             method: 'PUT',
             headers: {
-                "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb`,
+                "Authorization": `Token ${token}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(searchData),
@@ -364,10 +365,10 @@ const Family = () => {
         const searchData = {
             username: id,
         };
-        fetch('http://jenilsavla.pythonanywhere.com/api/add-member/1', {
+        fetch(`http://jenilsavla.pythonanywhere.com/api/add-member/${family}`, {
             method: 'DELETE',
             headers: {
-                "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb`,
+                "Authorization": `Token ${token}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(searchData),
@@ -389,7 +390,7 @@ const Family = () => {
         fetch(`http://jenilsavla.pythonanywhere.com/api/family/${id}`, {
             method: 'DELETE',
             headers: {
-                "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb`,
+                "Authorization": `Token ${token}`,
                 'Content-Type': 'application/json',
             },
         })
@@ -417,10 +418,10 @@ const Family = () => {
                 }
             ]
         };
-        fetch('http://jenilsavla.pythonanywhere.com/api/family/1', {
+        fetch(`http://jenilsavla.pythonanywhere.com/api/family/${family}`, {
             method: 'PUT',
             headers: {
-                "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb`,
+                "Authorization": `Token ${token}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(searchData),
@@ -441,7 +442,7 @@ const Family = () => {
         setUsernamemem(id);
         setIsOpen(true);
         const result = await axios.get(`http://jenilsavla.pythonanywhere.com/api/add-member/${id}`, {
-            headers: { "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb` },
+            headers: { "Authorization": `Token ${token}`, },
         });
         console.log(result.data.data);
         setEditbg(result.data.data.blood_group);
@@ -474,10 +475,10 @@ const Family = () => {
             maritial_status: editmaritialstatus.value,
             email_address: editemail
         };
-        fetch('http://jenilsavla.pythonanywhere.com/api/add-member/1', {
+        fetch(`http://jenilsavla.pythonanywhere.com/api/add-member/${family}`, {
             method: 'PUT',
             headers: {
-                "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb`,
+                "Authorization": `Token ${token}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(searchData),
@@ -1366,53 +1367,3 @@ const Family = () => {
 }
 
 export default Family
-
-/*
-
-[
-    {
-        pagename : "a",
-        id:1,
-        pages:[
-            {
-                pagename:"tyuio",
-                pageid:0
-            },
-            {
-                pagename:"tyuioh",
-                pageid:1
-            },
-
-        ]
-    }
-]
-
-[
-    {
-        pagename : "a",
-        id:1,
-        pages:[
-            {
-                pagename:"tyuio",
-                pageid:0,
-                status : "default"
-            }
-        ]
-    },
-        {
-        pagename : "bc",
-        id:1,
-        pages:[
-            {
-                pagename:"tyuioh",
-                pageid:1,
-                status : "moved"
-            },
-
-        ]
-    }
-]
-
-
-
-*/

@@ -39,7 +39,8 @@ const Jobs = () => {
     }),
   };
 
-
+  const token = localStorage.getItem("tokenvsv")
+  const family = localStorage.getItem("familyid")
   const validationSchema = yup.object({
     job_type: yup
       .string()
@@ -51,12 +52,13 @@ const Jobs = () => {
       job_type: null,
     },
     validationSchema: validationSchema,
+
     onSubmit: (values) => {
       console.log(values);
       fetch("http://jenilsavla.pythonanywhere.com/api/job/0", {
         method: "POST",
         headers: {
-          "Authorization": "Token ebeb63c068b02f00c0797a0c8edc06575c139fbb",
+          "Authorization": `Token ${token}`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
@@ -84,13 +86,15 @@ const Jobs = () => {
   console.log(load)
 
   const loadList = async () => {
+    const token = localStorage.getItem("tokenvsv")
+    const family = localStorage.getItem("familyid")
     if (load.length == 0) {
       //const token = localStorage.getItem("token")
       const result = await axios.get(
         "http://jenilsavla.pythonanywhere.com/api/jobs",
         {
           headers: {
-            Authorization: "Token ebeb63c068b02f00c0797a0c8edc06575c139fbb",
+            Authorization: `Token ${token}`,
           },
         }
       );
@@ -138,7 +142,7 @@ const Jobs = () => {
               <div>
                 <form onSubmit={formik.handleSubmit} >
                   <Grid container spacing={2} style={{ textAlign: "center", marginBottom: "2.5rem" }}>
-                    <Grid item sx={12} md={8} sm={8}>
+                    <Grid item xs={12} md={8} sm={8}>
                       <Select
                         id="job_type"
                         name="job_type"

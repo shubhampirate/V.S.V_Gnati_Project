@@ -70,6 +70,7 @@ const Profile = () => {
   };
 
   const handlenamedistrict = async () => {
+
     const searchData = {
       name: searchName,
       district: searchDistrict,
@@ -200,9 +201,11 @@ const Profile = () => {
   ];
 
   const loadList = async () => {
+    const token = localStorage.getItem("tokenvsv")
+    const family = localStorage.getItem("familyid")
     if (load.length === 0 && filterList.length === 0) {
       const result = await axios.get("http://jenilsavla.pythonanywhere.com/api/members", {
-        headers: { "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb` },
+        headers: { "Authorization": `Token ${token}` },
       });
       setLoad(result.data.data);
       setFilterList(result.data.data);

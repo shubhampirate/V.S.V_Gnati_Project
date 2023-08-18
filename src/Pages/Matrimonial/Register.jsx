@@ -108,10 +108,12 @@ const Login = () => {
             formData.append("gender", values.gender);
             formData.append("picture", values.profile);
             formData.append("biodata", values.biodata);
+            const token = localStorage.getItem("tokenvsv")
+            const family = localStorage.getItem("familyid")
             fetch("http://jenilsavla.pythonanywhere.com/api/matrimonies/", {
                 method: "POST",
                 headers: {
-                    "Authorization": "Token ebeb63c068b02f00c0797a0c8edc06575c139fbb",
+                    "Authorization": `Token ${token}`,
                 },
                 body: formData,
             })

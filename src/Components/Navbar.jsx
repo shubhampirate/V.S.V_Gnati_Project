@@ -1,100 +1,278 @@
 import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
-import { GiHamburgerMenu } from "react-icons/gi";
-
+import { NavLink } from "react-router-dom";
 import "./Navbar.css";
+import MenuIcon from '@mui/icons-material/Menu';
+import EmergencyShareIcon from '@mui/icons-material/EmergencyShare';
+import Swal from "sweetalert2";
+import logo from "../images/logo.jpeg"
 const Navbar = () => {
-  // const [showMediaIcons, setShowMediaIcons] = useState(false);
-  const tokenvsv = localStorage.getItem("tokenvsv");
-  console.log(tokenvsv)
+  const [click, setClick] = useState(false);
+  const tokenid = localStorage.getItem("tokenvsv");
+  const success = () => {
+    const token = localStorage.getItem("token")
+    fetch(`http://womenhackathon.pythonanywhere.com/family/sms/`, {
+      method: "POST",
+      headers: { "Authorization": `Bearer ${token}` },
+    })
+      .then((result) => {
+        console.log(result)
+        Swal.fire({
+          icon: 'success',
+          title: 'The alert message is shared with all your contacts',
+          showConfirmButton: false,
+          timer: 3000
+        })
+      })
+      .catch(() => {
+        alert('Error in the Code');
+      });
+  }
+
+  const handleClick = () => setClick(!click);
+
+  const handleClickRemove = () => {
+    setClick(!click);
+    localStorage.removeItem("tokenvsv");
+    localStorage.removeItem("family");
+  }
+
   return (
     <>
-      <nav>
-        <label for="drop" class="toggle">
-          <GiHamburgerMenu />
-        </label>
-        <input type="checkbox" id="drop" />
-        <ul class="menu">
-          <li>
-            <NavLink to="/">Home</NavLink>
-          </li>
-          <li>
-            <NavLink to="/about">About Us</NavLink>
-          </li>
-          <li>
-            <NavLink to="/events">Events</NavLink>
-          </li>
-          <li>
-            <label for="drop-1" class="toggle">
-              Jobs
-            </label>
-            {tokenvsv !== null ?
-              <>
-                <NavLink to="/jobs"> Jobs </NavLink>
-                <input type="checkbox" id="drop-1" />
-                <ul>
-                  <li>
-                    <NavLink to="/jobs">Jobs</NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/jobs/recruiter">Add Job</NavLink>
-                  </li>
-                </ul>
-              </> : <>
-                <NavLink to="/login">Jobs</NavLink>
-              </>}
-          </li>
-          <li>
-            <label for="drop-2" class="toggle">
-              Matrimonial
-            </label>
-            {tokenvsv !== null ?
-              <>
-                <NavLink to="/matrimonial">Matrimonial</NavLink>
-                <input type="checkbox" id="drop-2" />
-                <ul>
-                  <li>
-                    <NavLink to="/matrimonial">Matrimonial</NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/matrimonial/register">Register Now</NavLink>
-                  </li>
-                </ul>
-              </> : <>
-                <NavLink to="/login">Matrimonial</NavLink>
-              </>}
-          </li>
-          <li>
-            <label for="drop-3" class="toggle">
-              Profile
-            </label>
-            {tokenvsv !== null ?
-              <>
-                <NavLink to="/profile">Members</NavLink>
-                <input type="checkbox" id="drop-3" />
-                <ul>
-                  <li>
-                    <NavLink to="/profile">Members</NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/family">Family</NavLink>
-                  </li>
-                </ul>
-              </> : <>
-                <NavLink to="/profile">Members</NavLink>
-              </>}
-          </li>
-          <li>
-            <NavLink to="/contact">Contact Us</NavLink>
-          </li>
-          <li>
-            <NavLink to="/donate">Donate</NavLink>
-          </li>
-        </ul>
+      <nav className="navbar">
+        <div className="nav-container">
+          <NavLink exact to="/" className="nav-logo" style={{ textAlign: "left" }}>
+            {/* <EmergencyShareIcon style={{ width: "5vh", height: "5vh" }} onClick={success} /> */}
+            <img src={logo} style={{ width: "7.5rem", marginTop: "0.5rem" }} />
+            <i className="fas fa-code"></i>
+          </NavLink>
+
+          <ul className={click ? "nav-menu active" : "nav-menu"}>
+            <li className="nav-item">
+              <NavLink
+                exact
+                to="/"
+                activeClassName="active"
+                className="nav-links"
+                onClick={handleClick}
+              >
+                Home
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink
+                exact
+                to="/about"
+                activeClassName="active"
+                className="nav-links"
+                onClick={handleClick}
+              >
+                About Us
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink
+                exact
+                to="/events"
+                activeClassName="active"
+                className="nav-links"
+                onClick={handleClick}
+              >
+                Events
+              </NavLink>
+            </li>
+            {tokenid ?
+              <li className="nav-item">
+                <NavLink
+                  exact
+                  to="/family"
+                  activeClassName="active"
+                  className="nav-links"
+                  onClick={handleClick}
+                >
+                  Members
+                </NavLink>
+              </li> : <li className="nav-item">
+                <NavLink
+                  exact
+                  to="/login"
+                  activeClassName="active"
+                  className="nav-links"
+                  onClick={handleClick}
+                >
+                  Members
+                </NavLink>
+              </li>}
+            {tokenid ?
+              <li className="nav-item">
+                <NavLink
+                  exact
+                  to="/profile"
+                  activeClassName="active"
+                  className="nav-links"
+                  onClick={handleClick}
+                >
+                  Profile
+                </NavLink>
+              </li> : <li className="nav-item">
+                <NavLink
+                  exact
+                  to="/login"
+                  activeClassName="active"
+                  className="nav-links"
+                  onClick={handleClick}
+                >
+                  Profile
+                </NavLink>
+              </li>}
+
+            {tokenid ?
+              <li className="nav-item">
+                <NavLink
+                  exact
+                  to="/matrimonial"
+                  activeClassName="active"
+                  className="nav-links"
+                  onClick={handleClick}
+                >
+                  Matrimonial
+                </NavLink>
+              </li> : <li className="nav-item">
+                <NavLink
+                  exact
+                  to="/login"
+                  activeClassName="active"
+                  className="nav-links"
+                  onClick={handleClick}
+                >
+                  Matrimonial
+                </NavLink>
+              </li>}
+
+            {tokenid ?
+              <li className="nav-item">
+                <NavLink
+                  exact
+                  to="/register-matrimony"
+                  activeClassName="active"
+                  className="nav-links"
+                  onClick={handleClick}
+                >
+                  + Matrimonial
+                </NavLink>
+              </li> : <li className="nav-item">
+                <NavLink
+                  exact
+                  to="/login"
+                  activeClassName="active"
+                  className="nav-links"
+                  onClick={handleClick}
+                >
+                  + Matrimonial
+                </NavLink>
+              </li>}
+
+            {tokenid ?
+              <li className="nav-item">
+                <NavLink
+                  exact
+                  to="/jobs"
+                  activeClassName="active"
+                  className="nav-links"
+                  onClick={handleClick}
+                >
+                  Jobs
+                </NavLink>
+              </li> : <li className="nav-item">
+                <NavLink
+                  exact
+                  to="/login"
+                  activeClassName="active"
+                  className="nav-links"
+                  onClick={handleClick}
+                >
+                  Jobs
+                </NavLink>
+              </li>}
+
+            {tokenid ?
+              <li className="nav-item">
+                <NavLink
+                  exact
+                  to="/register-job"
+                  activeClassName="active"
+                  className="nav-links"
+                  onClick={handleClick}
+                >
+                  + Jobs
+                </NavLink>
+              </li> : <li className="nav-item">
+                <NavLink
+                  exact
+                  to="/login"
+                  activeClassName="active"
+                  className="nav-links"
+                  onClick={handleClick}
+                >
+                  + Jobs
+                </NavLink>
+              </li>}
+            {/* <li className="nav-item">
+              <NavLink
+                exact
+                to="/family"
+                activeClassName="active"
+                className="nav-links"
+                onClick={handleClick}
+              >
+                Members
+              </NavLink>
+            </li> */}
+
+
+
+
+
+            <li className="nav-item">
+              <NavLink
+                exact
+                to="/donate"
+                activeClassName="active"
+                className="nav-links"
+                onClick={handleClick}
+              >
+                Donate
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink
+                exact
+                to="/contact"
+                activeClassName="active"
+                className="nav-links"
+                onClick={handleClick}
+              >
+                Contact Us
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink
+                exact
+                to="/"
+                activeClassName="active"
+                className="nav-links"
+                onClick={handleClickRemove}
+              >
+                Logout
+              </NavLink>
+            </li>
+          </ul>
+          <div className="nav-icon" onClick={handleClick}>
+            <i className={click ? "fas fa-times" : "fas fa-bars"}><MenuIcon /></i>
+          </div>
+        </div>
       </nav>
     </>
   );
-};
+}
 
-export default Navbar;
-
+export default Navbar
