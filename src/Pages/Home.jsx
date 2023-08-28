@@ -98,13 +98,13 @@ const Home = () => {
             </Grid>
           </Grid>
         </Grid> */}
-        <Grid item xs={12} style={{ padding: "1rem", paddingLeft: "3.5rem", marginBottom: "2rem" }}>
+        <Grid item xs={12} style={{ padding: "1rem", paddingLeft: "3.5rem", marginBottom: "2rem", marginTop: "2rem" }}>
           <CarouselAd />
         </Grid>
         <Grid item xs={12}>
           <Grid container spacing={3}>
             <Grid item xs={12} style={{ fontSize: "2rem", marginBottom: "3rem", paddingLeft: "10%", paddingRight: "5%" }}>
-              <span className='underline' style={{ padding: "0rem 2rem" }}>Our community comes together to achieve these goals.</span>
+              <span className='underline'>Our community comes together to achieve these goals.</span>
             </Grid>
             <Grid item xs={12} md={3} sm={6} style={{ backgroundColor: "#CEF5D3" }}>
               <Grid container spacing={2}>
@@ -171,9 +171,9 @@ const Home = () => {
               <Grid container sapcing={2}>
                 <Grid item xs={12}
                   style={{ fontSize: "3rem", textAlign: "left", paddingLeft: "10%", paddingRight: "10%", marginTop: "2rem", marginBottom: "1rem" }}>
-                  <span className='underline' style={{ padding: "0rem 0.5rem " }}>Dontation</span>
+                  <span className='underline-header' style={{ padding: "0rem 0.5rem " }}>Dontation</span>
                 </Grid>
-                <Grid item xs={12} style={{ fontSize: "1.15rem", textAlign: "justify", paddingLeft: "10%", paddingRight: "10%" }}>
+                <Grid item xs={12} style={{ fontSize: "1.15rem", textAlign: "justify", paddingLeft: "12%", paddingRight: "10%" }}>
                   Your donation to our society is greatly appreciated.
                   It enables us to make a meaningful impact on our community by supporting education,
                   healthcare, poverty alleviation, and environmental conservation. Your contribution helps
