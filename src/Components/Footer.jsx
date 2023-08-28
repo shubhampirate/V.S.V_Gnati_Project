@@ -22,7 +22,7 @@ const Footer = () => {
                         <Grid item xs={12}>
                             <img src={logo} style={{ width: "7.5rem" }} />
                         </Grid>
-                        <Grid item xs={12} style={{ textAlign: "justify", fontSize: "1.15rem" }}>
+                        <Grid item xs={12} style={{ textAlign: "justify", fontSize: "1.1rem" }}>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet,
                             consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
