@@ -1,0 +1,151 @@
+.navbar {
+    background-color: #fff;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+  }
+  
+  .nav-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 99%;
+    height: 80px;
+    max-width: 1500px;
+  }
+  
+  .nav-logo {
+    color: #000;
+    align-items: center;
+    margin-left: 20px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 2rem;
+    flex-grow: 1;
+  }
+  
+  .nav-menu {
+    display: flex;
+    list-style: none;
+    text-align: center;
+    padding: 1.2rem;
+  }
+  
+  .nav-links {
+    color: #000;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    height: 100%;
+    border-bottom: 3px solid transparent;
+  }
+  .fa-code {
+    margin-left: 1rem;
+  }
+  
+  .nav-item {
+    line-height: 40px;
+    margin-right: 1rem;
+    /* background-color: aqua; */
+    position: relative;
+  }
+  
+  .sub-menu {
+    position: absolute;
+    top: 100%; /* Position the sub-menu below the parent item */
+    left: 0;
+    display: none; /* Hide the sub-menu by default */
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: #fff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .nav-item:hover .sub-menu {
+    display: block; /* Show the sub-menu on parent hover */
+  }
+  
+  .sub-menu li {
+    width: 150px;
+    text-align: left;
+  }
+  
+  .nav-item:after {
+    content: "";
+    display: block;
+    height: 3px;
+    width: 0;
+    background: transparent;
+    transition: width 0.7s ease, background-color 0.5s ease;
+  }
+  
+  .nav-item:hover:after {
+    width: 100%;
+    left: 50%;
+    background: #000;
+  }
+  
+  .nav-item .active {
+    color: #000;
+    /* border: 1px solid #000; */
+  }
+  
+  .nav-icon {
+    display: none;
+  }
+  
+  @media screen and (max-width: 900px) {
+    .nav-menu {
+      display: flex;
+      flex-direction: column;
+      width: 89.25%;
+      /* background-color: bisque; */
+      border-top: 1px solid #fff;
+      position: absolute;
+      top: 80px;
+      left: -110%;
+      opacity: 1;
+      transition: all 0.5s ease;
+      text-align: center;
+    }
+  
+    .nav-menu.active {
+      background: #fff;
+      left: 0px;
+      opacity: 1;
+      transition: all 0.5s ease;
+      z-index: 1;
+    }
+  
+    .nav-item{
+      text-align: center;
+      max-width: max-content;
+    }
+    .nav-item .active {
+      color: #000;
+      border: none;
+    }
+    .nav-links {
+      /* padding: 1.5rem; */
+      width: 100%;
+      display: table;
+    }
+  
+    .nav-icon {
+      display: block;
+      position: absolute;
+      top: 0;
+      right: 0;
+      transform: translate(-100%, 60%);
+      font-size: 1.7rem;
+      cursor: pointer;
+      color: #000;
+    }
+  }
+  
+  
