@@ -259,7 +259,7 @@ const ContactUs = () => {
         </Grid>
       </Grid >
       <Grid item xs={12}>
-        <Grid container p={4}>
+        <Grid container p={4} style={{ backgroundColor: "white" }}>
           <Grid item xs={12} md={4} sm={4}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
@@ -286,7 +286,7 @@ const ContactUs = () => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={12} md={4} sm={4}>
+          <Grid item xs={12} md={4} sm={4} >
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <img src={address} style={{ width: "4rem", height: "4rem", marginTop: "1rem" }} />
@@ -295,7 +295,7 @@ const ContactUs = () => {
                 Address
               </Grid>
               <Grid item xs={12} style={{ fontSize: "1.2rem", color: "#4F225E", paddingLeft: "1.5rem", paddingRight: "1.5rem", marginBottom: "2rem" }}>
-                803, Natraj Society, Sodawala Lane, <br />Borivali (W), Mumbai - 400092
+                803, Natraj Society, Sodawala Lane, Borivali (W), Mumbai - 400092
               </Grid>
             </Grid>
           </Grid>
@@ -305,7 +305,7 @@ const ContactUs = () => {
         <iframe
           title="Google Maps Location"
           width="100%"
-          height="300"
+          height="400"
           frameBorder="0"
           style={{ border: 0, marginBottom: "-3.8rem" }}
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3767.1169827869567!2d72.8538461!3d19.2337328!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b1e294b07269%3A0x991cbbccaf65fb2e!2sNatraj%20society!5e0!3m2!1sen!2sin!4v1691932561651!5m2!1sen!2sin"

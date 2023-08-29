@@ -1,4 +1,4 @@
-nav {
+/* nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -122,4 +122,67 @@ body.open .menu-items {
   display: flex;
   z-index: 1000;
 }
+ */
 
+
+ nav {
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  z-index: 100;
+  position: fixed;
+  width: 100%;
+  background: black;
+}
+.link {
+  text-decoration: none;
+  display: flex;
+  color: white;
+  align-items: center;
+  padding: 0 1rem;
+  height: 100%;
+  cursor: pointer;
+}
+.mobile-menu-icon {
+  display: none;
+}
+.icons {
+  display: flex;
+  align-items: center;
+}
+.icon-tabler {
+  margin-right: 5px;
+}
+.github-icon {
+  color: white;
+}
+.menu-items {
+  display: flex;
+  align-items: center;
+}
+
+@media screen and (max-width: 768px) {
+  .menu-items,
+  .signup-button,
+  .github-corner {
+    display: none;
+  }
+  .mobile-menu-icon {
+    display: block;
+    color: white;
+    display: flex;
+    align-items: center;
+    font-size: 4vh;
+    cursor: pointer;
+    top: 0;
+    right: 0;
+  }
+}
+
+.github-corner {
+  position: fixed;
+  top: 0;
+  z-index: 99999;
+  right: 0px;
+}
