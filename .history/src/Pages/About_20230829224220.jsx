@@ -192,10 +192,10 @@ Visa Sorthiya Vanik has leaped for the first ever major transformation in 2019 w
           <Grid container spacing={2}>
             {data.map((item) => {
               return (
-                <Grid item xs={11} sm={6} md={4} lg={3}>
+                <Grid item xs={12} sm={6} md={3}>
                   <div className="row">
                     <div className="folded_corner" style={{ textAlign: "left" }}>
-                      <img src={photo} alt="Frontend Development" style={{ width: "100%", height: "80%" }} />
+                      <img src={photo} alt="Frontend Development" style={{ width: "80%", height: "80%" }} />
                       <Grid item xs={12}><h2>Shubham Shah</h2></Grid>
                       <Grid item xs={12} style={{ marginTop: "-1rem" }}><h3>Secretary</h3></Grid>
                     </div>
