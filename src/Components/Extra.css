@@ -1,10 +1,11 @@
 .navbar {
-    background-color: #fff;
+    background-color: white;
     height: 100px;
     display: flex;
+    height: 4rem;
     justify-content: center;
     align-items: center;
-    font-size: 1rem;
+    font-size: 0.95rem;
     position: sticky;
     top: 0;
     z-index: 20;
@@ -16,7 +17,7 @@
     align-items: center;
     width: 99%;
     height: 80px;
-    max-width: 1500px;
+    max-width: 2000px;
   }
   
   .nav-logo {
@@ -34,6 +35,7 @@
     list-style: none;
     text-align: center;
     padding: 1.2rem;
+    padding-top: 2rem;
   }
   
   .nav-links {
@@ -50,29 +52,13 @@
   .nav-item {
     line-height: 40px;
     margin-right: 1rem;
-    /* background-color: aqua; */
+    background-color: transparent;
     position: relative;
+    margin-top:-1rem;
   }
   
-  .sub-menu {
-    position: absolute;
-    top: 100%; /* Position the sub-menu below the parent item */
-    left: 0;
-    display: none; /* Hide the sub-menu by default */
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    background-color: #fff;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .nav-item:hover .sub-menu {
-    display: block; /* Show the sub-menu on parent hover */
-  }
-  
-  .sub-menu li {
-    width: 150px;
-    text-align: left;
+  .nav-item:hover  {
+    display: block; 
   }
   
   .nav-item:after {
@@ -103,15 +89,16 @@
     .nav-menu {
       display: flex;
       flex-direction: column;
-      width: 89.25%;
+      width: 90%;
       /* background-color: bisque; */
       border-top: 1px solid #fff;
       position: absolute;
-      top: 80px;
+      top: 45px;
       left: -110%;
       opacity: 1;
       transition: all 0.5s ease;
       text-align: center;
+      overflow-x: hidden;
     }
   
     .nav-menu.active {
@@ -120,18 +107,18 @@
       opacity: 1;
       transition: all 0.5s ease;
       z-index: 1;
+      
     }
   
     .nav-item{
       text-align: center;
-      max-width: max-content;
     }
     .nav-item .active {
       color: #000;
       border: none;
     }
     .nav-links {
-      /* padding: 1.5rem; */
+      left:50%;
       width: 100%;
       display: table;
     }

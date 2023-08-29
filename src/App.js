@@ -21,17 +21,17 @@ function App() {
     
     <Routes>
       <Route path="/login" element={<><Login/></>} />
-      <Route path="/" element={<><Navbar/><Home/><Footer/></>}/>
-      <Route path="/about" element={<><Navbar/><About/><Footer/></>}/>
-      <Route path="/events" element={<><Navbar/><Events/><Footer/></>}/>
-      <Route path="/register-matrimony" element={<><Navbar/><Register/><Footer/></>}/>
-      <Route path="/matrimonial" element={<><Navbar/><Matrimonial/><Footer/></>}/>
-      <Route path="/jobs" element={<><Navbar/><Jobs/><Footer/></>}/>
-      <Route path="/register-job" element={<><Navbar/><Jobadmin/><Footer/></>} />
-      <Route path="/contact" element={<><Navbar/><ContactUs/><Footer/></>}/>
-      <Route path="/family" element={<><Navbar/><Profile/><Footer/></>}/>
-      <Route path="/profile" element={<><Navbar/><Family/><Footer/></>} />
-      <Route path="/donate" element={<><Navbar/><Donate/><Footer/></>}/>
+      <Route path="/" element={<><Navbar/><Home/></>}/>
+      <Route path="/about" element={<><About/></>}/>
+      <Route path="/events" element={<><Events/></>}/>
+      <Route path="/register-matrimony" element={<><Register/></>}/>
+      <Route path="/matrimonial" element={<><Matrimonial/></>}/>
+      <Route path="/jobs" element={<><Jobs/></>}/>
+      <Route path="/register-job" element={<><Jobadmin/></>} />
+      <Route path="/contact" element={<><ContactUs/></>}/>
+      <Route path="/family" element={<><Profile/></>}/>
+      <Route path="/profile" element={<><Family/></>} />
+      <Route path="/donate" element={<><Donate/></>}/>
       </Routes>
 
   );

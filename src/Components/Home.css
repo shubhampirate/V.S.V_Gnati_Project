@@ -1,4 +1,4 @@
-/* ImageDisplay.css */
+
 .image-container {
     display: flex;
     justify-content: center;
@@ -20,22 +20,6 @@
 
   .image-text-two {
     font-size:  4.5vw;
-  }
-
-
-  /* medium-width */
-  @media (max-width: 768px) {  
-
-    .image-container {
-        height: 35vh;
-      }
-
-    .image-text {
-      font-size: 8vw; /* Increase font size for smaller screens */
-    }
-    .image-text-two {
-        font-size:  8.5vw;
-      }
   }
 
   /*smallwidth*/
@@ -97,55 +81,7 @@
       font-size: 2.5rem;
     }
   }
-
-  .container-donation {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-  }
   
-  .header-donation {
-    background-color: #333;
-    color: white;
-    padding: 10px;
-    text-align: center;
-  }
-  
-  .content-donation {
-    display: flex;
-    flex-direction: row;
-    flex: 1;
-    position: relative;
-  }
-  
-  .background-image-donation {
-    background: linear-gradient(to right, rgb(6, 47, 24), transparent), url('../images/donationWallpaper.jpg');
-    background-size: cover;
-    background-position: left;
-    /* background-image: url('../images/hometwo.jpeg'); */
-    /* background-size: cover; */
-    /* background-position: left; */
-    flex: 1;
-    height: 100%;
-    opacity: 0.7; /* Adjust opacity as needed */
-  }
-  
-  .text-donation {
-    /* background-color: white; */
-    padding: 10px;
-    width: 450px; /* Adjust width as needed */
-    position: absolute;
-    text-align: justify;
-    font-size: 1.25rem;
-    color: white;
-    top: 50%;
-    left: 6%;
-    transform: translate(0, -50%);
-    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); */
-  }
-  
-
-
   .underline {
     transform: translate(-50%,-50%);
     background-image: linear-gradient(to right, #B3B6E3,#D8D5ED,#DFFCD9, #CEF5D3);
@@ -174,28 +110,185 @@
     background-size: 100% 100%;
     background-position: 0% 100%;
     transition: background-position .7s, background-size .5s ease-in-out;
+  } 
+
+  .folded_corner{
+    position:relative;
+    /* width:190px; */
+    margin:4vh 1rem;
+    padding:25px;
+    color:000;
+    height: 400px;
+    /* background: #CEC6FC; */
+    background: linear-gradient(to left bottom, transparent 50%, rgba(0,0,0,.4) 0) no-repeat 100% 0 / 2em 2em,
+      linear-gradient(-135deg, transparent 1.5em, #CEC6FC 0);
+    
   }
- 
-  @media (max-width: 768px) {
-    .content-donation {
-      flex-direction: row;
+  .folded_corner::before{
+    content: ' ';
+    position:absolute;
+    top:2em; 
+    right:0;
+    background: linear-gradient(to left bottom, transparent 50%, rgba(0,0,0,0.1) 0) 100% 0 no-repeat;
+    width: 2em;
+    height:2em;
+    transform: rotate(180deg)
+  }
+
+  .folded_corner_sub{
+    position:relative;
+    /* width:190px; */
+    margin:4vh 1rem;
+    padding:25px;
+    color:000;
+    height: 85px;
+    /* background: #CEC6FC; */
+    background: linear-gradient(to left bottom, transparent 50%, rgba(0,0,0,.4) 0) no-repeat 100% 0 / 2em 2em,
+      linear-gradient(-135deg, transparent 1.5em, #CEC6FC 0);
+    
+  }
+  .folded_corner_sub::before{
+    content: ' ';
+    position:absolute;
+    top:2em; 
+    right:0;
+    background: linear-gradient(to left bottom, transparent 50%, rgba(0,0,0,0.1) 0) 100% 0 no-repeat;
+    width: 2em;
+    height:2em;
+    transform: rotate(180deg)
+  }
+  
+  
+  
+  
+    @media (max-width: 768px) {
+      .image-container {
+        height: 35vh;
+      }
+    .image-text {
+      font-size: 8vw; /* Increase font size for smaller screens */
+    }
+    .image-text-two {
+        font-size:  8.5vw;
+      }
+    .underline{
+      background-image: none;
     }
   
-    .background-image-donation {
-      flex: 1;
-      height: 100%;
     }
   
-    .text-donation {
-      width: 350px;
+    .contact-section {
+      position: relative;
+      background-image: url('../images/contactUsWallpapertwo.jpg');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 15px;
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+      padding-right: 1rem;
+      background-color: rgba(20, 20, 20, 0.45); 
+    }
+    
+    .contact-section::before {
+      content: "";
       position: absolute;
-      top: 50%;
-      left: 3%;
-      transform: translate(0, -50%);
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      /* background-color: rgba(245, 245, 245,0.45);  */
+    }
+    
+    .form-background{
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: rgba(245, 245, 245,0.9); 
+    border-radius: 0.5rem;
+    }
+  
+    .info-background{
+      top: 0;
+      left: 0;
+      height: 100%;
+      margin-top: 2rem;
+      color: #B3B6E3;
+      /* background-color: rgba(245, 245, 245,0.45);  */
+      border-radius: 0.5rem;
+      }
+  
+    .contact-info{
+      top: 50%
     }
 
-  .underline{
-    background-image: none;
+    .about_us_section{
+      position: relative;
+      background: linear-gradient(to left,rgba(33, 22, 32, 0.25) 10%, rgba(33, 22, 32, 0.99) 95%), 
+              url('../images/contactUsWallpaperone.jpg');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 15px;
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+      padding-right: 1rem;
+      border-radius: 1rem;
+      /* background-color: rgba(0, 128, 0, 0.5); */
+    }
+  
+
+    .events_section{
+      position: relative;
+      background: linear-gradient(45deg, rgba(144,207,211,0.7),rgba(89, 218, 185,0.7),rgba(20, 172, 129,0.7), rgba(10, 142, 102,0.7),rgba(144,207,211,0.7),rgba(89, 218, 185,0.7),rgba(20, 172, 129,0.7), rgba(10, 142, 102,0.7)) 0 0 / 1000% no-repeat, url('../images/eventsHero.webp') center/cover no-repeat;;
+      -webkit-animation: gradientAnimation 40s ease infinite;
+      animation: gradientAnimation 40s ease infinite;
+      /* background-size: cover;
+      background-position-y: -50%; */
+      color: white;
+      padding: 15px;
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+      background-position-y: -90%;
+      /* padding-right: 1rem; */
+      /* background-color: rgba(0, 128, 0, 0.5); */
+    }
+
+    @-webkit-keyframes gradientAnimation {
+      0%   { background-position: 0% 40%, center center; }
+      50%  { background-position: 100% 80%, center center; }
+      100% { background-position: 0% 40%, center center; }
+  }
+  
+  @keyframes gradientAnimation {
+      0%   { background-position: 0% 40%, center center; }
+      50%  { background-position: 100% 80%, center center; }
+      100% { background-position: 0% 40%, center center; }
   }
 
+  .marriage_section{
+    position: relative;
+    background: linear-gradient(45deg,rgba(189, 180, 233, 0.7), rgba(189, 180, 233, 0.7), rgba(116, 0, 212, 0.7), rgba(51, 24, 179, 0.7),rgba(189, 180, 233, 0.7), rgba(189, 180, 233, 0.7), rgba(116, 0, 212, 0.7), rgba(51, 24, 179, 0.7) ) 0 0 / 1000% no-repeat, url('../images/marriage.jpg') center/cover no-repeat;;
+    -webkit-animation: gradientAnimationM 40s ease infinite;
+    animation: gradientAnimationM 40s ease infinite;
+    /* background-size: cover;
+    background-position-y: -50%; */
+    color: white;
+    padding: 15px;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    background-position-y: -90%;
+    /* padding-right: 1rem; */
+    /* background-color: rgba(0, 128, 0, 0.5); */
   }
+  @-webkit-keyframes gradientAnimationM {
+    0%   { background-position: 0% 30%, center center; }
+    50%  { background-position: 800% 60%, center center; }
+    100% { background-position: 0% 30%, center center; }
+}
+
+@keyframes gradientAnimationM {
+    0%   { background-position: 0% 30%, center center; }
+    50%  { background-position: 80% 60%, center center; }
+    100% { background-position: 0% 30%, center center; }
+}

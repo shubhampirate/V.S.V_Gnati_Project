@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { Box, Button, Grid } from '@mui/material'
-import mainevent from '../../images/eventsmain.jpg'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Modal } from "react-responsive-modal";
 import { Link } from 'react-router-dom';
@@ -60,13 +59,14 @@ const Matrimonial = () => {
   return (
     <Box>
       <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Grid container spacing={2} style={{ paddingLeft: "5%", paddingRight: "2.5%" }}>
-            <Grid item xs={12} sx={{ marginTop: "2.5rem" }}>
-              <div style={{ fontSize: "3rem", fontWeight: "700" }}>Matrimonial</div>
+        <Grid item xs={12} className='marriage_section'>
+          <Grid container spacing={2} style={{ paddingLeft: "3%", paddingRight: "2.5%" }}>
+            <Grid item xs={12} sx={{ marginTop: "11%" }}>
+              <div style={{ fontSize: "2.5rem", fontWeight: "700" }}>Matrimonial Bliss</div>
             </Grid>
-            <Grid item xs={12}>
-              <div style={{ fontSize: "2rem", marginBottom: "1.5rem" }}>Your life partner search ends here</div>
+            <Grid item xs={12} style={{ marginBottom: "11%" }} >
+              <div style={{ fontSize: "1.35rem", marginBottom: "1.5rem", marginLeft: "2%" }}>Embrace the beauty of companionship and step into a world of possibilities with our matrimonial services.
+                <br />Discover meaningful connections and start your journey towards a lifelong partnership filled with love and togetherness.</div>
             </Grid>
           </Grid>
         </Grid>
