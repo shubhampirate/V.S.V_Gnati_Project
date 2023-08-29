@@ -91,6 +91,25 @@ const dataSub = [{
 ]
 
 const About = () => {
+  const containerStyle = {
+    display: 'flex',
+    justifyContent: 'space-between', // Equal spacing between words
+    alignItems: 'center',
+    flexWrap: 'wrap', // Allow items to wrap on smaller screens
+    backgroundColor: '#f0f0f0',
+    padding: '10px 20px',
+    boxSizing: 'border-box',
+  };
+
+  const wordStyle = {
+    flexBasis: '30%', // Set initial width for larger screens
+    minWidth: '100px', // Minimum width to prevent excessive shrinking
+    textAlign: 'center',
+    fontSize: '24px',
+    fontWeight: 'bold',
+    margin: '5px', // Add spacing between words
+  };
+
   return (
     <div>
       <Grid container spacing={2} sx={{ padding: "3% 5%", }}>
@@ -127,61 +146,20 @@ const About = () => {
           <div style={{ fontSize: "1.25rem", fontWeight: "500" }}>
          Being the Varishth Mandal it is prime duty to bring transparency in the functioning of Gnati. The upliftment of Gnati and take the gnati to the next level by participation of more and more gnatijan and bring them in the main stream of the gnati. Further, it is our duty to align the youth of the gnati to the mainstream and participate in the ganti activiely.  
 The Committee has been formed with main focus on 3T 
-
-
-<Grid item xs={12}>
-          <Grid container spacing={3}>
-           
-            <Grid item xs={12} md={4} sm={12} >
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  {/* <img src={Culture} style={{ width: "4.5rem", height: "4.5rem" }} /> */}
-                </Grid>
-                <Grid item xs={12} style={{ fontSize: "1.5rem", color: "#222A45" }}>
-                • Transformation
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item xs={12} md={4} sm={12} >
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  {/* <img src={education} style={{ width: "4.5rem", height: "4.5rem" }} /> */}
-                </Grid>
-                <Grid item xs={12} style={{ fontSize: "1.5rem", color: "#005500" }}>
-                • Technology
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item xs={12} md={4} sm={12} >
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  {/* <img src={global} style={{ width: "4.5rem", height: "4.5rem" }} /> */}
-                </Grid>
-                <Grid item xs={12} style={{ fontSize: "1.5rem", color: "#4F225E" }}>
-                • Transparency
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-<br />
-{/* <br /> */}
+<h4>•	Transformation</h4>
+<h4>•	Technology</h4>
+<h4>•	Transparency</h4>
+<div style={containerStyle}>
+      <h1 style={wordStyle}>Transformation</h1>
+      <h1 style={wordStyle}>Transformation</h1>
+      <h1 style={wordStyle}>Transformation</h1>
+    </div>
 
 Transformation thorough Technology and Transparency
 The process begins with election, women members in the committee, use of technology by way of you tube live of Shree Samaudri Mataji (Kuldevi) Bhana, Digital Presentation, Atma Nirbhar VSV Yojana, and latest is this digital app. 
 
 This Digital App and Website which will not only be a Vasti Patrak but also a self-supported portal which can be used as a marriage bureau, job portal, donation collector, communication of activities to gnati at large by all mandals and many more.
           </div>
-        </Grid>
-        <Grid item xs={12} sx={{ marginTop: "2.5rem" }}>
-          <div style={{ fontSize: "2.5rem", fontWeight: "700", textAlign: "right" }}>
-            <span className='underline-header' style={{ padding: "0rem 0.5rem " }}>V.S.V Gnati Samsta Activities</span></div>
-        </Grid>
-        <Grid item xs={12} sx={{ marginBottom: "2.5rem", textAlign: "justify" }}>
-          <div style={{ fontSize: "1.25rem", fontWeight: "500" }}>
-          Shree Mumbai Visa Sorathiya Vanik Gnati Samast (Varishth Mandal) is the core mandal of Gnati with sole intention of welfare and upliftment of the gnati. The Varishth mandal has main activity of giving Rahat hapta to the needy members of the gnati, Vidhva Sahay, Rehthan Sahay, bought up harmony amongst the ganti members by organising picnic and social gatherings, cultural and traditional program, carry out the Kudevi Shree Samudri Mata Bhana and Patotsav on behalf of the whole gnati for the blessing of Shree Samudri Mata on the whole Gnati, Maintaining Property of Gnati at Kalbadevi & Nathdwara.
-The present committee has added one more program of Atam Nirbahr VSV with the sole intention of making the gnati self-reliant a step of transformation from “Rahat” to “Rah to earn”.
-Visa Sorthiya Vanik has leaped for the first ever major transformation in 2019 when Shree Mumbai Visa Sorathiya Vanik Gnati Samast (Varishth Mandal) has decided to form a committee by way of election giving away the old tradition of selection. The Present Committee elected in 2019 is the first ever elected committee of the GNATI beside that this committee has first ever women members in the committee.          </div>
         </Grid>
         <Grid item xs={12}>
           <Grid item xs={12} style={{ fontSize: "2rem", marginBottom: "3rem", paddingLeft: "10%", paddingRight: "5%" }}>
