@@ -23,7 +23,9 @@ const Footer = () => {
                             <img src={logo} style={{ width: "5rem" }} />
                         </Grid>
                         <Grid item xs={12} style={{ textAlign: "justify", fontSize: "1.1rem" }}>
-                        Shree Mumbai Visa Sorathiya Vanik Gnati Samast has in all around 20 mandals. The core and main Mandal is Shree Mumbai Visa Sorathiya Vanik Gnati Samast (Varishth Mandal) which was established in 1940. 
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet,
+                            consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                         </Grid>
                     </Grid>
                 </Grid>
@@ -93,11 +95,11 @@ const Footer = () => {
                                 <ul style={{ listStyle: 'none', paddingLeft: 10 }}>
                                     <li style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
                                         <PhoneIcon style={{ fontSize: "1.7rem" }} /> &nbsp;
-                                        <span style={{ marginLeft: '10px', fontSize: "1.2rem" }}>   +91 9820537159, +91 9819001855</span>
+                                        <span style={{ marginLeft: '10px', fontSize: "1.2rem" }}> +1234567890</span>
                                     </li>
                                     <li style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
                                         <EmailIcon style={{ fontSize: "1.7rem" }} /> &nbsp;
-                                        <span style={{ marginLeft: '10px', fontSize: "1.2rem" }}> vsvgnati@gmail.com</span>
+                                        <span style={{ marginLeft: '10px', fontSize: "1.2rem" }}> example@example.com</span>
                                     </li>
                                     <li style={{ display: 'flex', alignItems: 'center' }}>
                                         <LocationOnIcon style={{ fontSize: "1.7rem" }} /> &nbsp;

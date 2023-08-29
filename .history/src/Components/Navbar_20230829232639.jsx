@@ -24,8 +24,8 @@ const Navbar = () => {
         <div className="nav-container">
           <NavLink exact to="/" className="nav-logo" style={{ textAlign: "center" }}>
             {/* <EmergencyShareIcon style={{ width: "5vh", height: "5vh" }} onClick={success} /> */}
-            {/* <img src={logo} style={{ width: "7.5rem", marginTop: "0.5rem" }} /> */}
-            <img src={logo} style={{ width: "3rem", marginTop: "0.5rem" }} />
+            <img src={logo} style={{ width: "7.5rem", marginTop: "0.5rem" }} />
+            <img src={logo} style={{ width: "100%",height:"10%", marginTop: "0.5rem" }} />
             <i className="fas fa-code"></i>
           </NavLink>
 

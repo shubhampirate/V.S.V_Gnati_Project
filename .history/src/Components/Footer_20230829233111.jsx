@@ -93,11 +93,11 @@ const Footer = () => {
                                 <ul style={{ listStyle: 'none', paddingLeft: 10 }}>
                                     <li style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
                                         <PhoneIcon style={{ fontSize: "1.7rem" }} /> &nbsp;
-                                        <span style={{ marginLeft: '10px', fontSize: "1.2rem" }}>   +91 9820537159, +91 9819001855</span>
+                                        <span style={{ marginLeft: '10px', fontSize: "1.2rem" }}> +1234567890</span>
                                     </li>
                                     <li style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
                                         <EmailIcon style={{ fontSize: "1.7rem" }} /> &nbsp;
-                                        <span style={{ marginLeft: '10px', fontSize: "1.2rem" }}> vsvgnati@gmail.com</span>
+                                        <span style={{ marginLeft: '10px', fontSize: "1.2rem" }}> example@example.com</span>
                                     </li>
                                     <li style={{ display: 'flex', alignItems: 'center' }}>
                                         <LocationOnIcon style={{ fontSize: "1.7rem" }} /> &nbsp;
