@@ -55,7 +55,8 @@ const Donate = () => {
                     "&:hover": {
                       backgroundColor: "#BDB4E9"
                     },
-                  }}>Donate Today</Button>
+                  }} onClick={handleDonation} >Donate Today</Button>
+                  {showRazorpay && <RazorpayModal setShowRazorpay={setShowRazorpay} />}
                 </Grid>
               </Grid>
             </Grid>
