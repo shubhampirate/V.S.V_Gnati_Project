@@ -10,20 +10,14 @@ import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArro
 import axios from 'axios';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-
-const StyledTab = styled(Tab)`
-  &.react-tabs__tab--selected::after {
-    background-color: red; /* Change this to the desired color */
-    /* Add any other styles you want */
-  }
-`;
+import "../Components/styleEvents.css";
 
 
 const Events = () => {
 
   const [visible, setVisible] = useState(12);
   const [len, setLen] = useState('');
-  const year = [2023, 2022, 2021, 2020]
+  const year = [2023, 2022]
 
   const [load, setLoad] = useState([]);
   useEffect(() => {
@@ -85,11 +79,11 @@ const Events = () => {
         <Grid item xs={12}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Tabs>
+              <Tabs className="component-e-tabs">
                 <TabList style={{ border: "none", fontSize: "1.5rem", marginBottom: "2rem" }}>
                   {year.map((item, key) => {
                     return (
-                      <Tab style={{ backgroundColor: "transparent", border: "none" }}
+                      <Tab
                         onClick={() =>
                           loadList(item)
                         }>{item}</Tab>

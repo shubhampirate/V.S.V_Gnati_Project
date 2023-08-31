@@ -9,6 +9,7 @@ import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArro
 import PhoneIcon from '@mui/icons-material/Phone';
 import Swal from 'sweetalert2';
 import { useFormik } from "formik";
+import { Link } from "react-router-dom";
 import * as yup from 'yup';
 import "./Job.css";
 import axios from "axios";
@@ -126,19 +127,42 @@ const Jobs = () => {
   return (
     <Box>
       <Grid container spacing={2}>
+        <Grid item xs={12} className='job_section'>
+          <Grid container spacing={2} style={{ paddingLeft: "4%", paddingRight: "2.5%" }}>
+            <Grid item xs={12} sx={{ marginTop: "11%" }}>
+              <div style={{ fontSize: "2.5rem", fontWeight: "700" }}>Job Quest</div>
+            </Grid>
+            <Grid item xs={12}>
+              <div style={{ fontSize: "1.35rem", marginBottom: "1.5rem", marginLeft: "2%" }}>Empowering individuals on their journey to success, our vibrant community
+                opens doors to unparalleled job-seeking opportunities. <br />Join us to connect, learn, and thrive as we pave the
+                way for your professional growth.
+              </div>
+            </Grid>
+            <Grid item xs={12} style={{ marginBottom: "11%" }}>
+              <div>
+                <Link to="/register-job">
+                  <Button
+                    sx={{
+                      color: 'white',
+                      fontSize: "1.25rem",
+                      fontFamily: "PT Sans",
+                      backgroundColor: 'transparent',
+                      border: '2px solid white',
+                      '&:hover': {
+                        backgroundColor: 'white',
+                        color: '#582C6F'
+                      }
+                    }}>
+                    Register
+                  </Button>
+                </Link>
+              </div>
+            </Grid>
+          </Grid>
+        </Grid>
         <Grid item xs={12}>
-          <Grid container spacing={2} sx={{ paddingLeft: "5%", paddingRight: "3%", }}>
-            <Grid item xs={12} sx={{ marginTop: "2.5rem" }}>
-              <div style={{ fontSize: "3rem", fontWeight: "700" }}>
-                Job Opportunity
-              </div>
-            </Grid>
-            <Grid item xs={12}>
-              <div style={{ fontSize: "2rem", marginBottom: "1.5rem" }}>
-                One Step closer to your new Job
-              </div>
-            </Grid>
-            <Grid item xs={12}>
+          <Grid container spacing={2} sx={{ paddingLeft: "5%", paddingRight: "3%" }}>
+            <Grid item xs={12} style={{ marginTop: "2rem" }}>
               <div>
                 <form onSubmit={formik.handleSubmit} >
                   <Grid container spacing={2} style={{ textAlign: "center", marginBottom: "2.5rem" }}>

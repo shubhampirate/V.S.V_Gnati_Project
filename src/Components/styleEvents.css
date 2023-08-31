@@ -1,0 +1,14 @@
+
+.component-e-tabs .react-tabs__tab{
+    color: #018D8D;
+    margin: 0px 15px;
+    padding: 5px 25px;
+    border-radius: 2px; /* Change to the desired selected tab background color */
+  }
+  
+  .component-e-tabs .react-tabs__tab--selected {
+    background-color: #018D8D;
+    color: white; /* Change to the desired selected tab background color */
+  }
+  
+  .sideways { text-orientation: sideways; }

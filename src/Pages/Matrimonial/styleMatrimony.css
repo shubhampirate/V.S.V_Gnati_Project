@@ -1,0 +1,15 @@
+
+.component-m-tabs .react-tabs__tab{
+    color: #582C6F;
+    margin: 0px 15px;
+    padding: 5px 25px;
+    border-radius: 2px; /* Change to the desired selected tab background color */
+  }
+  
+  .component-m-tabs .react-tabs__tab--selected {
+    background-color: #582C6F;
+    color: white; /* Change to the desired selected tab background color */
+  }
+  
+  
+  

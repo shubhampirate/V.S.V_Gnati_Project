@@ -240,7 +240,7 @@
 
     .events_section{
       position: relative;
-      background: linear-gradient(45deg, rgba(144,207,211,0.7),rgba(89, 218, 185,0.7),rgba(20, 172, 129,0.7), rgba(10, 142, 102,0.7),rgba(144,207,211,0.7),rgba(89, 218, 185,0.7),rgba(20, 172, 129,0.7), rgba(10, 142, 102,0.7)) 0 0 / 1000% no-repeat, url('../images/eventsHero.webp') center/cover no-repeat;;
+      background: linear-gradient(45deg, rgba(144,207,211,0.7),rgba(91, 155, 159, 0.7),rgba(67, 130, 135, 0.7),rgba(37, 106, 110, 0.7),rgba(183, 226, 229, 0.7),rgba(91, 213, 222, 0.7),rgba(22, 101, 106, 0.7), rgba(144,207,211,0.7)) 0 0 / 1000% no-repeat, url('../images/eventsHero.webp') center/cover no-repeat;;
       -webkit-animation: gradientAnimation 40s ease infinite;
       animation: gradientAnimation 40s ease infinite;
       /* background-size: cover;
@@ -268,12 +268,12 @@
 
   .marriage_section{
     position: relative;
-    background: linear-gradient(45deg,rgba(189, 180, 233, 0.7), rgba(189, 180, 233, 0.7), rgba(116, 0, 212, 0.7), rgba(51, 24, 179, 0.7),rgba(189, 180, 233, 0.7), rgba(189, 180, 233, 0.7), rgba(116, 0, 212, 0.7), rgba(51, 24, 179, 0.7) ) 0 0 / 1000% no-repeat, url('../images/marriage.jpg') center/cover no-repeat;;
+    background: linear-gradient(45deg,rgba(189, 180, 233, 0.85),rgba(189, 180, 233, 0.85)  ) 0 0 / 1000% no-repeat, url('../images/marriage.jpg') center/cover no-repeat;;
     -webkit-animation: gradientAnimationM 40s ease infinite;
     animation: gradientAnimationM 40s ease infinite;
     /* background-size: cover;
     background-position-y: -50%; */
-    color: white;
+    color: black;
     padding: 15px;
     padding-top: 3rem;
     padding-bottom: 3rem;
@@ -291,4 +291,32 @@
     0%   { background-position: 0% 30%, center center; }
     50%  { background-position: 80% 60%, center center; }
     100% { background-position: 0% 30%, center center; }
+}
+
+
+.job_section{
+  position: relative;
+  background: linear-gradient(45deg,rgba(1, 93, 93, 0.7), rgba(28, 136, 136, 0.7), rgba(70, 137, 137, 0.7),rgba(113, 139, 139, 0.7),rgba(1, 141,141, 0.7), rgba(28, 136, 136, 0.7), rgba(70, 137, 137, 0.7),rgba(173, 223, 223, 0.7) ) 0 0 / 1000% no-repeat, url('../images/jobs.jpg') center/cover no-repeat;;
+  -webkit-animation: gradientAnimationJ 40s ease infinite;
+  animation: gradientAnimationJ 40s ease infinite;
+  /* background-size: cover;
+  background-position-y: -50%; */
+  color: black;
+  padding: 15px;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  background-position-y: -90%;
+  /* padding-right: 1rem; */
+  /* background-color: rgba(0, 128, 0, 0.5); */
+}
+@-webkit-keyframes gradientAnimationJ {
+  0%   { background-position: 0% 30%, center center; }
+  50%  { background-position: 800% 60%, center center; }
+  100% { background-position: 0% 30%, center center; }
+}
+
+@keyframes gradientAnimationJ {
+  0%   { background-position: 0% 30%, center center; }
+  50%  { background-position: 80% 60%, center center; }
+  100% { background-position: 0% 30%, center center; }
 }

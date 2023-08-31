@@ -265,10 +265,10 @@ const ContactUs = () => {
               <Grid item xs={12}>
                 <img src={phone} style={{ width: "4.5rem", height: "4.5rem", marginTop: "1rem" }} />
               </Grid>
-              <Grid item xs={12} style={{ fontSize: "1.5rem", color: "#222A45" }}>
-                Conatct Number
+              <Grid item xs={12} style={{ fontSize: "1.5rem", color: "#5E989C" }}>
+                Contact Number
               </Grid>
-              <Grid item xs={12} style={{ fontSize: "1.2rem", color: "#222A45", paddingLeft: "1.5rem", paddingRight: "1.5rem", marginBottom: "2rem" }}>
+              <Grid item xs={12} style={{ fontSize: "1.2rem", color: "#5E989C", paddingLeft: "1.5rem", paddingRight: "1.5rem", marginBottom: "2rem" }}>
                 +91 9820537159 <br /> +91 9819001855
               </Grid>
             </Grid>
@@ -278,10 +278,10 @@ const ContactUs = () => {
               <Grid item xs={12}>
                 <img src={email} style={{ width: "4.5rem", height: "4.5rem", marginTop: "1rem" }} />
               </Grid>
-              <Grid item xs={12} style={{ fontSize: "1.5rem", color: "#4F225E" }}>
+              <Grid item xs={12} style={{ fontSize: "1.5rem", color: "#6C60A8" }}>
                 Email
               </Grid>
-              <Grid item xs={12} style={{ fontSize: "1.2rem", color: "#4F225E", paddingLeft: "1.5rem", paddingRight: "1.5rem", marginBottom: "2rem" }}>
+              <Grid item xs={12} style={{ fontSize: "1.25rem", color: "#6C60A8", paddingLeft: "1.5rem", paddingRight: "1.5rem", marginBottom: "2rem" }}>
                 vsvgnati@gmail.com
               </Grid>
             </Grid>

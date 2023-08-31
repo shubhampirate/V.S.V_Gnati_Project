@@ -64,10 +64,9 @@ const Home = () => {
 
   return (
     <Box>
-
       <Grid container spacing={5}>
         <Grid item xs={12}>
-          <div className="image-container-overlay">
+          <div className="image-container-overlay" style={{ marginTop: "-1rem" }}>
             <div className="image-overlay" style={{ backgroundImage: `url(${imageUrls[currentImageIndex]})` }}>
               <div className="overlay"></div>
               <div className="text-overlay"> Shri Visa Soarathia</div>
@@ -170,7 +169,9 @@ const Home = () => {
             <Grid item xs={12} sm={12} md={8} style={{
               backgroundImage: `url(${donationHome})`,
               backgroundSize: 'cover',
-              backgroundPosition: 'center',
+              // backgroundPosition: 'center',
+              backgroundPositionY: '95%',
+              backgroundPositionX: "50%",
               height: '500px',
             }}>
 
