@@ -58,7 +58,7 @@ const Matrimonial = () => {
 
   return (
     <Box>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} style={{ marginBottom: "2rem" }}>
         <Grid item xs={12} className='marriage_section'>
           <Grid container spacing={2} style={{ paddingLeft: "4%", paddingRight: "2.5%" }}>
             <Grid item xs={12} sx={{ marginTop: "11%" }}>

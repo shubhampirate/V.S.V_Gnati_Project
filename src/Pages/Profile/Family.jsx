@@ -514,7 +514,7 @@ const Family = () => {
 
     return (
         <div>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} style={{ marginBottom: "2rem" }}>
                 {load ? <>
                     <Grid item xs={12} sx={{ marginTop: "2.5rem", marginBottom: "3rem" }}>
                         <div style={{ fontSize: "3rem", fontWeight: "700" }}>Family {load.id}</div>

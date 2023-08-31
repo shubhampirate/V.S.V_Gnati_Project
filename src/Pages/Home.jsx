@@ -115,7 +115,7 @@ const Home = () => {
                 </Grid>
                 <Grid item xs={12} style={{ fontSize: "1.5rem", color: "#4F225E" }}>
                   Global Network
-                 </Grid>
+                </Grid>
                 <Grid item xs={12} style={{ fontSize: "1rem", color: "#4F225E", paddingLeft: "1.5rem", paddingRight: "1.5rem", marginBottom: "2rem" }}>
                   Connecting Hearts Worldwide<br /> Bridging Cultures, Creating Bonds.
                 </Grid>
@@ -170,9 +170,9 @@ const Home = () => {
               backgroundImage: `url(${donationHome})`,
               backgroundSize: 'cover',
               // backgroundPosition: 'center',
-              backgroundPositionY: '95%',
+              backgroundPositionY: '105%',
               backgroundPositionX: "50%",
-              height: '500px',
+              height: '520px',
             }}>
 
             </Grid>

@@ -313,7 +313,7 @@ const Overlay = styled.div`
 const OverlayMenu = styled.ul`
   list-style: none;
   position: absolute;
-  left: 50%;
+  left: 45%;
   top: 40%;
   transform: translate(-50%, -50%);
   

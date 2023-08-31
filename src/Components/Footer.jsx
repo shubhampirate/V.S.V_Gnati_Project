@@ -1,7 +1,8 @@
 import React from 'react';
 import './Footer.css'; // Make sure to link your CSS file correctly
 import { Grid } from '@mui/material';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
@@ -10,7 +11,68 @@ import logo from "../images/VSVLogo.png"
 const Footer = () => {
     return (
         <>
-            <Grid container spacing={2} style={{
+            <Grid container spacing={2}>
+                <footer className="footer-distributed">
+
+                    <div className="footer-left">
+
+                        <h3>V.S.V Gnati<span>Samsta</span></h3>
+
+                        <p className="footer-links">
+                            <Link className="link-1" to="/">Home &nbsp;</Link>
+                            <Link to="/about">About Us &nbsp;</Link>
+                            <Link to="/events">Events &nbsp;</Link>
+                            <Link to="/members">Members &nbsp;</Link>
+                            <Link to="/profile">Profile &nbsp;</Link>
+                            <Link to="/jobs">Jobs &nbsp;</Link>
+                            <Link to="/matrimonial">Matrimony &nbsp;</Link>
+                            <Link to="/donate">Donation &nbsp;</Link>
+                            <Link to="/contact">Contact Us&nbsp;</Link>
+                        </p>
+
+                        <p className="footer-company-name">Shri Visa SoarathiaVanika Gnati Samasta © 2023</p>
+                    </div>
+
+                    <div className="footer-center">
+
+                        <div>
+                            {/* <i><LocationOnIcon /></i> */}
+                            <p style={{ marginBottom: "1.2rem" }}>803, Natraj Society, Sodawala Lane, Borivali (West), Mumbai - 400092</p>
+                        </div>
+
+                        <div>
+                            {/* <i><PhoneIcon /></i> */}
+                            <p style={{ marginBottom: "1.2rem" }}>9820537159 / 9819001855</p>
+                        </div>
+
+                        <div>
+                            {/* <i><EmailIcon /></i> */}
+                            <p style={{ marginBottom: "1.2rem" }}><a href="mailto:support@company.com">vsvgnati@gmail.com</a></p>
+                        </div>
+
+                    </div>
+
+                    <div className="footer-right">
+
+                        <p className="footer-company-about">
+                            <span>About the company</span>
+                            The committee has been formed by on the building blocks of Transformation, Technology and Transperancy
+                        </p>
+
+                        <div className="footer-icons">
+
+                            {/* <a href="#"><i className="fa fa-facebook"></i></a>
+                            <a href="#"><i className="fa fa-twitter"></i></a>
+                            <a href="#"><i className="fa fa-linkedin"></i></a>
+                            <a href="#"><i className="fa fa-github"></i></a> */}
+
+                        </div>
+
+                    </div>
+
+                </footer>
+            </Grid>
+            {/* <Grid container spacing={2} style={{
                 marginTop: "2.5rem",
                 paddingLeft: "5%", paddingRight: "5%", paddingBottom: "3%", backgroundColor: "#8691b8"
             }}>
@@ -103,17 +165,6 @@ const Footer = () => {
                                         <LocationOnIcon style={{ fontSize: "1.7rem" }} /> &nbsp;
                                         <span style={{ marginLeft: '10px', fontSize: "1.2rem" }}> 803, Natraj Society, Sodawala Lane, Borivali (W), Mumbai - 400092</span>
                                     </li>
-                                    {/* <li>
-                                        <iframe
-                                            title="Google Maps Location"
-                                            width="100%"
-                                            height="300"
-                                            frameBorder="0"
-                                            style={{ border: 0, marginTop: "1.25rem" }}
-                                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3767.1169827869567!2d72.8538461!3d19.2337328!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b1e294b07269%3A0x991cbbccaf65fb2e!2sNatraj%20society!5e0!3m2!1sen!2sin!4v1691932561651!5m2!1sen!2sin"
-                                            allowFullScreen
-                                        ></iframe>
-                                    </li> */}
                                 </ul>
                             </div>
                         </Grid>
@@ -123,7 +174,8 @@ const Footer = () => {
 
                     <p>&copy; 2023 Your Company. All rights reserved.</p>
                 </Grid>
-            </Grid >
+            </Grid > */}
+
         </>
     );
 }

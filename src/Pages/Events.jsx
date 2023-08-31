@@ -63,7 +63,7 @@ const Events = () => {
 
   return (
     <Box>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} style={{ marginBottom: "2rem" }}>
         <Grid item xs={12} className='events_section'>
           <Grid container spacing={2} style={{ paddingLeft: "3%", paddingRight: "2.5%" }}>
             <Grid item xs={12} sx={{ marginTop: "11%" }}>
