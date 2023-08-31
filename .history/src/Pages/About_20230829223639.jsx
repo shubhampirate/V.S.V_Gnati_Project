@@ -175,13 +175,12 @@ This Digital App and Website which will not only be a Vasti Patrak but also a se
         </Grid>
         <Grid item xs={12} sx={{ marginTop: "2.5rem" }}>
           <div style={{ fontSize: "2.5rem", fontWeight: "700", textAlign: "right" }}>
-            <span className='underline-header' style={{ padding: "0rem 0.5rem " }}>V.S.V Gnati Samsta Activities</span></div>
+            <span className='underline-header' style={{ padding: "0rem 0.5rem " }}>V.S.V Gnati Samsta History</span></div>
         </Grid>
         <Grid item xs={12} sx={{ marginBottom: "2.5rem", textAlign: "justify" }}>
           <div style={{ fontSize: "1.25rem", fontWeight: "500" }}>
-          Shree Mumbai Visa Sorathiya Vanik Gnati Samast (Varishth Mandal) is the core mandal of Gnati with sole intention of welfare and upliftment of the gnati. The Varishth mandal has main activity of giving Rahat hapta to the needy members of the gnati, Vidhva Sahay, Rehthan Sahay, bought up harmony amongst the ganti members by organising picnic and social gatherings, cultural and traditional program, carry out the Kudevi Shree Samudri Mata Bhana and Patotsav on behalf of the whole gnati for the blessing of Shree Samudri Mata on the whole Gnati, Maintaining Property of Gnati at Kalbadevi & Nathdwara.
-The present committee has added one more program of Atam Nirbahr VSV with the sole intention of making the gnati self-reliant a step of transformation from “Rahat” to “Rah to earn”.
-Visa Sorthiya Vanik has leaped for the first ever major transformation in 2019 when Shree Mumbai Visa Sorathiya Vanik Gnati Samast (Varishth Mandal) has decided to form a committee by way of election giving away the old tradition of selection. The Present Committee elected in 2019 is the first ever elected committee of the GNATI beside that this committee has first ever women members in the committee.          </div>
+          Visa Sorthiya Vanik is a Ganti of people from “Sorath” part in Gujrat. The main origin of the gnati is from Sorath and being parted from Pancha, Dasha and then become Visa. The Gantijan are following mainly the “Vaishnav” Religion. The Gnati was originated in Gujrat and spread into two geographical areas over there viz., “Ghed” & “Naghed”.  The Gnatijan moved to cities and abroad in search of job, education and better opportunities. And now the gnati is spread across the globe. The VSV Gnati has overall 2500 plus families all over the world. The maximum gnatijans are now living in Mumbai and in Gujrat/Saurashtra. Over 1650 families of gnatijans are living in Mumbai and majority of them are staying in Kandivali. Shree Mumbai Visa Sorathiya Vanik Gnati Samast (Varishth Mandal) was established in 1940.
+          </div>
         </Grid>
         <Grid item xs={12}>
           <Grid item xs={12} style={{ fontSize: "2rem", marginBottom: "3rem", paddingLeft: "10%", paddingRight: "5%" }}>
@@ -192,7 +191,7 @@ Visa Sorthiya Vanik has leaped for the first ever major transformation in 2019 w
           <Grid container spacing={2}>
             {data.map((item) => {
               return (
-                <Grid item xs={11} sm={6} md={4} lg={3}>
+                <Grid item xs={12} sm={6} md={3}>
                   <div className="row">
                     <div className="folded_corner" style={{ textAlign: "left" }}>
                       <img src={photo} alt="Frontend Development" style={{ width: "100%", height: "80%" }} />
@@ -208,7 +207,7 @@ Visa Sorthiya Vanik has leaped for the first ever major transformation in 2019 w
           <Grid container spacing={2}>
             {dataSub.map((item) => {
               return (
-                <Grid item xs={12} sm={6} md={4} lg={3}>
+                <Grid item xs={12} sm={6} md={3}>
                   <div className="row">
                     <div className="folded_corner_sub" style={{ textAlign: "left" }}>
                       <Grid item xs={12}><h2>Shubham Shah</h2></Grid>

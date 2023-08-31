@@ -165,23 +165,13 @@ The Committee has been formed with main focus on 3T
           </Grid>
         </Grid>
 <br />
-{/* <br /> */}
+<br />
 
 Transformation thorough Technology and Transparency
 The process begins with election, women members in the committee, use of technology by way of you tube live of Shree Samaudri Mataji (Kuldevi) Bhana, Digital Presentation, Atma Nirbhar VSV Yojana, and latest is this digital app. 
 
 This Digital App and Website which will not only be a Vasti Patrak but also a self-supported portal which can be used as a marriage bureau, job portal, donation collector, communication of activities to gnati at large by all mandals and many more.
           </div>
-        </Grid>
-        <Grid item xs={12} sx={{ marginTop: "2.5rem" }}>
-          <div style={{ fontSize: "2.5rem", fontWeight: "700", textAlign: "right" }}>
-            <span className='underline-header' style={{ padding: "0rem 0.5rem " }}>V.S.V Gnati Samsta Activities</span></div>
-        </Grid>
-        <Grid item xs={12} sx={{ marginBottom: "2.5rem", textAlign: "justify" }}>
-          <div style={{ fontSize: "1.25rem", fontWeight: "500" }}>
-          Shree Mumbai Visa Sorathiya Vanik Gnati Samast (Varishth Mandal) is the core mandal of Gnati with sole intention of welfare and upliftment of the gnati. The Varishth mandal has main activity of giving Rahat hapta to the needy members of the gnati, Vidhva Sahay, Rehthan Sahay, bought up harmony amongst the ganti members by organising picnic and social gatherings, cultural and traditional program, carry out the Kudevi Shree Samudri Mata Bhana and Patotsav on behalf of the whole gnati for the blessing of Shree Samudri Mata on the whole Gnati, Maintaining Property of Gnati at Kalbadevi & Nathdwara.
-The present committee has added one more program of Atam Nirbahr VSV with the sole intention of making the gnati self-reliant a step of transformation from “Rahat” to “Rah to earn”.
-Visa Sorthiya Vanik has leaped for the first ever major transformation in 2019 when Shree Mumbai Visa Sorathiya Vanik Gnati Samast (Varishth Mandal) has decided to form a committee by way of election giving away the old tradition of selection. The Present Committee elected in 2019 is the first ever elected committee of the GNATI beside that this committee has first ever women members in the committee.          </div>
         </Grid>
         <Grid item xs={12}>
           <Grid item xs={12} style={{ fontSize: "2rem", marginBottom: "3rem", paddingLeft: "10%", paddingRight: "5%" }}>
@@ -192,7 +182,7 @@ Visa Sorthiya Vanik has leaped for the first ever major transformation in 2019 w
           <Grid container spacing={2}>
             {data.map((item) => {
               return (
-                <Grid item xs={11} sm={6} md={4} lg={3}>
+                <Grid item xs={12} sm={6} md={3}>
                   <div className="row">
                     <div className="folded_corner" style={{ textAlign: "left" }}>
                       <img src={photo} alt="Frontend Development" style={{ width: "100%", height: "80%" }} />
@@ -208,7 +198,7 @@ Visa Sorthiya Vanik has leaped for the first ever major transformation in 2019 w
           <Grid container spacing={2}>
             {dataSub.map((item) => {
               return (
-                <Grid item xs={12} sm={6} md={4} lg={3}>
+                <Grid item xs={12} sm={6} md={3}>
                   <div className="row">
                     <div className="folded_corner_sub" style={{ textAlign: "left" }}>
                       <Grid item xs={12}><h2>Shubham Shah</h2></Grid>

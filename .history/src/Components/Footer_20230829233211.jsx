@@ -97,7 +97,7 @@ const Footer = () => {
                                     </li>
                                     <li style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
                                         <EmailIcon style={{ fontSize: "1.7rem" }} /> &nbsp;
-                                        <span style={{ marginLeft: '10px', fontSize: "1.2rem" }}> vsvgnati@gmail.com</span>
+                                        <span style={{ marginLeft: '10px', fontSize: "1.2rem" }}> example@example.com</span>
                                     </li>
                                     <li style={{ display: 'flex', alignItems: 'center' }}>
                                         <LocationOnIcon style={{ fontSize: "1.7rem" }} /> &nbsp;
