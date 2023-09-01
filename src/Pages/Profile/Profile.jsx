@@ -8,6 +8,8 @@ import * as yup from 'yup';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import Select from 'react-select';
+import secureLocalStorage from 'react-secure-storage';
+import Loader from '../../Components/Loader';
 
 const columns = [
   { id: 'name', label: 'Family Head & Other Family Members' },
@@ -25,6 +27,9 @@ const columns = [
 
 
 const Profile = () => {
+
+  const domain = secureLocalStorage.getItem("domainvsv");
+  const token = secureLocalStorage.getItem("tokenvsv");
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -68,33 +73,6 @@ const Profile = () => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
-  const handlenamedistrict = async () => {
-
-    const searchData = {
-      name: searchName,
-      district: searchDistrict,
-    };
-    await fetch('http://jenilsavla.pythonanywhere.com/api/members/', {
-      method: 'POST',
-      headers: {
-        "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(searchData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // console.log(data.data);
-        setLoad(data.data);
-        // setFilterList(data.data);
-        console.log("1-", data.data);
-        //setFilterList(data.data)
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
 
 
   const handleSubmitName = async () => {
@@ -201,10 +179,8 @@ const Profile = () => {
   ];
 
   const loadList = async () => {
-    const token = localStorage.getItem("tokenvsv")
-    const family = localStorage.getItem("familyid")
     if (load.length === 0 && filterList.length === 0) {
-      const result = await axios.get("http://jenilsavla.pythonanywhere.com/api/members", {
+      const result = await axios.get(`${domain}/members`, {
         headers: { "Authorization": `Token ${token}` },
       });
       setLoad(result.data.data);
@@ -218,12 +194,18 @@ const Profile = () => {
     <Box>
       <Grid container spacing={2} style={{ marginBottom: "2rem" }}>
         <Grid item xs={12}>
-          <Grid container spacing={2} style={{ paddingLeft: "5%", paddingRight: "2.5%" }}>
-            <Grid item xs={12} sx={{ marginTop: "2.5rem" }}>
-              <div style={{ fontSize: "3rem", fontWeight: "700" }}>Search members</div>
-            </Grid>
-            <Grid item xs={12}>
-              <div style={{ fontSize: "2rem", marginBottom: "1.5rem" }}>Connect with your family and friends</div>
+          <Grid item xs={12} className='events_section'>
+            <Grid container spacing={2} style={{ paddingLeft: "3%", paddingRight: "2.5%" }}>
+              <Grid item xs={12} sx={{ marginTop: "11%" }}>
+                <div style={{ fontSize: "2.5rem", fontWeight: "700" }}>Search Members</div>
+              </Grid>
+              <Grid item xs={12} style={{ marginBottom: "11%" }} >
+                <div style={{ fontSize: "1.35rem", marginBottom: "1.5rem", marginLeft: "2%" }}>
+                  At V.s.V Gnati Samsta, our mission is to bridge the gaps and bring families closer together.
+                  With our dedicated search and connection services, we make it effortless to reconnect with your family members,
+                  whether they're near or far. Let us help you rekindle those special bonds and create new memories that will last a lifetime.
+                </div>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
@@ -329,31 +311,33 @@ const Profile = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {filterList
-                      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                      .map((row) => {
-                        return (
-                          <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                            {columns.map((column) => {
-                              const value = row[column.id];
-                              return (
-                                <TableCell key={column.id} style={{ fontSize: "1.1rem", textAlign: "center" }}>
-                                  {column.format && typeof value === 'number'
-                                    ? column.format(value)
-                                    : value}
-                                </TableCell>
-                              );
-                            })}
-                          </TableRow>
-                        );
-                      })}
+                    {filterList.length ? <>
+                      {filterList
+                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                        .map((row) => {
+                          return (
+                            <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                              {columns.map((column) => {
+                                const value = row[column.id];
+                                return (
+                                  <TableCell key={column.id} style={{ fontSize: "1.1rem", textAlign: "center" }}>
+                                    {column.format && typeof value === 'number'
+                                      ? column.format(value)
+                                      : value}
+                                  </TableCell>
+                                );
+                              })}
+                            </TableRow>
+                          );
+                        })}</> : <><Loader /></>}
+
                   </TableBody>
                 </Table>
               </TableContainer>
               <TablePagination
                 rowsPerPageOptions={10}
                 component="div"
-                count={load.length}
+                count={filterList.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}

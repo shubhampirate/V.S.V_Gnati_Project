@@ -13,6 +13,8 @@ import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import DomainAddIcon from '@mui/icons-material/DomainAdd';
 import Select from 'react-select';
+import secureLocalStorage from 'react-secure-storage';
+import Loader from '../../Components/Loader';
 
 const validationSchemaJob = yup.object({
     details: yup
@@ -44,8 +46,10 @@ const customStyles = {
 };
 
 const Jobadmin = () => {
-    const token = localStorage.getItem("tokenvsv")
-    const family = localStorage.getItem("familyid")
+    const domain = secureLocalStorage.getItem("domainvsv");
+    const token = secureLocalStorage.getItem("tokenvsv");
+    const companyId = secureLocalStorage.getItem("companyvsv");
+
     const formikJob = useFormik({
         initialValues: {
             details: '',
@@ -61,25 +65,35 @@ const Jobadmin = () => {
             formData.append("type", values.job_type);
             formData.append("details", values.details);
             formData.append("phone", values.phone);
-            fetch("http://jenilsavla.pythonanywhere.com/api/jobs/", {
+            fetch(`${domain}/jobs/`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Token ${token}`,
                 },
                 body: formData,
             })
-                .then((result) => {
-                    console.log(result)
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Successfully Added the Job',
-                        showConfirmButton: false,
-                        timer: 4000
-                    })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.status == true) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Successfully added the new Job',
+                            showConfirmButton: false,
+                            timer: 3000
+                        })
+                    }
+                    else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: data.message,
+                            showConfirmButton: false,
+                            timer: 3000
+                        })
+                    }
                     loadListjob();
                 })
                 .catch(() => {
-                    alert('Error in the Code');
+                    // alert('Error in the Code');
                 });
         }
     });
@@ -90,7 +104,6 @@ const Jobadmin = () => {
         { value: 'Full-Time', label: 'Full-Time' },
         { value: 'Internship', label: 'Internship' }
     ];
-
 
     const [editArray, setEditArray] = useState([]);
     const [edittype, setEdittype] = useState('');
@@ -112,7 +125,7 @@ const Jobadmin = () => {
 
     const loadListjob = async () => {
         //const token = localStorage.getItem("token")
-        const result = await axios.get("http://jenilsavla.pythonanywhere.com/api/jobs", {
+        const result = await axios.get(`${domain}/jobs`, {
             headers: { "Authorization": `Token ${token}` },
         });
         setLoadjob(result.data.data.jobs);
@@ -124,7 +137,7 @@ const Jobadmin = () => {
         console.log(id);
         setidjob(id);
         setIsOpen(true);
-        const result = await axios.get(`http://jenilsavla.pythonanywhere.com/api/job/${id}`, {
+        const result = await axios.get(`${domain}/job/${id}`, {
             headers: { "Authorization": `Token ${token}` },
         });
         console.log(result.data.data);
@@ -134,9 +147,10 @@ const Jobadmin = () => {
         setEditphone(result.data.data.phone);
         setEditdetails(result.data.data.details);
     }
+
     const handledelete = async (id) => {
         console.log(id);
-        fetch(`http://jenilsavla.pythonanywhere.com/api/job/${id}`, {
+        fetch(`${domain}/job/${id}`, {
             method: 'DELETE',
             headers: {
                 "Authorization": `Token ${token}`,
@@ -145,7 +159,23 @@ const Jobadmin = () => {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
+                if (data.status == true) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Successfully deleted the Company',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: data.message,
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                }
+                // console.log(data);
                 loadListjob();
                 loadListjob();
             })
@@ -161,7 +191,7 @@ const Jobadmin = () => {
             phone: editphone,
             details: editdetail,
         };
-        fetch(`http://jenilsavla.pythonanywhere.com/api/job/${idjob}`, {
+        fetch(`${domain}/job/${idjob}`, {
             method: 'PUT',
             headers: {
                 "Authorization": `Token ${token}`,
@@ -171,7 +201,22 @@ const Jobadmin = () => {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
+                if (data.status == true) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Successfully updated Job details',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: data.message,
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                }
             })
             .catch((error) => {
                 console.error(error);
@@ -183,6 +228,7 @@ const Jobadmin = () => {
 
     const [showJob, setShowJob] = useState(false);
     const showComponentJob = (e) => { setShowJob(!showJob) }
+
     return (
         <div>
             <Grid container spacing={2} style={{ marginLeft: "-0.5rem", padding: "2%" }}>
@@ -340,42 +386,51 @@ const Jobadmin = () => {
                                         }}>Action</Th>
                                     </Tr>
                                 </Thead>
-                                {loadjob.map((item) => {
-                                    return (
-                                        <Tbody>
-                                            <Tr>
-                                                <Td style={{
-                                                    border: "1px solid #000",
-                                                    padding: "0.75rem",
-                                                    textAlign: "left"
-                                                }}>{item.title}</Td>
-                                                <Td style={{
-                                                    border: "1px solid #000",
-                                                    padding: "0.75rem",
-                                                    textAlign: "left"
-                                                }}>{item.type}</Td>
-                                                <Td style={{
-                                                    border: "1px solid #000",
-                                                    padding: "0.75rem",
-                                                    textAlign: "left"
-                                                }}>{item.phone}</Td>
-                                                <Td style={{
-                                                    border: "1px solid #000",
-                                                    padding: "0.75rem",
-                                                    textAlign: "left"
-                                                }}>{item.details}</Td>
-                                                <Td style={{
-                                                    border: "1px solid #000",
-                                                    padding: "0.75rem",
-                                                    textAlign: "left"
-                                                }}>
-                                                    <span onClick={() => handleedit(item.id)}> Edit </span> /
-                                                    <span onClick={() => handledelete(item.id)}> Delete </span>
-                                                </Td>
-                                            </Tr>
-                                        </Tbody>
-                                    )
-                                })}
+                                {companyId ? <>
+                                    {loadjob.length ? <>
+                                        {loadjob.map((item) => {
+                                            return (
+                                                <>
+                                                    {item.company === companyId ? <>
+                                                        <Tbody>
+                                                            <Tr>
+                                                                <Td style={{
+                                                                    border: "1px solid #000",
+                                                                    padding: "0.75rem",
+                                                                    textAlign: "left"
+                                                                }}>{item.title}</Td>
+                                                                <Td style={{
+                                                                    border: "1px solid #000",
+                                                                    padding: "0.75rem",
+                                                                    textAlign: "left"
+                                                                }}>{item.type}</Td>
+                                                                <Td style={{
+                                                                    border: "1px solid #000",
+                                                                    padding: "0.75rem",
+                                                                    textAlign: "left"
+                                                                }}>{item.phone}</Td>
+                                                                <Td style={{
+                                                                    border: "1px solid #000",
+                                                                    padding: "0.75rem",
+                                                                    textAlign: "left"
+                                                                }}>{item.details}</Td>
+                                                                <Td style={{
+                                                                    border: "1px solid #000",
+                                                                    padding: "0.75rem",
+                                                                    textAlign: "left"
+                                                                }}>
+                                                                    <span onClick={() => handleedit(item.id)}> Edit </span> /
+                                                                    <span onClick={() => handledelete(item.id)}> Delete </span>
+                                                                </Td>
+                                                            </Tr>
+                                                        </Tbody></> : <></>}
+                                                </>
+                                            )
+                                        })}
+                                    </> : <><Loader /></>}
+                                </> : <>
+                                    <div style={{ fontSize: "2.5rem", fontWeight: "700", marginBottom: "2rem" }}>No Company has Registered yet</div>
+                                </>}
                             </Table>
                             <Modal
                                 open={isOpen}
@@ -458,113 +513,3 @@ const Jobadmin = () => {
 
 export default Jobadmin
 
-
-{/*
-convert 
-[{
-    identified:[
-    {
-        {
-            name:ajbdjf,
-            pages:{
-                {
-                    pagename:ndnsddsk,
-                    pageurl : fcgvhbjnkm
-                }
-            }
-        },
-        {
-            name:ajbdjf,
-            pages:{
-                {
-                    pagename:ndnsddsk,
-                    pageurl : fcgvhbjnkm
-                }
-            }
-        },
-
-    },
-]},
-{
-nonidentified:[
-    {
-        {
-            name:ajbdjf,
-            pages:{
-                {
-                    pagename:ndnsddsk,
-                    pageurl : fcgvhbjnkm
-                }
-            }
-        },
-        {
-            name:ajbdjf,
-            pages:{
-                {
-                    pagename:ndnsddsk,
-                    pageurl : fcgvhbjnkm
-                }
-            }
-        },
-
-    },
-]
- into this 
-[
-    {
-        requestId: "dfbsdfb",
-        "originid": "dsfsffsmsn"
-    }
-    {
-            name:ajbdjf,
-            pages:{
-                {
-                    pagename:ndnsddsk
-                }
-            }
-        },
-        {
-            name:ajbdjf,
-            pages:{
-                {
-                    pagename:ndnsddsk
-                }
-            }
-        },
-    {
-            name:ajbdjf,
-            pages:{
-                {
-                    pagename:ndnsddsk
-                }
-            }
-        },
-        {
-            name:ajbdjf,
-            pages:{
-                {
-                    pagename:ndnsddsk
-                }
-            }
-        },
-
-],
-
-
-treee structure to be converted in is :
-
-identified 
-    hfbs,
-    hfbs,
-    hfbs,
-    hfbs,
-nonidentified
-    identified 
-    hfbs,
-    hfbs,
-    hfbs,
-    hfbs,
-
-
-
-*/}

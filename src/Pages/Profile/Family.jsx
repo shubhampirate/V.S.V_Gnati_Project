@@ -23,9 +23,14 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import Select from 'react-select';
+import secureLocalStorage from 'react-secure-storage';
+
+
 const Family = () => {
-    const token = localStorage.getItem("tokenvsv")
-    const family = localStorage.getItem("familyid")
+    const domain = secureLocalStorage.getItem("domainvsv");
+    const token = secureLocalStorage.getItem("tokenvsv");
+    const familyId = secureLocalStorage.getItem("familyidvsv");
+
     const validationSchema = yup.object({
         occupation: yup
             .string('Enter your Occupation')
@@ -39,6 +44,9 @@ const Family = () => {
         name: yup
             .string('Enter your Name')
             .required('Name is required'),
+        native_village: yup
+            .string('Enter your Native Village')
+            .required('Native Village is required'),
         relation: yup
             .string('')
             .required('Relation is required'),
@@ -113,6 +121,7 @@ const Family = () => {
 
     const relation_options = [
         { value: "Self", label: 'Self' },
+        { value: "Spouse", label: 'Spouse' },
         { value: 'Mother', label: 'Mother' },
         { value: "Brother", label: 'Brother' },
         { value: 'Grandmother', label: 'Grandmother' },
@@ -169,7 +178,7 @@ const Family = () => {
         validationSchema: validationSchema,
         onSubmit: (values) => {
             console.log(values);
-            fetch(`http://jenilsavla.pythonanywhere.com/api/family/${family}`, {
+            fetch(`${domain}/family/${familyId}`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Token ${token}`,
@@ -198,6 +207,7 @@ const Family = () => {
             name: '',
             relation: null,
             date: '',
+            native_village: '',
             phone: '',
             profession_name: null,
             profession_status: '',
@@ -211,19 +221,7 @@ const Family = () => {
         validationSchema: validationSchemamember,
         onSubmit: (values) => {
             console.log(values);
-            /*const formData = new FormData();
-            formData.append("name", values.name);
-            formData.append("relation", values.relation);
-            formData.append("dob", values.date);
-            formData.append("phone", values.phone);
-            formData.append("education", values.education);
-            formData.append("maritial_status", values.maritial_status);
-            formData.append("blood_group", values.blood_group);
-            formData.append("email_address", values.email_address);
-            formData.append("profession_name", values.profession_name);
-            formData.append("profession_status", values.profession_status);
-            formData.append("gender", values.gender);*/
-            fetch(`http://jenilsavla.pythonanywhere.com/api/add-member/${family}`, {
+            fetch(`${domain}/add-member/${familyId}`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Token ${token}`,
@@ -233,6 +231,7 @@ const Family = () => {
                     name: values.name,
                     relation: values.relation,
                     dob: values.date,
+                    native_village: values.native_village,
                     phone: values.phone,
                     education: values.education,
                     maritial_status: values.maritial_status,
@@ -241,17 +240,16 @@ const Family = () => {
                     profession_name: values.profession_name,
                     profession_status: values.profession_status,
                     gender: values.gender
-
                 }),
             })
                 .then((result) => {
                     console.log(result);
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Successfully Added the Company',
-                        showConfirmButton: false,
-                        timer: 4000
-                    })
+                    // Swal.fire({
+                    //     icon: 'success',
+                    //     title: 'Successfully Added the Company',
+                    //     showConfirmButton: false,
+                    //     timer: 4000
+                    // })
                     loadList();
                 })
                 .catch(() => {
@@ -268,9 +266,8 @@ const Family = () => {
     }, []);
 
     const loadList = async () => {
-        const token = localStorage.getItem("tokenvsv")
-        const family = localStorage.getItem("familyid")
-        const result = await axios.get(`http://jenilsavla.pythonanywhere.com/api/family/${family}`, {
+
+        const result = await axios.get(`${domain}/family/${familyId}`, {
             headers: { "Authorization": `Token ${token}` },
         });
         setLoad(result.data.data);
@@ -280,14 +277,14 @@ const Family = () => {
     //console.log(loadmember);
 
     const handlehomedit = async () => {
-        console.log(homeedit)
+        console.log(homeedit, load.gotrej, load.native_village);
         const searchData = {
             home_address: homeedit,
             gotrej: load.gotrej,
             native_village: load.native_village,
             occupations: [],
         };
-        fetch(`http://jenilsavla.pythonanywhere.com/api/family/${family}`, {
+        fetch(`${domain}/family/${familyId}`, {
             method: 'PUT',
             headers: {
                 "Authorization": `Token ${token}`,
@@ -307,14 +304,14 @@ const Family = () => {
     }
 
     const handlegotrejedit = async () => {
-        console.log(gotrejedit)
+        console.log(load.home_address, gotrejedit, load.native_village);
         const searchData = {
             home_address: load.home_address,
             gotrej: gotrejedit,
             native_village: load.native_village,
             occupations: [],
         };
-        fetch(`http://jenilsavla.pythonanywhere.com/api/family/${family}`, {
+        fetch(`${domain}/family/${familyId}`, {
             method: 'PUT',
             headers: {
                 "Authorization": `Token ${token}`,
@@ -341,7 +338,7 @@ const Family = () => {
             native_village: nativeedit,
             occupations: [],
         };
-        fetch(`http://jenilsavla.pythonanywhere.com/api/family/${family}`, {
+        fetch(`${domain}/family/${familyId}`, {
             method: 'PUT',
             headers: {
                 "Authorization": `Token ${token}`,
@@ -365,7 +362,7 @@ const Family = () => {
         const searchData = {
             username: id,
         };
-        fetch(`http://jenilsavla.pythonanywhere.com/api/add-member/${family}`, {
+        fetch(`${domain}/add-member/${familyId}`, {
             method: 'DELETE',
             headers: {
                 "Authorization": `Token ${token}`,
@@ -385,9 +382,9 @@ const Family = () => {
             });
     }
 
-    const handleDeleteoccupation = async (id) => {
-        console.log(id);
-        fetch(`http://jenilsavla.pythonanywhere.com/api/family/${id}`, {
+    const handleDeleteoccupation = async (deleteId) => {
+        console.log(deleteId);
+        fetch(`${domain}/family/${deleteId}`, {
             method: 'DELETE',
             headers: {
                 "Authorization": `Token ${token}`,
@@ -418,7 +415,7 @@ const Family = () => {
                 }
             ]
         };
-        fetch(`http://jenilsavla.pythonanywhere.com/api/family/${family}`, {
+        fetch(`${domain}/family/${familyId}`, {
             method: 'PUT',
             headers: {
                 "Authorization": `Token ${token}`,
@@ -437,11 +434,11 @@ const Family = () => {
             });
     }
 
-    const handleeditmember = async (id) => {
-        console.log(id);
-        setUsernamemem(id);
+    const handleeditmember = async (editId) => {
+        console.log(editId);
+        setUsernamemem(editId);
         setIsOpen(true);
-        const result = await axios.get(`http://jenilsavla.pythonanywhere.com/api/add-member/${id}`, {
+        const result = await axios.get(`${domain}/add-member/${editId}`, {
             headers: { "Authorization": `Token ${token}`, },
         });
         console.log(result.data.data);
@@ -475,7 +472,7 @@ const Family = () => {
             maritial_status: editmaritialstatus.value,
             email_address: editemail
         };
-        fetch(`http://jenilsavla.pythonanywhere.com/api/add-member/${family}`, {
+        fetch(`${domain}/add-member/${familyId}`, {
             method: 'PUT',
             headers: {
                 "Authorization": `Token ${token}`,
@@ -867,9 +864,7 @@ const Family = () => {
                                         <DeleteIcon style={{ fontSize: "4.75vh", color: "#018d8d", textAlign: "right" }}
                                             onClick={() => handleDeleteoccupation(item.id)} />
                                     </Grid>
-
                                 </Grid>
-
                             )
                         })
                         }
@@ -1025,7 +1020,7 @@ const Family = () => {
                                                 </div>
                                             ) : null}
                                         </Grid>
-                                        <Grid item xs={12} md={4} sm={12}>
+                                        <Grid item xs={12} md={3} sm={12}>
                                             <TextField
                                                 id="email_address"
                                                 name="email_address"
@@ -1038,7 +1033,7 @@ const Family = () => {
                                                 sx={{ width: "100%" }}
                                             />
                                         </Grid>
-                                        <Grid item xs={12} md={4} sm={12}>
+                                        <Grid item xs={12} md={3} sm={6}>
                                             <Select
                                                 id="profession_name"
                                                 name="profession_name"
@@ -1055,7 +1050,7 @@ const Family = () => {
                                                 </div>
                                             ) : null}
                                         </Grid>
-                                        <Grid item xs={12} md={4} sm={12}>
+                                        <Grid item xs={12} md={3} sm={6}>
                                             <Select
                                                 id="profession_status"
                                                 name="profession_status"
@@ -1071,6 +1066,19 @@ const Family = () => {
                                                     {formikmember.errors.profession_status}
                                                 </div>
                                             ) : null}
+                                        </Grid>
+                                        <Grid item xs={12} md={3} sm={12}>
+                                            <TextField
+                                                id="native_village"
+                                                name="native_village"
+                                                label="Native Village"
+                                                color='success'
+                                                value={formikmember.values.native_village}
+                                                onChange={formikmember.handleChange}
+                                                error={formikmember.touched.native_village && Boolean(formikmember.errors.native_village)}
+                                                helperText={formikmember.touched.native_village && formikmember.errors.native_village}
+                                                sx={{ width: "100%" }}
+                                            />
                                         </Grid>
                                         <Grid item xs={12}>
                                             <Button variant="contained" type="submit"

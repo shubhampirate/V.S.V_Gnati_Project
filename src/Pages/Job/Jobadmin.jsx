@@ -8,15 +8,15 @@ import JobRegister from './JobRegister';
 import CompanyRegister from './CompanyRegister';
 
 const Jobadmin = () => {
-    
+
     return (
         <div>
             <Grid container spacing={2} style={{ marginLeft: "-1.5rem", padding: "2rem" }}>
-                <Grid item xs={12}  style={{ marginBottom: "8rem " }}>
-                    <CompanyRegister/>
+                <Grid item xs={12} style={{ marginBottom: "8rem " }}>
+                    <CompanyRegister />
                 </Grid>
                 <Grid item xs={12} >
-                    <JobRegister/>
+                    <JobRegister />
                 </Grid>
             </Grid>
         </div>

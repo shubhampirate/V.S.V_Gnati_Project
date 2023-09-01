@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import {
     Grid, InputAdornment,
-    TextField, Button, Box, InputLabel, Select, MenuItem
+    TextField, Button, Box, InputLabel, Select, MenuItem, Modal
 } from '@mui/material'
 import React, { useState, useEffect } from 'react'
 import { useFormik } from "formik";
@@ -13,6 +13,8 @@ import axios from 'axios';
 import AddHomeIcon from '@mui/icons-material/AddHome';
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
+import secureLocalStorage from 'react-secure-storage';
+import Loader from '../../Components/Loader';
 
 const validationSchema = yup.object({
     nameCompany: yup
@@ -52,13 +54,21 @@ const customStyles = {
 };
 
 const CompanyRegister = () => {
+    const domain = secureLocalStorage.getItem("domainvsv");
+    const token = secureLocalStorage.getItem("tokenvsv");
+    const companyId = secureLocalStorage.getItem("companyvsv");
+
     const [companylogo, setLogo] = useState(null);
     const [editemail, setEditemail] = useState("");
     const [editname, setEditname] = useState("");
     const [editAddress, setEditaddress] = useState("");
-    const token = localStorage.getItem("tokenvsv")
-    const family = localStorage.getItem("familyid")
     const navigate = useNavigate();
+    const [isOpen, setIsOpen] = useState(false);
+
+    const handleClose = () => {
+        setIsOpen(false);
+    };
+
     const formikCompany = useFormik({
         initialValues: {
             nameCompany: '',
@@ -74,7 +84,7 @@ const CompanyRegister = () => {
             formData.append("name", values.nameCompany);
             formData.append("address", values.addressCompany);
             formData.append("picture", values.profile);
-            fetch("http://jenilsavla.pythonanywhere.com/api/companies/", {
+            fetch(`${domain}/companies/`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Token ${token}`,
@@ -83,76 +93,126 @@ const CompanyRegister = () => {
             })
                 .then(response => response.json())
                 .then(data => {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Successfully Logged In',
-                        showConfirmButton: false,
-                        timer: 4000
-                    })
-                    console.log(data);
+                    if (data.status == true) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Successfully Added the Company',
+                            showConfirmButton: false,
+                            timer: 3000
+                        })
+                    }
+                    else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: data.message,
+                            showConfirmButton: false,
+                            timer: 3000
+                        })
+                    }
+                    // console.log(data);
                     loadListcompany();
+                    secureLocalStorage.setItem("companyvsv", data.id)
+                    companyId = secureLocalStorage.getItem("companyvsv");
                 })
                 .catch(() => {
-                    alert('Error in the Code');
+
                 });
         }
     });
 
 
     const handledelete = async (id) => {
+        console.log(id);
+        fetch(`${domain}/company/${id}`, {
+            method: 'DELETE',
+            headers: {
+                "Authorization": `Token ${token}`,
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.status == true) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Successfully deleted the Company',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: data.message,
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                }
+                // console.log(data);
+                loadListcompany();
+                loadListcompany();
+            })
+            .catch((error) => {
+                // console.error(error);
+            });
+    }
+
+    const handleedit = async (id) => {
         // console.log(id);
-        // fetch(`http://jenilsavla.pythonanywhere.com/api/job/${id}`, {
-        //     method: 'DELETE',
-        //     headers: {
-        //         "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb`,
-        //         'Content-Type': 'application/json',
-        //     },
-        // })
-        //     .then((response) => response.json())
-        //     .then((data) => {
-        //         console.log(data);
-        //         loadListcompany();
-        //         loadListcompany();
-        //     })
-        //     .catch((error) => {
-        //         console.error(error);
-        //     });
+        setIsOpen(true);
+        const result = await axios.get(`${domain}/company/${id}`, {
+            headers: { "Authorization": `Token ${token}` },
+        });
+        // console.log(result.data.data);
+        // setEditArray(result.data.data);
+        setEditname(result.data.data.name);
+        setEditaddress(result.data.data.address);
+        setEditemail(result.data.data.email);
     }
 
-    // const handleEditsubmit = async () => {
-    //     const searchData = {
-    //         name: editname,
-    //         email: editemail,
-    //         address: editAddress,
-    //     };
-    //     fetch(`http://jenilsavla.pythonanywhere.com/api/job/${idjob}`, {
-    //         method: 'PUT',
-    //         headers: {
-    //             "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb`,
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify(searchData),
-    //     })
-    //         .then((response) => response.json())
-    //         .then((data) => {
-    //             console.log(data);
-    //         })
-    //         .catch((error) => {
-    //             console.error(error);
-    //         });
-    //     loadListcompany();
-    //     loadListcompany();
-    //     setIsOpen(false);
-    // }
-
-
-
-
-    const [visible, setVisible] = useState(4);
-
-    const showMore = () => {
-        setVisible((preVisible) => preVisible + 4);
+    const handleEditsubmit = async (id) => {
+        // console.log(id)
+        const searchData = {
+            name: editname,
+            email: editemail,
+            address: editAddress,
+        };
+        fetch(`${domain}/company/${id}`, {
+            method: 'PUT',
+            headers: {
+                "Authorization": `Token ${token}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(searchData),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.status == true) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Successfully Updated the Company',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: data.message,
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                }
+                // console.log(data);
+            })
+            .catch((error) => {
+                // console.error(error);
+            });
+        loadListcompany();
+        loadListcompany();
+        setIsOpen(false);
     }
+
 
     const [loadcompany, setLoadCompany] = useState([]);
     useEffect(() => {
@@ -160,20 +220,19 @@ const CompanyRegister = () => {
     }, []);
 
     const loadListcompany = async () => {
-        const token = localStorage.getItem("tokenvsv")
-        const family = localStorage.getItem("familyid")
-        const result = await axios.get("http://jenilsavla.pythonanywhere.com/api/companies/", {
+        const result = await axios.get(`${domain}/company/${companyId}`, {
             headers: { "Authorization": `Token ${token}` },
         });
-        setLoadCompany(result.data.data.companies);
+        setLoadCompany(result.data.data);
         setEditemail(result.data.data.email);
         setEditname(result.data.data.name);
         setEditaddress(result.data.data.address);
-    };
-    console.log(loadcompany);
 
+    };
     const [show, setShow] = useState(false);
     const showComponent = (e) => { setShow(!show) }
+
+    console.log(loadcompany)
     return (
         <div>
             <Grid container spacing={2} style={{ marginLeft: "-0.5rem", padding: "2%", marginBottom: "-5rem" }}>
@@ -278,85 +337,152 @@ const CompanyRegister = () => {
                             </div>
                         </> : <></>
                     }
-                    <Grid item xs={12}>
-                        <Grid container spacing={2} >
-                            <Grid item xs={12} style={{
-                                fontSize: "2.3vh", textAlign: "left",
-                                paddingLeft: "5%", paddingRight: "3.5%"
-                            }}>
-                                <Table>
-                                    <Thead>
-                                        <Tr>
-                                            <Th style={{
-                                                fontWeight: "600",
-                                                backgroundColor: "#018d8d",
-                                                color: "#fff",
-                                                border: "1px solid #000",
-                                                padding: "0.75rem",
-                                                textAlign: "left"
-                                            }}>Name</Th>
-                                            <Th style={{
-                                                fontWeight: "600",
-                                                backgroundColor: "#018d8d",
-                                                color: "#fff",
-                                                border: "1px solid #000",
-                                                padding: "0.75rem",
-                                                textAlign: "left"
-                                            }}>Email</Th>
-                                            <Th style={{
-                                                fontWeight: "600",
-                                                backgroundColor: "#018d8d",
-                                                color: "#fff",
-                                                border: "1px solid #000",
-                                                padding: "0.75rem",
-                                                textAlign: "left"
-                                            }}>Address</Th>
-                                            <Th style={{
-                                                fontWeight: "600",
-                                                backgroundColor: "#018d8d",
-                                                color: "#fff",
-                                                border: "1px solid #000",
-                                                padding: "0.75rem",
-                                                textAlign: "left"
-                                            }}>Action</Th>
-
-                                        </Tr>
-                                    </Thead>
-                                    {loadcompany.map((item) => {
-                                        return (
-                                            <Tbody>
+                    {companyId !== "None" ?
+                        <>
+                            <Grid item xs={12}>
+                                <Grid container spacing={2} >
+                                    <Grid item xs={12} style={{
+                                        fontSize: "2.3vh", textAlign: "left",
+                                        paddingLeft: "5%", paddingRight: "3.5%"
+                                    }}>
+                                        <Table>
+                                            <Thead>
                                                 <Tr>
-                                                    <Td style={{
+                                                    <Th style={{
+                                                        fontWeight: "600",
+                                                        backgroundColor: "#018d8d",
+                                                        color: "#fff",
                                                         border: "1px solid #000",
                                                         padding: "0.75rem",
                                                         textAlign: "left"
-                                                    }}>{item.name}</Td>
-                                                    <Td style={{
+                                                    }}>Name</Th>
+                                                    <Th style={{
+                                                        fontWeight: "600",
+                                                        backgroundColor: "#018d8d",
+                                                        color: "#fff",
                                                         border: "1px solid #000",
                                                         padding: "0.75rem",
                                                         textAlign: "left"
-                                                    }}>{item.email}</Td>
-                                                    <Td style={{
+                                                    }}>Email</Th>
+                                                    <Th style={{
+                                                        fontWeight: "600",
+                                                        backgroundColor: "#018d8d",
+                                                        color: "#fff",
                                                         border: "1px solid #000",
                                                         padding: "0.75rem",
                                                         textAlign: "left"
-                                                    }}>{item.address}</Td>
-                                                    <Td style={{
+                                                    }}>Address</Th>
+                                                    <Th style={{
+                                                        fontWeight: "600",
+                                                        backgroundColor: "#018d8d",
+                                                        color: "#fff",
                                                         border: "1px solid #000",
                                                         padding: "0.75rem",
                                                         textAlign: "left"
-                                                    }}>
-                                                        <span /*onClick={() => handleedit(item.id)}*/> Edit </span> /
-                                                        <span /*onClick={() => handledelete(item.id)}*/> Delete </span>
-                                                    </Td>
+                                                    }}>Action</Th>
+
                                                 </Tr>
-                                            </Tbody>
-                                        )
-                                    })}
-                                </Table>
+                                            </Thead>
+                                            {loadcompany.name ? <>
+                                                {loadcompany ? <>
+                                                    <Tbody>
+                                                        <Tr>
+                                                            <Td style={{
+                                                                border: "1px solid #000",
+                                                                padding: "0.75rem",
+                                                                textAlign: "left"
+                                                            }}>{loadcompany.name}</Td>
+                                                            <Td style={{
+                                                                border: "1px solid #000",
+                                                                padding: "0.75rem",
+                                                                textAlign: "left"
+                                                            }}>{loadcompany.email}</Td>
+                                                            <Td style={{
+                                                                border: "1px solid #000",
+                                                                padding: "0.75rem",
+                                                                textAlign: "left"
+                                                            }}>{loadcompany.address}</Td>
+                                                            <Td style={{
+                                                                border: "1px solid #000",
+                                                                padding: "0.75rem",
+                                                                textAlign: "left"
+                                                            }}>
+                                                                <span onClick={() => handleedit(companyId)}> Edit </span> /
+                                                                <span onClick={() => handledelete(companyId)}> Delete </span>
+                                                            </Td>
+                                                        </Tr>
+                                                    </Tbody></> : <></>
+                                                }</> : <><Loader /></>}
+                                        </Table>
+                                    </Grid>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                    </Grid>
+                        </> : <>
+                            <div style={{ fontSize: "2.5rem", fontWeight: "700", marginBottom: "2rem" }}>No Company has Registered yet</div>
+                        </>}
+                    <Modal
+                        open={isOpen}
+                        onClose={handleClose}
+                        aria-labelledby="modal-title"
+                        style={{ backgroundColor: "white", paddingBottom: "2rem" }}
+                    >
+                        <div>
+                            <div style={{ fontSize: "2rem", fontWeight: "700", backgroundColor: "white" }}>Edit Details</div>
+                            <Grid container spacing={2} marginTop={2}
+                                style={{
+                                    backgroundColor: "white", paddingLeft: "5%", paddingRight: "3.5%",
+                                    paddingBottom: "1.5rem"
+                                }}>
+                                <Grid item xs={12} md={6} sm={12}>
+                                    <TextField
+                                        id="name_edit"
+                                        name="name_edit"
+                                        label="Name"
+                                        value={editname}
+                                        onChange={(e) => setEditname(e.target.value)}
+                                        sx={{ width: "100%" }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} md={6} sm={12}>
+                                    <TextField
+                                        id="address_edit"
+                                        name="address_edit"
+                                        label="Address"
+                                        multiline
+                                        maxRows={3}
+                                        value={editAddress}
+                                        onChange={(e) => setEditaddress(e.target.value)}
+                                        sx={{ width: "100%" }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} md={6} sm={12}>
+                                    <TextField
+                                        id="email_edit"
+                                        name="email_edit"
+                                        label="Email"
+                                        value={editemail}
+                                        onChange={(e) => setEditemail(e.target.value)}
+                                        sx={{ width: "100%" }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} md={6} sm={12}>
+                                    <Grid item xs={12}>
+                                        <Button variant="contained" type="submit"
+                                            sx={{
+                                                width: "100%", height: "3.45rem", fontSize: "1.1rem",
+                                                backgroundColor: "#C4CFFE", boxShadow: "none", color: "black"
+                                                , "&:hover": {
+                                                    backgroundColor: "#C4CFFE", boxShadow: "none", color: "black",
+                                                    fontSize: "1.3rem",
+                                                }
+                                            }} onClick={() => handleEditsubmit(companyId)}>
+                                            Submit
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </div>
+                    </Modal>
                 </Grid>
             </Grid>
         </div>

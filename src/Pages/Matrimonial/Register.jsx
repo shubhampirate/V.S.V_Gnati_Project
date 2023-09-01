@@ -11,6 +11,9 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
+import secureLocalStorage from 'react-secure-storage';
+import Loader from '../../Components/Loader';
+
 const SUPPORTED_FORMATS = [
     "image/jpg",
     "image/jpeg",
@@ -83,6 +86,10 @@ const customStyles = {
 };
 
 const Login = () => {
+    const domain = secureLocalStorage.getItem("domainvsv");
+    const token = secureLocalStorage.getItem("tokenvsv");
+    const matrimonyId = secureLocalStorage.getItem("matrimonyvsv");
+
     const navigate = useNavigate();
     const formik = useFormik({
         initialValues: {
@@ -108,26 +115,35 @@ const Login = () => {
             formData.append("gender", values.gender);
             formData.append("picture", values.profile);
             formData.append("biodata", values.biodata);
-            const token = localStorage.getItem("tokenvsv")
-            const family = localStorage.getItem("familyid")
-            fetch("http://jenilsavla.pythonanywhere.com/api/matrimonies/", {
+            fetch(`${domain}/matrimonies/`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Token ${token}`,
                 },
                 body: formData,
             })
-                .then((result) => {
-                    console.log(result)
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Successfully Added the Job',
-                        showConfirmButton: false,
-                        timer: 4000
-                    })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.status == true) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Successfully added your account',
+                            showConfirmButton: false,
+                            timer: 3000
+                        })
+                    }
+                    else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: data.message,
+                            showConfirmButton: false,
+                            timer: 3000
+                        })
+                    }
+                    // console.log(result)
                 })
                 .catch(() => {
-                    alert('Error in the Code');
+                    // alert('Error in the Code');
                 });
         }
     });
@@ -139,7 +155,7 @@ const Login = () => {
         link.click();
     };
 
-    const targetIds = [21, 22, 23, 24, 25];
+    const targetIds = matrimonyId;
 
     const [filteredArray, setFilteredArray] = useState([]);
     const [editname, setEditname] = useState('');
@@ -162,12 +178,12 @@ const Login = () => {
 
     const loadList = async () => {
         //const token = localStorage.getItem("token")
-        const result = await axios.get('http://jenilsavla.pythonanywhere.com/api/matrimonies?gender=Male', {
-            headers: { "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb` },
+        const result = await axios.get(`${domain}/matrimonies?gender=Male`, {
+            headers: { "Authorization": `Token ${token}` },
         });
 
-        const result2 = await axios.get('http://jenilsavla.pythonanywhere.com/api/matrimonies?gender=Female', {
-            headers: { "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb` },
+        const result2 = await axios.get(`${domain}/matrimonies?gender=Female`, {
+            headers: { "Authorization": `Token ${token}` },
         });
 
         const data1 = result.data.data.matrimonies; // Assuming the API response is an array
@@ -187,16 +203,32 @@ const Login = () => {
 
     const handledelete = async (id) => {
         console.log(id);
-        fetch(`http://jenilsavla.pythonanywhere.com/api/matrimony/${id}`, {
+        fetch(`${domain}/matrimony/${id}`, {
             method: 'DELETE',
             headers: {
-                "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb`,
+                "Authorization": `Token ${token}`,
                 'Content-Type': 'application/json',
             },
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
+                if (data.status == true) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Successfully deleted your account details',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: data.message,
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                }
+                // console.log(data);
                 loadList();
                 loadList();
             })
@@ -208,8 +240,8 @@ const Login = () => {
     const handleedit = async (id) => {
         console.log(id);
         setIsOpen(true);
-        const result = await axios.get(`http://jenilsavla.pythonanywhere.com/api/matrimony/${id}`, {
-            headers: { "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb` },
+        const result = await axios.get(`${domain}/matrimony/${id}`, {
+            headers: { "Authorization": `Token ${token}` },
         });
         console.log(result.data.data);
         setEditArray(result.data.data);
@@ -231,17 +263,32 @@ const Login = () => {
             about: editabout,
             dob: editdob,
         };
-        fetch(`http://jenilsavla.pythonanywhere.com/api/matrimony/${matriid}`, {
+        fetch(`${domain}/matrimony/${matriid}`, {
             method: 'PUT',
             headers: {
-                "Authorization": `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb`,
+                "Authorization": `Token ${token}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(searchData),
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
+                if (data.status == true) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Successfully updated your account details',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: data.message,
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                }
             })
             .catch((error) => {
                 console.error(error);
@@ -417,245 +464,251 @@ const Login = () => {
                 </Grid>
                 <Grid item xs={12} md={2} sm={12}></Grid>
             </Grid>
-            <div style={{ fontSize: "2rem", fontWeight: "700", marginBottom: "2rem" }}>Registered Users</div>
-            <Grid item xs={12}>
-                <Grid container spacing={2} >
-                    <Grid item xs={12} style={{
-                        fontSize: "2.3vh", textAlign: "left",
-                        paddingLeft: "6%", paddingRight: "3.5%",
-                        marginBottom: "2rem"
-                    }}>
-                        <Table>
-                            <Thead>
-                                <Tr>
-                                    <Th style={{
-                                        fontWeight: "600",
-                                        backgroundColor: "#C4CFFE",
-                                        color: "#000",
-                                        border: "1px solid #000",
-                                        padding: "0.75rem",
-                                        textAlign: "left"
-                                    }}>Name</Th>
-                                    <Th style={{
-                                        fontWeight: "600",
-                                        backgroundColor: "#C4CFFE",
-                                        color: "#000",
-                                        border: "1px solid #000",
-                                        padding: "0.75rem",
-                                        textAlign: "left"
-                                    }}>DOB</Th>
-                                    <Th style={{
-                                        fontWeight: "600",
-                                        backgroundColor: "#C4CFFE",
-                                        color: "#000",
-                                        border: "1px solid #000",
-                                        padding: "0.75rem",
-                                        textAlign: "left"
-                                    }}>Gender</Th>
-                                    <Th style={{
-                                        fontWeight: "600",
-                                        backgroundColor: "#C4CFFE",
-                                        color: "#000",
-                                        border: "1px solid #000",
-                                        padding: "0.75rem",
-                                        textAlign: "left"
-                                    }}>Phone</Th>
-                                    <Th style={{
-                                        fontWeight: "600",
-                                        backgroundColor: "#C4CFFE",
-                                        color: "#000",
-                                        border: "1px solid #000",
-                                        padding: "0.75rem",
-                                        textAlign: "left"
-                                    }}>Father's Name</Th>
-                                    <Th style={{
-                                        fontWeight: "600",
-                                        backgroundColor: "#C4CFFE",
-                                        color: "#000",
-                                        border: "1px solid #000",
-                                        padding: "0.75rem",
-                                        textAlign: "left"
-                                    }}>Picture</Th>
-                                    <Th style={{
-                                        fontWeight: "600",
-                                        backgroundColor: "#C4CFFE",
-                                        color: "#000",
-                                        border: "1px solid #000",
-                                        padding: "0.75rem",
-                                        textAlign: "left"
-                                    }}>Biodata</Th>
-                                    <Th style={{
-                                        fontWeight: "600",
-                                        backgroundColor: "#C4CFFE",
-                                        color: "#000",
-                                        border: "1px solid #000",
-                                        padding: "0.75rem",
-                                        textAlign: "left"
-                                    }}>About</Th>
-                                    <Th style={{
-                                        fontWeight: "600",
-                                        backgroundColor: "#C4CFFE",
-                                        color: "#000",
-                                        border: "1px solid #000",
-                                        padding: "0.75rem",
-                                        textAlign: "left"
-                                    }}>Action</Th>
-                                </Tr>
-                            </Thead>
-                            {filteredArray.map((item) => {
-                                return (
-                                    <Tbody>
-                                        <Tr>
-                                            <Td style={{
-                                                border: "1px solid #000",
-                                                padding: "0.75rem",
-                                                textAlign: "left"
-                                            }}>{item.name}</Td>
-                                            <Td style={{
-                                                border: "1px solid #000",
-                                                padding: "0.75rem",
-                                                textAlign: "left"
-                                            }}>{item.dob}</Td>
-                                            <Td style={{
-                                                border: "1px solid #000",
-                                                padding: "0.75rem",
-                                                textAlign: "left"
-                                            }}>{item.gender}</Td>
-                                            <Td style={{
-                                                border: "1px solid #000",
-                                                padding: "0.75rem",
-                                                textAlign: "left"
-                                            }}>{item.phone}</Td>
-                                            <Td style={{
-                                                border: "1px solid #000",
-                                                padding: "0.75rem",
-                                                textAlign: "left"
-                                            }}>{item.fathers_name}</Td>
-                                            <Td style={{
-                                                border: "1px solid #000",
-                                                padding: "0.75rem",
-                                                textAlign: "left"
-                                            }} onClick={() => handleDownload(`http://jenilsavla.pythonanywhere.com` + item.picture)}
-                                            >Picture</Td>
-                                            <Td style={{
-                                                border: "1px solid #000",
-                                                padding: "0.75rem",
-                                                textAlign: "left",
-                                                cursor: "pointer"
-                                            }} onClick={() => handleDownload(`http://jenilsavla.pythonanywhere.com` + item.biodata)}
-                                            >Biodata</Td>
-                                            <Td style={{
-                                                border: "1px solid #000",
-                                                padding: "0.75rem",
-                                                textAlign: "left"
-                                            }}>{item.about}</Td>
-                                            <Td style={{
-                                                border: "1px solid #000",
-                                                padding: "0.75rem",
-                                                textAlign: "left"
-                                            }}>
-                                                <span onClick={() => handleedit(item.id)}> Edit </span> /
-                                                <span onClick={() => handledelete(item.id)}> Delete </span>
-                                            </Td>
-                                        </Tr>
-                                    </Tbody>
-                                )
-                            })}
-                        </Table>
-                        <Modal
-                            open={isOpen}
-                            onClose={handleClose}
-                            aria-labelledby="modal-title"
-                            style={{ backgroundColor: "white", paddingBottom: "2rem" }}
-                        >
-                            <div>
-                                <div style={{ fontSize: "2rem", fontWeight: "700", backgroundColor: "white" }}>Edit Details</div>
-                                <Grid container spacing={2} marginTop={2}
-                                    style={{
-                                        backgroundColor: "white", paddingLeft: "5%", paddingRight: "3.5%",
-                                        paddingBottom: "1.5rem"
-                                    }}>
-                                    <Grid item xs={12} md={6} sm={12}>
-                                        <TextField
-                                            id="name_edit"
-                                            name="name_edit"
-                                            label="Full Name"
-                                            value={editname}
-                                            onChange={(e) => setEditname(e.target.value)}
-                                            sx={{ width: "100%" }}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12} md={6} sm={12}>
-                                        <TextField
-                                            id="about_edit"
-                                            name="about_edit"
-                                            label="About you"
-                                            multiline
-                                            maxRows={3}
-                                            value={editabout}
-                                            onChange={(e) => setEditabout(e.target.value)}
-                                            sx={{ width: "100%" }}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12} md={6} sm={12}>
-                                        <TextField
-                                            id="father_name_edit"
-                                            name="father_name_edit"
-                                            label="Fathers Name"
-                                            value={editfather}
-                                            onChange={(e) => setEditfather(e.target.value)}
-                                            sx={{ width: "100%" }}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12} md={6} sm={12}>
-                                        <Select
-                                            options={gender_options}
-                                            value={editgender}
-                                            styles={customStyles}
-                                            onChange={(selectedOption) => setEditgender(selectedOption)}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12} md={4} sm={12}>
-                                        <TextField
-                                            id="phone_edit"
-                                            name="phone_edit"
-                                            label="Mobile Number"
-                                            value={editphone}
-                                            onChange={(e) => setEditphone(e.target.value)}
-                                            sx={{ width: "100%" }}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12} md={4} sm={12}>
-                                        <TextField
-                                            id="dob_edit"
-                                            name="dob_edit"
-                                            type="date"
-                                            value={editdob}
-                                            onChange={(e) => setEditdob(e.target.value)}
-                                            sx={{ width: "100%" }}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12} md={4} sm={12}>
-                                        <Grid item xs={12}>
-                                            <Button variant="contained" type="submit"
-                                                sx={{
-                                                    width: "100%", height: "3.45rem", fontSize: "1.1rem",
-                                                    backgroundColor: "#C4CFFE", boxShadow: "none", color: "black"
-                                                    , "&:hover": {
-                                                        backgroundColor: "#C4CFFE", boxShadow: "none", color: "black",
-                                                        fontSize: "1.3rem",
-                                                    }
-                                                }} onClick={() => handleEditsubmit()}>
-                                                Submit
-                                            </Button>
+            {matrimonyId.length > 0 ? <>
+                <div style={{ fontSize: "2rem", fontWeight: "700", marginBottom: "2rem" }}>Registered Users</div>
+                <Grid item xs={12}>
+                    <Grid container spacing={2} >
+                        <Grid item xs={12} style={{
+                            fontSize: "2.3vh", textAlign: "left",
+                            paddingLeft: "6%", paddingRight: "3.5%",
+                            marginBottom: "2rem"
+                        }}>
+                            <Table>
+                                <Thead>
+                                    <Tr>
+                                        <Th style={{
+                                            fontWeight: "600",
+                                            backgroundColor: "#C4CFFE",
+                                            color: "#000",
+                                            border: "1px solid #000",
+                                            padding: "0.75rem",
+                                            textAlign: "left"
+                                        }}>Name</Th>
+                                        <Th style={{
+                                            fontWeight: "600",
+                                            backgroundColor: "#C4CFFE",
+                                            color: "#000",
+                                            border: "1px solid #000",
+                                            padding: "0.75rem",
+                                            textAlign: "left"
+                                        }}>DOB</Th>
+                                        <Th style={{
+                                            fontWeight: "600",
+                                            backgroundColor: "#C4CFFE",
+                                            color: "#000",
+                                            border: "1px solid #000",
+                                            padding: "0.75rem",
+                                            textAlign: "left"
+                                        }}>Gender</Th>
+                                        <Th style={{
+                                            fontWeight: "600",
+                                            backgroundColor: "#C4CFFE",
+                                            color: "#000",
+                                            border: "1px solid #000",
+                                            padding: "0.75rem",
+                                            textAlign: "left"
+                                        }}>Phone</Th>
+                                        <Th style={{
+                                            fontWeight: "600",
+                                            backgroundColor: "#C4CFFE",
+                                            color: "#000",
+                                            border: "1px solid #000",
+                                            padding: "0.75rem",
+                                            textAlign: "left"
+                                        }}>Father's Name</Th>
+                                        <Th style={{
+                                            fontWeight: "600",
+                                            backgroundColor: "#C4CFFE",
+                                            color: "#000",
+                                            border: "1px solid #000",
+                                            padding: "0.75rem",
+                                            textAlign: "left"
+                                        }}>Picture</Th>
+                                        <Th style={{
+                                            fontWeight: "600",
+                                            backgroundColor: "#C4CFFE",
+                                            color: "#000",
+                                            border: "1px solid #000",
+                                            padding: "0.75rem",
+                                            textAlign: "left"
+                                        }}>Biodata</Th>
+                                        <Th style={{
+                                            fontWeight: "600",
+                                            backgroundColor: "#C4CFFE",
+                                            color: "#000",
+                                            border: "1px solid #000",
+                                            padding: "0.75rem",
+                                            textAlign: "left"
+                                        }}>About</Th>
+                                        <Th style={{
+                                            fontWeight: "600",
+                                            backgroundColor: "#C4CFFE",
+                                            color: "#000",
+                                            border: "1px solid #000",
+                                            padding: "0.75rem",
+                                            textAlign: "left"
+                                        }}>Action</Th>
+                                    </Tr>
+                                </Thead>
+                                {filteredArray.length ? <>
+                                    {filteredArray.map((item) => {
+                                        return (
+                                            <Tbody>
+                                                <Tr>
+                                                    <Td style={{
+                                                        border: "1px solid #000",
+                                                        padding: "0.75rem",
+                                                        textAlign: "left"
+                                                    }}>{item.name}</Td>
+                                                    <Td style={{
+                                                        border: "1px solid #000",
+                                                        padding: "0.75rem",
+                                                        textAlign: "left"
+                                                    }}>{item.dob}</Td>
+                                                    <Td style={{
+                                                        border: "1px solid #000",
+                                                        padding: "0.75rem",
+                                                        textAlign: "left"
+                                                    }}>{item.gender}</Td>
+                                                    <Td style={{
+                                                        border: "1px solid #000",
+                                                        padding: "0.75rem",
+                                                        textAlign: "left"
+                                                    }}>{item.phone}</Td>
+                                                    <Td style={{
+                                                        border: "1px solid #000",
+                                                        padding: "0.75rem",
+                                                        textAlign: "left"
+                                                    }}>{item.fathers_name}</Td>
+                                                    <Td style={{
+                                                        border: "1px solid #000",
+                                                        padding: "0.75rem",
+                                                        textAlign: "left"
+                                                    }} onClick={() => handleDownload(`http://jenilsavla.pythonanywhere.com` + item.picture)}
+                                                    >Picture</Td>
+                                                    <Td style={{
+                                                        border: "1px solid #000",
+                                                        padding: "0.75rem",
+                                                        textAlign: "left",
+                                                        cursor: "pointer"
+                                                    }} onClick={() => handleDownload(`http://jenilsavla.pythonanywhere.com` + item.biodata)}
+                                                    >Biodata</Td>
+                                                    <Td style={{
+                                                        border: "1px solid #000",
+                                                        padding: "0.75rem",
+                                                        textAlign: "left"
+                                                    }}>{item.about}</Td>
+                                                    <Td style={{
+                                                        border: "1px solid #000",
+                                                        padding: "0.75rem",
+                                                        textAlign: "left"
+                                                    }}>
+                                                        <span onClick={() => handleedit(item.id)}> Edit </span> /
+                                                        <span onClick={() => handledelete(item.id)}> Delete </span>
+                                                    </Td>
+                                                </Tr>
+                                            </Tbody>
+                                        )
+                                    })}</> : <><Loader /></>}
+
+                            </Table>
+                            <Modal
+                                open={isOpen}
+                                onClose={handleClose}
+                                aria-labelledby="modal-title"
+                                style={{ backgroundColor: "white", paddingBottom: "2rem" }}
+                            >
+                                <div>
+                                    <div style={{ fontSize: "2rem", fontWeight: "700", backgroundColor: "white" }}>Edit Details</div>
+                                    <Grid container spacing={2} marginTop={2}
+                                        style={{
+                                            backgroundColor: "white", paddingLeft: "5%", paddingRight: "3.5%",
+                                            paddingBottom: "1.5rem"
+                                        }}>
+                                        <Grid item xs={12} md={6} sm={12}>
+                                            <TextField
+                                                id="name_edit"
+                                                name="name_edit"
+                                                label="Full Name"
+                                                value={editname}
+                                                onChange={(e) => setEditname(e.target.value)}
+                                                sx={{ width: "100%" }}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} md={6} sm={12}>
+                                            <TextField
+                                                id="about_edit"
+                                                name="about_edit"
+                                                label="About you"
+                                                multiline
+                                                maxRows={3}
+                                                value={editabout}
+                                                onChange={(e) => setEditabout(e.target.value)}
+                                                sx={{ width: "100%" }}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} md={6} sm={12}>
+                                            <TextField
+                                                id="father_name_edit"
+                                                name="father_name_edit"
+                                                label="Fathers Name"
+                                                value={editfather}
+                                                onChange={(e) => setEditfather(e.target.value)}
+                                                sx={{ width: "100%" }}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} md={6} sm={12}>
+                                            <Select
+                                                options={gender_options}
+                                                value={editgender}
+                                                styles={customStyles}
+                                                onChange={(selectedOption) => setEditgender(selectedOption)}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} md={4} sm={12}>
+                                            <TextField
+                                                id="phone_edit"
+                                                name="phone_edit"
+                                                label="Mobile Number"
+                                                value={editphone}
+                                                onChange={(e) => setEditphone(e.target.value)}
+                                                sx={{ width: "100%" }}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} md={4} sm={12}>
+                                            <TextField
+                                                id="dob_edit"
+                                                name="dob_edit"
+                                                type="date"
+                                                value={editdob}
+                                                onChange={(e) => setEditdob(e.target.value)}
+                                                sx={{ width: "100%" }}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} md={4} sm={12}>
+                                            <Grid item xs={12}>
+                                                <Button variant="contained" type="submit"
+                                                    sx={{
+                                                        width: "100%", height: "3.45rem", fontSize: "1.1rem",
+                                                        backgroundColor: "#C4CFFE", boxShadow: "none", color: "black"
+                                                        , "&:hover": {
+                                                            backgroundColor: "#C4CFFE", boxShadow: "none", color: "black",
+                                                            fontSize: "1.3rem",
+                                                        }
+                                                    }} onClick={() => handleEditsubmit()}>
+                                                    Submit
+                                                </Button>
+                                            </Grid>
                                         </Grid>
                                     </Grid>
-                                </Grid>
-                            </div>
-                        </Modal>
+                                </div>
+                            </Modal>
+                        </Grid>
                     </Grid>
                 </Grid>
-            </Grid>
+            </> : <>
+                <div style={{ fontSize: "2.5rem", fontWeight: "700", marginBottom: "2rem" }}>No users are Registered yet</div>
+            </>}
         </div>
     )
 }

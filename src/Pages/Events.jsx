@@ -11,9 +11,14 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import "../Components/styleEvents.css";
+import secureLocalStorage from 'react-secure-storage';
+import Loader from '../Components/Loader';
 
 
 const Events = () => {
+
+  const domain = secureLocalStorage.getItem("domainvsv");
+  const token = secureLocalStorage.getItem("tokenvsv");
 
   const [visible, setVisible] = useState(12);
   const [len, setLen] = useState('');
@@ -29,9 +34,9 @@ const Events = () => {
     if (id == undefined) {
       const config = {
         method: 'post',
-        url: `http://jenilsavla.pythonanywhere.com/api/event/2023`,
+        url: `${domain}/event/2023`,
         headers: {
-          'Authorization': `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb`
+          'Authorization': `Token ${token}`
         }
       };
       const response = await axios(config);
@@ -41,9 +46,9 @@ const Events = () => {
     else {
       const config = {
         method: 'post',
-        url: `http://jenilsavla.pythonanywhere.com/api/event/${id}`,
+        url: `${domain}/event/${id}`,
         headers: {
-          'Authorization': `Token ebeb63c068b02f00c0797a0c8edc06575c139fbb`
+          'Authorization': `Token ${token}`
         }
       };
       const response = await axios(config);
@@ -94,7 +99,7 @@ const Events = () => {
                   return (
                     <TabPanel>
                       <Grid container spacing={2}>
-                        {load.map((item) => {
+                        {load.length ? <>{load.map((item) => {
                           return (
                             <>
                               {len !== 0 ?
@@ -161,7 +166,7 @@ const Events = () => {
                                   <div style={{ fontSize: "1.5rem" }}>image not there okay hello</div>
                                 </>}
                             </>)
-                        })}
+                        })}</> : <><Loader /></>}
                       </Grid>
                     </TabPanel>
                   )

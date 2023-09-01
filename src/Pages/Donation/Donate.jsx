@@ -6,7 +6,7 @@ import CountUp from 'react-countup';
 import members from "../../images/members.png"
 import globe from "../../images/globe.png"
 import happiness from "../../images/happiness.png"
-import donateus from "../../images/donateus.png"
+import donateus from "../../images/donateToday.avif"
 import "../../Components/styleEvents.css"
 
 const Donate = () => {
@@ -62,13 +62,8 @@ const Donate = () => {
             </Grid>
           </Grid>
           <Grid item xs={12}>
-            <Grid container p={4} style={{ backgroundColor: "white" }}>
-              <Grid item xs={12} md={3} sm={6} >
-                {/* <div className="sideways">
-                  Empower Change Today
-                </div> */}
-              </Grid>
-              <Grid item xs={12} md={3} sm={6}>
+            <Grid container p={4} style={{ backgroundColor: "white", marginBottom: "1rem" }}>
+              <Grid item xs={12} md={4} sm={6}>
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
                     <img src={members} style={{ width: "4.5rem", height: "4.5rem", marginTop: "1rem" }} />
@@ -78,7 +73,7 @@ const Donate = () => {
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item xs={12} md={3} sm={6}>
+              <Grid item xs={12} md={4} sm={6}>
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
                     <img src={globe} style={{ width: "4.5rem", height: "4.5rem", marginTop: "1rem" }} />
@@ -88,13 +83,13 @@ const Donate = () => {
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item xs={12} md={3} sm={6} >
+              <Grid item xs={12} md={4} sm={6} >
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
                     <img src={happiness} style={{ width: "4rem", height: "4rem", marginTop: "1rem" }} />
                   </Grid>
                   <Grid item xs={12} style={{ fontSize: "1.5rem", color: "#4F225E" }}>
-                    Spreading happiness since past <br /><CountUp end={50} duration={10} /> + years
+                    Spreading happiness since past <CountUp end={50} duration={10} /> + years
                   </Grid>
                 </Grid>
               </Grid>
@@ -113,7 +108,7 @@ const Donate = () => {
           </Grid> */}
         </Grid>
       </Grid>
-    </Box>
+    </Box >
   )
 }
 

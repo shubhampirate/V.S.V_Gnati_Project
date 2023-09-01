@@ -7,7 +7,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import logo from "../images/VSVLogo.png"
+import logo from "../images/logo.jpeg"
 const Footer = () => {
     return (
         <>
@@ -60,6 +60,7 @@ const Footer = () => {
                         </p>
 
                         <div className="footer-icons">
+                            <img src={logo} style={{ width: "8rem" }} />
 
                             {/* <a href="#"><i className="fa fa-facebook"></i></a>
                             <a href="#"><i className="fa fa-twitter"></i></a>

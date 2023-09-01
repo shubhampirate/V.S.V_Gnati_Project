@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import NavBar from "../Components/Navbar.jsx"
+import secureLocalStorage from 'react-secure-storage';
 
 const validationSchema = yup.object({
     name: yup
@@ -17,6 +18,8 @@ const validationSchema = yup.object({
 });
 
 const Login = () => {
+    secureLocalStorage.setItem("domainvsv", "http://jenilsavla.pythonanywhere.com/api");
+    const domain = secureLocalStorage.getItem("domainvsv");
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
 
@@ -36,7 +39,7 @@ const Login = () => {
             const formData = new FormData();
             formData.append("username", values.name);
             formData.append("password", values.password);
-            fetch("http://jenilsavla.pythonanywhere.com/api/login/", {
+            fetch(`${domain}/login/`, {
                 method: "POST",
                 body: formData,
 
@@ -50,8 +53,11 @@ const Login = () => {
                         timer: 4000
                     })
                     console.log(data);
-                    localStorage.setItem("tokenvsv", data.data.token);
-                    localStorage.setItem("familyid", data.data.family);
+                    secureLocalStorage.setItem("tokenvsv", data.data.token);
+                    secureLocalStorage.setItem("familyidvsv", data.data.family);
+                    secureLocalStorage.setItem("companyvsv", data.data.company);
+                    secureLocalStorage.setItem("matrimonyvsv", data.data.matrimony);
+                    secureLocalStorage.setItem("isadminvsv", data.data.isadmin);
                     navigate(-1);
                 })
                 .catch((error) => {
@@ -63,7 +69,6 @@ const Login = () => {
 
     return (
         <div>
-
             <NavBar />
             <Grid container spacing={2} style={{ padding: "2rem" }}>
                 <Grid item xs={12} md={2} sm={12}></Grid>
@@ -152,4 +157,13 @@ const Login = () => {
     )
 }
 
+export const gettoken = () => secureLocalStorage.getItem("tokenvsv");
+export const getfamilyId = () => secureLocalStorage.getItem("familyidvsv");
+export const getcompany = () => secureLocalStorage.getItem("companyvsv");
+export const getmatrimony = () => secureLocalStorage.getItem("matrimonyvsv");
+export const getadmin = () => secureLocalStorage.getItem("isadminvsv");
+export const getdomain = () => secureLocalStorage.getItem("domainvsv");
+
 export default Login
+
+

@@ -14,8 +14,13 @@ import * as yup from 'yup';
 import "./Job.css";
 import axios from "axios";
 import Select from 'react-select';
+import secureLocalStorage from "react-secure-storage";
+import Loader from "../../Components/Loader";
 
 const Jobs = () => {
+  const domain = secureLocalStorage.getItem("domainvsv");
+  const token = secureLocalStorage.getItem("tokenvsv");
+  const familyId = secureLocalStorage.getItem("familyidvsv");
 
   const [load, setLoad] = useState([]);
   const [loadcompany, setCompany] = useState([]);
@@ -40,8 +45,6 @@ const Jobs = () => {
     }),
   };
 
-  const token = localStorage.getItem("tokenvsv")
-  const family = localStorage.getItem("familyid")
   const validationSchema = yup.object({
     job_type: yup
       .string()
@@ -56,7 +59,7 @@ const Jobs = () => {
 
     onSubmit: (values) => {
       console.log(values);
-      fetch("http://jenilsavla.pythonanywhere.com/api/job/0", {
+      fetch(`${domain}/job/0`, {
         method: "POST",
         headers: {
           "Authorization": `Token ${token}`,
@@ -87,12 +90,10 @@ const Jobs = () => {
   console.log(load)
 
   const loadList = async () => {
-    const token = localStorage.getItem("tokenvsv")
-    const family = localStorage.getItem("familyid")
     if (load.length == 0) {
       //const token = localStorage.getItem("token")
       const result = await axios.get(
-        "http://jenilsavla.pythonanywhere.com/api/jobs",
+        `${domain}/jobs`,
         {
           headers: {
             Authorization: `Token ${token}`,
@@ -103,22 +104,20 @@ const Jobs = () => {
     }
   };
 
-  //console.log(load);
-  const loadcompanyfunc = async (id) => {
-    //const token = localStorage.getItem("token")
+  const loadcompanyfunc = async (companyId) => {
     const result = await axios.get(
-      `http://jenilsavla.pythonanywhere.com/api/company/${id}`,
+      `${domain}/company/${companyId}`,
       {
         headers: {
-          Authorization: "Token ebeb63c068b02f00c0797a0c8edc06575c139fbb",
+          Authorization: `Token ${token}`,
         },
       }
     );
     setCompany(result.data.data);
   };
 
-  const companyDetails = (id, job) => {
-    loadcompanyfunc(id);
+  const companyDetails = (companyId, job) => {
+    loadcompanyfunc(companyId);
     setJobid(job);
     setShowMoreCompany(!showMoreCompany);
   };
@@ -204,105 +203,106 @@ const Jobs = () => {
         </Grid>
         <Grid item xs={12}>
           <Grid container spacing={2}>
-            {load.map((item) => {
-              return (
-                <Grid item xs={12} md={4} sm={6} style={{
-                  paddingLeft: "5%", paddingRight: "2.5%",
-                }}>
-                  <Grid container spacing={2} sx={{ borderRadius: "2vh", padding: "1rem" }}>
-                    <Grid item xs={12}
-                      style={{
-                        padding: "1rem", marginLeft: "16px", marginTop: "-0.75rem", color: "#E0E1DC",
-                        borderRadius: "1.5vh", backgroundColor: "#018d8d"
-                      }}>
-                      <Grid container spacing={1} sx={{ textAlign: "left", marginTop: "0.5vh" }}>
-                        <Grid item xs={12}>
-                          <div style={{ fontSize: "1.1rem" }}>{item.type}</div>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <div style={{ fontSize: "2rem", fontWeight: "700" }}>{item.title}</div>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <Grid container spacing={2}>
-                            <Grid item xs={2}>
-                              <PhoneIcon style={{ fontSize: "5vh", color: "#E0E1DC" }} />
-                            </Grid>
-                            <Grid item xs={5} >
-                              <div style={{ fontSize: "1.25rem", marginTop: "0.5rem" }}>{item.phone}</div>
-                            </Grid>
-                            <Grid item xs={5} style={{ marginTop: "0.3rem", textAlign: "right" }}>
-                              <HomeWorkIcon style={{
-                                fontSize: "3.5vh", color: "#018d8d", cursor: "pointer",
-                                backgroundColor: "#90cfd3", padding: "0.25rem", borderRadius: "0.5rem 0rem 0rem 0.5rem"
-                              }}
-                                onClick={() =>
-                                  companyDetails(item.company, item.id)
-                                } />
-                              <KeyboardDoubleArrowRightIcon style={{
-                                fontSize: "3.5vh", color: "#018d8d",
-                                backgroundColor: "#90cfd3", padding: "0.25rem", borderRadius: "0rem 0.5rem 0.5rem 0rem"
-                              }} />
+            {load.length ? <>
+              {load.map((item) => {
+                return (
+                  <Grid item xs={12} md={4} sm={6} style={{
+                    paddingLeft: "5%", paddingRight: "2.5%",
+                  }}>
+                    <Grid container spacing={2} sx={{ borderRadius: "2vh", padding: "1rem" }}>
+                      <Grid item xs={12}
+                        style={{
+                          padding: "1rem", marginLeft: "16px", marginTop: "-0.75rem", color: "#E0E1DC",
+                          borderRadius: "1.5vh", backgroundColor: "#018d8d"
+                        }}>
+                        <Grid container spacing={1} sx={{ textAlign: "left", marginTop: "0.5vh" }}>
+                          <Grid item xs={12}>
+                            <div style={{ fontSize: "1.1rem" }}>{item.type}</div>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <div style={{ fontSize: "2rem", fontWeight: "700" }}>{item.title}</div>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <Grid container spacing={2}>
+                              <Grid item xs={2}>
+                                <PhoneIcon style={{ fontSize: "5vh", color: "#E0E1DC" }} />
+                              </Grid>
+                              <Grid item xs={5} >
+                                <div style={{ fontSize: "1.25rem", marginTop: "0.5rem" }}>{item.phone}</div>
+                              </Grid>
+                              <Grid item xs={5} style={{ marginTop: "0.3rem", textAlign: "right" }}>
+                                <HomeWorkIcon style={{
+                                  fontSize: "3.5vh", color: "#018d8d", cursor: "pointer",
+                                  backgroundColor: "#90cfd3", padding: "0.25rem", borderRadius: "0.5rem 0rem 0rem 0.5rem"
+                                }}
+                                  onClick={() =>
+                                    companyDetails(item.company, item.id)
+                                  } />
+                                <KeyboardDoubleArrowRightIcon style={{
+                                  fontSize: "3.5vh", color: "#018d8d",
+                                  backgroundColor: "#90cfd3", padding: "0.25rem", borderRadius: "0rem 0.5rem 0.5rem 0rem"
+                                }} />
+                              </Grid>
                             </Grid>
                           </Grid>
-                        </Grid>
-                        {showMoreCompany && jobid === item.id ? (
-                          <>
-                            {loadcompany ? (
-                              <>
-                                <hr style={{
-                                  border: "1px solid #E0E1DC", width: "100%",
-                                  borderRadius: "5px", marginLeft: "0.5rem"
-                                }} />
-                                {/*<Grid item xs={12}>
+                          {showMoreCompany && jobid === item.id ? (
+                            <>
+                              {loadcompany ? (
+                                <>
+                                  <hr style={{
+                                    border: "1px solid #E0E1DC", width: "100%",
+                                    borderRadius: "5px", marginLeft: "0.5rem"
+                                  }} />
+                                  {/*<Grid item xs={12}>
                                   <img src={`http://jenilsavla.pythonanywhere.com` + loadcompany.picture}
                                     style={{ width: "100%", height: "35vh", borderRadius: "1.5vh " }} />
                               </Grid>
                               */}
-                                <Grid item xs={12}>
-                                  <Grid container spacing={2}>
-                                    <Grid item xs={9}>
-                                      <div style={{ fontSize: "2rem", fontWeight: "700" }}>{loadcompany.name}</div>
-                                    </Grid>
-                                    <Grid item xs={3} style={{ textAlign: "right" }}>
-                                      <img src={`http://jenilsavla.pythonanywhere.com` + loadcompany.picture}
-                                        style={{ width: "5vh", height: "5vh", borderRadius: "0.5vh " }} />
-                                    </Grid>
-                                  </Grid>
-                                </Grid>
-                                <Grid item xs={12}>
-                                  <Grid container spacing={2}>
-                                    <Grid item xs={2}>
-                                      <LocationOnIcon style={{ fontSize: "5vh", color: "#E0E1DC" }} />
-                                    </Grid>
-                                    <Grid item xs={10} >
-                                      <div style={{ fontSize: "1.25rem", marginTop: "0.5rem" }}>{loadcompany.address}</div>
+                                  <Grid item xs={12}>
+                                    <Grid container spacing={2}>
+                                      <Grid item xs={9}>
+                                        <div style={{ fontSize: "2rem", fontWeight: "700" }}>{loadcompany.name}</div>
+                                      </Grid>
+                                      <Grid item xs={3} style={{ textAlign: "right" }}>
+                                        <img src={`http://jenilsavla.pythonanywhere.com` + loadcompany.picture}
+                                          style={{ width: "5vh", height: "5vh", borderRadius: "0.5vh " }} />
+                                      </Grid>
                                     </Grid>
                                   </Grid>
-                                </Grid>
-                                <Grid item xs={12}>
-                                  <Grid container spacing={2}>
-                                    <Grid item xs={2}>
-                                      <EmailIcon style={{ fontSize: "5vh", color: "#E0E1DC" }} />
-                                    </Grid>
-                                    <Grid item xs={10} >
-                                      <div style={{ fontSize: "1.25rem", marginTop: "0.5rem" }}>{loadcompany.email}</div>
+                                  <Grid item xs={12}>
+                                    <Grid container spacing={2}>
+                                      <Grid item xs={2}>
+                                        <LocationOnIcon style={{ fontSize: "5vh", color: "#E0E1DC" }} />
+                                      </Grid>
+                                      <Grid item xs={10} >
+                                        <div style={{ fontSize: "1.25rem", marginTop: "0.5rem" }}>{loadcompany.address}</div>
+                                      </Grid>
                                     </Grid>
                                   </Grid>
-                                </Grid>
-                              </>
-                            ) : (
-                              <></>
-                            )}
-                          </>
-                        ) : (
-                          <></>
-                        )}
+                                  <Grid item xs={12}>
+                                    <Grid container spacing={2}>
+                                      <Grid item xs={2}>
+                                        <EmailIcon style={{ fontSize: "5vh", color: "#E0E1DC" }} />
+                                      </Grid>
+                                      <Grid item xs={10} >
+                                        <div style={{ fontSize: "1.25rem", marginTop: "0.5rem" }}>{loadcompany.email}</div>
+                                      </Grid>
+                                    </Grid>
+                                  </Grid>
+                                </>
+                              ) : (
+                                <></>
+                              )}
+                            </>
+                          ) : (
+                            <></>
+                          )}
+                        </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
-                </Grid>
-              )
-            })}
+                )
+              })}</> : <><Loader /></>}
           </Grid>
         </Grid>
       </Grid>

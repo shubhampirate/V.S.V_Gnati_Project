@@ -11,9 +11,12 @@ import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArro
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import DescriptionIcon from '@mui/icons-material/Description';
 import axios from 'axios';
-const Matrimonial = () => {
+import secureLocalStorage from 'react-secure-storage';
+import Loader from '../../Components/Loader';
 
-  const [visible, setVisible] = useState(4);
+const Matrimonial = () => {
+  const domain = secureLocalStorage.getItem("domainvsv");
+  const token = secureLocalStorage.getItem("tokenvsv");
   const events = ["Male", "Female"]
 
   const handleDownload = (fileUrl) => {
@@ -33,9 +36,7 @@ const Matrimonial = () => {
   }, []);
 
   const loadListMale = async () => {
-    const token = localStorage.getItem("tokenvsv")
-    const family = localStorage.getItem("familyid")
-    const result = await axios.get('http://jenilsavla.pythonanywhere.com/api/matrimonies?gender=Male', {
+    const result = await axios.get(`${domain}/matrimonies?gender=Male`, {
       headers: { "Authorization": `Token ${token}` },
     });
     setLoadMale(result.data.data.matrimonies);
@@ -44,9 +45,8 @@ const Matrimonial = () => {
   console.log(loadMale);
 
   const loadListFemale = async () => {
-    const token = localStorage.getItem("tokenvsv")
-    const family = localStorage.getItem("familyid")
-    const result = await axios.get("http://jenilsavla.pythonanywhere.com/api/matrimonies?gender=Female", {
+
+    const result = await axios.get(`${domain}/matrimonies?gender=Female`, {
       headers: { "Authorization": `Token ${token}` },
     });
     setLoadFemale(result.data.data.matrimonies);
@@ -104,147 +104,151 @@ const Matrimonial = () => {
                       {item1 == "Female" ?
                         <>
                           <TabPanel>
+
                             <Grid container spacing={2}>
-                              {loadFemale.slice(0, visible).map((item) => {
-                                return (
-                                  <Grid item xs={12} md={4} sm={6} style={{
-                                    paddingLeft: "5%", paddingRight: "2.5%",
-                                  }}>
-                                    <Grid container spacing={2} sx={{ borderRadius: "2vh", padding: "1rem" }}>
-                                      {item.picture == null ? <>
-                                        <Grid item xs={12}>
-                                          <img src={girl}
-                                            style={{ width: "100%", height: "35vh", borderRadius: "1.5vh 1.5vh 0vh 0vh" }} />
-                                        </Grid>
-                                      </> : <>
-                                        <Grid item xs={12}>
-                                          <img src={`http://jenilsavla.pythonanywhere.com` + item.picture}
-                                            style={{ width: "100%", height: "35vh", borderRadius: "1.5vh 1.5vh 0vh 0vh" }} />
-                                        </Grid>
-                                      </>}
-                                      <Grid item xs={12}
-                                        style={{
-                                          padding: "1rem", marginLeft: "16px", marginTop: "-0.75rem",
-                                          borderRadius: "0vh 0vh 1.5vh 1.5vh", backgroundColor: "#BDB4E9"
-                                        }}>
-                                        <Grid container spacing={1} sx={{ textAlign: "left", marginTop: "0.5vh" }}>
+                              {loadFemale ? <>
+                                {loadFemale.map((item) => {
+                                  return (
+                                    <Grid item xs={12} md={4} sm={6} style={{
+                                      paddingLeft: "5%", paddingRight: "2.5%",
+                                    }}>
+                                      <Grid container spacing={2} sx={{ borderRadius: "2vh", padding: "1rem" }}>
+                                        {item.picture == null ? <>
                                           <Grid item xs={12}>
-                                            <div style={{ fontSize: "2rem", fontWeight: "700" }}>{item.name}</div>
+                                            <img src={girl}
+                                              style={{ width: "100%", height: "35vh", borderRadius: "1.5vh 1.5vh 0vh 0vh" }} />
                                           </Grid>
+                                        </> : <>
                                           <Grid item xs={12}>
-                                            <div style={{ fontSize: "1.1rem" }}>{item.about}</div>
+                                            <img src={`http://jenilsavla.pythonanywhere.com` + item.picture}
+                                              style={{ width: "100%", height: "35vh", borderRadius: "1.5vh 1.5vh 0vh 0vh" }} />
                                           </Grid>
-                                          <hr style={{ border: "1px solid #582C6F", width: "100%", borderRadius: "5px" }} />
-                                          <Grid item xs={12}>
-                                            <Grid container spacing={2}>
-                                              <Grid item xs={2}>
-                                                <LocalPhoneIcon style={{ fontSize: "5vh", color: "#582C6F" }} />
-                                              </Grid>
-                                              <Grid item xs={10} >
-                                                <div style={{ fontSize: "1.25rem", marginTop: "0.7rem" }}>{item.phone}</div>
+                                        </>}
+                                        <Grid item xs={12}
+                                          style={{
+                                            padding: "1rem", marginLeft: "16px", marginTop: "-0.75rem",
+                                            borderRadius: "0vh 0vh 1.5vh 1.5vh", backgroundColor: "#BDB4E9"
+                                          }}>
+                                          <Grid container spacing={1} sx={{ textAlign: "left", marginTop: "0.5vh" }}>
+                                            <Grid item xs={12}>
+                                              <div style={{ fontSize: "2rem", fontWeight: "700" }}>{item.name}</div>
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                              <div style={{ fontSize: "1.1rem" }}>{item.about}</div>
+                                            </Grid>
+                                            <hr style={{ border: "1px solid #582C6F", width: "100%", borderRadius: "5px" }} />
+                                            <Grid item xs={12}>
+                                              <Grid container spacing={2}>
+                                                <Grid item xs={2}>
+                                                  <LocalPhoneIcon style={{ fontSize: "5vh", color: "#582C6F" }} />
+                                                </Grid>
+                                                <Grid item xs={10} >
+                                                  <div style={{ fontSize: "1.25rem", marginTop: "0.7rem" }}>{item.phone}</div>
+                                                </Grid>
                                               </Grid>
                                             </Grid>
-                                          </Grid>
-                                          <Grid item xs={12}>
-                                            <Grid container spacing={2}>
-                                              <Grid item xs={2}>
-                                                <EventIcon style={{ fontSize: "5vh", color: "#582C6F" }} />
-                                              </Grid>
-                                              <Grid item xs={5} >
-                                                <div style={{ fontSize: "1.25rem", marginTop: "0.7rem" }}>{item.dob}</div>
-                                              </Grid>
-                                              <Grid item xs={5} style={{ marginTop: "0.3rem", textAlign: "right", cursor: "pointer" }}
-                                                onClick={() => handleDownload(`http://jenilsavla.pythonanywhere.com` + item.biodata)}>
-                                                <DescriptionIcon style={{
-                                                  fontSize: "3.5vh", color: "#582C6F",
-                                                  backgroundColor: "#C4CFFE", padding: "0.25rem", borderRadius: "0.5rem 0rem 0rem 0.5rem",
-                                                }} />
-                                                <KeyboardDoubleArrowRightIcon style={{
-                                                  fontSize: "3.5vh", color: "#582C6F",
-                                                  backgroundColor: "#C4CFFE", padding: "0.25rem", borderRadius: "0rem 0.5rem 0.5rem 0rem"
-                                                }} />
+                                            <Grid item xs={12}>
+                                              <Grid container spacing={2}>
+                                                <Grid item xs={2}>
+                                                  <EventIcon style={{ fontSize: "5vh", color: "#582C6F" }} />
+                                                </Grid>
+                                                <Grid item xs={5} >
+                                                  <div style={{ fontSize: "1.25rem", marginTop: "0.7rem" }}>{item.dob}</div>
+                                                </Grid>
+                                                <Grid item xs={5} style={{ marginTop: "0.3rem", textAlign: "right", cursor: "pointer" }}
+                                                  onClick={() => handleDownload(`http://jenilsavla.pythonanywhere.com` + item.biodata)}>
+                                                  <DescriptionIcon style={{
+                                                    fontSize: "3.5vh", color: "#582C6F",
+                                                    backgroundColor: "#C4CFFE", padding: "0.25rem", borderRadius: "0.5rem 0rem 0rem 0.5rem",
+                                                  }} />
+                                                  <KeyboardDoubleArrowRightIcon style={{
+                                                    fontSize: "3.5vh", color: "#582C6F",
+                                                    backgroundColor: "#C4CFFE", padding: "0.25rem", borderRadius: "0rem 0.5rem 0.5rem 0rem"
+                                                  }} />
+                                                </Grid>
                                               </Grid>
                                             </Grid>
                                           </Grid>
                                         </Grid>
                                       </Grid>
                                     </Grid>
-                                  </Grid>
-                                )
-                              })}
+                                  )
+                                })}</> : <><Loader /></>}
                             </Grid>
                           </TabPanel>
                         </> :
                         <>
                           <TabPanel>
                             <Grid container spacing={2}>
-                              {loadMale.slice(0, visible).map((item) => {
-                                return (
-                                  <Grid item xs={12} md={4} sm={6} style={{
-                                    paddingLeft: "5%", paddingRight: "2.5%",
-                                  }}>
-                                    <Grid container spacing={2} sx={{ borderRadius: "2vh", padding: "1rem" }}>
-                                      {item.picture == null ? <>
-                                        <Grid item xs={12}>
-                                          <img src={boy}
-                                            style={{ width: "100%", height: "35vh", borderRadius: "1.5vh 1.5vh 0vh 0vh" }} />
-                                        </Grid>
-                                      </> : <>
-                                        <Grid item xs={12}>
-                                          <img src={`http://jenilsavla.pythonanywhere.com` + item.picture}
-                                            style={{ width: "100%", height: "35vh", borderRadius: "1.5vh 1.5vh 0vh 0vh" }} />
-                                        </Grid>
-                                      </>}
-                                      <Grid item xs={12}
-                                        style={{
-                                          padding: "1rem", marginLeft: "16px", marginTop: "-0.75rem",
-                                          borderRadius: "0vh 0vh 1.5vh 1.5vh", backgroundColor: "#BDB4E9"
-                                        }}>
-                                        <Grid container spacing={1} sx={{ textAlign: "left", marginTop: "0.5vh" }}>
+                              {loadMale.length ? <>
+                                {loadMale.map((item) => {
+                                  return (
+                                    <Grid item xs={12} md={4} sm={6} style={{
+                                      paddingLeft: "5%", paddingRight: "2.5%",
+                                    }}>
+                                      <Grid container spacing={2} sx={{ borderRadius: "2vh", padding: "1rem" }}>
+                                        {item.picture == null ? <>
                                           <Grid item xs={12}>
-                                            <div style={{ fontSize: "2rem", fontWeight: "700" }}>{item.name}</div>
+                                            <img src={boy}
+                                              style={{ width: "100%", height: "35vh", borderRadius: "1.5vh 1.5vh 0vh 0vh" }} />
                                           </Grid>
+                                        </> : <>
                                           <Grid item xs={12}>
-                                            <div style={{ fontSize: "1.1rem" }}>{item.about}</div>
+                                            <img src={`http://jenilsavla.pythonanywhere.com` + item.picture}
+                                              style={{ width: "100%", height: "35vh", borderRadius: "1.5vh 1.5vh 0vh 0vh" }} />
                                           </Grid>
-                                          <hr style={{ border: "1px solid #582C6F", width: "100%", borderRadius: "5px" }} />
-                                          <Grid item xs={12}>
-                                            <Grid container spacing={2}>
-                                              <Grid item xs={2}>
-                                                <LocalPhoneIcon style={{ fontSize: "5vh", color: "#582C6F" }} />
-                                              </Grid>
-                                              <Grid item xs={10} >
-                                                <div style={{ fontSize: "1.25rem", marginTop: "0.7rem" }}>{item.phone}</div>
+                                        </>}
+                                        <Grid item xs={12}
+                                          style={{
+                                            padding: "1rem", marginLeft: "16px", marginTop: "-0.75rem",
+                                            borderRadius: "0vh 0vh 1.5vh 1.5vh", backgroundColor: "#BDB4E9"
+                                          }}>
+                                          <Grid container spacing={1} sx={{ textAlign: "left", marginTop: "0.5vh" }}>
+                                            <Grid item xs={12}>
+                                              <div style={{ fontSize: "2rem", fontWeight: "700" }}>{item.name}</div>
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                              <div style={{ fontSize: "1.1rem" }}>{item.about}</div>
+                                            </Grid>
+                                            <hr style={{ border: "1px solid #582C6F", width: "100%", borderRadius: "5px" }} />
+                                            <Grid item xs={12}>
+                                              <Grid container spacing={2}>
+                                                <Grid item xs={2}>
+                                                  <LocalPhoneIcon style={{ fontSize: "5vh", color: "#582C6F" }} />
+                                                </Grid>
+                                                <Grid item xs={10} >
+                                                  <div style={{ fontSize: "1.25rem", marginTop: "0.7rem" }}>{item.phone}</div>
+                                                </Grid>
                                               </Grid>
                                             </Grid>
-                                          </Grid>
-                                          <Grid item xs={12}>
-                                            <Grid container spacing={2}>
-                                              <Grid item xs={2}>
-                                                <EventIcon style={{ fontSize: "5vh", color: "#582C6F" }} />
-                                              </Grid>
-                                              <Grid item xs={5} >
-                                                <div style={{ fontSize: "1.25rem", marginTop: "0.7rem" }}>{item.dob}</div>
-                                              </Grid>
-                                              <Grid item xs={5} style={{ marginTop: "0.3rem", textAlign: "right", cursor: "pointer" }}
-                                                onClick={() => handleDownload(`http://jenilsavla.pythonanywhere.com` + item.biodata)}>
-                                                <DescriptionIcon style={{
-                                                  fontSize: "3.5vh", color: "#582C6F",
-                                                  backgroundColor: "#C4CFFE", padding: "0.25rem", borderRadius: "0.5rem 0rem 0rem 0.5rem"
-                                                }} />
-                                                <KeyboardDoubleArrowRightIcon style={{
-                                                  fontSize: "3.5vh", color: "#582C6F",
-                                                  backgroundColor: "#C4CFFE", padding: "0.25rem", borderRadius: "0rem 0.5rem 0.5rem 0rem"
-                                                }} />
+                                            <Grid item xs={12}>
+                                              <Grid container spacing={2}>
+                                                <Grid item xs={2}>
+                                                  <EventIcon style={{ fontSize: "5vh", color: "#582C6F" }} />
+                                                </Grid>
+                                                <Grid item xs={5} >
+                                                  <div style={{ fontSize: "1.25rem", marginTop: "0.7rem" }}>{item.dob}</div>
+                                                </Grid>
+                                                <Grid item xs={5} style={{ marginTop: "0.3rem", textAlign: "right", cursor: "pointer" }}
+                                                  onClick={() => handleDownload(`http://jenilsavla.pythonanywhere.com` + item.biodata)}>
+                                                  <DescriptionIcon style={{
+                                                    fontSize: "3.5vh", color: "#582C6F",
+                                                    backgroundColor: "#C4CFFE", padding: "0.25rem", borderRadius: "0.5rem 0rem 0rem 0.5rem"
+                                                  }} />
+                                                  <KeyboardDoubleArrowRightIcon style={{
+                                                    fontSize: "3.5vh", color: "#582C6F",
+                                                    backgroundColor: "#C4CFFE", padding: "0.25rem", borderRadius: "0rem 0.5rem 0.5rem 0rem"
+                                                  }} />
+                                                </Grid>
                                               </Grid>
                                             </Grid>
                                           </Grid>
                                         </Grid>
                                       </Grid>
                                     </Grid>
-                                  </Grid>
-                                )
-                              })}
+                                  )
+                                })}</> : <><Loader /></>}
+
                             </Grid>
                           </TabPanel>
                         </>
