@@ -114,7 +114,7 @@ const Events = () => {
       fetch(`${domain}/events/`, {
         method: "POST",
         headers: {
-          "Authorization": `Token 0375ca4c25e7e911db2dce7ce73e380b624229c1`,
+          "Authorization": `Token ${token}`,
         },
         body: formData,
       })
@@ -177,7 +177,7 @@ const Events = () => {
     fetch(`${domain}/event/${eventId}`, {
       method: 'PUT',
       headers: {
-        "Authorization": `Token 0375ca4c25e7e911db2dce7ce73e380b624229c1`,
+        "Authorization": `Token ${token}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(searchData),
