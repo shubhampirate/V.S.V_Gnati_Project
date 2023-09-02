@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import {
     Grid, InputAdornment,
-    TextField, Button, Box, InputLabel, Select, MenuItem, Modal
+    TextField, Button, Box, InputLabel, Select, MenuItem
 } from '@mui/material'
 import React, { useState, useEffect } from 'react'
 import { useFormik } from "formik";
@@ -15,6 +15,8 @@ import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import secureLocalStorage from 'react-secure-storage';
 import Loader from '../../Components/Loader';
+import 'react-responsive-modal/styles.css';
+import { Modal } from 'react-responsive-modal';
 
 const validationSchema = yup.object({
     nameCompany: yup
@@ -109,10 +111,17 @@ const CompanyRegister = () => {
                             timer: 3000
                         })
                     }
+                    if (data.status == true) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Re-Login to view the Company Details',
+                            showConfirmButton: false,
+                            timer: 4000
+                        })
+                        navigate("/login")
+                    }
                     // console.log(data);
                     loadListcompany();
-                    secureLocalStorage.setItem("companyvsv", data.id)
-                    companyId = secureLocalStorage.getItem("companyvsv");
                 })
                 .catch(() => {
 
@@ -139,6 +148,7 @@ const CompanyRegister = () => {
                         showConfirmButton: false,
                         timer: 3000
                     })
+                    navigate("/register-job")
                 }
                 else {
                     Swal.fire({
@@ -203,6 +213,7 @@ const CompanyRegister = () => {
                         timer: 3000
                     })
                 }
+                setIsOpen(false);
                 // console.log(data);
             })
             .catch((error) => {
@@ -418,19 +429,17 @@ const CompanyRegister = () => {
                                 </Grid>
                             </Grid>
                         </> : <>
-                            <div style={{ fontSize: "2.5rem", fontWeight: "700", marginBottom: "2rem" }}>No Company has Registered yet</div>
+                            <div style={{ fontSize: "2.5rem", fontWeight: "700", marginBottom: "2rem" }}>No Company has been registered yet</div>
                         </>}
                     <Modal
                         open={isOpen}
                         onClose={handleClose}
-                        aria-labelledby="modal-title"
-                        style={{ backgroundColor: "white", paddingBottom: "2rem" }}
+                        center
                     >
                         <div>
-                            <div style={{ fontSize: "2rem", fontWeight: "700", backgroundColor: "white" }}>Edit Details</div>
+                            <div style={{ fontSize: "2rem", fontWeight: "700", backgroundColor: "white" }}>Edit Company Details</div>
                             <Grid container spacing={2} marginTop={2}
                                 style={{
-                                    backgroundColor: "white", paddingLeft: "5%", paddingRight: "3.5%",
                                     paddingBottom: "1.5rem"
                                 }}>
                                 <Grid item xs={12} md={6} sm={12}>
@@ -470,9 +479,9 @@ const CompanyRegister = () => {
                                         <Button variant="contained" type="submit"
                                             sx={{
                                                 width: "100%", height: "3.45rem", fontSize: "1.1rem",
-                                                backgroundColor: "#C4CFFE", boxShadow: "none", color: "black"
+                                                backgroundColor: "#018d8d", boxShadow: "none", color: "white"
                                                 , "&:hover": {
-                                                    backgroundColor: "#C4CFFE", boxShadow: "none", color: "black",
+                                                    backgroundColor: "#018d8d", boxShadow: "none", color: "white",
                                                     fontSize: "1.3rem",
                                                 }
                                             }} onClick={() => handleEditsubmit(companyId)}>

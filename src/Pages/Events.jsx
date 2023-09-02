@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
-import { Box, Button, Grid } from '@mui/material'
+import { Box, Button, Grid, TextField } from '@mui/material'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import EventIcon from '@mui/icons-material/Event';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -13,16 +13,240 @@ import { Link } from 'react-router-dom';
 import "../Components/styleEvents.css";
 import secureLocalStorage from 'react-secure-storage';
 import Loader from '../Components/Loader';
-
+import 'react-responsive-modal/styles.css';
+import { Modal } from 'react-responsive-modal';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useFormik, ErrorMessage, } from "formik";
+import * as yup from 'yup';
+import Swal from 'sweetalert2';
 
 const Events = () => {
 
   const domain = secureLocalStorage.getItem("domainvsv");
   const token = secureLocalStorage.getItem("tokenvsv");
+  const isAdmin = secureLocalStorage.getItem("isadminvsv");
+  // const isAdmin = useState(true);
 
-  const [visible, setVisible] = useState(12);
   const [len, setLen] = useState('');
-  const year = [2023, 2022]
+  const year = [2023, 2022];
+  const [eventId, setEventId] = useState('');
+  const [editAbout, setEditabout] = useState('');
+  const [editName, setEditName] = useState('');
+  const [editStartTime, setEditStartTime] = useState('');
+  const [editDate, setEditDate] = useState('');
+  const [editEndTime, setEditEndTime] = useState('');
+  const [editVenue, setEditVenue] = useState('');
+  const [editPhotos, setEditPhotos] = useState('');
+
+  const [showAddEvent, setShowAddEvent] = useState(false);
+  // const showAddEventComponent = () => setShowAddEvent(true);
+  const showAddEventComponent = () => setShowAddEvent(!showAddEvent);
+  const closeAddEventComponent = () => setShowAddEvent(false)
+
+  const [showEditEvent, setShowEditEvent] = useState(false);
+  // const showEditEventComponent = () => setShowEditEvent(true);
+  const showEditEventComponent = () => setShowEditEvent(!showEditEvent);
+  const closeEditEventComponent = () => setShowEditEvent(false);
+
+
+
+  const validationSchema = yup.object({
+    start_time: yup
+      .date('Enter Start Time of Event')
+      .required('Start Time of Event is required'),
+    date: yup
+      .date('Enter Event Date')
+      .required('Date of Event is required'),
+    end_time: yup
+      .date('Enter End Time of Event')
+      .required('End Time of Event is required'),
+    name: yup
+      .string('Enter Event name')
+      .required('Event name is required'),
+    about: yup
+      .string('Enter about Event')
+      .required('Some Description is required'),
+    venue: yup
+      .string('Enter Venue')
+      .required('Venue is required'),
+    photos_drive: yup
+      .string('Enter Photos Drive')
+      .required('Photos Drive is required'),
+    picture: yup
+      .mixed()
+      .test('fileType', 'Invalid file format. Only images are allowed.', (value) => {
+        if (value && value.length) {
+          const fileType = value[0].type;
+          return fileType.startsWith('image/');
+        }
+        return true;
+      })
+      .required('Picture is required'),
+
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+      picture: null,
+      about: '',
+      venue: '',
+      start_time: '',
+      end_time: '',
+      photos_drive: '',
+      date: '',
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      console.log(values);
+      console.log(values.picture)
+      const formData = new FormData();
+      formData.append('name', values.name);
+      formData.append('about', values.about);
+      formData.append('start_time', values.start_time);
+      formData.append('end_time', values.end_time);
+      formData.append('venue', values.venue);
+      formData.append('picture', values.picture);
+      formData.append('date', values.date);
+      formData.append('photos_drive', values.photos_drive);
+
+      fetch(`${domain}/events/`, {
+        method: "POST",
+        headers: {
+          "Authorization": `Token 0375ca4c25e7e911db2dce7ce73e380b624229c1`,
+        },
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // console.log(data);
+          if (data.status == true) {
+            Swal.fire({
+              icon: 'success',
+              title: 'Successfully added Events Details',
+              showConfirmButton: false,
+              timer: 3000
+            })
+          }
+          else {
+            Swal.fire({
+              icon: 'error',
+              title: data.message,
+              showConfirmButton: false,
+              timer: 3000
+            })
+          }
+          loadList();
+          setShowAddEvent(false);
+        })
+        .catch((error) => {
+          // console.error(error);
+        });
+    }
+  });
+
+
+  const handleEventDetails = async (editId) => {
+    const result = await axios.get(`${domain}/event/${editId}`, {
+      headers: { "Authorization": `Token ${token}`, },
+    });
+    console.log(result.data.data);
+    setEditDate(result.data.data.date);
+    setEditEndTime(result.data.data.end_time);
+    setEditName(result.data.data.name);
+    setEditStartTime(result.data.data.start_time);
+    setEditVenue(result.data.data.venue);
+    setEditabout(result.data.data.about);
+    setEditPhotos(result.data.data.photos_drive);
+    setShowEditEvent(true);
+  }
+
+  const handleEventSubmit = async () => {
+    const searchData = {
+      name: editName,
+      about: editAbout,
+      start_time: editStartTime,
+      end_time: editEndTime,
+      venue: editVenue,
+      date: editDate,
+      photos_drive: editPhotos,
+    };
+
+    console.log(searchData, eventId);
+    fetch(`${domain}/event/${eventId}`, {
+      method: 'PUT',
+      headers: {
+        "Authorization": `Token 0375ca4c25e7e911db2dce7ce73e380b624229c1`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(searchData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log(data);
+        if (data.status == true) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Successfully Edited the details',
+            showConfirmButton: false,
+            timer: 3000
+          })
+        }
+        else {
+          Swal.fire({
+            icon: 'error',
+            title: data.message,
+            showConfirmButton: false,
+            timer: 3000
+          })
+        }
+        loadList();
+        loadList();
+        showEditEventComponent(false);
+      })
+      .catch((error) => {
+        // console.error(error);
+      });
+  }
+
+  const handleDeleteEvent = async (id) => {
+    console.log(id);
+    fetch(`${domain}/event/${id}`, {
+      method: 'DELETE',
+      headers: {
+        "Authorization": `Token ${token}`,
+        'Content-Type': 'application/json',
+      }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status == true) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Successfully deleted the Event details',
+            showConfirmButton: false,
+            timer: 3000
+          })
+        }
+        else {
+          Swal.fire({
+            icon: 'error',
+            title: data.message,
+            showConfirmButton: false,
+            timer: 3000
+          })
+        }
+        // console.log(data);
+        loadList();
+        loadList();
+        // setShowOccupationedit(false);
+      })
+      .catch((error) => {
+        // console.error(error);
+      });
+  }
+
 
   const [load, setLoad] = useState([]);
   useEffect(() => {
@@ -30,7 +254,6 @@ const Events = () => {
   }, []);
 
   const loadList = async (id) => {
-    console.log(id)
     if (id == undefined) {
       const config = {
         method: 'post',
@@ -62,9 +285,6 @@ const Events = () => {
     }
 
   }
-  console.log(load);
-  console.log(len)
-
 
   return (
     <Box>
@@ -74,11 +294,189 @@ const Events = () => {
             <Grid item xs={12} sx={{ marginTop: "11%" }}>
               <div style={{ fontSize: "2.5rem", fontWeight: "700" }}>Events Extravaganza</div>
             </Grid>
-            <Grid item xs={12} style={{ marginBottom: "11%" }} >
-              <div style={{ fontSize: "1.35rem", marginBottom: "1.5rem", marginLeft: "2%" }}>Unite with family and friends as we host a series of joyous gatherings and celebrations
-                in honor of V.S.V Gnati Samasta. Experience the magic of togetherness through our heartwarming events that bring laughter,
-                connection, and cherished memories. Come be a part of these special occasions that embody the spirit of unity and celebration.</div>
-            </Grid>
+            {isAdmin ? <>
+              <Grid item xs={12}>
+                <div style={{ fontSize: "1.35rem", marginBottom: "1.5rem", marginLeft: "2%" }}>Unite with family and friends as we host a series of joyous gatherings and celebrations
+                  in honor of V.S.V Gnati Samasta. Experience the magic of togetherness through our heartwarming events that bring laughter,
+                  connection, and cherished memories. Come be a part of these special occasions that embody the spirit of unity and celebration.</div>
+              </Grid>
+              <Grid item xs={12} style={{ marginBottom: "11%" }}>
+                <div>
+                  <Button
+                    sx={{
+                      color: '#fff',
+                      fontSize: "1.25rem",
+                      fontFamily: "PT Sans",
+                      backgroundColor: 'transparent',
+                      border: '2px solid #fff',
+                      '&:hover': {
+                        backgroundColor: '#fff',
+                        color: 'black'
+                      }
+                    }} onClick={showAddEventComponent}>
+                    Add Events
+                  </Button>
+                </div>
+              </Grid>
+              <Modal open={showAddEvent} onClose={closeAddEventComponent} center >
+                <h2>Add Events</h2>
+                <form onSubmit={formik.handleSubmit} >
+                  <Grid container spacing={2} p={2}>
+                    <Grid item xs={12} style={{ marginLeft: "-1rem" }}>
+                      <TextField
+                        id="name"
+                        name="name"
+                        label="Full Name"
+                        color="success"
+                        value={formik.values.name}
+                        onChange={formik.handleChange}
+                        error={formik.touched.name && Boolean(formik.errors.name)}
+                        helperText={formik.touched.name && formik.errors.name}
+                        sx={{ width: '100%', fontSize: "1.5rem" }}
+                      />
+                    </Grid>
+                    <Grid item xs={12} style={{ marginLeft: "-1rem" }}>
+                      <TextField
+                        id="about"
+                        name="about"
+                        label="About Event"
+                        color="success"
+                        value={formik.values.about}
+                        onChange={formik.handleChange}
+                        error={formik.touched.about && Boolean(formik.errors.about)}
+                        helperText={formik.touched.about && formik.errors.about}
+                        sx={{ width: '100%', fontSize: "1.5rem" }}
+                      />
+                    </Grid>
+                    <Grid item xs={12} style={{ marginLeft: "-1rem" }}>
+                      <TextField
+                        id="venue"
+                        name="venue"
+                        label="Event Venue"
+                        color="success"
+                        value={formik.values.venue}
+                        onChange={formik.handleChange}
+                        error={formik.touched.venue && Boolean(formik.errors.venue)}
+                        helperText={formik.touched.venue && formik.errors.venue}
+                        sx={{ width: '100%', fontSize: "1.5rem" }}
+                      />
+                    </Grid>
+                    <Grid item xs={12} style={{ marginLeft: "-1rem" }}>
+                      <TextField
+                        id="date"
+                        name="date"
+                        type="date"
+                        label="Date of Event"
+                        sx={{ width: "100%", fontSize: "1.5rem", color: "red" }}
+                        color='success'
+                        value={formik.values.date}
+                        onChange={formik.handleChange}
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                      />
+                      {formik.touched.date && formik.errors.date ? (
+                        <div style={{ color: "#d65a5a", fontSize: "13px", textAlign: "left", marginLeft: "15px", marginTop: "2px" }}>
+                          {formik.errors.date}
+                        </div>
+                      ) : null}
+                    </Grid>
+                    <Grid item xs={12} style={{ marginLeft: "-1rem" }}>
+                      <TextField
+                        id="start_time"
+                        name="start_time"
+                        type="datetime-local"
+                        label="Start Time"
+                        sx={{ width: "100%", fontSize: "1.5rem", color: "red" }}
+                        color='success'
+                        value={formik.values.start_time}
+                        onChange={formik.handleChange}
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                      />
+                      {formik.touched.start_time && formik.errors.start_time ? (
+                        <div style={{ color: "#d65a5a", fontSize: "13px", textAlign: "left", marginLeft: "15px", marginTop: "2px" }}>
+                          {formik.errors.start_time}
+                        </div>
+                      ) : null}
+                    </Grid>
+                    <Grid item xs={12} style={{ marginLeft: "-1rem" }}>
+                      <TextField
+                        id="end_time"
+                        name="end_time"
+                        type="datetime-local"
+                        label="End Time"
+                        sx={{ width: "100%", fontSize: "1.5rem", color: "red" }}
+                        color='success'
+                        value={formik.values.end_time}
+                        onChange={formik.handleChange}
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                      />
+                      {formik.touched.end_time && formik.errors.end_time ? (
+                        <div style={{ color: "#d65a5a", fontSize: "13px", textAlign: "left", marginLeft: "15px", marginTop: "2px" }}>
+                          {formik.errors.end_time}
+                        </div>
+                      ) : null}
+                    </Grid>
+                    <Grid item xs={12} style={{ marginLeft: "-1rem" }}>
+                      <TextField
+                        id="photos_drive"
+                        name="photos_drive"
+                        label="Event Photos Drive Link"
+                        color="success"
+                        value={formik.values.photos_drive}
+                        onChange={formik.handleChange}
+                        error={formik.touched.photos_drive && Boolean(formik.errors.photos_drive)}
+                        helperText={formik.touched.photos_drive && formik.errors.photos_drive}
+                        sx={{ width: '100%', fontSize: "1.5rem" }}
+                      />
+                    </Grid>
+                    <Grid item xs={12} style={{ marginLeft: "-1rem" }}>
+                      <TextField
+                        type="file"
+                        id="picture"
+                        name="picture"
+                        label="Events Picture"
+                        accept="image/*"
+                        onChange={(event) => formik.setFieldValue('picture', event.currentTarget.files[0])}
+                        onBlur={formik.handleBlur}
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                        sx={{ width: "100%", fontSize: "1.5rem" }}
+                      />
+                      {formik.touched.picture && formik.errors.picture ? (
+                        <div style={{ color: "#d65a5a", fontSize: "13px", textAlign: "left", marginLeft: "15px", marginTop: "2px" }}>
+                          {formik.errors.picture}
+                        </div>
+                      ) : null}
+                    </Grid>
+                    <Grid item xs={12} style={{ marginLeft: "-1rem" }}>
+                      <Button variant="contained" type="submit"
+                        sx={{
+                          width: "100%", height: "3.45rem", fontSize: "1.1rem",
+                          backgroundColor: "#C4CFFE", boxShadow: "none", color: "black"
+                          , "&:hover": {
+                            backgroundColor: "#C4CFFE", boxShadow: "none", color: "black",
+                            fontSize: "1.3rem",
+                          }
+                        }}>
+                        Submit
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </form>
+              </Modal>
+            </> : <>
+              <Grid item xs={12} style={{ marginBottom: "11%" }}>
+                <div style={{ fontSize: "1.35rem", marginBottom: "1.5rem", marginLeft: "2%" }}>Unite with family and friends as we host a series of joyous gatherings and celebrations
+                  in honor of V.S.V Gnati Samasta. Experience the magic of togetherness through our heartwarming events that bring laughter,
+                  connection, and cherished memories. Come be a part of these special occasions that embody the spirit of unity and celebration.</div>
+              </Grid></>}
+
           </Grid>
         </Grid>
         <Grid item xs={12}>
@@ -118,9 +516,131 @@ const Events = () => {
                                           borderRadius: "0vh 0vh 1.5vh 1.5vh", backgroundColor: "#90CFD3"
                                         }}>
                                         <Grid container spacing={1} sx={{ textAlign: "left", marginTop: "0.5vh" }}>
-                                          <Grid item xs={12}>
-                                            <div style={{ fontSize: "2rem", fontWeight: "700" }}>{item.name}</div>
-                                          </Grid>
+                                          {isAdmin ? <>
+                                            <Grid item xs={8}>
+                                              <div style={{ fontSize: "2rem", fontWeight: "700" }}>{item.name}</div>
+                                            </Grid>
+                                            <Grid item xs={2} style={{ textAlign: "right" }}>
+                                              <EditIcon style={{ fontSize: "4vh", color: "#018d8d" }}
+                                                onClick={() => { handleEventDetails(); showEditEventComponent(); setEventId(item.id) }} />
+                                            </Grid>
+                                            <Grid item xs={2} style={{ textAlign: "right" }}>
+                                              <DeleteIcon style={{ fontSize: "4vh", color: "#018d8d" }}
+                                                onClick={() => handleDeleteEvent(item.id)} />
+                                            </Grid>
+                                            <Modal open={showEditEvent} onClose={closeEditEventComponent} center >
+                                              <h2>Edit Event Details</h2>
+                                              <Grid container spacing={2} p={2}>
+                                                <Grid item xs={12} style={{ marginLeft: "-1rem" }}>
+                                                  <TextField
+                                                    id="name"
+                                                    name="name"
+                                                    label="Full Name"
+                                                    color="success"
+                                                    value={editName}
+                                                    onChange={(e) => setEditName(e.target.value)}
+                                                    sx={{ width: '100%', fontSize: "1.5rem" }}
+                                                  />
+                                                </Grid>
+                                                <Grid item xs={12} style={{ marginLeft: "-1rem" }}>
+                                                  <TextField
+                                                    id="about"
+                                                    name="about"
+                                                    label="About Event"
+                                                    color="success"
+                                                    value={editAbout}
+                                                    onChange={(e) => setEditabout(e.target.value)}
+                                                    sx={{ width: '100%', fontSize: "1.5rem" }}
+                                                  />
+                                                </Grid>
+                                                <Grid item xs={12} style={{ marginLeft: "-1rem" }}>
+                                                  <TextField
+                                                    id="venue"
+                                                    name="venue"
+                                                    label="Event Venue"
+                                                    color="success"
+                                                    value={editVenue}
+                                                    onChange={(e) => setEditVenue(e.target.value)}
+                                                    sx={{ width: '100%', fontSize: "1.5rem" }}
+                                                  />
+                                                </Grid>
+                                                <Grid item xs={12} style={{ marginLeft: "-1rem" }}>
+                                                  <TextField
+                                                    id="date"
+                                                    name="date"
+                                                    type="date"
+                                                    label="Date of Event"
+                                                    sx={{ width: "100%", fontSize: "1.5rem", color: "red" }}
+                                                    color='success'
+                                                    value={editDate}
+                                                    onChange={(e) => setEditDate(e.target.value)}
+                                                    InputLabelProps={{
+                                                      shrink: true,
+                                                    }}
+                                                  />
+                                                </Grid>
+                                                <Grid item xs={12} style={{ marginLeft: "-1rem" }}>
+                                                  <TextField
+                                                    id="start_time"
+                                                    name="start_time"
+                                                    type="datetime-local"
+                                                    label="Start Time"
+                                                    sx={{ width: "100%", fontSize: "1.5rem", color: "red" }}
+                                                    color='success'
+                                                    value={editStartTime}
+                                                    onChange={(e) => setEditStartTime(e.target.value)}
+                                                    InputLabelProps={{
+                                                      shrink: true,
+                                                    }}
+                                                  />
+                                                </Grid>
+                                                <Grid item xs={12} style={{ marginLeft: "-1rem" }}>
+                                                  <TextField
+                                                    id="end_time"
+                                                    name="end_time"
+                                                    type="datetime-local"
+                                                    label="End Time"
+                                                    sx={{ width: "100%", fontSize: "1.5rem", color: "red" }}
+                                                    color='success'
+                                                    value={editEndTime}
+                                                    onChange={(e) => setEditEndTime(e.target.value)}
+                                                    InputLabelProps={{
+                                                      shrink: true,
+                                                    }}
+                                                  />
+                                                </Grid>
+                                                <Grid item xs={12} style={{ marginLeft: "-1rem" }}>
+                                                  <TextField
+                                                    id="photos_drive"
+                                                    name="photos_drive"
+                                                    label="Event Photos Drive Link"
+                                                    color="success"
+                                                    value={editPhotos}
+                                                    onChange={(e) => setEditPhotos(e.target.value)}
+                                                    sx={{ width: '100%', fontSize: "1.5rem" }}
+                                                  />
+                                                </Grid>
+                                                <Grid item xs={12} style={{ marginLeft: "-1rem" }}>
+                                                  <Button variant="contained" type="submit"
+                                                    sx={{
+                                                      width: "100%", height: "3.45rem", fontSize: "1.1rem",
+                                                      backgroundColor: "#C4CFFE", boxShadow: "none", color: "black"
+                                                      , "&:hover": {
+                                                        backgroundColor: "#C4CFFE", boxShadow: "none", color: "black",
+                                                        fontSize: "1.3rem",
+                                                      }
+                                                    }} onClick={handleEventSubmit} onClose={closeEditEventComponent}>
+                                                    Submit
+                                                  </Button>
+                                                </Grid>
+                                              </Grid>
+                                            </Modal>
+                                          </> : <>
+                                            <Grid item xs={12}>
+                                              <div style={{ fontSize: "2rem", fontWeight: "700" }}>{item.name}</div>
+                                            </Grid>
+                                          </>
+                                          }
                                           <Grid item xs={12}>
                                             <div style={{ fontSize: "1.1rem" }}>{item.about}</div>
                                           </Grid>

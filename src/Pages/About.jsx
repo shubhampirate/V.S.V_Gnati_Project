@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Grid } from '@mui/material'
 import "../Components/Home.css"
 import avatar from "../images/couple.png"
@@ -6,29 +6,7 @@ import profile from "../images/profile.png"
 import position from "../images/position.png"
 import photo from "../images/photo.webp";
 
-const data = [{
-  name: "Shubham Shah",
-  position: "Secretary",
-}, {
-  name: "Shubham Shah",
-  position: "Secretary",
-}, {
-  name: "Shubham Shah",
-  position: "Secretary",
-}, {
-  name: "Shubham Shah",
-  position: "Secretary",
-}, {
-  name: "Shubham Shah",
-  position: "Secretary",
-}, {
-  name: "Shubham Shah",
-  position: "Secretary",
-}, {
-  name: "Shubham Shah",
-  position: "Secretary",
-},
-]
+
 
 const dataSub = [{
   name: "Shubham Shah",
@@ -91,6 +69,38 @@ const dataSub = [{
 ]
 
 const About = () => {
+  const trustee = [{ name: "Vinod G. Malkan", position: "Trust Pramukh" },
+  { name: "Dinesh Dharamshi Shah", position: "MG. Trustee" },
+  { name: "Lalit M. Shah", position: "Trustee" },
+  { name: "Narottam K. Malkan", position: "Trustee" },
+  { name: "Mahendra Chatrabhuj Shah", position: "Trustee" },
+  ];
+
+  const mainMember = [{ name: "Sunil Vrajlal Shah", position: "Pramukh" },
+  { name: "Hiren Harakhchand Shah", position: "Uppramukh" },
+  { name: "Kiran Rakesh Shah", position: "Secretary" },
+  { name: "Rahul Prafulchandra Shah", position: "Secretary" },
+  { name: "Sanjay Maneklal Gandhi", position: "Secretary" },
+  { name: "Sangeeta Ketan Gandhi", position: "Treasurer" },
+  { name: "Piyush R. Shah", position: "Joint Treasurer" },
+  ];
+
+  const members = [{ name: "Ashwin Pranlal Shah", position: "Committee Member" },
+  { name: "Uday M. Saurashtri", position: "Committee Member" },
+  { name: "Jignesh Naveen Shah", position: "Committee Member" },
+  { name: "Shailesh Kapoorchand Shah", position: "Committee Member" },
+  { name: "Shailesh Chimanlal Parekh", position: "Committee Member" },
+  { name: "Mukesh D. Shah", position: "Committee Member" },
+  { name: "Naresh G. Shah", position: "Committee Member" },
+  { name: "Mehul A. Shah", position: "Committee Member" },
+  { name: "Hasmukh J. Shah", position: "Committee Member" },
+  { name: "Ashwin J. Shah", position: "Committee Member" },
+  { name: "Umesh D. Shah", position: "Committee Member" },
+  { name: "Dimple Nilesh Mavani", position: "Committee Member" },
+  { name: "Bhavna K. Shah", position: "Committee Member" },
+  { name: "Pranav K. Parekh", position: "Committee Member" },
+  ]
+
   return (
     <div>
       <Grid container spacing={2} sx={{ padding: "3% 5%", }}>
@@ -163,40 +173,77 @@ const About = () => {
             Visa Sorthiya Vanik has leaped for the first ever major transformation in 2019 when Shree Mumbai Visa Sorathiya Vanik Gnati Samast (Varishth Mandal) has decided to form a committee by way of election giving away the old tradition of selection. The Present Committee elected in 2019 is the first ever elected committee of the GNATI beside that this committee has first ever women members in the committee.          </div>
         </Grid>
         <Grid item xs={12}>
-          <Grid item xs={12} style={{ fontSize: "2rem", marginBottom: "3rem", paddingLeft: "10%", paddingRight: "5%" }}>
+          <Grid item xs={12} style={{ fontSize: "2rem", paddingLeft: "10%", paddingRight: "5%" }}>
             <span className='underline'>Connect with the Minds Steering Our Community</span>
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          <Grid container spacing={2}>
-            {data.map((item) => {
-              return (
-                <Grid item xs={12} sm={6} md={4} lg={3}>
-                  <div className="row">
-                    <div className="folded_corner" style={{ textAlign: "left" }}>
-                      <img src={photo} alt="Frontend Development" style={{ width: "100%", height: "80%" }} />
-                      <Grid item xs={12}><h2>Shubham Shah</h2></Grid>
-                      <Grid item xs={12} style={{ marginTop: "-1rem" }}><h3>Secretary</h3></Grid>
-                    </div>
-                  </div>
-                </Grid>)
-            })}
-          </Grid>
+          <div className="center-table">
+            <h2>Trustees</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th style={{ width: '60%' }}>Name</th>
+                  <th style={{ width: '40%' }}>Position</th>
+                </tr>
+              </thead>
+              <tbody>
+                {trustee.map((item) => {
+                  return (
+                    <tr>
+                      <td>{item.name}</td>
+                      <td>{item.position}</td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
         </Grid>
         <Grid item xs={12}>
-          <Grid container spacing={2}>
-            {dataSub.map((item) => {
-              return (
-                <Grid item xs={12} sm={6} md={4} lg={3}>
-                  <div className="row">
-                    <div className="folded_corner_sub" style={{ textAlign: "left" }}>
-                      <Grid item xs={12}><h2>Shubham Shah</h2></Grid>
-                      <Grid item xs={12} style={{ marginTop: "-1rem" }}><h3>Secretary</h3></Grid>
-                    </div>
-                  </div>
-                </Grid>)
-            })}
-          </Grid>
+          <div className="center-table">
+            <h2>Committee Members</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th style={{ width: '60%' }}>Name</th>
+                  <th style={{ width: '40%' }}>Position</th>
+                </tr>
+              </thead>
+              <tbody>
+                {mainMember.map((item) => {
+                  return (
+                    <tr>
+                      <td>{item.name}</td>
+                      <td>{item.position}</td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+        </Grid>
+        <Grid item xs={12}>
+          <div className="center-table">
+            <table>
+              <thead>
+                <tr>
+                  <th style={{ width: '60%' }}>Name</th>
+                  <th style={{ width: '40%' }}>Position</th>
+                </tr>
+              </thead>
+              <tbody>
+                {members.map((item) => {
+                  return (
+                    <tr>
+                      <td>{item.name}</td>
+                      <td>{item.position}</td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
         </Grid>
       </Grid>
     </div>

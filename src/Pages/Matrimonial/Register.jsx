@@ -1,5 +1,5 @@
 import {
-    Grid, Modal,
+    Grid,
     TextField, Button,
 } from '@mui/material'
 import React, { useState, useEffect } from 'react'
@@ -13,6 +13,8 @@ import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import secureLocalStorage from 'react-secure-storage';
 import Loader from '../../Components/Loader';
+import 'react-responsive-modal/styles.css';
+import { Modal } from 'react-responsive-modal';
 
 const SUPPORTED_FORMATS = [
     "image/jpg",
@@ -353,9 +355,13 @@ const Login = () => {
                                         type="file"
                                         id="profile"
                                         name="profile"
+                                        label="Profile Picture"
                                         accept="image/*"
                                         onChange={(event) => formik.setFieldValue('profile', event.currentTarget.files[0])}
                                         onBlur={formik.handleBlur}
+                                        InputLabelProps={{
+                                            shrink: true,
+                                        }}
                                         sx={{ width: "100%", fontSize: "1.5rem" }}
                                     />
                                     {formik.touched.profile && formik.errors.profile ? (
@@ -395,11 +401,14 @@ const Login = () => {
                                         id="date"
                                         name="date"
                                         type="date"
-                                        placeholder='Date of Birth'
+                                        label="Date of Event"
                                         sx={{ width: "100%", fontSize: "1.5rem", color: "red" }}
                                         color='success'
                                         value={formik.values.date}
                                         onChange={formik.handleChange}
+                                        InputLabelProps={{
+                                            shrink: true,
+                                        }}
                                     />
                                     {formik.touched.date && formik.errors.date ? (
                                         <div style={{ color: "#d65a5a", fontSize: "13px", textAlign: "left", marginLeft: "15px", marginTop: "2px" }}>
@@ -412,9 +421,13 @@ const Login = () => {
                                         type="file"
                                         id="biodata"
                                         name="biodata"
+                                        label="Biodata"
                                         accept=".pdf"
                                         onChange={(event) => formik.setFieldValue('biodata', event.currentTarget.files[0])}
                                         onBlur={formik.handleBlur}
+                                        InputLabelProps={{
+                                            shrink: true,
+                                        }}
                                         sx={{ width: "100%", fontSize: "1.5rem" }}
                                     />
                                     {formik.touched.biodata && formik.errors.biodata ? (
@@ -615,15 +628,13 @@ const Login = () => {
                             <Modal
                                 open={isOpen}
                                 onClose={handleClose}
-                                aria-labelledby="modal-title"
-                                style={{ backgroundColor: "white", paddingBottom: "2rem" }}
+                                center
                             >
                                 <div>
-                                    <div style={{ fontSize: "2rem", fontWeight: "700", backgroundColor: "white" }}>Edit Details</div>
+                                    <div style={{ fontSize: "2rem", fontWeight: "700", backgroundColor: "white" }}>Edit Your Details</div>
                                     <Grid container spacing={2} marginTop={2}
                                         style={{
-                                            backgroundColor: "white", paddingLeft: "5%", paddingRight: "3.5%",
-                                            paddingBottom: "1.5rem"
+                                            backgroundColor: "white"
                                         }}>
                                         <Grid item xs={12} md={6} sm={12}>
                                             <TextField

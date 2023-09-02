@@ -61,8 +61,8 @@ const Donate = () => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <Grid container p={4} style={{ backgroundColor: "white", marginBottom: "1rem" }}>
+          <Grid item xs={12} >
+            <Grid container p={4} style={{ marginBottom: "1rem", backgroundColor: "white" }}>
               <Grid item xs={12} md={4} sm={6}>
                 <Grid container spacing={2}>
                   <Grid item xs={12}>

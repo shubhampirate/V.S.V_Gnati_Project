@@ -320,3 +320,55 @@
   50%  { background-position: 80% 60%, center center; }
   100% { background-position: 0% 30%, center center; }
 }
+
+.members_section{
+  position: relative;
+  background: linear-gradient(45deg, rgba(144,207,211,0.4),rgba(91, 155, 159, 0.4),rgba(183, 226, 229, 0.4)) 0 0 / 1000% no-repeat, url('../images/membersWallpaper.jpg') center/cover no-repeat;;
+  -webkit-animation: gradientAnimationMem 40s ease infinite;
+  animation: gradientAnimationMem 40s ease infinite;
+  /* background-size: cover;
+  background-position-y: -50%; */
+  color: white;
+  padding: 15px;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  /* background-position-y: 50%; */
+  /* padding-right: 1rem; */
+  /* background-color: rgba(0, 128, 0, 0.5); */
+}
+
+@-webkit-keyframes gradientAnimationMem {
+  0%   { background-position: 0% 90%, center center; } /* Adjust the 40% to 60% */
+  50%  { background-position: 100% 100%, center center; } /* Adjust the 80% to 100% */
+  100% { background-position: 0% 90%, center center; } /* Adjust the 40% to 60% */
+}
+
+@keyframes gradientAnimationMem {
+  0%   { background-position: 0% 90%, center center; } /* Adjust the 40% to 60% */
+  50%  { background-position: 100% 100%, center center; } /* Adjust the 80% to 100% */
+  100% { background-position: 0% 90%, center center; } /* Adjust the 40% to 60% */
+}
+
+.center-table {
+  text-align: center; /* Center the table horizontally */
+  margin: 0 auto; /* Center the table horizontally */
+  max-width: 800px;
+  font-size: 1.15rem; /* Optional: Limit the maximum width of the table */
+}
+
+table {
+  width: 100%; /* Make the table fill the container */
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid #000; /* Optional: Add borders to table, header, and data cells */
+  padding: 8px;
+  text-align: center; /* Center text within cells */
+}
+
+th {
+  background-color: #D6D2EC; /* Optional: Header background color */
+}
+
+

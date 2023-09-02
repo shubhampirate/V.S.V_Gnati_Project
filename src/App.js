@@ -7,14 +7,14 @@ import Events from './Pages/Events';
 import Matrimonial from './Pages/Matrimonial/Matrimonial';
 import Jobs from './Pages/Job/Jobs';
 import ContactUs from './Pages/ContactUs';
-import Profile from './Pages/Profile/Profile';
 import { Routes, Route } from "react-router-dom"
 import Register from './Pages/Matrimonial/Register';
 import Jobadmin from './Pages/Job/Jobadmin';
-import Family from './Pages/Profile/Family';
 import Login from './Pages/Login';
 import Donate from './Pages/Donation/Donate';
 import Footer from './Components/Footer';
+import Members from './Pages/Profile/Members';
+import Profile from './Pages/Profile/Profile';
 
 function App() {
   return (
@@ -29,8 +29,8 @@ function App() {
       <Route path="/jobs" element={<><Navbar/><Jobs/><Footer/></>}/>
       <Route path="/register-job" element={<><Navbar/><Jobadmin/><Footer/></>} />
       <Route path="/contact" element={<><Navbar/><ContactUs/><Footer/></>}/>
-      <Route path="/members" element={<><Navbar/><Profile/><Footer/></>}/>
-      <Route path="/profile" element={<><Navbar/><Family/><Footer/></>} />
+      <Route path="/members" element={<><Navbar/><Members/><Footer/></>}/>
+      <Route path="/profile" element={<><Navbar/><Profile/><Footer/></>} />
       <Route path="/donate" element={<><Navbar/><Donate/><Footer/></>}/>
       </Routes>
 

@@ -46,19 +46,31 @@ const Login = () => {
             })
                 .then(response => response.json())
                 .then(data => {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Successfully Logged In',
-                        showConfirmButton: false,
-                        timer: 4000
-                    })
-                    console.log(data);
+                    if (data.status == true) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Successfully Logged In',
+                            showConfirmButton: false,
+                            timer: 3000
+                        })
+                        navigate(-1);
+                    }
+                    else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: data.message,
+                            showConfirmButton: false,
+                            timer: 3000
+                        })
+
+                    }
+                    // console.log(data);
                     secureLocalStorage.setItem("tokenvsv", data.data.token);
                     secureLocalStorage.setItem("familyidvsv", data.data.family);
                     secureLocalStorage.setItem("companyvsv", data.data.company);
                     secureLocalStorage.setItem("matrimonyvsv", data.data.matrimony);
                     secureLocalStorage.setItem("isadminvsv", data.data.isadmin);
-                    navigate(-1);
+
                 })
                 .catch((error) => {
                     console.log(error)
