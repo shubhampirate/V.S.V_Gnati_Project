@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import {
-    Grid, InputAdornment,
-    TextField, Button, Modal
+    Grid, InputAdornment, TextField, Button
 } from '@mui/material'
 import React, { useState, useEffect } from 'react'
 import { useFormik } from "formik";
@@ -15,6 +14,8 @@ import DomainAddIcon from '@mui/icons-material/DomainAdd';
 import Select from 'react-select';
 import secureLocalStorage from 'react-secure-storage';
 import Loader from '../../Components/Loader';
+import 'react-responsive-modal/styles.css';
+import { Modal } from 'react-responsive-modal';
 
 const validationSchemaJob = yup.object({
     details: yup
@@ -178,9 +179,10 @@ const Jobadmin = () => {
                 // console.log(data);
                 loadListjob();
                 loadListjob();
+                setIsOpen(false);
             })
             .catch((error) => {
-                console.error(error);
+                // console.error(error);
             });
     }
 
@@ -219,7 +221,7 @@ const Jobadmin = () => {
                 }
             })
             .catch((error) => {
-                console.error(error);
+                // console.error(error);
             });
         loadListjob();
         loadListjob();
@@ -435,15 +437,13 @@ const Jobadmin = () => {
                             <Modal
                                 open={isOpen}
                                 onClose={handleClose}
-                                aria-labelledby="modal-title"
-                                style={{ backgroundColor: "white", paddingBottom: "2rem" }}
+                                center
                             >
                                 <div>
-                                    <div style={{ fontSize: "2rem", fontWeight: "700", backgroundColor: "white" }}>Edit Details</div>
+                                    <div style={{ fontSize: "2rem", fontWeight: "700", backgroundColor: "white" }}>Edit Job Details</div>
                                     <Grid container spacing={2} marginTop={2}
                                         style={{
-                                            backgroundColor: "white", paddingLeft: "5%", paddingRight: "3.5%",
-                                            paddingBottom: "1.5rem"
+                                            backgroundColor: "white"
                                         }}>
                                         <Grid item xs={12} md={6} sm={12}>
                                             <TextField
@@ -490,9 +490,9 @@ const Jobadmin = () => {
                                                 <Button variant="contained" type="submit"
                                                     sx={{
                                                         width: "100%", height: "3.45rem", fontSize: "1.1rem",
-                                                        backgroundColor: "#C4CFFE", boxShadow: "none", color: "black"
+                                                        backgroundColor: "#018d8d", boxShadow: "none", color: "#fff"
                                                         , "&:hover": {
-                                                            backgroundColor: "#C4CFFE", boxShadow: "none", color: "black",
+                                                            backgroundColor: "#018d8d", boxShadow: "none", color: "#fff",
                                                             fontSize: "1.3rem",
                                                         }
                                                     }} onClick={() => handleEditsubmit()}>
