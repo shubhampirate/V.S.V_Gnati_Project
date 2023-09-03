@@ -170,6 +170,7 @@ const Members = () => {
     { value: 'Professor/Teacher', label: 'Professor/Teacher' },
     { value: 'Journalist', label: 'Journalist' },
     { value: 'Banker', label: 'Banker' },
+    { value: 'Home Baker', label: 'Home Baker' },
     { value: 'Other', label: 'Other' },
   ];
 
