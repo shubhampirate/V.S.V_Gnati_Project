@@ -113,6 +113,7 @@ const Profile = () => {
         { value: 'Business', label: 'Business' },
         { value: 'Job', label: 'Job' },
         { value: 'Student', label: 'Student' },
+        { value: 'Home Baker', label: 'Home Baker' },
         { value: 'N/A', label: 'N/A' }
     ];
 
@@ -127,7 +128,6 @@ const Profile = () => {
         { value: 'Professor/Teacher', label: 'Professor/Teacher' },
         { value: 'Journalist', label: 'Journalist' },
         { value: 'Banker', label: 'Banker' },
-        { value: 'Home Baker', label: 'Home Baker' },
         { value: 'Other', label: 'Other' },
     ]
 

@@ -170,7 +170,6 @@ const Members = () => {
     { value: 'Professor/Teacher', label: 'Professor/Teacher' },
     { value: 'Journalist', label: 'Journalist' },
     { value: 'Banker', label: 'Banker' },
-    { value: 'Home Baker', label: 'Home Baker' },
     { value: 'Other', label: 'Other' },
   ];
 
@@ -178,6 +177,7 @@ const Members = () => {
     { value: '', label: 'All' },
     { value: 'Single', label: 'Single' },
     { value: 'Married', label: 'Married' },
+    { value: 'Widow', label: 'Widow' },
   ];
 
   // Options for the profession dropdown

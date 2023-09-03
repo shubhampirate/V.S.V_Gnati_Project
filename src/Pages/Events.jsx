@@ -531,113 +531,6 @@ const Events = () => {
                                               <DeleteIcon style={{ fontSize: "4vh", color: "#018d8d", cursor: "pointer" }}
                                                 onClick={() => handleDeleteEvent(item.id)} />
                                             </Grid>
-                                            <Modal open={showEditEvent} onClose={closeEditEventComponent} center >
-                                              <h2>Edit Event Details</h2>
-                                              <Grid container spacing={2} p={2}>
-                                                <Grid item xs={12} style={{ marginLeft: "-1rem" }}>
-                                                  <TextField
-                                                    id="name"
-                                                    name="name"
-                                                    label="Event Name"
-                                                    color="success"
-                                                    value={editName}
-                                                    onChange={(e) => setEditName(e.target.value)}
-                                                    sx={{ width: '100%', fontSize: "1.5rem" }}
-                                                  />
-                                                </Grid>
-                                                <Grid item xs={12} style={{ marginLeft: "-1rem" }}>
-                                                  <TextField
-                                                    id="about"
-                                                    name="about"
-                                                    label="About Event"
-                                                    color="success"
-                                                    value={editAbout}
-                                                    onChange={(e) => setEditabout(e.target.value)}
-                                                    sx={{ width: '100%', fontSize: "1.5rem" }}
-                                                  />
-                                                </Grid>
-                                                <Grid item xs={12} style={{ marginLeft: "-1rem" }}>
-                                                  <TextField
-                                                    id="venue"
-                                                    name="venue"
-                                                    label="Event Venue"
-                                                    color="success"
-                                                    value={editVenue}
-                                                    onChange={(e) => setEditVenue(e.target.value)}
-                                                    sx={{ width: '100%', fontSize: "1.5rem" }}
-                                                  />
-                                                </Grid>
-                                                <Grid item xs={12} style={{ marginLeft: "-1rem" }}>
-                                                  <TextField
-                                                    id="date"
-                                                    name="date"
-                                                    type="date"
-                                                    label="Date of Event"
-                                                    sx={{ width: "100%", fontSize: "1.5rem", color: "red" }}
-                                                    color='success'
-                                                    value={editDate}
-                                                    onChange={(e) => setEditDate(e.target.value)}
-                                                    InputLabelProps={{
-                                                      shrink: true,
-                                                    }}
-                                                  />
-                                                </Grid>
-                                                <Grid item xs={12} style={{ marginLeft: "-1rem" }}>
-                                                  <TextField
-                                                    id="start_time"
-                                                    name="start_time"
-                                                    type="datetime-local"
-                                                    label="Start Time"
-                                                    sx={{ width: "100%", fontSize: "1.5rem", color: "red" }}
-                                                    color='success'
-                                                    value={editStartTime}
-                                                    onChange={(e) => setEditStartTime(e.target.value)}
-                                                    InputLabelProps={{
-                                                      shrink: true,
-                                                    }}
-                                                  />
-                                                </Grid>
-                                                <Grid item xs={12} style={{ marginLeft: "-1rem" }}>
-                                                  <TextField
-                                                    id="end_time"
-                                                    name="end_time"
-                                                    type="datetime-local"
-                                                    label="End Time"
-                                                    sx={{ width: "100%", fontSize: "1.5rem", color: "red" }}
-                                                    color='success'
-                                                    value={editEndTime}
-                                                    onChange={(e) => setEditEndTime(e.target.value)}
-                                                    InputLabelProps={{
-                                                      shrink: true,
-                                                    }}
-                                                  />
-                                                </Grid>
-                                                <Grid item xs={12} style={{ marginLeft: "-1rem" }}>
-                                                  <TextField
-                                                    id="photos_drive"
-                                                    name="photos_drive"
-                                                    label="Event Photos Drive Link"
-                                                    color="success"
-                                                    value={editPhotos}
-                                                    onChange={(e) => setEditPhotos(e.target.value)}
-                                                    sx={{ width: '100%', fontSize: "1.5rem" }}
-                                                  />
-                                                </Grid>
-                                                <Grid item xs={12} style={{ marginLeft: "-1rem" }}>
-                                                  <Button variant="contained" type="submit"
-                                                    sx={{
-                                                      width: "100%", height: "3.45rem", fontSize: "1.1rem",
-                                                      backgroundColor: "#C4CFFE", boxShadow: "none", color: "black"
-                                                      , "&:hover": {
-                                                        backgroundColor: "#C4CFFE", boxShadow: "none", color: "black",
-                                                        fontSize: "1.3rem", cursor: "pointer"
-                                                      }
-                                                    }} onClick={handleEventSubmit} onClose={closeEditEventComponent}>
-                                                    Submit
-                                                  </Button>
-                                                </Grid>
-                                              </Grid>
-                                            </Modal>
                                           </> : <>
                                             <Grid item xs={12}>
                                               <div style={{ fontSize: "2rem", fontWeight: "700" }}>{item.name}</div>
@@ -686,7 +579,6 @@ const Events = () => {
                                   </Grid>
                                 </> :
                                 <>
-                                  <div style={{ fontSize: "1.5rem" }}>image not there okay hello</div>
                                 </>}
                             </>)
                         })}</> : <><Loader /></>}
@@ -706,6 +598,113 @@ const Events = () => {
           </Grid>
           </>}
       </Grid>
+      <Modal open={showEditEvent} onClose={closeEditEventComponent} center >
+        <h2>Edit Event Details</h2>
+        <Grid container spacing={2} p={2}>
+          <Grid item xs={12} style={{ marginLeft: "-1rem" }}>
+            <TextField
+              id="name"
+              name="name"
+              label="Event Name"
+              color="success"
+              value={editName}
+              onChange={(e) => setEditName(e.target.value)}
+              sx={{ width: '100%', fontSize: "1.5rem" }}
+            />
+          </Grid>
+          <Grid item xs={12} style={{ marginLeft: "-1rem" }}>
+            <TextField
+              id="about"
+              name="about"
+              label="About Event"
+              color="success"
+              value={editAbout}
+              onChange={(e) => setEditabout(e.target.value)}
+              sx={{ width: '100%', fontSize: "1.5rem" }}
+            />
+          </Grid>
+          <Grid item xs={12} style={{ marginLeft: "-1rem" }}>
+            <TextField
+              id="venue"
+              name="venue"
+              label="Event Venue"
+              color="success"
+              value={editVenue}
+              onChange={(e) => setEditVenue(e.target.value)}
+              sx={{ width: '100%', fontSize: "1.5rem" }}
+            />
+          </Grid>
+          <Grid item xs={12} style={{ marginLeft: "-1rem" }}>
+            <TextField
+              id="date"
+              name="date"
+              type="date"
+              label="Date of Event"
+              sx={{ width: "100%", fontSize: "1.5rem", color: "red" }}
+              color='success'
+              value={editDate}
+              onChange={(e) => setEditDate(e.target.value)}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </Grid>
+          <Grid item xs={12} style={{ marginLeft: "-1rem" }}>
+            <TextField
+              id="start_time"
+              name="start_time"
+              type="datetime-local"
+              label="Start Time"
+              sx={{ width: "100%", fontSize: "1.5rem", color: "red" }}
+              color='success'
+              value={editStartTime}
+              onChange={(e) => setEditStartTime(e.target.value)}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </Grid>
+          <Grid item xs={12} style={{ marginLeft: "-1rem" }}>
+            <TextField
+              id="end_time"
+              name="end_time"
+              type="datetime-local"
+              label="End Time"
+              sx={{ width: "100%", fontSize: "1.5rem", color: "red" }}
+              color='success'
+              value={editEndTime}
+              onChange={(e) => setEditEndTime(e.target.value)}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </Grid>
+          <Grid item xs={12} style={{ marginLeft: "-1rem" }}>
+            <TextField
+              id="photos_drive"
+              name="photos_drive"
+              label="Event Photos Drive Link"
+              color="success"
+              value={editPhotos}
+              onChange={(e) => setEditPhotos(e.target.value)}
+              sx={{ width: '100%', fontSize: "1.5rem" }}
+            />
+          </Grid>
+          <Grid item xs={12} style={{ marginLeft: "-1rem" }}>
+            <Button variant="contained" type="submit"
+              sx={{
+                width: "100%", height: "3.45rem", fontSize: "1.1rem",
+                backgroundColor: "#C4CFFE", boxShadow: "none", color: "black"
+                , "&:hover": {
+                  backgroundColor: "#C4CFFE", boxShadow: "none", color: "black",
+                  fontSize: "1.3rem", cursor: "pointer"
+                }
+              }} onClick={handleEventSubmit} onClose={closeEditEventComponent}>
+              Submit
+            </Button>
+          </Grid>
+        </Grid>
+      </Modal>
     </Box >
   )
 }
