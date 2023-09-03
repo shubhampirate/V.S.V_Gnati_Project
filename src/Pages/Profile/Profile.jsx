@@ -385,6 +385,9 @@ const Profile = () => {
         setLoadOccupation(result.data.data.occupations);
         setLoadmember(result.data.data.members);
         setLoadAdditionalAddress(result.data.data.additional_address);
+        setHomeedit(result.data.data.home_address);
+        setGotrejedit(result.data.data.gotrej);
+        setNativeedit(result.data.data.native_village);
     };
     //console.log(loadmember);
 
@@ -1465,18 +1468,18 @@ const Profile = () => {
                         </> : <>&nbsp;</>}
                 </Grid>
                 <Grid item xs={12}>
-                    <Grid container spacing={12}
+                    <Grid container p={2} spacing={10}
                         style={{ paddingLeft: "1.5%", paddingRight: "1.5%", marginTop: "-3rem" }}>
                         {loadmember.map((item1) => {
                             return (
                                 <Grid item xs={12} md={4} sm={6}>
-                                    <Grid container spacing={2} sx={{ borderRadius: "2vh", padding: "1rem" }}>
+                                    <Grid container spacing={2} sx={{ borderRadius: "2vh" }} p={1}>
                                         <Grid item xs={12}
                                             style={{
                                                 padding: "1rem", marginLeft: "16px", marginTop: "-0.75rem",
                                                 borderRadius: "1.4.75vh", backgroundColor: "#90CFD3"
                                             }}>
-                                            <Grid container spacing={1} sx={{ textAlign: "left", marginTop: "0.4.75vh" }}>
+                                            <Grid container spacing={1} sx={{ textAlign: "left", marginTop: "0.4.75vh" }} p={1} pr={2}>
                                                 <Grid item xs={8}>
                                                     <div style={{ fontSize: "2rem", fontWeight: "700" }}>{item1.name}</div>
                                                 </Grid>

@@ -26,6 +26,8 @@ const Events = () => {
   const domain = secureLocalStorage.getItem("domainvsv");
   const token = secureLocalStorage.getItem("tokenvsv");
   const isAdmin = secureLocalStorage.getItem("isadminvsv");
+
+  console.log(domain, token, isAdmin);
   // const isAdmin = useState(true);
 
   const [len, setLen] = useState('');
@@ -148,7 +150,7 @@ const Events = () => {
 
 
   const handleEventDetails = async (editId) => {
-    const result = await axios.get(`${domain}/event/${editId}`, {
+    const result = await axios.get(`${domain}/event/${eventId}`, {
       headers: { "Authorization": `Token ${token}`, },
     });
     console.log(result.data.data);
@@ -163,6 +165,7 @@ const Events = () => {
   }
 
   const handleEventSubmit = async () => {
+    handleEventDetails(eventId);
     const searchData = {
       name: editName,
       about: editAbout,
@@ -294,7 +297,7 @@ const Events = () => {
             <Grid item xs={12} sx={{ marginTop: "11%" }}>
               <div style={{ fontSize: "2.5rem", fontWeight: "700" }}>Events Extravaganza</div>
             </Grid>
-            {isAdmin ? <>
+            {isAdmin == "true" ? <>
               <Grid item xs={12}>
                 <div style={{ fontSize: "1.35rem", marginBottom: "1.5rem", marginLeft: "2%" }}>Unite with family and friends as we host a series of joyous gatherings and celebrations
                   in honor of V.S.V Gnati Samasta. Experience the magic of togetherness through our heartwarming events that bring laughter,
@@ -326,7 +329,7 @@ const Events = () => {
                       <TextField
                         id="name"
                         name="name"
-                        label="Full Name"
+                        label="Event Name"
                         color="success"
                         value={formik.values.name}
                         onChange={formik.handleChange}
@@ -516,7 +519,7 @@ const Events = () => {
                                           borderRadius: "0vh 0vh 1.5vh 1.5vh", backgroundColor: "#90CFD3"
                                         }}>
                                         <Grid container spacing={1} sx={{ textAlign: "left", marginTop: "0.5vh" }}>
-                                          {isAdmin ? <>
+                                          {isAdmin == "true" ? <>
                                             <Grid item xs={8}>
                                               <div style={{ fontSize: "2rem", fontWeight: "700" }}>{item.name}</div>
                                             </Grid>
@@ -535,7 +538,7 @@ const Events = () => {
                                                   <TextField
                                                     id="name"
                                                     name="name"
-                                                    label="Full Name"
+                                                    label="Event Name"
                                                     color="success"
                                                     value={editName}
                                                     onChange={(e) => setEditName(e.target.value)}

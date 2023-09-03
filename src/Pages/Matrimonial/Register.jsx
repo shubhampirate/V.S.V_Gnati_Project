@@ -92,6 +92,8 @@ const Login = () => {
     const token = secureLocalStorage.getItem("tokenvsv");
     const matrimonyId = secureLocalStorage.getItem("matrimonyvsv");
 
+    console.log(matrimonyId)
+
     const navigate = useNavigate();
     const formik = useFormik({
         initialValues: {
@@ -477,7 +479,7 @@ const Login = () => {
                 </Grid>
                 <Grid item xs={12} md={2} sm={12}></Grid>
             </Grid>
-            {matrimonyId.length > 0 ? <>
+            {matrimonyId !== "None" ? <>
                 <div style={{ fontSize: "2rem", fontWeight: "700", marginBottom: "2rem" }}>Registered Users</div>
                 <Grid item xs={12}>
                     <Grid container spacing={2} >
@@ -718,7 +720,7 @@ const Login = () => {
                     </Grid>
                 </Grid>
             </> : <>
-                <div style={{ fontSize: "2.5rem", fontWeight: "700", marginBottom: "2rem" }}>No users are Registered yet</div>
+                <div style={{ fontSize: "2.5rem", fontWeight: "700", marginBottom: "4rem" }}>No users are Registered yet</div>
             </>}
         </div>
     )

@@ -4,11 +4,12 @@ import logo from "../images/logo.jpeg"
 import { NavLink } from "react-router-dom";
 import secureLocalStorage from "react-secure-storage";
 import { token } from "../Pages/Login";
+import CloseIcon from '@mui/icons-material/Close';
 
 const Nav = styled.nav`
   padding: 0 20px;
   min-height: 9vh;
-  background: rgba(255,255,255, 0.5);
+  background: rgba(255,255,255,0.5);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -60,7 +61,7 @@ const Menu = styled.ul`
     margin: 0px 10px;
   }
 
-  @media (max-width: 863.5px) {
+  @media (max-width: 937px) {
     display: none;
   }
 `;
@@ -81,7 +82,7 @@ const NavIcon = styled.button`
   cursor: pointer;
   border: none;
   outline: none;
-  @media (min-width: 863.5px) {
+  @media (min-width: 937px) {
     display: none;
   }
 `;
@@ -106,7 +107,7 @@ const Overlay = styled.div`
   width: 100vw;
   background: rgba(255,255,255,0.95);
   transition: height 0.4s ease-in-out;
-  @media (min-width: 863.5px) {
+  @media (min-width: 937px) {
     display: none;
   }
 `;
@@ -142,6 +143,7 @@ const Navbar = () => {
   const token = secureLocalStorage.getItem("tokenvsv");
 
   const [toggle, toggleNav] = useState(false);
+
   return (
     <>
       <Nav>
@@ -221,80 +223,84 @@ const Navbar = () => {
           </Item>
         </Menu>
         <NavIcon onClick={() => toggleNav(!toggle)}>
-          <Line open={toggle} />
-          <Line open={toggle} />
-          <Line open={toggle} />
+          {toggle ? <>
+            <CloseIcon sx={{ fontSize: 40 }} />
+          </> : <>
+            <Line open={toggle} />
+            <Line open={!toggle} />
+            <Line open={toggle} /></>}
+
         </NavIcon>
       </Nav>
       <Overlay open={toggle} style={{ zIndex: "1000", overflow: "hidden", marginTop: "-1.2rem" }}>
         <OverlayMenu open={toggle}>
           <Item>
-            <NavLinkStyled to="/">
+            <NavLinkStyled to="/" onClick={() => toggleNav(!toggle)}>
               Home
             </NavLinkStyled>
           </Item>
           <Item>
-            <NavLinkStyled to="/about">
+            <NavLinkStyled to="/about" onClick={() => toggleNav(!toggle)}>
               About Us
             </NavLinkStyled>
           </Item>
           <Item>
-            <NavLinkStyled to="/events" >
+            <NavLinkStyled to="/events" onClick={() => toggleNav(!toggle)}>
               Events
             </NavLinkStyled>
           </Item>
           <Item>
             {token ? <>
-              <NavLinkStyled to="/members">
+              <NavLinkStyled to="/members" onClick={() => toggleNav(!toggle)}>
                 Members
               </NavLinkStyled></> : <>
-              <NavLinkStyled to="/login">
+              <NavLinkStyled to="/login" onClick={() => toggleNav(!toggle)}>
                 Members
               </NavLinkStyled></>}
           </Item>
           <Item>
             {token ? <>
-              <NavLinkStyled to="/profile">
+              <NavLinkStyled to="/profile" onClick={() => toggleNav(!toggle)}>
                 Profile
               </NavLinkStyled></> : <>
-              <NavLinkStyled to="/login">
+              <NavLinkStyled to="/login" onClick={() => toggleNav(!toggle)}>
                 Profile
               </NavLinkStyled></>}
           </Item>
           <Item>
             {token ? <>
-              <NavLinkStyled to="/jobs">
+              <NavLinkStyled to="/jobs" onClick={() => toggleNav(!toggle)}>
                 Jobs
               </NavLinkStyled></> : <>
-              <NavLinkStyled to="/login">
+              <NavLinkStyled to="/login" onClick={() => toggleNav(!toggle)}>
                 Jobs
               </NavLinkStyled></>}
           </Item>
           <Item>
             {token ? <>
-              <NavLinkStyled to="/matrimonial">
+              <NavLinkStyled to="/matrimonial" onClick={() => toggleNav(!toggle)}>
                 Matrimony
               </NavLinkStyled></> : <>
-              <NavLinkStyled to="/login">
+              <NavLinkStyled to="/login" onClick={() => toggleNav(!toggle)}>
                 Matrimony
               </NavLinkStyled></>}
           </Item>
           <Item>
-            <NavLinkStyled to="/donate">
+            <NavLinkStyled to="/donate" onClick={() => toggleNav(!toggle)}>
               Donate
             </NavLinkStyled>
           </Item>
           <Item>
-            <NavLinkStyled to="/contact">
+            <NavLinkStyled to="/contact" onClick={() => toggleNav(!toggle)}>
               Contact Us
             </NavLinkStyled>
           </Item>
           <Item>
             {token ? <>
-              <NavLinkStyled to="/login" onClick={handleClickRemove}>
+              <NavLinkStyled to="/login" onClick={() => { handleClickRemove(); toggleNav(!toggle); }}>
                 Logout
               </NavLinkStyled></> : <>
-              <NavLinkStyled to="/login">
+              <NavLinkStyled to="/login" onClick={() => toggleNav(!toggle)}>
                 Login
               </NavLinkStyled></>}
           </Item>

@@ -372,3 +372,15 @@ th {
 }
 
 
+.login_section{
+  position: relative;
+  background: linear-gradient(45deg, rgba(255,255,255, 0.6),rgba(255,255,255, 0.6)) 0 0 / 1000% no-repeat, url('../images/loginPage.webp') center/cover no-repeat;;
+  
+  color: white;
+  padding: 15px;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  /* background-position-y: 50%; */
+  /* padding-right: 1rem; */
+  /* background-color: rgba(0, 128, 0, 0.5); */
+}
