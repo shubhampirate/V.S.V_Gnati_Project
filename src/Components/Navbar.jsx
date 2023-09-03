@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import logo from "../images/logo.jpeg"
+import logo from "../images/VSVLogo.png"
 import { NavLink } from "react-router-dom";
 import secureLocalStorage from "react-secure-storage";
 import { token } from "../Pages/Login";
@@ -148,7 +148,7 @@ const Navbar = () => {
     <>
       <Nav>
         <Logo>
-          <img src={logo} style={{ width: "100%", height: "3.5rem", marginLeft: "5%" }} />
+          <img src={logo} style={{ width: "100%", height: "3.5rem", marginLeft: "10%" }} />
         </Logo>
         <Menu style={{ marginTop: "-0.25%" }}>
           <Item>

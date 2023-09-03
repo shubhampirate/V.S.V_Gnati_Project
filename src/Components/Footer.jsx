@@ -7,7 +7,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import logo from "../images/logo.jpeg"
+import logo from "../images/VSVLogo.png"
 const Footer = () => {
     return (
         <>
@@ -52,7 +52,7 @@ const Footer = () => {
                             The committee has been formed by on the building blocks of Transformation, Technology and Transperancy
                         </p>
                         <div className="footer-icons">
-                            <img src={logo} style={{ width: "8rem" }} />
+                            <img src={logo} style={{ width: "6rem" }} />
                         </div>
                     </div>
                 </footer>
