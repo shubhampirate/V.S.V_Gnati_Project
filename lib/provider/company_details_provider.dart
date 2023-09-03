@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:community/provider/job_service.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:get_storage/get_storage.dart';
@@ -60,7 +61,9 @@ class CompanyDetailsProvider extends ChangeNotifier {
       _companyName = responseData["data"]["name"];
       _companyEmail = responseData["data"]["email"];
       _companyAddress = responseData["data"]["address"];
-      _companyPhoto = responseData["data"]["picture"];
+      if (responseData["data"]["picture"] != null) {
+        _companyPhoto = responseData["data"]["picture"];
+      }
     } else {
       print(response.statusCode);
     }
@@ -68,10 +71,14 @@ class CompanyDetailsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<int> addOrEditJob(String jobTitle, String jobType, String jobDetails,
-      int phoneNumber, int? jobId) async {
+  Future<dynamic> addOrEditJob(BuildContext context, String jobTitle,
+      String jobType, String jobDetails, int phoneNumber, int? jobId) async {
     try {
       final Response response;
+      print(jobTitle);
+      print(jobType);
+      print(jobDetails);
+      print("h");
 
       if (jobId != null) {
         response = await http.put(
@@ -82,7 +89,7 @@ class CompanyDetailsProvider extends ChangeNotifier {
           },
           body: json.encode({
             'title': jobTitle,
-            'type': jobDetails,
+            'type': jobType,
             'details': jobDetails,
             'phone': phoneNumber,
           }),
@@ -96,7 +103,7 @@ class CompanyDetailsProvider extends ChangeNotifier {
           },
           body: json.encode({
             'title': jobTitle,
-            'type': jobDetails,
+            'type': jobType,
             'details': jobDetails,
             'phone': phoneNumber,
           }),
@@ -107,12 +114,25 @@ class CompanyDetailsProvider extends ChangeNotifier {
       final responseData = json.decode(response.body);
       if (response.statusCode == 200 && jobId == null) {
         _companyJobs.add(responseData["data"]);
+
+        //
+        // JobDetailProvider job =
+        //     Provider.of<JobDetailProvider>(context, listen: false);
+
+        // JobDetailProvider job =
+        //     Provider.of<JobDetailProvider>(context, listen: false);
+        // print(job.jobDetails!.length);
+        // job.jobDetails!.add(responseData["data"]);
+        // print(job.jobDetails!.length.toString() + " new");
         notifyListeners();
       }
       if (responseData['error'] != null) {
         throw HttpException(responseData['error']['message']);
       }
-      return response.statusCode;
+
+      return responseData['data'];
+      // return response.statusCode;
+
       // final token = responseData['data']['token'];
       // final familyId = responseData['data']['family'];
 
@@ -170,6 +190,68 @@ class CompanyDetailsProvider extends ChangeNotifier {
         _companyEmail = responseData["data"]["email"];
         _companyAddress = responseData["data"]["address"];
         _companyPhoto = responseData["data"]["picture"];
+
+        notifyListeners();
+        return true;
+      } else {
+        print("failed");
+        return false;
+      }
+    } catch (e) {
+      print("error is " + e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> createMyCompany(
+      {required File? profilePic,
+      required String companyName,
+      required String companyEmail,
+      required String companyAddress}) async {
+    try {
+      String url = "http://jenilsavla.pythonanywhere.com/api/companies/";
+
+      Uri uri = Uri.parse(url);
+
+      var request = http.MultipartRequest('POST', uri);
+
+      request.fields['name'] = companyName;
+      request.fields['email'] = companyEmail;
+      request.fields['address'] = companyAddress;
+
+      request.headers['Authorization'] = "Token ${GetStorage().read('token')}";
+
+      if (profilePic != null) {
+        request.files.add(http.MultipartFile.fromBytes(
+          'picture',
+          profilePic.readAsBytesSync(),
+          filename: profilePic.path.split('/').last,
+        ));
+      }
+
+      var response = await request.send();
+
+      var response1 = await http.Response.fromStream(response);
+
+      print(response1.body);
+      print(response1.statusCode);
+
+      if (response1.statusCode == 200 || response1.statusCode == 201) {
+        print("success");
+        print(response1.body);
+
+        var responseData = json.decode(response1.body);
+        print(responseData);
+
+        GetStorage().write('companyId', responseData["data"]["id"]);
+
+        _companyName = responseData["data"]["name"];
+        _companyEmail = responseData["data"]["email"];
+        _companyAddress = responseData["data"]["address"];
+
+        if (responseData["data"]["picture"] != null) {
+          _companyPhoto = responseData["data"]["picture"];
+        }
 
         notifyListeners();
         return true;

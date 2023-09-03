@@ -2,9 +2,11 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:community/constants/colors.dart';
 import 'package:community/constants/paths.dart';
 import 'package:community/provider/event_service.dart';
+import 'package:community/screens/forms/add_events_form.dart';
 import 'package:community/screens/tabs_screen/event_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -32,20 +34,53 @@ class _EventsScreenState extends State<EventsScreen> {
       // ]),
       body: ListView(
         shrinkWrap: true,
-        physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+        physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics()),
         children: [
-          Container(
-            margin: const EdgeInsets.only(top: 30),
-            child: Text(
-              "Events",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: kbrownColor,
-                fontFamily: "Raleway",
-                fontWeight: FontWeight.w700,
-                fontSize: 24,
+          SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 40,
               ),
-            ),
+              Text(
+                "Events",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: kbrownColor,
+                  fontFamily: "Raleway",
+                  fontWeight: FontWeight.w700,
+                  fontSize: 24,
+                ),
+              ),
+              if (GetStorage().read('isAdmin') ?? false)
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, AddEventForm.id);
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: kyellowColor,
+                    ),
+                    padding: const EdgeInsets.all(6),
+                    child: Icon(
+                      Icons.add,
+                      color: Colors.white,
+                      size: 25,
+                    ),
+                  ),
+                )
+              else
+                SizedBox(
+                  width: 40,
+                ),
+            ],
           ),
           Container(
             margin: const EdgeInsets.only(top: 30, left: 20, bottom: 20),
@@ -62,24 +97,29 @@ class _EventsScreenState extends State<EventsScreen> {
           ),
           FutureBuilder(
             future: eventService.eventData.isEmpty
-                ? Provider.of<EventProvider>(context, listen: false).fetchEventData()
+                ? Provider.of<EventProvider>(context, listen: false)
+                    .fetchEventData()
                 : null,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());
               } else if (snapshot.hasError) {
-                return const Center(child: Text("An error occurred while fetching events data."));
+                return const Center(
+                    child:
+                        Text("An error occurred while fetching events data."));
               } else {
                 // final eventsData = snapshot.data;
                 return Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                   child: ListView.builder(
                       itemCount: eventService.eventData.length,
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
                         return Container(
-                          margin: const EdgeInsets.only(right: 10, left: 10, bottom: 15),
+                          margin: const EdgeInsets.only(
+                              right: 10, left: 10, bottom: 15),
                           child: Column(
                             // mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,27 +128,40 @@ class _EventsScreenState extends State<EventsScreen> {
                                 child: Container(
                                   height: 172,
                                   width: 350,
-                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0)),
+                                  decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.circular(10.0)),
                                   // margin: E,
                                   // color: Color(0xFFC4C4C4),
-                                  child: eventService.eventData[index]["picture"] == null
+                                  child: eventService.eventData[index]
+                                              ["picture"] ==
+                                          null
                                       ? ClipRRect(
-                                          borderRadius: BorderRadius.circular(10.0),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
                                           child: Image.asset(
                                             kaboutUsImage,
                                             fit: BoxFit.fill,
                                           ),
                                         )
                                       : ClipRRect(
-                                          borderRadius: BorderRadius.circular(10.0),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
                                           child: Image.network(
-                                            kbaseUrlImage + eventService.eventData[index]["picture"],
+                                            kbaseUrlImage +
+                                                eventService.eventData[index]
+                                                    ["picture"],
                                             fit: BoxFit.fill,
                                             loadingBuilder:
-                                                (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                                              if (loadingProgress == null) return child;
+                                                (BuildContext context,
+                                                    Widget child,
+                                                    ImageChunkEvent?
+                                                        loadingProgress) {
+                                              if (loadingProgress == null)
+                                                return child;
                                               return Center(
-                                                child: CircularProgressIndicator(),
+                                                child:
+                                                    CircularProgressIndicator(),
                                               );
                                             },
                                           ),
@@ -130,9 +183,11 @@ class _EventsScreenState extends State<EventsScreen> {
                                 ),
                               ),
                               Container(
-                                margin: const EdgeInsets.only(top: 10, bottom: 10),
+                                margin:
+                                    const EdgeInsets.only(top: 10, bottom: 10),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
                                       child: Row(
@@ -161,8 +216,9 @@ class _EventsScreenState extends State<EventsScreen> {
                                     Container(
                                       child: InkWell(
                                         onTap: () async {
-                                          if (!await launchUrl(
-                                              Uri.parse(eventService.eventData[index]["photos_drive"]))) {
+                                          if (!await launchUrl(Uri.parse(
+                                              eventService.eventData[index]
+                                                  ["photos_drive"]))) {
                                             throw Exception(
                                                 'Could not launch "${eventService.eventData[index]["photos_drive"]}"');
                                           }
@@ -197,7 +253,8 @@ class _EventsScreenState extends State<EventsScreen> {
                               Container(
                                 margin: const EdgeInsets.only(bottom: 15),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
                                       child: Row(
@@ -225,24 +282,37 @@ class _EventsScreenState extends State<EventsScreen> {
                                     ),
                                     InkWell(
                                       onTap: () {
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
                                           return EventDetailsScreen(
-                                            eventName: eventService.eventData[index]["name"],
-                                            eventAbout: eventService.eventData[index]["about"],
-                                            eventDate: eventService.eventData[index]["date"],
-                                            eventVenue: eventService.eventData[index]["venue"],
-                                            eventStartTime: eventService.eventData[index]["start_time"],
-                                            eventEndTime: eventService.eventData[index]["end_time"],
-                                            eventPhotos: eventService.eventData[index]["photos_drive"],
-                                            eventPicture: eventService.eventData[index]["picture"],
+                                            eventName: eventService
+                                                .eventData[index]["name"],
+                                            eventAbout: eventService
+                                                .eventData[index]["about"],
+                                            eventDate: eventService
+                                                .eventData[index]["date"],
+                                            eventVenue: eventService
+                                                .eventData[index]["venue"],
+                                            eventStartTime: eventService
+                                                .eventData[index]["start_time"],
+                                            eventEndTime: eventService
+                                                .eventData[index]["end_time"],
+                                            eventPhotos:
+                                                eventService.eventData[index]
+                                                    ["photos_drive"],
+                                            eventPicture: eventService
+                                                .eventData[index]["picture"],
                                           );
                                         }));
                                       },
                                       child: Container(
-                                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10, vertical: 2),
                                         decoration: BoxDecoration(
                                           color: kyellowColor,
-                                          borderRadius: BorderRadius.circular(10.0),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
                                         ),
                                         child: Row(
                                           children: [

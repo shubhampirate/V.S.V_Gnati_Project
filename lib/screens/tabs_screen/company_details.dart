@@ -52,7 +52,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
         ),
       ),
       body: FutureBuilder(
-          future: companyDetailService.companyJobs.isEmpty
+          future: companyDetailService.companyName == ""
               ? Provider.of<CompanyDetailsProvider>(context, listen: false)
                   .fetchCompanyDetails()
               : null,
@@ -98,7 +98,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                       ],
                     ),
                     companyDetailService.companyPhoto != "" ||
-                            companyDetailService.companyPhoto != null
+                            companyDetailService.companyPhoto != ""
                         ? Image.network(
                             "${kbaseUrlImage}${companyDetailService.companyPhoto}",
                             height: 100,
@@ -310,7 +310,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                       companyDetailService.companyPhoto != "" ||
                                               companyDetailService
                                                       .companyPhoto !=
-                                                  null
+                                                  ""
                                           ? Image.network(
                                               "${kbaseUrlImage}${companyDetailService.companyPhoto}",
                                               height: 45.0,

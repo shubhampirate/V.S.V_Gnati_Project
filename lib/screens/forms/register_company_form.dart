@@ -4,6 +4,7 @@ import 'package:community/constants/colors.dart';
 import 'package:community/provider/company_details_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -64,7 +65,7 @@ class _RegisterCompanyState extends State<RegisterCompany> {
 
   @override
   Widget build(BuildContext context) {
-    //  final companyDetailsService = Provider.of<CompanyDetailsProvider>(context);
+    final companyDetailsService = Provider.of<CompanyDetailsProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -85,7 +86,7 @@ class _RegisterCompanyState extends State<RegisterCompany> {
         title: Padding(
           padding: const EdgeInsets.only(top: 15.0),
           child: Text(
-            "Edit Company Details",
+            "Add a Company",
             // textAlign: TextAlign.center,
             style: TextStyle(
               color: kbrownColor,
@@ -295,7 +296,17 @@ class _RegisterCompanyState extends State<RegisterCompany> {
                   Center(
                     child: InkWell(
                       onTap: () async {
+                        // print(GetStorage().read("companyId"));
+                        // return;
+                        final res = await companyDetailsService.createMyCompany(
+                            profilePic: profilePic,
+                            companyName: _companyNameController.text,
+                            companyEmail: _companyEmailController.text,
+                            companyAddress: _companyAddressController.text);
+
+                        print("res" + res.toString());
                         print('validated');
+
                         return;
                       },
                       child: Container(
@@ -308,7 +319,7 @@ class _RegisterCompanyState extends State<RegisterCompany> {
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         child: Text(
-                          "Edit Details",
+                          "Create Company",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               fontFamily: 'Roboto',

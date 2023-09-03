@@ -32,13 +32,17 @@ class AuthServiceProvider with ChangeNotifier {
       }
       final token = responseData['data']['token'];
       final familyId = responseData['data']['family'];
+      final isAdmin = responseData['data']['is_admin'] ?? false;
 
       final companyId = responseData['data']['company'];
       print(token);
       _user = User.fromJson(responseData['data'], token);
       GetStorage().write('token', token);
+      GetStorage().write('isAdmin', isAdmin);
       GetStorage().write('familyId', familyId);
-      GetStorage().write('companyId', companyId);
+      if (companyId != "None") {
+        GetStorage().write('companyId', companyId);
+      }
 
       List<int> ids = [];
       for (var i in responseData['data']['matrimony']) {

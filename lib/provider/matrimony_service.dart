@@ -208,8 +208,8 @@ class MatrimonyDetailProvider extends ChangeNotifier {
       );
 
       if (response.statusCode == 200) {
-        print("my data: ");
-        print(response.body);
+        // print("my data: ");
+        // print(response.body);
 
         final responseData = json.decode(response.body);
         _selfMatrimonyData.add(responseData["data"]);
