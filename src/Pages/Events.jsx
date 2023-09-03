@@ -482,7 +482,7 @@ const Events = () => {
 
           </Grid>
         </Grid>
-        <Grid item xs={12}>
+        {token ? <><Grid item xs={12}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Tabs className="component-e-tabs">
@@ -697,7 +697,14 @@ const Events = () => {
               </Tabs>
             </Grid>
           </Grid>
-        </Grid>
+        </Grid></> :
+          <><Grid container spacing={2}>
+            <Grid item xs={12}>
+              <div style={{ fontSize: "2rem", fontWeight: "700", marginBottom: "4rem", marginTop: "4rem" }}>
+                <Link to="/login">Login</Link> to view the events</div>
+            </Grid>
+          </Grid>
+          </>}
       </Grid>
     </Box >
   )
