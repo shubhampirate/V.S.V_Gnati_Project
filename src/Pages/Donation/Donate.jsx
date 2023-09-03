@@ -27,7 +27,6 @@ const Donate = () => {
               backgroundImage: `url(${donate})`,
               marginTop: "2rem",
               backgroundSize: 'cover',
-              // backgroundPosition: 'center',
               backgroundPositionY: "85%",
               backgroundPositionX: "50%",
               height: '500px',
@@ -62,7 +61,7 @@ const Donate = () => {
             </Grid>
           </Grid>
           <Grid item xs={12} >
-            <Grid container p={4} style={{ marginBottom: "1rem", backgroundColor: "white" }}>
+            <Grid container p={4} style={{ marginBottom: "1rem" }}>
               <Grid item xs={12} md={4} sm={6}>
                 <Grid container spacing={2}>
                   <Grid item xs={12}>

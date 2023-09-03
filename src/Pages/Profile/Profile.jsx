@@ -14,11 +14,11 @@ import AddHomeIcon from '@mui/icons-material/AddHome';
 import ManIcon from '@mui/icons-material/Man';
 import WorkIcon from '@mui/icons-material/Work';
 import PostAddIcon from '@mui/icons-material/PostAdd';
-import EditIcon from '@mui/icons-material/Edit';
 import AddHomeWorkIcon from '@mui/icons-material/AddHomeWork';
 import AddBusinessIcon from '@mui/icons-material/AddBusiness';
 import EmailIcon from '@mui/icons-material/Email';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Swal from 'sweetalert2';
 import axios from 'axios';
@@ -878,7 +878,7 @@ const Profile = () => {
                                                         width: "100%", height: "3.1rem", fontSize: "1.1rem",
                                                         backgroundColor: "#90CFD3", boxShadow: "none", color: "black", "&:hover": {
                                                             backgroundColor: "#90CFD3", boxShadow: "none", color: "black",
-                                                            fontSize: "1.3rem"
+                                                            fontSize: "1.3rem", cursor: "pointer"
                                                         }
                                                     }} onClick={handlehomedit} onClose={closeHomeEditComponent}>
                                                     <SendIcon sx={{ color: "#018D8D" }} />
@@ -926,7 +926,7 @@ const Profile = () => {
                                                         width: "100%", height: "3.1rem", fontSize: "1.1rem",
                                                         backgroundColor: "#90CFD3", boxShadow: "none", color: "black", "&:hover": {
                                                             backgroundColor: "#90CFD3", boxShadow: "none", color: "black",
-                                                            fontSize: "1.3rem"
+                                                            fontSize: "1.3rem", cursor: "pointer"
                                                         }
                                                     }} onClick={handlegotrejedit} onClose={closeGotrejEditComponent}>
                                                     <SendIcon sx={{ color: "#018D8D" }} />
@@ -977,7 +977,7 @@ const Profile = () => {
                                                         width: "100%", height: "3.1rem", fontSize: "1.1rem",
                                                         backgroundColor: "#90CFD3", boxShadow: "none", color: "black", "&:hover": {
                                                             backgroundColor: "#90CFD3", boxShadow: "none", color: "black",
-                                                            fontSize: "1.3rem"
+                                                            fontSize: "1.3rem", cursor: "pointer"
                                                         }
                                                     }} onClick={handlenativedit} onClose={closeEditNativeComponent}>
                                                     <SendIcon sx={{ color: "#018D8D" }} />
@@ -1028,7 +1028,7 @@ const Profile = () => {
                                                             width: "100%", height: "3.1rem", fontSize: "1.1rem",
                                                             backgroundColor: "#90CFD3", boxShadow: "none", color: "black", "&:hover": {
                                                                 backgroundColor: "#90CFD3", boxShadow: "none", color: "black",
-                                                                fontSize: "1.3rem"
+                                                                fontSize: "1.3rem", cursor: "pointer"
                                                             }
                                                         }} onClose={closeAddAdditionalAddressComponent}>
                                                         <SendIcon sx={{ color: "#018D8D" }} />
@@ -1051,11 +1051,11 @@ const Profile = () => {
                                                     }}>{item.id}. &nbsp;{item.additional_address}</div>
                                             </Grid>
                                             <Grid item xs={2}>
-                                                <EditIcon style={{ fontSize: "4vh", color: "#018d8d" }}
+                                                <EditIcon style={{ fontSize: "4vh", color: "#018d8d", cursor: "pointer" }}
                                                     onClick={() => { showEditAdditionalAddressComponent(); setUseridAddress(item.id) }} />
                                             </Grid>
                                             <Grid item xs={2}>
-                                                <DeleteIcon style={{ fontSize: "4vh", color: "#018d8d" }}
+                                                <DeleteIcon style={{ fontSize: "4vh", color: "#018d8d", cursor: "pointer" }}
                                                     onClick={() => handleDeleteAdditionalAddress(item.id)} />
                                             </Grid>
                                         </Grid>
@@ -1088,7 +1088,7 @@ const Profile = () => {
                                                 width: "100%", height: "3.1rem", fontSize: "1.1rem",
                                                 backgroundColor: "#90CFD3", boxShadow: "none", color: "black", "&:hover": {
                                                     backgroundColor: "#90CFD3", boxShadow: "none", color: "black",
-                                                    fontSize: "1.3rem"
+                                                    fontSize: "1.3rem", cursor: "pointer"
                                                 }
                                             }} onClick={() => handleEditAdditionalAddress(useridAddress)}
                                             onClose={closeEditAdditionalAddressComponent}>
@@ -1153,7 +1153,7 @@ const Profile = () => {
                                                             width: "100%", height: "3.1rem", fontSize: "1.1rem",
                                                             backgroundColor: "#90CFD3", boxShadow: "none", color: "black", "&:hover": {
                                                                 backgroundColor: "#90CFD3", boxShadow: "none", color: "black",
-                                                                fontSize: "1.3rem"
+                                                                fontSize: "1.3rem", cursor: "pointer"
                                                             }
                                                         }} onClose={closeEditOccupationComponent}>
                                                         <SendIcon sx={{ color: "#018D8D" }} />
@@ -1174,11 +1174,11 @@ const Profile = () => {
                                                             }}>{item.member}. &nbsp;{item.occupation_address}</div>
                                                     </Grid>
                                                     <Grid item xs={2}>
-                                                        <EditIcon style={{ fontSize: "4vh", color: "#018d8d" }}
+                                                        <EditIcon style={{ fontSize: "4vh", color: "#018d8d", cursor: "pointer" }}
                                                             onClick={() => { showEditOccupationComponent(); setUseridocc(item.id) }} />
                                                     </Grid>
                                                     <Grid item xs={2}>
-                                                        <DeleteIcon style={{ fontSize: "4vh", color: "#018d8d" }}
+                                                        <DeleteIcon style={{ fontSize: "4vh", color: "#018d8d", cursor: "pointer" }}
                                                             onClick={() => handleDeleteoccupation(item.id)} />
                                                     </Grid>
                                                 </Grid>
@@ -1226,7 +1226,7 @@ const Profile = () => {
                                                         width: "100%", height: "3.1rem", fontSize: "1.1rem",
                                                         backgroundColor: "#90CFD3", boxShadow: "none", color: "black", "&:hover": {
                                                             backgroundColor: "#90CFD3", boxShadow: "none", color: "black",
-                                                            fontSize: "1.3rem"
+                                                            fontSize: "1.3rem", cursor: "pointer"
                                                         }
                                                     }} onClick={() => handleeditoccupation(useridocc)} onClose={closeEditOccupationComponent}>
                                                     <SendIcon sx={{ color: "#018D8D" }} />
@@ -1456,7 +1456,7 @@ const Profile = () => {
                                                     backgroundColor: "#90CFD3", boxShadow: "none", color: "black", marginTop: "2vh"
                                                     , "&:hover": {
                                                         backgroundColor: "#90CFD3", boxShadow: "none", color: "black",
-                                                        fontSize: "1.3rem",
+                                                        fontSize: "1.3rem", cursor: "pointer"
                                                     }
                                                 }}>
                                                 Submit
@@ -1484,11 +1484,11 @@ const Profile = () => {
                                                     <div style={{ fontSize: "2rem", fontWeight: "700" }}>{item1.name}</div>
                                                 </Grid>
                                                 <Grid item xs={2} style={{ textAlign: "right" }}>
-                                                    <EditIcon style={{ fontSize: "4.75vh", color: "#018d8d", textAlign: "right" }}
+                                                    <EditIcon style={{ fontSize: "4.75vh", color: "#018d8d", textAlign: "right", cursor: "pointer" }}
                                                         onClick={() => handleeditmember(item1.username)} />
                                                 </Grid>
                                                 <Grid item xs={2} style={{ textAlign: "right" }}>
-                                                    <DeleteIcon style={{ fontSize: "4.75vh", color: "#018d8d", textAlign: "right" }}
+                                                    <DeleteIcon style={{ fontSize: "4.75vh", color: "#018d8d", textAlign: "right", cursor: "pointer" }}
                                                         onClick={() => handleDelete(item1.username)} />
                                                 </Grid>
                                                 <Grid item xs={6}>

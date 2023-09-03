@@ -8,6 +8,8 @@ import { useFormik } from "formik";
 import * as yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
 import PostAddIcon from '@mui/icons-material/PostAdd';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import AddHomeIcon from '@mui/icons-material/AddHome';
@@ -418,8 +420,13 @@ const CompanyRegister = () => {
                                                                 padding: "0.75rem",
                                                                 textAlign: "left"
                                                             }}>
-                                                                <span onClick={() => handleedit(companyId)}> Edit </span> /
-                                                                <span onClick={() => handledelete(companyId)}> Delete </span>
+                                                                <div >
+                                                                    <EditIcon onClick={() => handleedit(companyId)}
+                                                                        style={{ color: "#018d8d", cursor: "pointer" }} />
+                                                                    &nbsp; &nbsp;
+                                                                    <DeleteIcon onClick={() => handledelete(companyId)}
+                                                                        style={{ color: "#018d8d", cursor: "pointer" }} />
+                                                                </div>
                                                             </Td>
                                                         </Tr>
                                                     </Tbody></> : <></>

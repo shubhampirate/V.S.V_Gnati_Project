@@ -11,6 +11,8 @@ import axios from 'axios';
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import DomainAddIcon from '@mui/icons-material/DomainAdd';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import Select from 'react-select';
 import secureLocalStorage from 'react-secure-storage';
 import Loader from '../../Components/Loader';
@@ -325,7 +327,7 @@ const Jobadmin = () => {
                                                     backgroundColor: "#018d8d", boxShadow: "none", color: "white"
                                                     , "&:hover": {
                                                         backgroundColor: "#018d8d", boxShadow: "none", color: "white",
-                                                        fontSize: "1.3rem",
+                                                        fontSize: "1.3rem", cursor: "pointer"
                                                     }
                                                 }}>
                                                 Submit
@@ -421,8 +423,13 @@ const Jobadmin = () => {
                                                                     padding: "0.75rem",
                                                                     textAlign: "left"
                                                                 }}>
-                                                                    <span onClick={() => handleedit(item.id)}> Edit </span> /
-                                                                    <span onClick={() => handledelete(item.id)}> Delete </span>
+                                                                    <div >
+                                                                        <EditIcon onClick={() => handleedit(item.id)}
+                                                                            style={{ color: "#018d8d", cursor: "pointer" }} />
+                                                                        &nbsp; &nbsp;
+                                                                        <DeleteIcon onClick={() => handledelete(item.id)}
+                                                                            style={{ color: "#018d8d", cursor: "pointer" }} />
+                                                                    </div>
                                                                 </Td>
                                                             </Tr>
                                                         </Tbody></> : <></>}
@@ -493,7 +500,7 @@ const Jobadmin = () => {
                                                         backgroundColor: "#018d8d", boxShadow: "none", color: "#fff"
                                                         , "&:hover": {
                                                             backgroundColor: "#018d8d", boxShadow: "none", color: "#fff",
-                                                            fontSize: "1.3rem",
+                                                            fontSize: "1.3rem", cursor: "pointer"
                                                         }
                                                     }} onClick={() => handleEditsubmit()}>
                                                     Submit

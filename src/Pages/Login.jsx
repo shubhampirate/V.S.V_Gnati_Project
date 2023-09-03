@@ -7,25 +7,9 @@ import Swal from 'sweetalert2';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import NavBar from "../Components/Navbar.jsx"
 import secureLocalStorage from 'react-secure-storage';
-import bg from "../images/loginPage.webp"
-
-const backgroundImageStyle = {
-    backgroundImage: `url(${bg})`,
-    backgroundSize: 'cover', // Adjust the background size as needed
-    backgroundRepeat: 'no-repeat', // Adjust the background repeat as needed
-    // Other background-related CSS properties can be added here
-    width: '100%',
-    height: '100%',
-};
-
-const overlayStyle = {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'rgba(255, 255, 255, 0.5)', // Adjust opacity as needed (0.5 means 50% opacity)
-};
+import 'react-responsive-modal/styles.css';
+import { Modal } from 'react-responsive-modal';
+import SendIcon from '@mui/icons-material/Send';
 
 const validationSchema = yup.object({
     name: yup
@@ -36,11 +20,28 @@ const validationSchema = yup.object({
         .required('Password is required'),
 });
 
+
+
 const Login = () => {
     secureLocalStorage.setItem("domainvsv", "http://jenilsavla.pythonanywhere.com/api");
     const domain = secureLocalStorage.getItem("domainvsv");
     const navigate = useNavigate();
+    const [editoldpass, setEditoldpass] = useState('');
+    const [editnewpass, setEditnewpass] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const [showPasswordNew, setShowPasswordNew] = useState(false);
+    const [showPasswordOld, setShowPasswordOld] = useState(false);
+
+    const [show, setShow] = useState(false);
+    const showComponent = (e) => { setShow(!show) }
+
+    const handleTogglePasswordNew = () => {
+        setShowPasswordNew(!showPasswordNew);
+    };
+
+    const handleTogglePasswordOld = () => {
+        setShowPasswordOld(!showPasswordOld);
+    };
 
     const handleTogglePassword = () => {
         setShowPassword(!showPassword);
@@ -53,10 +54,9 @@ const Login = () => {
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-
             console.log(values);
             const formData = new FormData();
-            formData.append("username", values.name);
+            formData.append("username", values.name.trim());
             formData.append("password", values.password);
             fetch(`${domain}/login/`, {
                 method: "POST",
@@ -85,6 +85,7 @@ const Login = () => {
                     }
                     // console.log(data);
                     secureLocalStorage.setItem("tokenvsv", data.data.token);
+                    secureLocalStorage.setItem("changevsv", data.data.token)
                     secureLocalStorage.setItem("familyidvsv", data.data.family);
                     secureLocalStorage.setItem("companyvsv", data.data.company);
                     secureLocalStorage.setItem("matrimonyvsv", data.data.matrimony);
@@ -92,11 +93,51 @@ const Login = () => {
 
                 })
                 .catch((error) => {
-                    console.log(error)
-                    alert('Error in the Code');
                 });
         }
     });
+
+    const changePass = async () => {
+
+        const pasToken = secureLocalStorage.getItem("changevsv");
+
+        const searchData = {
+            old_password: editoldpass,
+            new_password: editnewpass,
+        };
+        fetch(`https://jenilsavla.pythonanywhere.com/api/reset-password/`, {
+            method: 'POST',
+            headers: {
+                "Authorization": `Token ${pasToken}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(searchData),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                // console.log(data);
+                if (data.status == true) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Successfully Changed the Password',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: data.message,
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                }
+                showComponent(false);
+            })
+            .catch((error) => {
+                // console.error(error);
+            });
+    }
 
     return (
         <div >
@@ -104,7 +145,7 @@ const Login = () => {
             <Grid container spacing={2} p={3} className='login_section'>
                 <Grid item xs={12} md={12} sm={12}
                     style={{
-                        marginTop: "2.5%", paddingTop: "7rem", paddingBottom: "7rem",
+                        marginTop: "4.5%", paddingTop: "8rem", paddingBottom: "7rem",
                     }}>
                     <div style={{ fontSize: "3rem", fontWeight: "700", color: "black" }}>Login</div>
                     <div>
@@ -179,12 +220,75 @@ const Login = () => {
                                 </Grid>
                             </Grid>
                         </form>
-                        <div style={{ marginTop: "2.5rem", fontSize: "1.3rem" }}>
-                            <Link to="/" style={{ textDecoration: "none", color: "black" }}>New user ? Register Now</Link>
+                        <div style={{ marginTop: "2rem", fontSize: "1.3rem", color: "black", cursor: "pointer" }}
+                            onClick={showComponent}>
+                            Change password
                         </div>
-                        <div style={{ marginTop: "1rem", fontSize: "1.3rem" }}>
-                            <Link to="/" style={{ textDecoration: "none", color: "black" }}>Change passowrd</Link>
-                        </div>
+                        <Modal open={show} onClose={showComponent} center >
+                            <h2>Change Password</h2>
+                            <Grid container spacing={2} p={2}>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        id="old_password"
+                                        name="old_password"
+                                        label="Old  Password"
+                                        value={editoldpass}
+                                        onChange={(e) => setEditoldpass(e.target.value)}
+                                        InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <IconButton onClick={handleTogglePasswordOld}>
+                                                        {showPasswordOld ? <Visibility /> : <VisibilityOff />}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                        type={showPasswordOld ? 'text' : 'password'}
+                                        sx={{
+                                            width: "100%", "& .MuiInputBase-root": {
+                                                height: 50,
+                                            }
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        id="new_password"
+                                        name="new_password"
+                                        label="New  Password"
+                                        value={editnewpass}
+                                        onChange={(e) => setEditnewpass(e.target.value)}
+                                        InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <IconButton onClick={handleTogglePasswordNew}>
+                                                        {showPasswordNew ? <Visibility /> : <VisibilityOff />}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                        type={showPasswordNew ? 'text' : 'password'}
+                                        sx={{
+                                            width: "100%", "& .MuiInputBase-root": {
+                                                height: 50,
+                                            }
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Button variant="contained" type="submit"
+                                        sx={{
+                                            width: "100%", height: "3.1rem", fontSize: "1.1rem",
+                                            backgroundColor: "#B8A273", boxShadow: "none", color: "black", "&:hover": {
+                                                backgroundColor: "#B8A273", boxShadow: "none", color: "black",
+                                                fontSize: "1.3rem", cursor: "pointer"
+                                            }
+                                        }} onClick={changePass} >
+                                        <SendIcon sx={{ color: "black" }} />
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </Modal>
                     </div>
                 </Grid>
                 <Grid item xs={12} md={2} sm={12}></Grid>

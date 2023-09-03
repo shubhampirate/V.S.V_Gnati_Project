@@ -227,7 +227,7 @@ const Navbar = () => {
             <CloseIcon sx={{ fontSize: 40 }} />
           </> : <>
             <Line open={toggle} />
-            <Line open={!toggle} />
+            <Line open={toggle} />
             <Line open={toggle} /></>}
 
         </NavIcon>

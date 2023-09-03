@@ -17,6 +17,7 @@ const columns = [
   { id: 'home_address', label: 'Residential Address' },
   { id: 'phone', label: 'Tel No./Mobile No.' },
   { id: 'dob', label: 'Date of Birth' },
+  { id: 'gender', label: 'Gender' },
   { id: 'education', label: 'Education' },
   { id: 'gotrej', label: 'Gotrej' },
   { id: 'maritial_status', label: 'Marital Status' },
@@ -94,7 +95,7 @@ const Members = () => {
       let isFilter5Match = true;
       let isFilter6Match = true;
 
-      const searchTermLower = searchName.toLowerCase();
+      const searchTermLower = searchName.toLowerCase().trim();
       const nameLower = item.name.toLowerCase();
 
       if (searchName !== null) {
@@ -102,7 +103,7 @@ const Members = () => {
         isFilter5Match = searchWords.some((word) => nameLower.includes(word));
       }
 
-      const serachDistrictLower = searchDistrict.toLowerCase();
+      const serachDistrictLower = searchDistrict.toLowerCase().trim();
       const districtlower = item.home_address.toLowerCase();
 
       if (searchDistrict !== null) {
@@ -180,10 +181,15 @@ const Members = () => {
 
   // Options for the profession dropdown
   const gotrejOptions = [
-    { value: '', label: 'All' },
-    { value: 'test data', label: 'Doctor' },
-    { value: 'engineer', label: 'Engineer' },
-    { value: 'teacher', label: 'Teacher' },
+    { value: 'Prashnavada', label: 'Prashnavada' },
+    { value: 'Loaje', label: 'Loaje' },
+    { value: 'Jamkhambaria', label: 'Jamkhambaria' },
+    { value: 'Lodhava', label: 'Lodhava' },
+    { value: 'Kotada', label: 'Kotada' },
+    { value: 'Kodinar', label: 'Kodinar' },
+    { value: 'Badalpara', label: 'Badalpara' },
+    { value: 'Kashyap', label: 'Kashyap' },
+    { value: 'Raimethiya', label: 'Raimethiya' },
   ];
 
   const loadList = async () => {

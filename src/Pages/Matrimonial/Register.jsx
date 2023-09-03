@@ -6,6 +6,8 @@ import React, { useState, useEffect } from 'react'
 import { useFormik } from "formik";
 import * as yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import Select from 'react-select';
 import Swal from 'sweetalert2';
 import axios from 'axios';
@@ -463,7 +465,7 @@ const Login = () => {
                                                 backgroundColor: "#C4CFFE", boxShadow: "none", color: "black"
                                                 , "&:hover": {
                                                     backgroundColor: "#C4CFFE", boxShadow: "none", color: "black",
-                                                    fontSize: "1.3rem",
+                                                    fontSize: "1.3rem", cursor: "pointer"
                                                 }
                                             }}>
                                             Submit
@@ -618,8 +620,13 @@ const Login = () => {
                                                         padding: "0.75rem",
                                                         textAlign: "left"
                                                     }}>
-                                                        <span onClick={() => handleedit(item.id)}> Edit </span> /
-                                                        <span onClick={() => handledelete(item.id)}> Delete </span>
+                                                        <div >
+                                                            <EditIcon onClick={() => handleedit(item.id)}
+                                                                style={{ color: "#582C6F", cursor: "pointer" }} />
+                                                            &nbsp; &nbsp;
+                                                            <DeleteIcon onClick={() => handledelete(item.id)}
+                                                                style={{ color: "#582C6F", cursor: "pointer" }} />
+                                                        </div>
                                                     </Td>
                                                 </Tr>
                                             </Tbody>
@@ -706,7 +713,7 @@ const Login = () => {
                                                         backgroundColor: "#C4CFFE", boxShadow: "none", color: "black"
                                                         , "&:hover": {
                                                             backgroundColor: "#C4CFFE", boxShadow: "none", color: "black",
-                                                            fontSize: "1.3rem",
+                                                            fontSize: "1.3rem", cursor: "pointer"
                                                         }
                                                     }} onClick={() => handleEditsubmit()}>
                                                     Submit

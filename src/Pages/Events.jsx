@@ -8,7 +8,6 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import axios from 'axios';
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import "../Components/styleEvents.css";
 import secureLocalStorage from 'react-secure-storage';
@@ -312,6 +311,7 @@ const Events = () => {
                       fontFamily: "PT Sans",
                       backgroundColor: 'transparent',
                       border: '2px solid #fff',
+                      cursor: "pointer",
                       '&:hover': {
                         backgroundColor: '#fff',
                         color: 'black'
@@ -464,7 +464,7 @@ const Events = () => {
                           backgroundColor: "#C4CFFE", boxShadow: "none", color: "black"
                           , "&:hover": {
                             backgroundColor: "#C4CFFE", boxShadow: "none", color: "black",
-                            fontSize: "1.3rem",
+                            fontSize: "1.3rem", cursor: "pointer"
                           }
                         }}>
                         Submit
@@ -524,11 +524,11 @@ const Events = () => {
                                               <div style={{ fontSize: "2rem", fontWeight: "700" }}>{item.name}</div>
                                             </Grid>
                                             <Grid item xs={2} style={{ textAlign: "right" }}>
-                                              <EditIcon style={{ fontSize: "4vh", color: "#018d8d" }}
+                                              <EditIcon style={{ fontSize: "4vh", color: "#018d8d", cursor: "pointer" }}
                                                 onClick={() => { handleEventDetails(); showEditEventComponent(); setEventId(item.id) }} />
                                             </Grid>
                                             <Grid item xs={2} style={{ textAlign: "right" }}>
-                                              <DeleteIcon style={{ fontSize: "4vh", color: "#018d8d" }}
+                                              <DeleteIcon style={{ fontSize: "4vh", color: "#018d8d", cursor: "pointer" }}
                                                 onClick={() => handleDeleteEvent(item.id)} />
                                             </Grid>
                                             <Modal open={showEditEvent} onClose={closeEditEventComponent} center >
@@ -630,7 +630,7 @@ const Events = () => {
                                                       backgroundColor: "#C4CFFE", boxShadow: "none", color: "black"
                                                       , "&:hover": {
                                                         backgroundColor: "#C4CFFE", boxShadow: "none", color: "black",
-                                                        fontSize: "1.3rem",
+                                                        fontSize: "1.3rem", cursor: "pointer"
                                                       }
                                                     }} onClick={handleEventSubmit} onClose={closeEditEventComponent}>
                                                     Submit
@@ -669,11 +669,11 @@ const Events = () => {
                                               <Grid item xs={5} style={{ marginTop: "0.3rem", textAlign: "right" }}>
                                                 <Link to={item.photos_drive}>
                                                   <PhotoCameraIcon style={{
-                                                    fontSize: "3.5vh", color: "#E0E1DC",
+                                                    fontSize: "3.5vh", color: "#E0E1DC", cursor: "pointer",
                                                     backgroundColor: "#018d8d", padding: "0.25rem", borderRadius: "0.5rem 0rem 0rem 0.5rem"
                                                   }} />
                                                   <KeyboardDoubleArrowRightIcon style={{
-                                                    fontSize: "3.5vh", color: "#E0E1DC",
+                                                    fontSize: "3.5vh", color: "#E0E1DC", cursor: "pointer",
                                                     backgroundColor: "#018d8d", padding: "0.25rem", borderRadius: "0rem 0.5rem 0.5rem 0rem"
                                                   }} />
                                                 </Link>

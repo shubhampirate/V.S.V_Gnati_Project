@@ -243,7 +243,7 @@ const ContactUs = () => {
                             fullWidth
                             style={{
                               backgroundColor: "#08B499", fontSize: "1.05rem",
-                              marginTop: "1rem", height: "2.5rem", boxShadow: "none"
+                              marginTop: "1rem", height: "2.5rem", boxShadow: "none", cursor: "pointer"
                             }}
                           >
                             Submit
@@ -269,8 +269,8 @@ const ContactUs = () => {
                 Contact Number
               </Grid>
               <Grid item xs={12} style={{ fontSize: "1.2rem", color: "#5E989C", paddingLeft: "1.5rem", paddingRight: "1.5rem", marginBottom: "2rem" }}>
-                <a href="tel:+91 9820537159" style={{ textDecoration: "none", color: "#5E989C" }}>+91 9820537159</a>
-                <br /> <a href="tel:+91 9819001855" style={{ textDecoration: "none", color: "#5E989C" }}>+91 9819001855</a>
+                <a href="tel:+91 9820537159" style={{ textDecoration: "none", color: "#5E989C", cursor: "pointer" }}>+91 9820537159</a>
+                <br /> <a href="tel:+91 9819001855" style={{ textDecoration: "none", color: "#5E989C", cursor: "pointer" }}>+91 9819001855</a>
               </Grid>
             </Grid>
           </Grid>
@@ -283,7 +283,7 @@ const ContactUs = () => {
                 Email
               </Grid>
               <Grid item xs={12} style={{ fontSize: "1.25rem", color: "#6C60A8", paddingLeft: "1.5rem", paddingRight: "1.5rem", marginBottom: "2rem" }}>
-                <a href="mailto:vsvgnati@gmail.com" style={{ textDecoration: "none", color: "#6C60A8" }}>vsvgnati@gmail.com</a>
+                <a href="mailto:vsvgnati@gmail.com" style={{ textDecoration: "none", color: "#6C60A8", cursor: "pointer" }}>vsvgnati@gmail.com</a>
               </Grid>
             </Grid>
           </Grid>
