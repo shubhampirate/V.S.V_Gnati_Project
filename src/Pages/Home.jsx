@@ -8,8 +8,7 @@ import homethree from "../images/homethree.jpg"
 import CarouselAd from '../Components/CarouselAd';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import Slider from 'react-slick';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Culture from '../images/diversity.png'
 import global from '../images/globalNetwork.png'
 import charity from '../images/donationTwo.png'
@@ -158,18 +157,17 @@ const Home = () => {
                   marginBottom: "2rem"
                 }}>
                   <Button sx={{
-                    color: "black", fontWeight: "650", border: "2px solid black",
+                    color: "black", fontWeight: "650", border: "2px solid black", cursor: "pointer",
                     "&:hover": {
                       backgroundColor: "#BDB4E9"
                     },
-                  }}>Donate Today</Button>
+                  }}><Link to="/donate" style={{ textDecoration: "none", color: "black" }}>Donate Today</Link></Button>
                 </Grid>
               </Grid>
             </Grid>
             <Grid item xs={12} sm={12} md={8} style={{
               backgroundImage: `url(${donationHome})`,
               backgroundSize: 'cover',
-              // backgroundPosition: 'center',
               backgroundPositionY: '105%',
               backgroundPositionX: "50%",
               height: '520px',
