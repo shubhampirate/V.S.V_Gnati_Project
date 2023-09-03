@@ -121,7 +121,7 @@ const Matrimonial = () => {
                                         </> : <>
                                           <Grid item xs={12}>
                                             <img src={`http://jenilsavla.pythonanywhere.com` + item.picture}
-                                              style={{ width: "100%", height: "35vh", borderRadius: "1.5vh 1.5vh 0vh 0vh" }} />
+                                              style={{ width: "100%", height: "43vh", borderRadius: "1.5vh 1.5vh 0vh 0vh" }} />
                                           </Grid>
                                         </>}
                                         <Grid item xs={12}
@@ -190,12 +190,12 @@ const Matrimonial = () => {
                                         {item.picture == null ? <>
                                           <Grid item xs={12}>
                                             <img src={boy}
-                                              style={{ width: "100%", height: "35vh", borderRadius: "1.5vh 1.5vh 0vh 0vh" }} />
+                                              style={{ width: "100%", height: "43vh", borderRadius: "1.5vh 1.5vh 0vh 0vh" }} />
                                           </Grid>
                                         </> : <>
                                           <Grid item xs={12}>
                                             <img src={`http://jenilsavla.pythonanywhere.com` + item.picture}
-                                              style={{ width: "100%", height: "35vh", borderRadius: "1.5vh 1.5vh 0vh 0vh" }} />
+                                              style={{ width: "100%", height: "43vh", borderRadius: "1.5vh 1.5vh 0vh 0vh" }} />
                                           </Grid>
                                         </>}
                                         <Grid item xs={12}

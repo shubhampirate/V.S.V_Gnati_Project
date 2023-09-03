@@ -48,7 +48,7 @@ const Footer = () => {
                     </div>
                     <div className="footer-right">
                         <p className="footer-company-about">
-                            <span>About the company</span>
+                            <span>About the Committee</span>
                             The committee has been formed by on the building blocks of Transformation, Technology and Transperancy
                         </p>
                         <div className="footer-icons">

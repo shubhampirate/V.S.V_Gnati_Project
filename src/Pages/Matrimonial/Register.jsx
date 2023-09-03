@@ -405,7 +405,7 @@ const Login = () => {
                                         id="date"
                                         name="date"
                                         type="date"
-                                        label="Date of Event"
+                                        label="Date of Birth"
                                         sx={{ width: "100%", fontSize: "1.5rem", color: "red" }}
                                         color='success'
                                         value={formik.values.date}
