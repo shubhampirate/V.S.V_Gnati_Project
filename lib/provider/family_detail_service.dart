@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 class FamilyDetailProvider extends ChangeNotifier {
   bool _isHomeAddressEditing = false;
@@ -82,6 +84,106 @@ class FamilyDetailProvider extends ChangeNotifier {
     }
     // _loading = false;
     notifyListeners();
+  }
+
+  Future<int> addOrEditMember(
+    int? index,
+    String? username,
+    int? memberId,
+    String name,
+    String relationWithMainMember,
+    String education,
+    String emailAddress,
+    String phoneNumber,
+    String birthDate,
+    String professionalStatus,
+    String professionalName,
+    String gender,
+    String bloodGroup,
+    String maritialStatus,
+  ) async {
+    try {
+      final Response response;
+      // final familyId = GetStorage().read('familyId');
+      // print(memberId);
+      // print(name);
+      // print(relationWithMainMember);
+      // print(education);
+      // print(emailAddress);
+      // print(phoneNumber);
+      // print(birthDate);
+      // print(professionalStatus);
+      // print(professionalName);
+      // print(gender);
+      // print(bloodGroup);
+      // print(maritialStatus);
+      if (memberId != null) {
+        response = await http.put(
+          Uri.parse('http://jenilsavla.pythonanywhere.com/api/add-member/${GetStorage().read('familyId')}'),
+          headers: {
+            "Authorization": "Token ${GetStorage().read('token')}",
+            'Content-Type': 'application/json',
+          },
+          body: json.encode({
+            "username": username,
+            "phone": int.parse(phoneNumber),
+            "name": name,
+            "relation": relationWithMainMember,
+            "dob": birthDate,
+            "education": education,
+            "profession_status": professionalStatus,
+            "profession_name": professionalName,
+            "gender": gender,
+            "blood_group": bloodGroup,
+            "maritial_status": maritialStatus,
+            "email_address": emailAddress
+          }),
+        );
+      } else {
+        response = await http.post(
+          Uri.parse('http://jenilsavla.pythonanywhere.com/api/add-member/${GetStorage().read('familyId')}'),
+          headers: {
+            "Authorization": "Token ${GetStorage().read('token')}",
+            'Content-Type': 'application/json',
+          },
+          body: json.encode({
+            "phone": int.parse(phoneNumber),
+            "name": name,
+            "relation": relationWithMainMember,
+            "dob": birthDate,
+            "education": education,
+            "profession_status": professionalStatus,
+            "profession_name": professionalName,
+            "gender": gender,
+            "blood_group": bloodGroup,
+            "maritial_status": maritialStatus,
+            "email_address": emailAddress
+          }),
+        );
+      }
+
+      print(response.body);
+      final responseData = json.decode(response.body);
+      if (response.statusCode == 200 && memberId == null) {
+        _memberDetails.add(responseData["data"]);
+        notifyListeners();
+      } else if (response.statusCode == 200 && memberId != null) {
+        _memberDetails[index!] = responseData['data'];
+        notifyListeners();
+      }
+      if (responseData['error'] != null) {
+        throw HttpException(responseData['error']['message']);
+      }
+      return response.statusCode;
+      // final token = responseData['data']['token'];
+      // final familyId = responseData['data']['family'];
+
+      // final companyId = responseData['data']['company'];
+      // print(token);
+      // return 200;
+    } catch (error) {
+      rethrow;
+    }
   }
 
   // void addAnotherOccupationAdress() {

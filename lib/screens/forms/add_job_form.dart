@@ -77,11 +77,7 @@ class _AddJobsFormState extends State<AddJobsForm> {
     );
   }
 
-  List<String> jobType = [
-    "Full-time",
-    "Part-time",
-    "Internship",
-  ];
+  List<String> jobType = ["Full-time", "Part-time", "Internship", "Job"];
 
   final _formKey = GlobalKey<FormState>();
   @override

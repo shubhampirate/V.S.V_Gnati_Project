@@ -1,6 +1,7 @@
 import 'package:community/constants/colors.dart';
 import 'package:community/constants/paths.dart';
 import 'package:community/provider/family_detail_service.dart';
+import 'package:community/screens/forms/add_or_edit_family_member.dart';
 import 'package:community/screens/forms/edit_family_details.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -241,6 +242,26 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
                                     ),
                                   )),
                               InkWell(
+                                onTap: () {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                    return const AddOrEditFamilyMember(
+                                      index: null,
+                                      username:null,
+                                      memberId: null,
+                                      name: "",
+                                      relationWithMainMember: "",
+                                      education: "",
+                                      emailAddress: "",
+                                      phoneNumber: "",
+                                      birthDate: "",
+                                      professionalStatus: "NA",
+                                      professionalName: "CA",
+                                      gender: "",
+                                      bloodGroup: "",
+                                      maritialStatus: "",
+                                    );
+                                  }));
+                                },
                                 child: Container(
                                   margin: const EdgeInsets.only(right: 20),
                                   padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
@@ -292,7 +313,7 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
                                           // mainAxisAlignment: MainAxisAlignment.start,
                                           children: [
                                             Text(
-                                              familyDetailService.memberDetails[index]["username"],
+                                              familyDetailService.memberDetails[index]["name"],
                                               style: TextStyle(fontFamily: 'Roboto', fontSize: 15, color: kblackColor),
                                             ),
                                             const SizedBox(
@@ -304,27 +325,55 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
                                             ),
                                           ],
                                         ),
-                                        Container(
-                                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
-                                          decoration: BoxDecoration(
-                                            color: kyellowColor,
-                                            borderRadius: BorderRadius.circular(5.0),
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                "Edit",
-                                                style:
-                                                    TextStyle(fontFamily: 'Roboto', fontSize: 12, color: kblackColor),
-                                              ),
-                                              const SizedBox(
-                                                width: 5,
-                                              ),
-                                              SvgPicture.asset(
-                                                "assets/images/edit.svg",
-                                                height: 15,
-                                              )
-                                            ],
+                                        InkWell(
+                                          onTap: () {
+                                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                              return AddOrEditFamilyMember(
+                                                index: index,
+                                                username: familyDetailService.memberDetails[index]["username"],
+                                                memberId: familyDetailService.memberDetails[index]["id"],
+                                                name: familyDetailService.memberDetails[index]["name"],
+                                                relationWithMainMember: familyDetailService.memberDetails[index]
+                                                    ["relation"],
+                                                education: familyDetailService.memberDetails[index]["education"],
+                                                emailAddress:
+                                                    familyDetailService.memberDetails[index]["email_address"] ?? "",
+                                                phoneNumber:
+                                                    familyDetailService.memberDetails[index]["phone"].toString(),
+                                                birthDate: familyDetailService.memberDetails[index]["dob"] ?? "",
+                                                professionalStatus: familyDetailService.memberDetails[index]
+                                                    ["profession_status"],
+                                                professionalName: familyDetailService.memberDetails[index]
+                                                    ["profession_name"],
+                                                gender: familyDetailService.memberDetails[index]["gender"],
+                                                bloodGroup: familyDetailService.memberDetails[index]["blood_group"],
+                                                maritialStatus: familyDetailService.memberDetails[index]
+                                                    ["maritial_status"],
+                                              );
+                                            }));
+                                          },
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+                                            decoration: BoxDecoration(
+                                              color: kyellowColor,
+                                              borderRadius: BorderRadius.circular(5.0),
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  "Edit",
+                                                  style:
+                                                      TextStyle(fontFamily: 'Roboto', fontSize: 12, color: kblackColor),
+                                                ),
+                                                const SizedBox(
+                                                  width: 5,
+                                                ),
+                                                SvgPicture.asset(
+                                                  "assets/images/edit.svg",
+                                                  height: 15,
+                                                )
+                                              ],
+                                            ),
                                           ),
                                         )
                                       ],
