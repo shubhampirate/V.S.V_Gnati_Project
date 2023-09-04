@@ -1,4 +1,4 @@
-import { Grid, TextField, Button, FormHelperText } from '@mui/material'
+import { Grid, TextField, Button, FormHelperText, InputAdornment, IconButton } from '@mui/material'
 import React, { useState, useEffect } from 'react'
 import { useFormik, ErrorMessage, } from "formik";
 import * as yup from 'yup';
@@ -14,7 +14,7 @@ import AddHomeIcon from '@mui/icons-material/AddHome';
 import ManIcon from '@mui/icons-material/Man';
 import WorkIcon from '@mui/icons-material/Work';
 import PostAddIcon from '@mui/icons-material/PostAdd';
-import AddHomeWorkIcon from '@mui/icons-material/AddHomeWork';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import AddBusinessIcon from '@mui/icons-material/AddBusiness';
 import EmailIcon from '@mui/icons-material/Email';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
@@ -148,6 +148,20 @@ const Profile = () => {
         { value: 'Son-in-law', label: 'Son-in-law' },
     ]
 
+    const [showPasswordNew, setShowPasswordNew] = useState(false);
+    const [showPasswordOld, setShowPasswordOld] = useState(false);
+
+    const [show, setShow] = useState(false);
+    const showComponent = (e) => { setShow(!show) }
+
+    const handleTogglePasswordNew = () => {
+        setShowPasswordNew(!showPasswordNew);
+    };
+
+    const handleTogglePasswordOld = () => {
+        setShowPasswordOld(!showPasswordOld);
+    }
+
     const [showAddOccupation, setShowAddOccupation] = useState(false);
     // const showAddOccupationComponent = () => setShowAddOccupation(true);
     const showAddOccupationComponent = () => setShowAddOccupation(!showAddOccupation);
@@ -189,6 +203,8 @@ const Profile = () => {
     const showEditAdditionalAddressComponent = () => setShowAdditionalAddressedit(!showAdditionalAddressEdit);
     const closeEditAdditionalAddressComponent = () => setShowAdditionalAddressedit(false)
 
+    const [editoldpass, setEditoldpass] = useState('');
+    const [editnewpass, setEditnewpass] = useState('');
     const [homeedit, setHomeedit] = useState('');
     const [gotrejedit, setGotrejedit] = useState('');
     const [nativeedit, setNativeedit] = useState('');
@@ -210,6 +226,49 @@ const Profile = () => {
     const [editemail, setEditemail] = useState('');
     const [editmaritialstatus, setEditmaritialstatus] = useState('');
     const [usernamemem, setUsernamemem] = useState('');
+
+    const changePass = async () => {
+
+        const pasToken = secureLocalStorage.getItem("changevsv");
+
+        const searchData = {
+            old_password: editoldpass,
+            new_password: editnewpass,
+        };
+        fetch(`https://jenilsavla.pythonanywhere.com/api/reset-password/`, {
+            method: 'POST',
+            headers: {
+                "Authorization": `Token ${pasToken}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(searchData),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                // console.log(data);
+                if (data.status == true) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Successfully Changed the Password',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: data.message,
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                }
+                showComponent(false);
+            })
+            .catch((error) => {
+                // console.error(error);
+            });
+    }
+
 
     const handleClose = () => {
         setIsOpen(false);
@@ -844,6 +903,80 @@ const Profile = () => {
                         <Grid container spacing={2} style={{ textAlign: "left" }} p={3}>
                             <Grid item xs={12} style={{ fontSize: "1.75rem", marginBottom: "1rem" }}>
                                 <span className='underline-header' > Celebrate Family with Us! <br /> Welcome to Your Family Profile Page </span>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <div style={{
+                                    marginTop: "-1rem", fontSize: "1.3rem", color: "#018D8D",
+                                    cursor: "pointer", textDecoration: "underline"
+                                }}
+                                    onClick={showComponent}>
+                                    Change password
+                                </div>
+                                <Modal open={show} onClose={showComponent} center >
+                                    <h2>Change Password</h2>
+                                    <Grid container spacing={2} p={2}>
+                                        <Grid item xs={12}>
+                                            <TextField
+                                                id="old_password"
+                                                name="old_password"
+                                                label="Old  Password"
+                                                value={editoldpass}
+                                                onChange={(e) => setEditoldpass(e.target.value)}
+                                                InputProps={{
+                                                    endAdornment: (
+                                                        <InputAdornment position="end">
+                                                            <IconButton onClick={handleTogglePasswordOld}>
+                                                                {showPasswordOld ? <Visibility /> : <VisibilityOff />}
+                                                            </IconButton>
+                                                        </InputAdornment>
+                                                    ),
+                                                }}
+                                                type={showPasswordOld ? 'text' : 'password'}
+                                                sx={{
+                                                    width: "100%", "& .MuiInputBase-root": {
+                                                        height: 50,
+                                                    }
+                                                }}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <TextField
+                                                id="new_password"
+                                                name="new_password"
+                                                label="New  Password"
+                                                value={editnewpass}
+                                                onChange={(e) => setEditnewpass(e.target.value)}
+                                                InputProps={{
+                                                    endAdornment: (
+                                                        <InputAdornment position="end">
+                                                            <IconButton onClick={handleTogglePasswordNew}>
+                                                                {showPasswordNew ? <Visibility /> : <VisibilityOff />}
+                                                            </IconButton>
+                                                        </InputAdornment>
+                                                    ),
+                                                }}
+                                                type={showPasswordNew ? 'text' : 'password'}
+                                                sx={{
+                                                    width: "100%", "& .MuiInputBase-root": {
+                                                        height: 50,
+                                                    }
+                                                }}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <Button variant="contained" type="submit"
+                                                sx={{
+                                                    width: "100%", height: "3.1rem", fontSize: "1.1rem",
+                                                    backgroundColor: "#B8A273", boxShadow: "none", color: "black", "&:hover": {
+                                                        backgroundColor: "#B8A273", boxShadow: "none", color: "black",
+                                                        fontSize: "1.3rem", cursor: "pointer"
+                                                    }
+                                                }} onClick={changePass} >
+                                                <SendIcon sx={{ color: "black" }} />
+                                            </Button>
+                                        </Grid>
+                                    </Grid>
+                                </Modal>
                             </Grid>
                             <Grid item xs={12} style={{ fontSize: "1.75rem" }}>
                                 <Grid container>

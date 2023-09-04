@@ -61,7 +61,7 @@ const Menu = styled.ul`
     margin: 0px 10px;
   }
 
-  @media (max-width: 937px) {
+  @media (max-width: 1000px) {
     display: none;
   }
 `;
@@ -82,7 +82,7 @@ const NavIcon = styled.button`
   cursor: pointer;
   border: none;
   outline: none;
-  @media (min-width: 937px) {
+  @media (min-width: 1000px) {
     display: none;
   }
 `;
@@ -107,7 +107,7 @@ const Overlay = styled.div`
   width: 100vw;
   background: rgba(255,255,255,0.95);
   transition: height 0.4s ease-in-out;
-  @media (min-width: 937px) {
+  @media (min-width: 1000px) {
     display: none;
   }
 `;
@@ -148,9 +148,9 @@ const Navbar = () => {
     <>
       <Nav>
         <Logo>
-          <img src={logo} style={{ width: "100%", height: "3.5rem", marginLeft: "10%" }} />
+          <img src={logo} style={{ width: "100%", height: "3.5rem" }} />
         </Logo>
-        <Menu style={{ marginTop: "-0.25%" }}>
+        <Menu style={{ marginTop: "-0.25%", fontSize: "1.25rem" }}>
           <Item>
             <NavLinkStyled to="/" >
               Home
@@ -158,7 +158,7 @@ const Navbar = () => {
           </Item>
           <Item>
             <NavLinkStyled to="/about">
-              About Us
+              About
             </NavLinkStyled>
           </Item>
           <Item>
@@ -209,9 +209,11 @@ const Navbar = () => {
           </Item>
           <Item>
             <NavLinkStyled to="/contact">
-              Contact Us
+              Contact
             </NavLinkStyled>
           </Item>
+        </Menu>
+        <Menu style={{ marginTop: "-0.25%", fontSize: "1.25rem" }}>
           <Item>
             {token ? <>
               <NavLinkStyled to="/login" onClick={handleClickRemove}>
@@ -241,7 +243,7 @@ const Navbar = () => {
           </Item>
           <Item>
             <NavLinkStyled to="/about" onClick={() => toggleNav(!toggle)}>
-              About Us
+              About
             </NavLinkStyled>
           </Item>
           <Item>
@@ -292,7 +294,7 @@ const Navbar = () => {
           </Item>
           <Item>
             <NavLinkStyled to="/contact" onClick={() => toggleNav(!toggle)}>
-              Contact Us
+              Contact
             </NavLinkStyled>
           </Item>
           <Item>
