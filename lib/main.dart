@@ -16,9 +16,12 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:get_storage/get_storage.dart';
 
+import 'screens/forms/add_events_form.dart';
+
 void main() async {
   await GetStorage.init();
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.bottom]);
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom]);
   print('token is ${GetStorage().read('token')}');
   print('Family Id is ${GetStorage().read('familyId')}');
   print('Matrimony Ids are ${GetStorage().read('matrimonyIds')}');
@@ -39,10 +42,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: ((context) => HomeProvider())),
         ChangeNotifierProvider(create: ((context) => EventProvider())),
         ChangeNotifierProvider(create: ((context) => FamilyDetailProvider())),
-        ChangeNotifierProvider(create: ((context) => MatrimonyDetailProvider())),
+        ChangeNotifierProvider(
+            create: ((context) => MatrimonyDetailProvider())),
         ChangeNotifierProvider(create: ((context) => JobDetailProvider())),
         ChangeNotifierProvider(create: ((context) => CompanyDetailsProvider())),
-        ChangeNotifierProvider(create: ((context) => MatrimonyDetailProvider())),
+        ChangeNotifierProvider(
+            create: ((context) => MatrimonyDetailProvider())),
         ChangeNotifierProvider(create: ((context) => MembersListProvider())),
       ],
       child: MaterialApp(
@@ -67,6 +72,7 @@ class MyApp extends StatelessWidget {
           SignupScreen.id: (context) => const SignupScreen(),
           HomeScreen.id: (context) => const HomeScreen(),
           PaymentScreen.id: (context) => const PaymentScreen(),
+          AddEventForm.id: (context) => const AddEventForm(),
         },
       ),
     );

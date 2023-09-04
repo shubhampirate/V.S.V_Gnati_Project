@@ -1,5 +1,6 @@
 import 'package:community/constants/colors.dart';
 import 'package:community/provider/company_details_provider.dart';
+import 'package:community/provider/job_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -83,6 +84,7 @@ class _AddJobsFormState extends State<AddJobsForm> {
   @override
   Widget build(BuildContext context) {
     final companyDetailService = Provider.of<CompanyDetailsProvider>(context);
+    final jobDetailService = Provider.of<JobDetailProvider>(context);
     return Scaffold(
       backgroundColor: kwhiteColor,
       appBar: AppBar(
@@ -151,7 +153,8 @@ class _AddJobsFormState extends State<AddJobsForm> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 20.0, right: 20, top: 10),
+                      padding:
+                          const EdgeInsets.only(left: 20.0, right: 20, top: 10),
                       child: Container(
                         // height: 40,
                         child: TextFormField(
@@ -214,7 +217,8 @@ class _AddJobsFormState extends State<AddJobsForm> {
                                 selectedJobType = value!;
                               });
                             },
-                            items: jobType.map<DropdownMenuItem<String>>((String value) {
+                            items: jobType
+                                .map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
                                 child: Text(value),
@@ -249,7 +253,8 @@ class _AddJobsFormState extends State<AddJobsForm> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 20.0, right: 20, top: 10),
+                      padding:
+                          const EdgeInsets.only(left: 20.0, right: 20, top: 10),
                       child: Container(
                         // height: 40,
                         child: TextFormField(
@@ -298,7 +303,8 @@ class _AddJobsFormState extends State<AddJobsForm> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 20.0, right: 20, top: 10),
+                      padding:
+                          const EdgeInsets.only(left: 20.0, right: 20, top: 10),
                       child: Container(
                         // height: 40,
                         child: TextFormField(
@@ -325,7 +331,8 @@ class _AddJobsFormState extends State<AddJobsForm> {
             Container(
               height: 40,
               padding: const EdgeInsets.only(top: 10, bottom: 10),
-              margin: const EdgeInsets.only(left: 20, right: 20, top: 30, bottom: 40),
+              margin: const EdgeInsets.only(
+                  left: 20, right: 20, top: 30, bottom: 40),
               decoration: BoxDecoration(
                 color: kblueButtonColor,
                 borderRadius: const BorderRadius.all(Radius.circular(5.0)),
@@ -337,12 +344,25 @@ class _AddJobsFormState extends State<AddJobsForm> {
                     try {
                       print("hello");
                       Loader.show(context);
-                      int statusCode = await companyDetailService.addOrEditJob(
-                          jobTitle, selectedJobType, jobDetails, int.parse(phoneNumber), jobId);
+                      final job = await companyDetailService.addOrEditJob(
+                          context,
+                          jobTitle,
+                          selectedJobType,
+                          jobDetails,
+                          int.parse(phoneNumber),
+                          jobId);
                       Loader.hide();
 
-                      if (statusCode == 200) {
+                      if (job != null) {
+                        jobDetailService.addJob(job);
+
                         Navigator.pop(context);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("Error adding job"),
+                          ),
+                        );
                       }
 
                       // await authService.signInWithEmailAndPassword(userNameController.text, passwordController.text);

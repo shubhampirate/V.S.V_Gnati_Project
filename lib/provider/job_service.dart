@@ -7,8 +7,16 @@ import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 
 class JobDetailProvider extends ChangeNotifier {
-  List _jobDetails = [];
-  List get jobDetails => _jobDetails;
+  List? _jobDetails;
+  List? get jobDetails => _jobDetails;
+
+  void addJob(job) {
+    if (_jobDetails == null) {
+      _jobDetails = [];
+    }
+    _jobDetails!.add(job);
+    notifyListeners();
+  }
 
   Future<void> fetchAvailableJobs() async {
     // print('family id is ${GetStorage().read('familyId')}');
@@ -25,10 +33,17 @@ class JobDetailProvider extends ChangeNotifier {
 
       final responseData = json.decode(response.body);
       _jobDetails = responseData["data"]["jobs"];
+
+      print("ended");
     } else {
       print(response.statusCode);
     }
 
+    notifyListeners();
+  }
+
+  void reset() {
+    _jobDetails = null;
     notifyListeners();
   }
 }

@@ -73,7 +73,7 @@ class _DonationScreenState extends State<DonationScreen> {
                   onTap: () async {
                     showDialog(
                       context: context,
-                      barrierDismissible: false,
+                      barrierDismissible: true,
                       builder: (_) => AlertDialog(
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(
@@ -81,7 +81,7 @@ class _DonationScreenState extends State<DonationScreen> {
                           ),
                         ),
                         title: Text(
-                          "Enter the amount",
+                          "Enter the amount (in ₹)",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               // fontSize: getHeight(20),

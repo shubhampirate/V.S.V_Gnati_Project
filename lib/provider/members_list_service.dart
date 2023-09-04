@@ -166,9 +166,9 @@ class MembersListProvider extends ChangeNotifier {
               .contains(native.toLowerCase());
 
       bool condition2 = () {
-        print('co2');
-        print(_female);
-        print(_male);
+        // print('co2');
+        // print(_female);
+        // print(_male);
 
         if (_male != null &&
             _female != null &&
@@ -183,13 +183,13 @@ class MembersListProvider extends ChangeNotifier {
 
         if (_female != null) {
           if (!_female! && element["gender"] == "Female") {
-            print('p1');
+            // print('p1');
             return false;
           }
         }
         if (_male != null) {
           if (!_male! && element["gender"] == "Male") {
-            print('p2');
+            // print('p2');
             return false;
           }
         }
@@ -214,12 +214,16 @@ class MembersListProvider extends ChangeNotifier {
 
         if (_maritalStatusMarried != null) {
           if (_maritalStatusMarried == true &&
-              element["marital_status"] != "Single") return false;
+              element["maritial_status"].toString().toLowerCase() == "single") {
+            return false;
+          }
         }
 
         if (_maritalStatusUnmarried != null) {
           if (_maritalStatusUnmarried == true &&
-              element["marital_status"] == "Single") return false;
+              element["maritial_status"].toString().toLowerCase() != "single") {
+            return false;
+          }
         }
 
         return true;
@@ -237,9 +241,10 @@ class MembersListProvider extends ChangeNotifier {
         return false;
       }();
 
-      print(element["name"]);
+      print("for name: " + element["name"]);
       print(condition1);
       print(condition2);
+      print(condition3);
       print(condition4);
 
       if (condition1 && condition2 && condition3 && condition4) {

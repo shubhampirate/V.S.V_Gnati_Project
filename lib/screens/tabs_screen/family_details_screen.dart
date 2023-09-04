@@ -1,6 +1,12 @@
 import 'package:community/constants/colors.dart';
 import 'package:community/constants/paths.dart';
+import 'package:community/provider/auth_service.dart';
+import 'package:community/provider/event_service.dart';
 import 'package:community/provider/family_detail_service.dart';
+import 'package:community/provider/home_service.dart';
+import 'package:community/provider/job_service.dart';
+import 'package:community/provider/matrimony_service.dart';
+import 'package:community/provider/members_list_service.dart';
 import 'package:community/screens/forms/add_or_edit_family_member.dart';
 import 'package:community/screens/forms/edit_family_details.dart';
 import 'package:flutter/cupertino.dart';
@@ -61,10 +67,34 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
         backgroundColor: kwhiteColor,
         elevation: 0,
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 15.0, top: 15),
-            child: SvgPicture.asset(
-              "assets/images/forward.svg",
+          InkWell(
+            onTap: () async {
+              final authService = Provider.of<AuthServiceProvider>(context, listen: false);
+              final homeService = Provider.of<HomeProvider>(context, listen: false);
+              final eventService = Provider.of<EventProvider>(context, listen: false);
+              final familyDetailService = Provider.of<FamilyDetailProvider>(context, listen: false);
+              final jobDetailService = Provider.of<JobDetailProvider>(context, listen: false);
+              final matrimonyService = Provider.of<MatrimonyDetailProvider>(context, listen: false);
+              final memberListService = Provider.of<MembersListProvider>(context, listen: false);
+              // context.read<HomeProvider>().dispose();
+              homeService.reset();
+              eventService.reset();
+              familyDetailService.reset();
+              jobDetailService.reset();
+              matrimonyService.reset();
+              memberListService.reset();
+              authService.signOut();
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(right: 20.0, top: 15),
+              child: Text(
+                'Logout',
+                style: TextStyle(
+                  color: kblackColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16.0,
+                ),
+              ),
             ),
           ),
         ],
@@ -246,7 +276,7 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
                                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                                     return const AddOrEditFamilyMember(
                                       index: null,
-                                      username:null,
+                                      username: null,
                                       memberId: null,
                                       name: "",
                                       relationWithMainMember: "",

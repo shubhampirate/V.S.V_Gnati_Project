@@ -194,6 +194,10 @@ class FamilyDetailProvider extends ChangeNotifier {
     _isHomeAddressEditing = false;
     _isOtherFieldEditing = false;
     _isOccupationAdressEditing = false;
+    _homeAddress = "";
+    _gotrej = "";
+    _occupationAddress = [];
+    _memberDetails = [];
     notifyListeners();
   }
 }
