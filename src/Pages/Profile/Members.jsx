@@ -36,6 +36,8 @@ const Members = () => {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [searchName, setSearchName] = useState('');
   const [searchDistrict, setSearchDistrict] = useState('');
+  const [searchMaxage, setSearchMaxAge] = useState('');
+  const [searchMinage, setSearchMinAge] = useState('');
   const [genderFilter, setGenderFilter] = useState(null);
   const [professionFilter, setProfessionFilter] = useState(null);
   const [maritialFilter, setMaritialFilter] = useState(null);
@@ -78,14 +80,14 @@ const Members = () => {
 
   const handleSubmitName = async () => {
     // handlenamedistrict();
-    console.log("2- load list", searchName, load);
+    // console.log("2- load list", searchName, load);
     handleFilter();
   }
 
 
 
   const handleFilter = () => {
-    console.log("3-", gotrej, maritialFilter, genderFilter, professionFilter, searchName, searchDistrict);
+    //console.log("3-", gotrej, maritialFilter, genderFilter, professionFilter, searchName, searchDistrict);
 
     const filteredValues = load.filter((item) => {
       let isFilter1Match = true;
@@ -94,6 +96,7 @@ const Members = () => {
       let isFilter4Match = true;
       let isFilter5Match = true;
       let isFilter6Match = true;
+      let isFilter7Match = true;
 
       const searchTermLower = searchName.toLowerCase().trim();
       const nameLower = item.name.toLowerCase();
@@ -144,14 +147,43 @@ const Members = () => {
         }
       }
 
-      return isFilter1Match && isFilter2Match && isFilter3Match && isFilter4Match && isFilter5Match && isFilter6Match;
+
+      if (searchMinage !== null || searchMaxage !== null) {
+        if (searchMaxage !== '' || searchMinage !== '') {
+          const birthYear = new Date(item.dob).getFullYear();
+          const currentYear = new Date().getFullYear();
+          const age = currentYear - birthYear;
+          isFilter7Match = (age >= searchMinage && age <= searchMaxage);
+        }
+      };
+
+
+
+      return isFilter1Match && isFilter2Match && isFilter3Match && isFilter4Match && isFilter5Match && isFilter6Match && isFilter7Match;
     });
 
     setFilterList(filteredValues);
 
-    console.log("4- Filtered List", filteredValues);
+    // console.log("4- Filtered List", filteredValues);
   };
 
+  function formatDateToDDMMYYYY(dateString) {
+    try {
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) {
+        return "Invalid Date";
+      }
+
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+
+      return `${day}-${month}-${year}`;
+    } catch (error) {
+      console.error("Error parsing date:", error);
+      return "Invalid Date";
+    }
+  }
   const genderOptions = [
     { value: '', label: 'All' },
     { value: 'Male', label: 'Male' },
@@ -170,6 +202,7 @@ const Members = () => {
     { value: 'Professor/Teacher', label: 'Professor/Teacher' },
     { value: 'Journalist', label: 'Journalist' },
     { value: 'Banker', label: 'Banker' },
+    { value: 'Business Agent', label: 'Business Agent' },
     { value: 'Other', label: 'Other' },
   ];
 
@@ -203,7 +236,7 @@ const Members = () => {
     }
   };
 
-  console.log(filterList)
+  // console.log(filterList)
 
   return (
     <Box>
@@ -229,7 +262,7 @@ const Members = () => {
         </Grid>
         <Grid item xs={12} style={{ paddingRight: "1rem", paddingLeft: "2rem", marginTop: "1rem" }}>
           <Grid container spacing={2} marginTop={2} p={2}>
-            <Grid item xs={12} md={4} sm={6}>
+            <Grid item xs={12} md={3} sm={6}>
               <TextField
                 id="search_name"
                 name="search_name"
@@ -239,7 +272,7 @@ const Members = () => {
                 sx={{ width: "100%" }}
               />
             </Grid>
-            <Grid item xs={12} md={4} sm={6}>
+            <Grid item xs={12} md={3} sm={6}>
               <TextField
                 id="search_district"
                 name="search_district"
@@ -249,7 +282,7 @@ const Members = () => {
                 sx={{ width: "100%" }}
               />
             </Grid>
-            <Grid item xs={12} md={4} sm={6}>
+            <Grid item xs={12} md={3} sm={6}>
               <Select
                 options={professionOptions}
                 value={professionFilter}
@@ -285,7 +318,33 @@ const Members = () => {
                 onChange={(selectedOption) => setMaritialFilter(selectedOption)}
               />
             </Grid>
-            <Grid item xs={12} md={3} sm={12}>
+            <Grid item xs={12} md={3} sm={6}>
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <TextField
+                    id="search_min_age"
+                    name="search_min_age"
+                    label="Minimum Age"
+                    value={searchMinage}
+                    type="number"
+                    onChange={(e) => setSearchMinAge(e.target.value)}
+                    sx={{ width: "100%" }}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    id="search_max_age"
+                    name="search_max_age"
+                    label="Maximum Age"
+                    value={searchMaxage}
+                    type="number"
+                    onChange={(e) => setSearchMaxAge(e.target.value)}
+                    sx={{ width: "100%" }}
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item xs={12} md={3} sm={6}>
               <Button variant="contained" type="submit"
                 sx={{
                   width: "100%", height: "3.4rem", fontSize: "1.1rem",
@@ -330,9 +389,14 @@ const Members = () => {
                                 const value = row[column.id];
                                 return (
                                   <TableCell key={column.id} style={{ fontSize: "1.1rem", textAlign: "center", border: "1px solid #EACD90" }}>
-                                    {column.format && typeof value === 'number'
-                                      ? column.format(value)
-                                      : value}
+                                    {column.id === 'dob' ? (
+                                      // Format the date here, assuming 'dateColumn' is the column ID for the date
+                                      formatDateToDDMMYYYY(value)
+                                    ) : column.format && typeof value === 'number' ? (
+                                      column.format(value)
+                                    ) : (
+                                      value
+                                    )}
                                   </TableCell>
                                 );
                               })}

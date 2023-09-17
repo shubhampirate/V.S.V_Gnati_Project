@@ -69,6 +69,8 @@ const Profile = () => {
         profession_name: yup
             .string('')
             .required('Profession Name is required'),
+        other_profession: yup
+            .string(''),
         email_address: yup
             .string()
             .email('Invalid emailaddress')
@@ -128,6 +130,7 @@ const Profile = () => {
         { value: 'Professor/Teacher', label: 'Professor/Teacher' },
         { value: 'Journalist', label: 'Journalist' },
         { value: 'Banker', label: 'Banker' },
+        { value: 'Business Agent', label: 'Business Agent' },
         { value: 'Other', label: 'Other' },
     ]
 
@@ -203,6 +206,7 @@ const Profile = () => {
     const showEditAdditionalAddressComponent = () => setShowAdditionalAddressedit(!showAdditionalAddressEdit);
     const closeEditAdditionalAddressComponent = () => setShowAdditionalAddressedit(false)
 
+    const [editother, setEditOthers] = useState('');
     const [editoldpass, setEditoldpass] = useState('');
     const [editnewpass, setEditnewpass] = useState('');
     const [homeedit, setHomeedit] = useState('');
@@ -329,6 +333,7 @@ const Profile = () => {
             education: '',
             email_address: '',
             gender: null,
+            other_profession: '',
             blood_group: null,
             maritial_status: null,
             profession_status: null,
@@ -354,7 +359,8 @@ const Profile = () => {
                     email_address: values.email_address,
                     profession_name: values.profession_name,
                     profession_status: values.profession_status,
-                    gender: values.gender
+                    gender: values.gender,
+                    other_profession: values.other_profession
                 }),
             })
                 .then((response) => response.json())
@@ -820,6 +826,7 @@ const Profile = () => {
         setEditgender(result.data.data.gender);
         setEditmaritialstatus(result.data.data.maritial_status);
         setEditprofstatus(result.data.data.profession_status);
+        setEditOthers(result.data.data.other_profession);
         setIsOpen(true);
     }
 
@@ -836,7 +843,8 @@ const Profile = () => {
             gender: editgender.value,
             blood_group: editbg.value,
             maritial_status: editmaritialstatus.value,
-            email_address: editemail
+            email_address: editemail,
+            other_profession: editother,
         };
         fetch(`${domain}/add-member/${familyId}`, {
             method: 'PUT',
@@ -1398,8 +1406,8 @@ const Profile = () => {
                             <div>
                                 <form onSubmit={formikmember.handleSubmit}
                                     style={{ paddingLeft: "3%", paddingRight: "3.5%" }}>
-                                    <Grid container spacing={2} marginTop={1}>
-                                        <Grid item xs={12} md={3} sm={12}>
+                                    <Grid container spacing={2} >
+                                        <Grid item xs={12} md={3} sm={6}>
                                             <TextField
                                                 id="name"
                                                 name="name"
@@ -1426,6 +1434,19 @@ const Profile = () => {
                                             />
                                         </Grid>
                                         <Grid item xs={12} md={3} sm={6}>
+                                            <TextField
+                                                id="email_address"
+                                                name="email_address"
+                                                label="Email"
+                                                color='success'
+                                                value={formikmember.values.email_address}
+                                                onChange={formikmember.handleChange}
+                                                error={formikmember.touched.email_address && Boolean(formikmember.errors.email_address)}
+                                                helperText={formikmember.touched.email_address && formikmember.errors.email_address}
+                                                sx={{ width: "100%" }}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} md={3} sm={6}>
                                             <Select
                                                 id="gender"
                                                 name="gender"
@@ -1442,7 +1463,7 @@ const Profile = () => {
                                                 </div>
                                             ) : null}
                                         </Grid>
-                                        <Grid item xs={12} md={3} sm={12}>
+                                        <Grid item xs={12} md={4} sm={6}>
                                             <TextField
                                                 id="date"
                                                 name="date"
@@ -1459,7 +1480,7 @@ const Profile = () => {
                                                 </div>
                                             ) : null}
                                         </Grid>
-                                        <Grid item xs={12} md={3} sm={12}>
+                                        <Grid item xs={12} md={4} sm={6}>
                                             <TextField
                                                 id="education"
                                                 name="education"
@@ -1469,6 +1490,19 @@ const Profile = () => {
                                                 onChange={formikmember.handleChange}
                                                 error={formikmember.touched.education && Boolean(formikmember.errors.education)}
                                                 helperText={formikmember.touched.education && formikmember.errors.education}
+                                                sx={{ width: "100%" }}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} md={4} sm={6}>
+                                            <TextField
+                                                id="native_village"
+                                                name="native_village"
+                                                label="Native Village"
+                                                color='success'
+                                                value={formikmember.values.native_village}
+                                                onChange={formikmember.handleChange}
+                                                error={formikmember.touched.native_village && Boolean(formikmember.errors.native_village)}
+                                                helperText={formikmember.touched.native_village && formikmember.errors.native_village}
                                                 sx={{ width: "100%" }}
                                             />
                                         </Grid>
@@ -1506,7 +1540,7 @@ const Profile = () => {
                                                 </div>
                                             ) : null}
                                         </Grid>
-                                        <Grid item xs={12} md={3} sm={12}>
+                                        <Grid item xs={12} md={3} sm={6}>
                                             <Select
                                                 id="maritial_status"
                                                 name="maritial_status"
@@ -1520,36 +1554,6 @@ const Profile = () => {
                                             {formikmember.touched.maritial_status && formikmember.errors.maritial_status ? (
                                                 <div style={{ color: "#d65a5a", fontSize: "13px", textAlign: "left", marginLeft: "15px", marginTop: "2px" }}>
                                                     {formikmember.errors.maritial_status}
-                                                </div>
-                                            ) : null}
-                                        </Grid>
-                                        <Grid item xs={12} md={3} sm={12}>
-                                            <TextField
-                                                id="email_address"
-                                                name="email_address"
-                                                label="Email"
-                                                color='success'
-                                                value={formikmember.values.email_address}
-                                                onChange={formikmember.handleChange}
-                                                error={formikmember.touched.email_address && Boolean(formikmember.errors.email_address)}
-                                                helperText={formikmember.touched.email_address && formikmember.errors.email_address}
-                                                sx={{ width: "100%" }}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={12} md={3} sm={6}>
-                                            <Select
-                                                id="profession_name"
-                                                name="profession_name"
-                                                placeholder="Profession name"
-                                                value={profession_name_options.find((option) => option.value === formikmember.values.profession_name)}
-                                                defaultValue={formikmember.values.profession_name}
-                                                onChange={(selectedOption) => formikmember.setFieldValue('profession_name', selectedOption.value)}
-                                                options={profession_name_options}
-                                                styles={customStyles}
-                                            />
-                                            {formikmember.touched.profession_name && formikmember.errors.profession_name ? (
-                                                <div style={{ color: "#d65a5a", fontSize: "13px", textAlign: "left", marginLeft: "15px", marginTop: "2px" }}>
-                                                    {formikmember.errors.profession_name}
                                                 </div>
                                             ) : null}
                                         </Grid>
@@ -1570,24 +1574,42 @@ const Profile = () => {
                                                 </div>
                                             ) : null}
                                         </Grid>
-                                        <Grid item xs={12} md={3} sm={12}>
+                                        <Grid item xs={12} md={4} sm={6}>
+                                            <Select
+                                                id="profession_name"
+                                                name="profession_name"
+                                                placeholder="Profession name"
+                                                value={profession_name_options.find((option) => option.value === formikmember.values.profession_name)}
+                                                defaultValue={formikmember.values.profession_name}
+                                                onChange={(selectedOption) => formikmember.setFieldValue('profession_name', selectedOption.value)}
+                                                options={profession_name_options}
+                                                styles={customStyles}
+                                            />
+                                            {formikmember.touched.profession_name && formikmember.errors.profession_name ? (
+                                                <div style={{ color: "#d65a5a", fontSize: "13px", textAlign: "left", marginLeft: "15px", marginTop: "2px" }}>
+                                                    {formikmember.errors.profession_name}
+                                                </div>
+                                            ) : null}
+                                        </Grid>
+                                        <Grid item xs={12} md={4} sm={6}>
                                             <TextField
-                                                id="native_village"
-                                                name="native_village"
-                                                label="Native Village"
+                                                id="other_profession"
+                                                name="other_profession"
+                                                label="Other Profession"
                                                 color='success'
-                                                value={formikmember.values.native_village}
+                                                value={formikmember.values.other_profession}
                                                 onChange={formikmember.handleChange}
-                                                error={formikmember.touched.native_village && Boolean(formikmember.errors.native_village)}
-                                                helperText={formikmember.touched.native_village && formikmember.errors.native_village}
+                                                error={formikmember.touched.other_profession && Boolean(formikmember.errors.other_profession)}
+                                                helperText={formikmember.touched.other_profession && formikmember.errors.other_profession}
                                                 sx={{ width: "100%" }}
+                                                disabled={formikmember.values.profession_name !== "Other"}
                                             />
                                         </Grid>
-                                        <Grid item xs={12}>
+                                        <Grid item xs={12} md={4} sm={6}>
                                             <Button variant="contained" type="submit"
                                                 sx={{
-                                                    width: "100%", height: "3rem", fontSize: "1.1rem",
-                                                    backgroundColor: "#90CFD3", boxShadow: "none", color: "black", marginTop: "2vh"
+                                                    width: "100%", height: "3.5rem", fontSize: "1.1rem",
+                                                    backgroundColor: "#90CFD3", boxShadow: "none", color: "black"
                                                     , "&:hover": {
                                                         backgroundColor: "#90CFD3", boxShadow: "none", color: "black",
                                                         fontSize: "1.3rem", cursor: "pointer"
@@ -1658,9 +1680,13 @@ const Profile = () => {
                                                         <Grid item xs={2}>
                                                             <HomeWorkIcon style={{ fontSize: "4.75vh", color: "#018d8d" }} />
                                                         </Grid>
-                                                        <Grid item xs={4} >
+                                                        {item1.profession_name.toLowerCase() == "other" ? <>
+                                                            <Grid item xs={4} >
+                                                                <div style={{ fontSize: "1.05rem", marginTop: "0.7rem" }}>{item1.other_profession}</div>
+                                                            </Grid>
+                                                        </> : <><Grid item xs={4} >
                                                             <div style={{ fontSize: "1.05rem", marginTop: "0.7rem" }}>{item1.profession_name}</div>
-                                                        </Grid>
+                                                        </Grid></>}
                                                         <Grid item xs={2}>
                                                             <LocalPhoneIcon style={{ fontSize: "4.75vh", color: "#018d8d" }} />
                                                         </Grid>
@@ -1840,6 +1866,17 @@ const Profile = () => {
                             />
                         </Grid>
                         <Grid item xs={12} md={6} sm={12}>
+                            <TextField
+                                id="other_profession"
+                                name="other_profession"
+                                label="Other Profession"
+                                value={editother}
+                                onChange={(e) => setEditOthers(e.target.value)}
+                                disabled={editprofname.value && editprofname.value.toLowerCase() !== "other"}
+                                sx={{ width: "100%" }}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={12} sm={12}>
                             <Grid item xs={12}>
                                 <Button variant="contained" type="submit"
                                     sx={{

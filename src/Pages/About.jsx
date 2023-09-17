@@ -1,104 +1,38 @@
 import React, { useEffect, useState } from 'react'
 import { Grid } from '@mui/material'
 import "../Components/Home.css"
-import avatar from "../images/couple.png"
-import profile from "../images/profile.png"
-import position from "../images/position.png"
-import photo from "../images/photo.webp";
-
-
-
-const dataSub = [{
-  name: "Shubham Shah",
-  position: "Secretary",
-}, {
-  name: "Shubham Shah",
-  position: "Secretary",
-}, {
-  name: "Shubham Shah",
-  position: "Secretary",
-}, {
-  name: "Shubham Shah",
-  position: "Secretary",
-}, {
-  name: "Shubham Shah",
-  position: "Secretary",
-}, {
-  name: "Shubham Shah",
-  position: "Secretary",
-}, {
-  name: "Shubham Shah",
-  position: "Secretary",
-}, {
-  name: "Shubham Shah",
-  position: "Secretary",
-}, {
-  name: "Shubham Shah",
-  position: "Secretary",
-}, {
-  name: "Shubham Shah",
-  position: "Secretary",
-}, {
-  name: "Shubham Shah",
-  position: "Secretary",
-}, {
-  name: "Shubham Shah",
-  position: "Secretary",
-}, {
-  name: "Shubham Shah",
-  position: "Secretary",
-}, {
-  name: "Shubham Shah",
-  position: "Secretary",
-}, {
-  name: "Shubham Shah",
-  position: "Secretary",
-}, {
-  name: "Shubham Shah",
-  position: "Secretary",
-}, {
-  name: "Shubham Shah",
-  position: "Secretary",
-}, {
-  name: "Shubham Shah",
-  position: "Secretary",
-}, {
-  name: "Shubham Shah",
-  position: "Secretary",
-},
-]
 
 const About = () => {
-  const trustee = [{ name: "Vinod G. Malkan", position: "Trust Pramukh" },
-  { name: "Dinesh Dharamshi Shah", position: "MG. Trustee" },
-  { name: "Lalit M. Shah", position: "Trustee" },
-  { name: "Narottam K. Malkan", position: "Trustee" },
-  { name: "Mahendra Chatrabhuj Shah", position: "Trustee" },
+  const trustee = [{ name: "Shriman Vinod G. Malkan", position: "Trust Pramukh" },
+  { name: "Shriman Dinesh Dharamshi Shah", position: "MG. Trustee" },
+  { name: "Shriman Lalit M. Shah", position: "Trustee" },
+  { name: "Shriman Narottam K. Malkan", position: "Trustee" },
+  { name: "Shriman Mahendra Chatrabhuj Shah", position: "Trustee" },
   ];
 
-  const mainMember = [{ name: "Sunil Vrajlal Shah", position: "Pramukh" },
-  { name: "Hiren Harakhchand Shah", position: "Uppramukh" },
-  { name: "Kiran Rakesh Shah", position: "Secretary" },
-  { name: "Rahul Prafulchandra Shah", position: "Secretary" },
-  { name: "Sanjay Maneklal Gandhi", position: "Secretary" },
-  { name: "Sangeeta Ketan Gandhi", position: "Treasurer" },
-  { name: "Piyush R. Shah", position: "Joint Treasurer" },
+  const mainMember = [{ name: "Shriman Sunil Vrajlal Shah", position: "Pramukh" },
+  { name: "Shriman Hiren Harakhchand Shah", position: "Uppramukh" },
+  { name: "Shriman Kiran Rakesh Shah", position: "Secretary" },
+  { name: "Shriman Rahul Prafulchandra Shah", position: "Secretary" },
+  { name: "Shriman Sanjay Maneklal Gandhi", position: "Secretary" },
+  { name: "Shrimati Sangeeta Ketan Gandhi", position: "Treasurer" },
+  { name: "Shriman Piyush R. Shah", position: "Joint Treasurer" },
   ];
 
-  const members = [{ name: "Ashwin Pranlal Shah", position: "Committee Member" },
-  { name: "Uday M. Saurashtri", position: "Committee Member" },
-  { name: "Jignesh Naveen Shah", position: "Committee Member" },
-  { name: "Shailesh Kapoorchand Shah", position: "Committee Member" },
-  { name: "Shailesh Chimanlal Parekh", position: "Committee Member" },
-  { name: "Mukesh D. Shah", position: "Committee Member" },
-  { name: "Naresh G. Shah", position: "Committee Member" },
-  { name: "Mehul A. Shah", position: "Committee Member" },
-  { name: "Hasmukh J. Shah", position: "Committee Member" },
-  { name: "Ashwin J. Shah", position: "Committee Member" },
-  { name: "Umesh D. Shah", position: "Committee Member" },
-  { name: "Dimple Nilesh Mavani", position: "Committee Member" },
-  { name: "Bhavna K. Shah", position: "Committee Member" },
-  { name: "Pranav K. Parekh", position: "Committee Member" },
+  const members = [{ name: "Shriman Ashwin Pranlal Shah", position: "Committee Member" },
+  { name: "Shriman Uday M. Saurashtri", position: "Committee Member" },
+  { name: "Shriman Jignesh Naveen Shah", position: "Committee Member" },
+  { name: "Shriman Shailesh Kapoorchand Shah", position: "Committee Member" },
+  { name: "Shriman Shailesh Chimanlal Parekh", position: "Committee Member" },
+  { name: "Shriman Mukesh D. Shah", position: "Committee Member" },
+  { name: "Shriman Naresh G. Shah", position: "Committee Member" },
+  { name: "Shriman Mehul A. Shah", position: "Committee Member" },
+  { name: "Shriman Hasmukh J. Shah", position: "Committee Member" },
+  { name: "Shriman Ashwin J. Shah", position: "Committee Member" },
+  { name: "Shriman Umesh D. Shah", position: "Committee Member" },
+  { name: "Shrimati Dimple Nilesh Mavani", position: "Committee Member" },
+  { name: "Shrimati Bhavna K. Shah", position: "Committee Member" },
+  { name: "Shriman Pranav K. Parekh", position: "Committee Member" },
   ]
 
   return (
@@ -183,16 +117,16 @@ const About = () => {
             <table>
               <thead>
                 <tr>
-                  <th style={{ width: '60%' }}>Name</th>
-                  <th style={{ width: '40%' }}>Position</th>
+                  <th style={{ width: '60%', textAlign: "left" }}>Name</th>
+                  <th style={{ width: '40%', textAlign: "left" }}>Position</th>
                 </tr>
               </thead>
               <tbody>
                 {trustee.map((item) => {
                   return (
                     <tr>
-                      <td>{item.name}</td>
-                      <td>{item.position}</td>
+                      <td style={{ textAlign: 'left' }}>{item.name}</td>
+                      <td style={{ textAlign: 'left' }}>{item.position}</td>
                     </tr>
                   )
                 })}
@@ -206,16 +140,16 @@ const About = () => {
             <table>
               <thead>
                 <tr>
-                  <th style={{ width: '60%' }}>Name</th>
-                  <th style={{ width: '40%' }}>Position</th>
+                  <th style={{ width: '60%', textAlign: "left" }}>Name</th>
+                  <th style={{ width: '40%', textAlign: "left" }}>Position</th>
                 </tr>
               </thead>
               <tbody>
                 {mainMember.map((item) => {
                   return (
                     <tr>
-                      <td>{item.name}</td>
-                      <td>{item.position}</td>
+                      <td style={{ textAlign: 'left' }}>{item.name}</td>
+                      <td style={{ textAlign: 'left' }}>{item.position}</td>
                     </tr>
                   )
                 })}
@@ -228,16 +162,16 @@ const About = () => {
             <table>
               <thead>
                 <tr>
-                  <th style={{ width: '60%' }}>Name</th>
-                  <th style={{ width: '40%' }}>Position</th>
+                  <th style={{ width: '60%', textAlign: "left" }}>Name</th>
+                  <th style={{ width: '40%', textAlign: "left" }}>Position</th>
                 </tr>
               </thead>
               <tbody>
                 {members.map((item) => {
                   return (
                     <tr>
-                      <td>{item.name}</td>
-                      <td>{item.position}</td>
+                      <td style={{ textAlign: 'left' }}>{item.name}</td>
+                      <td style={{ textAlign: 'left' }}>{item.position}</td>
                     </tr>
                   )
                 })}
