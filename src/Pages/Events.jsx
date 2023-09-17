@@ -30,7 +30,8 @@ const Events = () => {
   // const isAdmin = useState(true);
 
   const [len, setLen] = useState('');
-  const year = [2023, 2022];
+  const [year, setYear] = useState([]);
+  // const year = [2023, 2022];
   const [eventId, setEventId] = useState('');
   const [editAbout, setEditabout] = useState('');
   const [editName, setEditName] = useState('');
@@ -256,6 +257,26 @@ const Events = () => {
   }, []);
 
   const loadList = async (id) => {
+
+    const configEvents = {
+      method: 'get',
+      url: `${domain}/events`,
+      headers: {
+        'Authorization': `Token ${token}`
+      }
+    }
+    const responseEvents = await axios(configEvents);
+    const uniqueYears = new Set();
+    const events = responseEvents.data.data.events;
+    events.forEach(event => {
+      const dateParts = event.date.split('-');
+      if (dateParts.length === 3) {
+        const year = dateParts[0];
+        uniqueYears.add(year);
+      }
+      setYear(Array.from(uniqueYears));
+    });
+
     if (id == undefined) {
       const config = {
         method: 'post',
@@ -268,6 +289,7 @@ const Events = () => {
       console.log(response.data.data.events);
       setLoad(response.data.data.events);
     }
+
     else {
       const config = {
         method: 'post',
@@ -282,10 +304,8 @@ const Events = () => {
         console.log("empty")
       }
       setLen(response.data.data.events.length);
-      // console.log(len)
       setLoad(response.data.data.events);
     }
-
   }
 
   return (

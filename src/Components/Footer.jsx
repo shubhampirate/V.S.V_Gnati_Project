@@ -30,7 +30,12 @@ const Footer = () => {
                             <Link to="/contact">Contact Us&nbsp;</Link>
                         </p>
 
-                        <p className="footer-company-name">Shri Visa SoarathiaVanika Gnati Samasta © 2023</p>
+                        <p className="footer-company-about">
+                            <span>About the Committee</span>
+                            The committee has been formed by on the building blocks of Transformation, Technology and Transperancy
+                        </p>
+
+
                     </div>
 
                     <div className="footer-center">
@@ -47,13 +52,12 @@ const Footer = () => {
                         </div>
                     </div>
                     <div className="footer-right">
-                        <p className="footer-company-about">
-                            <span>About the Committee</span>
-                            The committee has been formed by on the building blocks of Transformation, Technology and Transperancy
-                        </p>
+                        <p className="footer-company-name" style={{ color: "black" }}>Made with ❤️ by Developers</p>
+                        <p className="footer-company-name" style={{ marginTop: "0.5rem", color: "black" }}>Shubham Shah | Prachi Patel | Jenil Savla | Yash Shah</p>
                         <div className="footer-icons">
-                            <img src={logo} style={{ width: "6rem" }} />
+                            <img src={logo} style={{ width: "5rem" }} />
                         </div>
+                        <p className="footer-company-name">2023 © SHRI VISA SOARTHIAVANIKA GNATI SAMASTA ALL RIGHTS RESERVED</p>
                     </div>
                 </footer>
             </Grid>
