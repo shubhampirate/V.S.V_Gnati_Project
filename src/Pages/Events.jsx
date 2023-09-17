@@ -148,7 +148,6 @@ const Events = () => {
     }
   });
 
-
   const handleEventDetails = async (editId) => {
     const result = await axios.get(`${domain}/event/${eventId}`, {
       headers: { "Authorization": `Token ${token}`, },
@@ -305,6 +304,24 @@ const Events = () => {
       }
       setLen(response.data.data.events.length);
       setLoad(response.data.data.events);
+    }
+  }
+
+  function formatDateToDDMMYYYY(dateString) {
+    try {
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) {
+        return "Invalid Date";
+      }
+
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+
+      return `${day}-${month}-${year}`;
+    } catch (error) {
+      console.error("Error parsing date:", error);
+      return "Invalid Date";
     }
   }
 
@@ -577,7 +594,7 @@ const Events = () => {
                                                 <EventIcon style={{ fontSize: "5vh", color: "#018d8d" }} />
                                               </Grid>
                                               <Grid item xs={5} >
-                                                <div style={{ fontSize: "1.25rem", marginTop: "0.7rem" }}>{item.date}</div>
+                                                <div style={{ fontSize: "1.25rem", marginTop: "0.7rem" }}> {formatDateToDDMMYYYY(item.date)}</div>
                                               </Grid>
                                               <Grid item xs={5} style={{ marginTop: "0.3rem", textAlign: "right" }}>
                                                 <Link to={item.photos_drive}>
