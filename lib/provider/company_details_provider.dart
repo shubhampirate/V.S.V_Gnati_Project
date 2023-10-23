@@ -71,8 +71,14 @@ class CompanyDetailsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<dynamic> addOrEditJob(BuildContext context, String jobTitle,
-      String jobType, String jobDetails, int phoneNumber, int? jobId) async {
+  Future<dynamic> addOrEditJob(
+      BuildContext context,
+      String jobTitle,
+      String jobType,
+      String jobDetails,
+      int phoneNumber,
+      int? jobId,
+      int? index) async {
     try {
       final Response response;
       print(jobTitle);
@@ -82,7 +88,7 @@ class CompanyDetailsProvider extends ChangeNotifier {
 
       if (jobId != null) {
         response = await http.put(
-          Uri.parse('http://jenilsavla.pythonanywhere.com/api/jobs/${jobId}'),
+          Uri.parse('http://jenilsavla.pythonanywhere.com/api/job/${jobId}'),
           headers: {
             "Authorization": "Token ${GetStorage().read('token')}",
             'Content-Type': 'application/json',
@@ -94,6 +100,7 @@ class CompanyDetailsProvider extends ChangeNotifier {
             'phone': phoneNumber,
           }),
         );
+        //TODO: local changes
       } else {
         response = await http.post(
           Uri.parse('http://jenilsavla.pythonanywhere.com/api/jobs/'),
@@ -111,6 +118,8 @@ class CompanyDetailsProvider extends ChangeNotifier {
       }
 
       print(response.body);
+      print(response.statusCode);
+      print(jobId);
       final responseData = json.decode(response.body);
       if (response.statusCode == 200 && jobId == null) {
         _companyJobs.add(responseData["data"]);
@@ -126,6 +135,12 @@ class CompanyDetailsProvider extends ChangeNotifier {
         // print(job.jobDetails!.length.toString() + " new");
         notifyListeners();
       }
+
+      if (response.statusCode == 200 && jobId != null) {
+        _companyJobs[index!] = responseData["data"];
+        notifyListeners();
+      }
+
       if (responseData['error'] != null) {
         throw HttpException(responseData['error']['message']);
       }
@@ -261,6 +276,31 @@ class CompanyDetailsProvider extends ChangeNotifier {
       }
     } catch (e) {
       print("error is " + e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> deleteJob(int id) async {
+    notifyListeners();
+
+    String url = "http://jenilsavla.pythonanywhere.com/api/job/${id}";
+
+    try {
+      final res = await http.delete(
+        Uri.parse(url),
+        headers: {"Authorization": "Token ${GetStorage().read('token')}"},
+      );
+
+      print(res.statusCode);
+
+      if (res.statusCode == 200) {
+        _companyJobs.removeWhere((element) => element["id"] == id);
+        notifyListeners();
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
       return false;
     }
   }

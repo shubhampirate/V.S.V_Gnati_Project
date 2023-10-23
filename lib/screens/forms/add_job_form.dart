@@ -14,13 +14,15 @@ class AddJobsForm extends StatefulWidget {
       required this.jobType,
       required this.jobDetails,
       required this.phoneNumber,
-      required this.jobId});
+      required this.jobId,
+      required this.index});
 
   final String jobTitle;
   final String jobType;
   final String jobDetails;
   final String phoneNumber;
   final int? jobId;
+  final int? index;
 
   @override
   State<AddJobsForm> createState() => _AddJobsFormState();
@@ -115,6 +117,58 @@ class _AddJobsFormState extends State<AddJobsForm> {
             ),
           ),
         ),
+
+        actions: [
+          widget.jobId != null
+              ? InkWell(
+                  onTap: () async {
+                    Loader.show(context);
+                    final res =
+                        await companyDetailService.deleteJob(widget.jobId!);
+
+                    Loader.hide();
+
+                    if (!res) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            "Job not deleted",
+                            style: TextStyle(
+                              fontFamily: "Inter",
+                              fontSize: 15,
+                              fontWeight: FontWeight.w400,
+                              color: kwhiteColor,
+                            ),
+                          ),
+                        ),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            "Job Deleted Successfully",
+                            style: TextStyle(
+                              fontFamily: "Inter",
+                              fontSize: 15,
+                              fontWeight: FontWeight.w400,
+                              color: kwhiteColor,
+                            ),
+                          ),
+                        ),
+                      );
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 15.0, right: 15),
+                    child: Icon(
+                      Icons.delete_outline_rounded,
+                      color: Colors.red,
+                    ),
+                  ),
+                )
+              : Container(),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -350,7 +404,8 @@ class _AddJobsFormState extends State<AddJobsForm> {
                           selectedJobType,
                           jobDetails,
                           int.parse(phoneNumber),
-                          jobId);
+                          jobId,
+                          widget.index);
                       Loader.hide();
 
                       if (job != null) {

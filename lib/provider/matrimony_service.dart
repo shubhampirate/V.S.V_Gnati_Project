@@ -14,7 +14,7 @@ class MatrimonyDetailProvider extends ChangeNotifier {
   dynamic get myMatrimonyDetails => myMatrinomyData;
 
   List _matrimonyData = [];
-  List _selfMatrimonyData = []; // self applied matrimonies
+  List? _selfMatrimonyData; // self applied matrimonies
   dynamic myMatrinomyData = {}; // for form data
   File? myProfileImage;
   File? myBioData;
@@ -33,7 +33,7 @@ class MatrimonyDetailProvider extends ChangeNotifier {
   }
 
   List get matrimonyData => _matrimonyData;
-  List get selfMatrimonyData => _selfMatrimonyData;
+  List? get selfMatrimonyData => _selfMatrimonyData;
 
   void setMatrimonyData(String key, String value) {
     myMatrinomyData[key] = value;
@@ -118,7 +118,8 @@ class MatrimonyDetailProvider extends ChangeNotifier {
         myMatrinomyData = responseData["data"];
         print(myMatrinomyData["name"]);
 
-        _selfMatrimonyData.add(myMatrinomyData);
+        _selfMatrimonyData ??= []; // Initialized if null
+        _selfMatrimonyData!.add(myMatrinomyData);
 
         print('matrimony ids are ${GetStorage().read('matrimonyIds')}');
 
@@ -212,10 +213,15 @@ class MatrimonyDetailProvider extends ChangeNotifier {
         // print(response.body);
 
         final responseData = json.decode(response.body);
-        _selfMatrimonyData.add(responseData["data"]);
+        _selfMatrimonyData ??= []; // Initialized if null
+        _selfMatrimonyData!.add(responseData["data"]);
       } else {
         print(response.statusCode);
       }
+    }
+
+    if (matrimonyIds.isEmpty) {
+      _selfMatrimonyData = [];
     }
 
     notifyListeners();
@@ -296,7 +302,7 @@ class MatrimonyDetailProvider extends ChangeNotifier {
       return false;
     }
 
-    for (var i in _selfMatrimonyData) {
+    for (var i in _selfMatrimonyData!) {
       print("found at name: ${i['name']}");
       if (i['id'] == id) {
         i['name'] = myMatrinomyData['name'];
@@ -320,11 +326,45 @@ class MatrimonyDetailProvider extends ChangeNotifier {
     return true;
   }
 
+  Future<bool> deleteMatrimony(int id, int index) async {
+    bool result = false;
+
+    try {
+      String url = "http://jenilsavla.pythonanywhere.com/api/matrimony/$id";
+      Uri uri = Uri.parse(url);
+
+      final res = await http.delete(
+        uri,
+        headers: {"Authorization": "Token ${GetStorage().read('token')}"},
+      );
+
+      print(res.statusCode);
+      print(res.body);
+
+      if (res.statusCode == 200) {
+        result = true;
+      }
+
+      if (result) {
+        _selfMatrimonyData!.removeAt(index);
+
+        List list = GetStorage().read('matrimonyIds') ?? [];
+        list.remove(id);
+        GetStorage().write('matrimonyIds', list);
+        notifyListeners();
+      }
+    } catch (e) {
+      print(e);
+    }
+
+    return result;
+  }
+
   void reset() {
     female = false;
     male = false;
     matrimonyData.clear();
-    selfMatrimonyData.clear();
+    selfMatrimonyData?.clear();
 
     notifyListeners();
   }

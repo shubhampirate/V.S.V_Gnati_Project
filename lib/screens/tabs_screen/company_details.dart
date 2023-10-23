@@ -245,12 +245,12 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
                                 return const AddJobsForm(
-                                  jobTitle: "",
-                                  jobDetails: "",
-                                  jobType: "Full-time",
-                                  phoneNumber: "",
-                                  jobId: null,
-                                );
+                                    jobTitle: "",
+                                    jobDetails: "",
+                                    jobType: "Full-time",
+                                    phoneNumber: "",
+                                    jobId: null,
+                                    index: null);
                               }));
                             },
                             child: Container(
@@ -374,6 +374,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                               .toString(),
                                           jobId: companyDetailService
                                               .companyJobs[index]["id"],
+                                          index: index,
                                         );
                                       }));
                                     },

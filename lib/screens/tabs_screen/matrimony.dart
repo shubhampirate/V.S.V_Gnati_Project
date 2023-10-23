@@ -71,7 +71,7 @@ class Matrimony extends StatelessWidget {
 
                 FutureBuilder(
                   // self data TODO
-                  future: matrimonyService.selfMatrimonyData.isEmpty
+                  future: matrimonyService.selfMatrimonyData == null
                       ? Provider.of<MatrimonyDetailProvider>(context,
                               listen: false)
                           .getSelfMatrimonies()
@@ -97,7 +97,8 @@ class Matrimony extends StatelessWidget {
                     } else {
                       // final eventsData = snapshot.data;
                       return ListView.builder(
-                          itemCount: matrimonyService.selfMatrimonyData.length,
+                          itemCount:
+                              matrimonyService.selfMatrimonyData?.length ?? 0,
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
@@ -122,7 +123,7 @@ class Matrimony extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      matrimonyService.selfMatrimonyData[index]
+                                      matrimonyService.selfMatrimonyData![index]
                                                   ['picture'] ==
                                               null
                                           ? Image.asset(
@@ -134,7 +135,7 @@ class Matrimony extends StatelessWidget {
                                               backgroundImage: NetworkImage(
                                                   kbaseUrlImage +
                                                       matrimonyService
-                                                              .selfMatrimonyData[
+                                                              .selfMatrimonyData![
                                                           index]['picture']),
                                             ),
                                       SizedBox(
@@ -146,7 +147,7 @@ class Matrimony extends StatelessWidget {
                                         children: [
                                           Text(
                                             matrimonyService
-                                                    .selfMatrimonyData[index]
+                                                    .selfMatrimonyData![index]
                                                 ['name'],
                                             style: TextStyle(
                                               fontFamily: 'Roboto',
@@ -160,7 +161,7 @@ class Matrimony extends StatelessWidget {
                                           ),
                                           Text(
                                             matrimonyService
-                                                .selfMatrimonyData[index]
+                                                .selfMatrimonyData![index]
                                                     ['phone']
                                                 .toString(),
                                             style: TextStyle(
@@ -180,7 +181,8 @@ class Matrimony extends StatelessWidget {
                                                   builder: (context) {
                                             return EditMatrimonyDetailsForm(
                                                 preFilledData: matrimonyService
-                                                    .selfMatrimonyData[index]);
+                                                    .selfMatrimonyData![index],
+                                                index: index);
                                           }));
                                         },
                                         child: Container(
@@ -238,7 +240,7 @@ class Matrimony extends StatelessWidget {
                                               ),
                                               Text(
                                                 matrimonyService
-                                                        .selfMatrimonyData[
+                                                        .selfMatrimonyData![
                                                     index]['dob'],
                                                 style: TextStyle(
                                                   fontFamily: 'Roboto',
@@ -267,7 +269,7 @@ class Matrimony extends StatelessWidget {
                                               ),
                                               Text(
                                                 matrimonyService
-                                                    .selfMatrimonyData[index]
+                                                    .selfMatrimonyData![index]
                                                         ['phone']
                                                     .toString(),
                                                 style: TextStyle(
@@ -303,7 +305,7 @@ class Matrimony extends StatelessWidget {
                                               ),
                                               Text(
                                                 matrimonyService
-                                                        .selfMatrimonyData[
+                                                        .selfMatrimonyData![
                                                     index]['fathers_name'],
                                                 style: TextStyle(
                                                   fontFamily: 'Roboto',
@@ -320,17 +322,16 @@ class Matrimony extends StatelessWidget {
                                           InkWell(
                                             onTap: () async {
                                               if (matrimonyService
-                                                          .selfMatrimonyData[
+                                                          .selfMatrimonyData![
                                                       index]['biodata'] ==
                                                   null) {
                                                 return;
                                               }
 
-                                              Uri _url = Uri.parse(
-                                                  kbaseUrlImage +
-                                                      matrimonyService
-                                                              .selfMatrimonyData[
-                                                          index]['biodata']);
+                                              Uri _url = Uri.parse(kbaseUrlImage +
+                                                  matrimonyService
+                                                          .selfMatrimonyData![
+                                                      index]['biodata']);
                                               print(_url);
                                               bool res = await launchUrl(_url,
                                                   mode: LaunchMode
@@ -359,7 +360,7 @@ class Matrimony extends StatelessWidget {
                                                   width: 10,
                                                 ),
                                                 Text(
-                                                  matrimonyService.selfMatrimonyData[
+                                                  matrimonyService.selfMatrimonyData![
                                                                   index]
                                                               ['biodata'] ==
                                                           null
@@ -371,7 +372,7 @@ class Matrimony extends StatelessWidget {
                                                     color: kblackColor,
                                                     fontWeight: FontWeight.w400,
                                                     decoration: matrimonyService
-                                                                        .selfMatrimonyData[
+                                                                        .selfMatrimonyData![
                                                                     index]
                                                                 ['biodata'] ==
                                                             null

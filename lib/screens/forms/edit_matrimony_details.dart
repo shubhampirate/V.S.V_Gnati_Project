@@ -5,15 +5,17 @@ import 'package:community/constants/paths.dart';
 import 'package:community/provider/family_detail_service.dart';
 import 'package:community/provider/matrimony_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:file_picker/file_picker.dart';
 
 class EditMatrimonyDetailsForm extends StatefulWidget {
-  const EditMatrimonyDetailsForm({super.key, this.preFilledData});
+  const EditMatrimonyDetailsForm({super.key, this.preFilledData, this.index});
 
   final dynamic preFilledData;
+  final int? index;
 
   @override
   State<EditMatrimonyDetailsForm> createState() =>
@@ -104,31 +106,82 @@ class _EditMatrimonyDetailsFormState extends State<EditMatrimonyDetailsForm> {
       child: Scaffold(
         backgroundColor: kwhiteColor,
         appBar: AppBar(
-          backgroundColor: kwhiteColor,
-          elevation: 0,
-          leading: InkWell(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(left: 15.0, top: 15),
-              child: SvgPicture.asset(
-                "assets/images/backward_arrow.svg",
+            backgroundColor: kwhiteColor,
+            elevation: 0,
+            leading: InkWell(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(left: 15.0, top: 15),
+                child: SvgPicture.asset(
+                  "assets/images/backward_arrow.svg",
+                ),
               ),
             ),
-          ),
-          title: Padding(
-            padding: const EdgeInsets.only(top: 15.0),
-            child: Text(
-              "Matrimony Details",
-              style: TextStyle(
-                  fontFamily: 'Raleway',
-                  fontSize: 18,
-                  color: kbrownColor,
-                  fontWeight: FontWeight.w700),
+            title: Padding(
+              padding: const EdgeInsets.only(top: 15.0),
+              child: Text(
+                "Matrimony Details",
+                style: TextStyle(
+                    fontFamily: 'Raleway',
+                    fontSize: 18,
+                    color: kbrownColor,
+                    fontWeight: FontWeight.w700),
+              ),
             ),
-          ),
-        ),
+            actions: [
+              InkWell(
+                onTap: () async {
+                  Loader.show(context);
+                  // final res =
+                  //     await companyDetailService.deleteJob(widget.jobId!);
+
+                  final res = await matrimonyDetailService.deleteMatrimony(
+                      widget.preFilledData['id'], widget.index!);
+
+                  Loader.hide();
+
+                  if (!res) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          "Profile not deleted",
+                          style: TextStyle(
+                            fontFamily: "Inter",
+                            fontSize: 15,
+                            fontWeight: FontWeight.w400,
+                            color: kwhiteColor,
+                          ),
+                        ),
+                      ),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          "Profile Deleted Successfully",
+                          style: TextStyle(
+                            fontFamily: "Inter",
+                            fontSize: 15,
+                            fontWeight: FontWeight.w400,
+                            color: kwhiteColor,
+                          ),
+                        ),
+                      ),
+                    );
+                    Navigator.pop(context);
+                  }
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 15.0, right: 15),
+                  child: Icon(
+                    Icons.delete_outline_rounded,
+                    color: Colors.red,
+                  ),
+                ),
+              )
+            ]),
         body: Form(
           key: _formKey,
           child: Container(
@@ -641,8 +694,8 @@ class _EditMatrimonyDetailsFormState extends State<EditMatrimonyDetailsForm> {
                               return;
                             }
 
-                            print('validated');
-                            return;
+                            // print('validated');
+                            // return;
                             // print(matrimonyDetailService.myMatrinomyData["name"]);
                             // print(matrimonyDetailService.myMatrinomyData["dob"]);
                             // print(nameController.text);

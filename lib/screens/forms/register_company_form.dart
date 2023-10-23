@@ -307,6 +307,8 @@ class _RegisterCompanyState extends State<RegisterCompany> {
                         print("res" + res.toString());
                         print('validated');
 
+                        Navigator.of(context).pop();
+
                         return;
                       },
                       child: Container(

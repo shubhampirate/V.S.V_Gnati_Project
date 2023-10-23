@@ -69,13 +69,20 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
         actions: [
           InkWell(
             onTap: () async {
-              final authService = Provider.of<AuthServiceProvider>(context, listen: false);
-              final homeService = Provider.of<HomeProvider>(context, listen: false);
-              final eventService = Provider.of<EventProvider>(context, listen: false);
-              final familyDetailService = Provider.of<FamilyDetailProvider>(context, listen: false);
-              final jobDetailService = Provider.of<JobDetailProvider>(context, listen: false);
-              final matrimonyService = Provider.of<MatrimonyDetailProvider>(context, listen: false);
-              final memberListService = Provider.of<MembersListProvider>(context, listen: false);
+              final authService =
+                  Provider.of<AuthServiceProvider>(context, listen: false);
+              final homeService =
+                  Provider.of<HomeProvider>(context, listen: false);
+              final eventService =
+                  Provider.of<EventProvider>(context, listen: false);
+              final familyDetailService =
+                  Provider.of<FamilyDetailProvider>(context, listen: false);
+              final jobDetailService =
+                  Provider.of<JobDetailProvider>(context, listen: false);
+              final matrimonyService =
+                  Provider.of<MatrimonyDetailProvider>(context, listen: false);
+              final memberListService =
+                  Provider.of<MembersListProvider>(context, listen: false);
               // context.read<HomeProvider>().dispose();
               homeService.reset();
               eventService.reset();
@@ -101,7 +108,8 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
       ),
       body: ListView(
           // shrinkWrap: true,
-          physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+          physics:
+              BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
           children: [
             Container(
               child: Text(
@@ -117,13 +125,15 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
             ),
             FutureBuilder(
                 future: familyDetailService.memberDetails.isEmpty
-                    ? Provider.of<FamilyDetailProvider>(context, listen: false).fetchFamilyDetails()
+                    ? Provider.of<FamilyDetailProvider>(context, listen: false)
+                        .fetchFamilyDetails()
                     : null,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Container(
                         margin: const EdgeInsets.only(top: 20),
-                        child: const Center(child: CircularProgressIndicator()));
+                        child:
+                            const Center(child: CircularProgressIndicator()));
                   } else if (snapshot.hasError) {
                     return Center(
                         child: Text(
@@ -204,14 +214,17 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
                                 ),
                               ),
                               ListView.builder(
-                                  itemCount: familyDetailService.occupationAddreess.length,
+                                  itemCount: familyDetailService
+                                      .occupationAddreess.length,
                                   physics: const NeverScrollableScrollPhysics(),
                                   shrinkWrap: true,
                                   itemBuilder: (context, index) {
                                     return Container(
                                       margin: const EdgeInsets.only(top: 5),
                                       child: Text(
-                                        familyDetailService.occupationAddreess[index]["occupation_address"],
+                                        familyDetailService
+                                                .occupationAddreess[index]
+                                            ["occupation_address"],
                                         style: TextStyle(
                                           color: kblackColor,
                                           fontFamily: "Roboto",
@@ -229,16 +242,22 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
                             // editOccupationAddress =
                             // });
 
-                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
                               return EditFamilyDetailsForm(
-                                editOccupationAddress: List.of(familyDetailService.occupationAddreess),
-                                editHomeAddress: familyDetailService.homeAddress,
+                                editOccupationAddress: List.of(
+                                    familyDetailService.occupationAddreess),
+                                editHomeAddress:
+                                    familyDetailService.homeAddress,
                                 editGotrej: familyDetailService.gotrej,
                               );
                             }));
                           },
                           child: Container(
-                            margin: EdgeInsets.only(top: 15, right: MediaQuery.of(context).size.width * 0.5, left: 20),
+                            margin: EdgeInsets.only(
+                                top: 15,
+                                right: MediaQuery.of(context).size.width * 0.5,
+                                left: 20),
                             padding: EdgeInsets.symmetric(vertical: 8),
                             // width: 250,
                             // height: 25,
@@ -250,7 +269,10 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
                             child: Text(
                               "Edit Family Details",
                               textAlign: TextAlign.center,
-                              style: TextStyle(fontFamily: 'Roboto', fontSize: 13, color: kblackColor),
+                              style: TextStyle(
+                                  fontFamily: 'Roboto',
+                                  fontSize: 13,
+                                  color: kblackColor),
                             ),
                           ),
                         ),
@@ -273,7 +295,8 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
                                   )),
                               InkWell(
                                 onTap: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
                                     return const AddOrEditFamilyMember(
                                       index: null,
                                       username: null,
@@ -294,7 +317,8 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
                                 },
                                 child: Container(
                                   margin: const EdgeInsets.only(right: 20),
-                                  padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15, vertical: 8),
                                   decoration: BoxDecoration(
                                     color: kyellowColor,
                                     borderRadius: BorderRadius.circular(5.0),
@@ -314,14 +338,19 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                          margin: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 20),
                           child: ListView.builder(
                             itemCount: familyDetailService.memberDetails.length,
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
+                              print(familyDetailService.memberDetails.length);
+                              print(familyDetailService.memberDetails[index]
+                                  ["id"]);
                               return Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 10),
                                 margin: EdgeInsets.only(bottom: 15),
                                 // height: 500,
                                 decoration: BoxDecoration(
@@ -335,65 +364,111 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
                                   // mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           // mainAxisAlignment: MainAxisAlignment.start,
                                           children: [
                                             Text(
-                                              familyDetailService.memberDetails[index]["name"],
-                                              style: TextStyle(fontFamily: 'Roboto', fontSize: 15, color: kblackColor),
+                                              familyDetailService
+                                                  .memberDetails[index]["name"],
+                                              style: TextStyle(
+                                                  fontFamily: 'Roboto',
+                                                  fontSize: 15,
+                                                  color: kblackColor),
                                             ),
                                             const SizedBox(
                                               height: 3,
                                             ),
                                             Text(
                                               "Relation : ${familyDetailService.memberDetails[index]["relation"]}",
-                                              style: TextStyle(fontFamily: 'Roboto', fontSize: 12, color: kblackColor),
+                                              style: TextStyle(
+                                                  fontFamily: 'Roboto',
+                                                  fontSize: 12,
+                                                  color: kblackColor),
                                             ),
                                           ],
                                         ),
                                         InkWell(
                                           onTap: () {
-                                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                            Navigator.push(context,
+                                                MaterialPageRoute(
+                                                    builder: (context) {
                                               return AddOrEditFamilyMember(
                                                 index: index,
-                                                username: familyDetailService.memberDetails[index]["username"],
-                                                memberId: familyDetailService.memberDetails[index]["id"],
-                                                name: familyDetailService.memberDetails[index]["name"],
-                                                relationWithMainMember: familyDetailService.memberDetails[index]
-                                                    ["relation"],
-                                                education: familyDetailService.memberDetails[index]["education"],
-                                                emailAddress:
-                                                    familyDetailService.memberDetails[index]["email_address"] ?? "",
-                                                phoneNumber:
-                                                    familyDetailService.memberDetails[index]["phone"].toString(),
-                                                birthDate: familyDetailService.memberDetails[index]["dob"] ?? "",
-                                                professionalStatus: familyDetailService.memberDetails[index]
-                                                    ["profession_status"],
-                                                professionalName: familyDetailService.memberDetails[index]
-                                                    ["profession_name"],
-                                                gender: familyDetailService.memberDetails[index]["gender"],
-                                                bloodGroup: familyDetailService.memberDetails[index]["blood_group"],
-                                                maritialStatus: familyDetailService.memberDetails[index]
-                                                    ["maritial_status"],
+                                                username: familyDetailService
+                                                        .memberDetails[index]
+                                                    ["username"],
+                                                memberId: familyDetailService
+                                                    .memberDetails[index]["id"],
+                                                name: familyDetailService
+                                                        .memberDetails[index]
+                                                    ["name"],
+                                                relationWithMainMember:
+                                                    familyDetailService
+                                                            .memberDetails[
+                                                        index]["relation"],
+                                                education: familyDetailService
+                                                        .memberDetails[index]
+                                                    ["education"],
+                                                emailAddress: familyDetailService
+                                                                .memberDetails[
+                                                            index]
+                                                        ["email_address"] ??
+                                                    "",
+                                                phoneNumber: familyDetailService
+                                                    .memberDetails[index]
+                                                        ["phone"]
+                                                    .toString(),
+                                                birthDate: familyDetailService
+                                                            .memberDetails[
+                                                        index]["dob"] ??
+                                                    "",
+                                                professionalStatus:
+                                                    familyDetailService
+                                                                .memberDetails[
+                                                            index]
+                                                        ["profession_status"],
+                                                professionalName:
+                                                    familyDetailService
+                                                                .memberDetails[
+                                                            index]
+                                                        ["profession_name"],
+                                                gender: familyDetailService
+                                                        .memberDetails[index]
+                                                    ["gender"],
+                                                bloodGroup: familyDetailService
+                                                        .memberDetails[index]
+                                                    ["blood_group"],
+                                                maritialStatus:
+                                                    familyDetailService
+                                                                .memberDetails[
+                                                            index]
+                                                        ["maritial_status"],
                                               );
                                             }));
                                           },
                                           child: Container(
-                                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 20, vertical: 4),
                                             decoration: BoxDecoration(
                                               color: kyellowColor,
-                                              borderRadius: BorderRadius.circular(5.0),
+                                              borderRadius:
+                                                  BorderRadius.circular(5.0),
                                             ),
                                             child: Row(
                                               children: [
                                                 Text(
                                                   "Edit",
-                                                  style:
-                                                      TextStyle(fontFamily: 'Roboto', fontSize: 12, color: kblackColor),
+                                                  style: TextStyle(
+                                                      fontFamily: 'Roboto',
+                                                      fontSize: 12,
+                                                      color: kblackColor),
                                                 ),
                                                 const SizedBox(
                                                   width: 5,
@@ -410,7 +485,12 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
                                     ),
                                     Container(
                                       margin: EdgeInsets.only(
-                                          right: MediaQuery.of(context).size.width * 0.10, top: 12, bottom: 3),
+                                          right: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.10,
+                                          top: 12,
+                                          bottom: 3),
                                       child: Row(
                                         // mainAxisAlignment: MainAxisAlignment.start,
                                         children: [
@@ -419,14 +499,20 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
                                             // padding: EdgeInsets.only(right),
                                             child: Row(
                                               children: [
-                                                Image.asset("assets/images/phone.png"),
+                                                Image.asset(
+                                                    "assets/images/phone.png"),
                                                 const SizedBox(
                                                   width: 5,
                                                 ),
                                                 Text(
-                                                  familyDetailService.memberDetails[index]["phone"].toString(),
-                                                  style:
-                                                      TextStyle(fontFamily: 'Roboto', fontSize: 14, color: kblackColor),
+                                                  familyDetailService
+                                                      .memberDetails[index]
+                                                          ["phone"]
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                      fontFamily: 'Roboto',
+                                                      fontSize: 14,
+                                                      color: kblackColor),
                                                 )
                                               ],
                                             ),
@@ -436,14 +522,20 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
                                           // ),
                                           Row(
                                             children: [
-                                              Image.asset("assets/images/blood_group.png"),
+                                              Image.asset(
+                                                  "assets/images/blood_group.png"),
                                               const SizedBox(
                                                 width: 5,
                                               ),
                                               Text(
-                                                familyDetailService.memberDetails[index]["blood_group"] ?? "NA",
-                                                style:
-                                                    TextStyle(fontFamily: 'Roboto', fontSize: 14, color: kblackColor),
+                                                familyDetailService
+                                                            .memberDetails[
+                                                        index]["blood_group"] ??
+                                                    "NA",
+                                                style: TextStyle(
+                                                    fontFamily: 'Roboto',
+                                                    fontSize: 14,
+                                                    color: kblackColor),
                                               )
                                             ],
                                           ),
@@ -452,7 +544,12 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
                                     ),
                                     Container(
                                       margin: EdgeInsets.only(
-                                          right: MediaQuery.of(context).size.width * 0.10, top: 8, bottom: 3),
+                                          right: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.10,
+                                          top: 8,
+                                          bottom: 3),
                                       child: Row(
                                         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
@@ -460,14 +557,20 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
                                             width: 218,
                                             child: Row(
                                               children: [
-                                                SvgPicture.asset("assets/images/calendar_icon.svg"),
+                                                SvgPicture.asset(
+                                                    "assets/images/calendar_icon.svg"),
                                                 const SizedBox(
                                                   width: 5,
                                                 ),
                                                 Text(
-                                                  familyDetailService.memberDetails[index]["dob"] ?? "NA",
-                                                  style:
-                                                      TextStyle(fontFamily: 'Roboto', fontSize: 14, color: kblackColor),
+                                                  familyDetailService
+                                                              .memberDetails[
+                                                          index]["dob"] ??
+                                                      "NA",
+                                                  style: TextStyle(
+                                                      fontFamily: 'Roboto',
+                                                      fontSize: 14,
+                                                      color: kblackColor),
                                                 )
                                               ],
                                             ),
@@ -478,16 +581,23 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
                                           Row(
                                             mainAxisSize: MainAxisSize.max,
                                             // crossAxisAlignment: CrossAxisAlignment.start,
-                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
                                             children: [
-                                              SvgPicture.asset("assets/images/gender.svg"),
+                                              SvgPicture.asset(
+                                                  "assets/images/gender.svg"),
                                               const SizedBox(
                                                 width: 3,
                                               ),
                                               Text(
-                                                familyDetailService.memberDetails[index]["gender"] ?? "NA",
-                                                style:
-                                                    TextStyle(fontFamily: 'Roboto', fontSize: 14, color: kblackColor),
+                                                familyDetailService
+                                                            .memberDetails[
+                                                        index]["gender"] ??
+                                                    "NA",
+                                                style: TextStyle(
+                                                    fontFamily: 'Roboto',
+                                                    fontSize: 14,
+                                                    color: kblackColor),
                                               ),
                                             ],
                                           ),
@@ -496,7 +606,12 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
                                     ),
                                     Container(
                                       margin: EdgeInsets.only(
-                                          right: MediaQuery.of(context).size.width * 0.10, top: 8, bottom: 3),
+                                          right: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.10,
+                                          top: 8,
+                                          bottom: 3),
                                       child: Row(
                                         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
@@ -504,14 +619,21 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
                                             width: 220,
                                             child: Row(
                                               children: [
-                                                Image.asset("assets/images/maritial_status.png"),
+                                                Image.asset(
+                                                    "assets/images/maritial_status.png"),
                                                 const SizedBox(
                                                   width: 5,
                                                 ),
                                                 Text(
-                                                  familyDetailService.memberDetails[index]["maritial_status"] ?? "NA",
-                                                  style:
-                                                      TextStyle(fontFamily: 'Roboto', fontSize: 14, color: kblackColor),
+                                                  familyDetailService
+                                                                  .memberDetails[
+                                                              index]
+                                                          ["maritial_status"] ??
+                                                      "NA",
+                                                  style: TextStyle(
+                                                      fontFamily: 'Roboto',
+                                                      fontSize: 14,
+                                                      color: kblackColor),
                                                 )
                                               ],
                                             ),
@@ -522,16 +644,24 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
                                           Row(
                                             mainAxisSize: MainAxisSize.max,
                                             // crossAxisAlignment: CrossAxisAlignment.start,
-                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
                                             children: [
-                                              Image.asset("assets/images/village.png"),
+                                              Image.asset(
+                                                  "assets/images/village.png"),
                                               const SizedBox(
                                                 width: 5,
                                               ),
                                               Text(
-                                                familyDetailService.memberDetails[index]["native_village"] ?? "NA",
-                                                style:
-                                                    TextStyle(fontFamily: 'Roboto', fontSize: 14, color: kblackColor),
+                                                familyDetailService
+                                                                .memberDetails[
+                                                            index]
+                                                        ["native_village"] ??
+                                                    "NA",
+                                                style: TextStyle(
+                                                    fontFamily: 'Roboto',
+                                                    fontSize: 14,
+                                                    color: kblackColor),
                                               ),
                                             ],
                                           ),
@@ -540,23 +670,40 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
                                     ),
                                     Container(
                                       margin: EdgeInsets.only(
-                                          right: MediaQuery.of(context).size.width * 0.10, top: 8, bottom: 3),
+                                          right: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.10,
+                                          top: 8,
+                                          bottom: 3),
                                       child: Row(
                                         children: [
-                                          SvgPicture.asset("assets/images/education.svg"),
+                                          SvgPicture.asset(
+                                              "assets/images/education.svg"),
                                           const SizedBox(
                                             width: 5,
                                           ),
                                           Text(
-                                            familyDetailService.memberDetails[index]["education"] ?? "NA",
-                                            style: TextStyle(fontFamily: 'Roboto', fontSize: 14, color: kblackColor),
+                                            familyDetailService
+                                                        .memberDetails[index]
+                                                    ["education"] ??
+                                                "NA",
+                                            style: TextStyle(
+                                                fontFamily: 'Roboto',
+                                                fontSize: 14,
+                                                color: kblackColor),
                                           )
                                         ],
                                       ),
                                     ),
                                     Container(
                                       margin: EdgeInsets.only(
-                                          right: MediaQuery.of(context).size.width * 0.10, top: 8, bottom: 3),
+                                          right: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.10,
+                                          top: 8,
+                                          bottom: 3),
                                       child: Row(
                                         children: [
                                           Icon(
@@ -568,23 +715,41 @@ class _FamilyDetailsScreenState extends State<FamilyDetailsScreen> {
                                             width: 5,
                                           ),
                                           Text(
-                                            familyDetailService.memberDetails[index]["profession_status"] ?? "NA",
-                                            style: TextStyle(fontFamily: 'Roboto', fontSize: 14, color: kblackColor),
+                                            familyDetailService
+                                                        .memberDetails[index]
+                                                    ["profession_status"] ??
+                                                "NA",
+                                            style: TextStyle(
+                                                fontFamily: 'Roboto',
+                                                fontSize: 14,
+                                                color: kblackColor),
                                           )
                                         ],
                                       ),
                                     ),
                                     Container(
-                                      margin: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.10, top: 8),
+                                      margin: EdgeInsets.only(
+                                          right: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.10,
+                                          top: 8),
                                       child: Row(
                                         children: [
-                                          SvgPicture.asset("assets/images/professional_name.svg"),
+                                          SvgPicture.asset(
+                                              "assets/images/professional_name.svg"),
                                           const SizedBox(
                                             width: 5,
                                           ),
                                           Text(
-                                            familyDetailService.memberDetails[index]["profession_name"] ?? "NA",
-                                            style: TextStyle(fontFamily: 'Roboto', fontSize: 14, color: kblackColor),
+                                            familyDetailService
+                                                        .memberDetails[index]
+                                                    ["profession_name"] ??
+                                                "NA",
+                                            style: TextStyle(
+                                                fontFamily: 'Roboto',
+                                                fontSize: 14,
+                                                color: kblackColor),
                                           )
                                         ],
                                       ),

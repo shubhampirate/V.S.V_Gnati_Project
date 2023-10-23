@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
@@ -64,7 +63,8 @@ class FamilyDetailProvider extends ChangeNotifier {
     // print("hello");
     try {
       final response = await http.get(
-        Uri.parse('https://jenilsavla.pythonanywhere.com/api/family/${GetStorage().read('familyId')}'),
+        Uri.parse(
+            'https://jenilsavla.pythonanywhere.com/api/family/${GetStorage().read('familyId')}'),
         headers: {"Authorization": "Token ${GetStorage().read('token')}"},
       );
       if (response.statusCode == 200) {
@@ -119,7 +119,8 @@ class FamilyDetailProvider extends ChangeNotifier {
       // print(maritialStatus);
       if (memberId != null) {
         response = await http.put(
-          Uri.parse('http://jenilsavla.pythonanywhere.com/api/add-member/${GetStorage().read('familyId')}'),
+          Uri.parse(
+              'http://jenilsavla.pythonanywhere.com/api/add-member/${GetStorage().read('familyId')}'),
           headers: {
             "Authorization": "Token ${GetStorage().read('token')}",
             'Content-Type': 'application/json',
@@ -141,7 +142,8 @@ class FamilyDetailProvider extends ChangeNotifier {
         );
       } else {
         response = await http.post(
-          Uri.parse('http://jenilsavla.pythonanywhere.com/api/add-member/${GetStorage().read('familyId')}'),
+          Uri.parse(
+              'http://jenilsavla.pythonanywhere.com/api/add-member/${GetStorage().read('familyId')}'),
           headers: {
             "Authorization": "Token ${GetStorage().read('token')}",
             'Content-Type': 'application/json',
@@ -184,6 +186,39 @@ class FamilyDetailProvider extends ChangeNotifier {
     } catch (error) {
       rethrow;
     }
+  }
+
+  Future<bool> deleteFamilyMember(int memberId, int index) async {
+    bool result = false;
+
+    String url =
+        "http://jenilsavla.pythonanywhere.com/api/add-member/${memberId}";
+
+    Uri uri = Uri.parse(url);
+
+    try {
+      final res = await http.delete(
+        uri,
+        headers: {"Authorization": "Token ${GetStorage().read('token')}"},
+      );
+
+      print(res.body);
+      print(res.statusCode);
+
+      if (res.statusCode == 200) {
+        result = true;
+      }
+    } on Exception catch (e) {
+      print(e);
+    }
+
+    if (result) {
+      memberDetails.removeAt(index);
+    }
+    notifyListeners();
+
+    // String url =
+    return result;
   }
 
   // void addAnotherOccupationAdress() {
