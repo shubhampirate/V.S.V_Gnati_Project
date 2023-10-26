@@ -23,7 +23,7 @@ void main() async {
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
       overlays: [SystemUiOverlay.bottom]);
   print('token is ${GetStorage().read('token')}');
-  print('Family Id is ${GetStorage().read('familyId')}');
+  print('Family Id is ');
   print('Matrimony Ids are ${GetStorage().read('matrimonyIds')}');
 
   runApp(const MyApp());

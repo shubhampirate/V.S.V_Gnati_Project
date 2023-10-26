@@ -173,8 +173,8 @@ class _AddOrEditFamilyMemberState extends State<AddOrEditFamilyMember> {
                     // final res =
                     //     await companyDetailService.deleteJob(widget.jobId!);
 
-                    final res = await familyDetailService.deleteFamilyMember(
-                        widget.memberId!, widget.index!);
+                    final res =
+                        await familyDetailService.deleteFamilyMember(widget.memberId!, widget.index!, widget.username!);
 
                     Loader.hide();
 
@@ -257,8 +257,7 @@ class _AddOrEditFamilyMemberState extends State<AddOrEditFamilyMember> {
                       ),
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsets.only(left: 20.0, right: 20, top: 10),
+                      padding: const EdgeInsets.only(left: 20.0, right: 20, top: 10),
                       child: Container(
                         // height: 40,
                         child: TextFormField(
@@ -307,8 +306,7 @@ class _AddOrEditFamilyMemberState extends State<AddOrEditFamilyMember> {
                       ),
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsets.only(left: 20.0, right: 20, top: 10),
+                      padding: const EdgeInsets.only(left: 20.0, right: 20, top: 10),
                       child: Container(
                         // height: 40,
                         child: TextFormField(
@@ -358,8 +356,7 @@ class _AddOrEditFamilyMemberState extends State<AddOrEditFamilyMember> {
                       ),
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsets.only(left: 20.0, right: 20, top: 10),
+                      padding: const EdgeInsets.only(left: 20.0, right: 20, top: 10),
                       child: Container(
                         // height: 40,
                         child: TextFormField(
@@ -404,8 +401,7 @@ class _AddOrEditFamilyMemberState extends State<AddOrEditFamilyMember> {
                       ),
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsets.only(left: 20.0, right: 20, top: 10),
+                      padding: const EdgeInsets.only(left: 20.0, right: 20, top: 10),
                       child: Container(
                         // height: 40,
                         child: TextFormField(
@@ -450,8 +446,7 @@ class _AddOrEditFamilyMemberState extends State<AddOrEditFamilyMember> {
                       ),
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsets.only(left: 20.0, right: 20, top: 10),
+                      padding: const EdgeInsets.only(left: 20.0, right: 20, top: 10),
                       child: Container(
                         // height: 40,
                         child: TextFormField(
@@ -498,8 +493,7 @@ class _AddOrEditFamilyMemberState extends State<AddOrEditFamilyMember> {
                       ),
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsets.only(left: 20.0, right: 20, top: 10),
+                      padding: const EdgeInsets.only(left: 20.0, right: 20, top: 10),
                       child: Container(
                         // height: 40,
                         child: TextFormField(
@@ -516,13 +510,10 @@ class _AddOrEditFamilyMemberState extends State<AddOrEditFamilyMember> {
 
                             if (pickedDate != null) {
                               // print(pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                              String formattedDate =
-                                  DateFormat('yyyy-MM-dd').format(pickedDate);
-                              print(
-                                  formattedDate); //formatted date output using intl package =>  2021-03-16
+                              String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+                              print(formattedDate); //formatted date output using intl package =>  2021-03-16
                               setState(() {
-                                birthDate =
-                                    formattedDate; //set output date to TextField value.
+                                birthDate = formattedDate; //set output date to TextField value.
                                 birthDateController.text = formattedDate;
                               });
                             } else {}
@@ -565,9 +556,7 @@ class _AddOrEditFamilyMemberState extends State<AddOrEditFamilyMember> {
                                   professionalStatus = value!;
                                 });
                               },
-                              items: professionalStatusList
-                                  .map<DropdownMenuItem<String>>(
-                                      (String value) {
+                              items: professionalStatusList.map<DropdownMenuItem<String>>((String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
                                   child: Text(value),
@@ -612,9 +601,7 @@ class _AddOrEditFamilyMemberState extends State<AddOrEditFamilyMember> {
                                   professionalName = value!;
                                 });
                               },
-                              items: dropdownOptions
-                                  .map<DropdownMenuItem<String>>(
-                                      (String value) {
+                              items: dropdownOptions.map<DropdownMenuItem<String>>((String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
                                   child: Text(value),
@@ -651,8 +638,7 @@ class _AddOrEditFamilyMemberState extends State<AddOrEditFamilyMember> {
                       ),
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsets.only(left: 20.0, right: 20, top: 10),
+                      padding: const EdgeInsets.only(left: 20.0, right: 20, top: 10),
                       child: Container(
                         // height: 40,
                         child: TextFormField(
@@ -697,8 +683,7 @@ class _AddOrEditFamilyMemberState extends State<AddOrEditFamilyMember> {
                       ),
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsets.only(left: 20.0, right: 20, top: 10),
+                      padding: const EdgeInsets.only(left: 20.0, right: 20, top: 10),
                       child: Container(
                         // height: 40,
                         child: TextFormField(
@@ -739,8 +724,7 @@ class _AddOrEditFamilyMemberState extends State<AddOrEditFamilyMember> {
                       ),
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsets.only(left: 20.0, right: 20, top: 10),
+                      padding: const EdgeInsets.only(left: 20.0, right: 20, top: 10),
                       child: Container(
                         // height: 40,
                         child: TextFormField(
@@ -767,8 +751,7 @@ class _AddOrEditFamilyMemberState extends State<AddOrEditFamilyMember> {
             Container(
               height: 40,
               padding: const EdgeInsets.only(top: 10, bottom: 10),
-              margin: const EdgeInsets.only(
-                  left: 20, right: 20, top: 30, bottom: 40),
+              margin: const EdgeInsets.only(left: 20, right: 20, top: 30, bottom: 40),
               decoration: BoxDecoration(
                 color: kyellowColor,
                 borderRadius: const BorderRadius.all(Radius.circular(5.0)),
@@ -780,8 +763,7 @@ class _AddOrEditFamilyMemberState extends State<AddOrEditFamilyMember> {
                     try {
                       // print(memberId);
                       Loader.show(context);
-                      int statusCode =
-                          await familyDetailService.addOrEditMember(
+                      int statusCode = await familyDetailService.addOrEditMember(
                         index,
                         username,
                         memberId,
@@ -815,9 +797,7 @@ class _AddOrEditFamilyMemberState extends State<AddOrEditFamilyMember> {
                 },
                 child: Center(
                   child: Text(
-                    widget.memberId != null
-                        ? "Edit Member Details"
-                        : "Add Member",
+                    widget.memberId != null ? "Edit Member Details" : "Add Member",
                     // widget.jobId != null ? "Edit Job" : "Add Job",
                     style: TextStyle(
                       fontFamily: "Roboto",

@@ -151,13 +151,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     decoration: BoxDecoration(color: Color(0xFFE99B01).withOpacity(0.5), shape: BoxShape.circle),
                     padding: EdgeInsets.all(3.0),
                     child: Icon(
-                      Icons.info_outline,
+                      Icons.currency_rupee,
                       color: kblackColor,
                       size: 25,
                     ),
                   )
                 : Icon(
-                    Icons.info_outline,
+                    Icons.currency_rupee,
                     color: kblackColor,
                     size: 25,
                   ),

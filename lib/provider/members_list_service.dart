@@ -140,14 +140,8 @@ class MembersListProvider extends ChangeNotifier {
     List newlist = [];
 
     _originalMembersList.forEach((element) {
-      bool condition1 = element["name"]
-              .toString()
-              .toLowerCase()
-              .contains(membername.toLowerCase()) &&
-          element["education"]
-              .toString()
-              .toLowerCase()
-              .contains(education.toLowerCase()) &&
+      bool condition1 = element["name"].toString().toLowerCase().contains(membername.toLowerCase()) &&
+          element["education"].toString().toLowerCase().contains(education.toLowerCase()) &&
           // element["phone"]
           //     .toString()
           //     .toLowerCase()
@@ -156,29 +150,18 @@ class MembersListProvider extends ChangeNotifier {
           //     .toString()
           //     .toLowerCase()
           //     .contains(profession.toLowerCase()) &&
-          element["gotrej"]
-              .toString()
-              .toLowerCase()
-              .contains(gotRej.toLowerCase()) &&
-          element["native_village"]
-              .toString()
-              .toLowerCase()
-              .contains(native.toLowerCase());
+          element["gotrej"].toString().toLowerCase().contains(gotRej.toLowerCase()) &&
+          element["native_village"].toString().toLowerCase().contains(native.toLowerCase());
 
       bool condition2 = () {
         // print('co2');
         // print(_female);
         // print(_male);
 
-        if (_male != null &&
-            _female != null &&
-            _male == true &&
-            _female == true) return true; // edge case if both are selected
+        if (_male != null && _female != null && _male == true && _female == true)
+          return true; // edge case if both are selected
 
-        if (_male != null &&
-            _female != null &&
-            _male == false &&
-            _female == false)
+        if (_male != null && _female != null && _male == false && _female == false)
           return true; // if none are selected display both male and female
 
         if (_female != null) {
@@ -213,15 +196,13 @@ class MembersListProvider extends ChangeNotifier {
         }
 
         if (_maritalStatusMarried != null) {
-          if (_maritalStatusMarried == true &&
-              element["maritial_status"].toString().toLowerCase() == "single") {
+          if (_maritalStatusMarried == true && element["maritial_status"].toString().toLowerCase() == "single") {
             return false;
           }
         }
 
         if (_maritalStatusUnmarried != null) {
-          if (_maritalStatusUnmarried == true &&
-              element["maritial_status"].toString().toLowerCase() != "single") {
+          if (_maritalStatusUnmarried == true && element["maritial_status"].toString().toLowerCase() != "single") {
             return false;
           }
         }

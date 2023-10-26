@@ -14,6 +14,7 @@ class FamilyDetailProvider extends ChangeNotifier {
   String _gotrej = "";
   List _occupationAddress = [];
   List _memberDetails = [];
+  List _additionalHomeAddress = [];
 
   // bool _editfamilyDetails
 
@@ -24,6 +25,7 @@ class FamilyDetailProvider extends ChangeNotifier {
   String get gotrej => _gotrej;
   List get occupationAddreess => _occupationAddress;
   List get memberDetails => _memberDetails;
+  List get additionalHomeAddress => _additionalHomeAddress;
 
   void editHomeAddress() {
     _isHomeAddressEditing = !_isHomeAddressEditing;
@@ -63,8 +65,7 @@ class FamilyDetailProvider extends ChangeNotifier {
     // print("hello");
     try {
       final response = await http.get(
-        Uri.parse(
-            'https://jenilsavla.pythonanywhere.com/api/family/${GetStorage().read('familyId')}'),
+        Uri.parse('https://jenilsavla.pythonanywhere.com/api/family/${GetStorage().read('familyId')}'),
         headers: {"Authorization": "Token ${GetStorage().read('token')}"},
       );
       if (response.statusCode == 200) {
@@ -74,6 +75,7 @@ class FamilyDetailProvider extends ChangeNotifier {
         _gotrej = responseData["data"]["gotrej"];
         _occupationAddress = responseData["data"]["occupations"];
         _memberDetails = responseData["data"]["members"];
+        _additionalHomeAddress = responseData["data"]["additional_address"];
       } else {
         print(response.statusCode);
       }
@@ -119,8 +121,7 @@ class FamilyDetailProvider extends ChangeNotifier {
       // print(maritialStatus);
       if (memberId != null) {
         response = await http.put(
-          Uri.parse(
-              'http://jenilsavla.pythonanywhere.com/api/add-member/${GetStorage().read('familyId')}'),
+          Uri.parse('http://jenilsavla.pythonanywhere.com/api/add-member/${GetStorage().read('familyId')}'),
           headers: {
             "Authorization": "Token ${GetStorage().read('token')}",
             'Content-Type': 'application/json',
@@ -142,8 +143,7 @@ class FamilyDetailProvider extends ChangeNotifier {
         );
       } else {
         response = await http.post(
-          Uri.parse(
-              'http://jenilsavla.pythonanywhere.com/api/add-member/${GetStorage().read('familyId')}'),
+          Uri.parse('http://jenilsavla.pythonanywhere.com/api/add-member/${GetStorage().read('familyId')}'),
           headers: {
             "Authorization": "Token ${GetStorage().read('token')}",
             'Content-Type': 'application/json',
@@ -188,18 +188,23 @@ class FamilyDetailProvider extends ChangeNotifier {
     }
   }
 
-  Future<bool> deleteFamilyMember(int memberId, int index) async {
+  Future<bool> deleteFamilyMember(int memberId, int index, String username) async {
     bool result = false;
 
-    String url =
-        "http://jenilsavla.pythonanywhere.com/api/add-member/${memberId}";
+    String url = "http://jenilsavla.pythonanywhere.com/api/add-member/${GetStorage().read('familyId')}";
 
     Uri uri = Uri.parse(url);
 
     try {
       final res = await http.delete(
         uri,
-        headers: {"Authorization": "Token ${GetStorage().read('token')}"},
+        headers: {
+          "Authorization": "Token ${GetStorage().read('token')}",
+          'Content-Type': 'application/json',
+        },
+        body: json.encode({
+          "username": username,
+        }),
       );
 
       print(res.body);
@@ -224,6 +229,97 @@ class FamilyDetailProvider extends ChangeNotifier {
   // void addAnotherOccupationAdress() {
   //   // _is
   // }
+
+  Future<bool> editFamilyDetails(
+      String editHomeAddress, String editGotrej, List editOccupations, List editAdditionalAddress) async {
+    try {
+      print(editHomeAddress);
+      print(editGotrej);
+      print(editOccupations);
+      print(editAdditionalAddress);
+      final Response response;
+
+      response = await http.put(
+        Uri.parse('https://jenilsavla.pythonanywhere.com/api/family/${GetStorage().read('familyId')}'),
+        headers: {
+          "Authorization": "Token ${GetStorage().read('token')}",
+          'Content-Type': 'application/json',
+        },
+        body: json.encode({
+          'home_address': editHomeAddress,
+          'gotrej': editGotrej,
+          'occupations': editOccupations,
+          'additional_address': editAdditionalAddress,
+        }),
+      );
+
+      print(response.body);
+      print(response.statusCode);
+      final responseData = json.decode(response.body);
+      if (response.statusCode == 200) {
+        _homeAddress = editHomeAddress;
+        _occupationAddress = editOccupations;
+        _additionalHomeAddress = editAdditionalAddress;
+        _gotrej = editGotrej;
+        notifyListeners();
+        return true;
+      }
+
+      if (responseData['error'] != null) {
+        throw HttpException(responseData['error']['message']);
+      }
+
+      return false;
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<bool> deleteOccupationAddress(int id, int index) async {
+    String url = "http://jenilsavla.pythonanywhere.com/api/family/${id}";
+
+    try {
+      final res = await http.delete(
+        Uri.parse(url),
+        headers: {"Authorization": "Token ${GetStorage().read('token')}"},
+      );
+
+      print(res.statusCode);
+
+      if (res.statusCode == 200) {
+        _occupationAddress.removeAt(index);
+        notifyListeners();
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> deleteAdditionalAddress(int id, int index) async {
+    String url = "http://jenilsavla.pythonanywhere.com/api/family-address/${id}";
+
+    try {
+      final res = await http.delete(
+        Uri.parse(url),
+        headers: {"Authorization": "Token ${GetStorage().read('token')}"},
+      );
+
+      print(res.statusCode);
+
+      if (res.statusCode == 200) {
+        _additionalHomeAddress.removeAt(index);
+        notifyListeners();
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
 
   void reset() {
     _isHomeAddressEditing = false;

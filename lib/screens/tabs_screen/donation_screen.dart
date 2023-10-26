@@ -1,13 +1,8 @@
 import 'package:community/constants/colors.dart';
 import 'package:community/constants/paths.dart';
-import 'package:community/provider/family_detail_service.dart';
-import 'package:community/screens/forms/edit_family_details.dart';
 import 'package:community/screens/payment_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class DonationScreen extends StatefulWidget {
@@ -28,21 +23,18 @@ class _DonationScreenState extends State<DonationScreen> {
           children: [
             Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 60,
                 ),
                 Text(
                   'Let\'s make a difference',
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Raleway',
-                      color: kbrownColor),
+                  style:
+                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'Raleway', color: kbrownColor),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
-                Text(
+                const Text(
                   'Donate Today',
                   style: TextStyle(
                     fontSize: 22,
@@ -53,11 +45,10 @@ class _DonationScreenState extends State<DonationScreen> {
                 // SizedBox(
                 //   height: 20,
                 // ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25, vertical: 20),
                   child: Text(
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                    'Your donation to our society is greatly appreciated. It enables us to make a meaningful impact on our community by supporting education, healthcare, poverty alleviation, and environmental conservation. Your contribution helps uplift the underprivileged, empower marginalized groups, and foster unity. We ensure transparency and accountability in handling your donation, and every amount, no matter how small, makes a difference. With your support, we can create a better future and bring hope to many lives.',
                     style: TextStyle(
                       fontSize: 15,
                       fontFamily: 'Roboto',
@@ -65,7 +56,7 @@ class _DonationScreenState extends State<DonationScreen> {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
 
@@ -80,7 +71,7 @@ class _DonationScreenState extends State<DonationScreen> {
                             Radius.circular(8),
                           ),
                         ),
-                        title: Text(
+                        title: const Text(
                           "Enter the amount (in ₹)",
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -96,57 +87,40 @@ class _DonationScreenState extends State<DonationScreen> {
                                 controller: _amountController,
                                 decoration: InputDecoration(
                                   isDense: true,
-                                  contentPadding:
-                                      const EdgeInsets.fromLTRB(10, 8, 10, 8),
+                                  contentPadding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
                                   enabledBorder: OutlineInputBorder(
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(10.0)),
-                                    borderSide: BorderSide(
-                                        color: ktextInputBorderColor,
-                                        width: 2.0),
+                                    borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                                    borderSide: BorderSide(color: ktextInputBorderColor, width: 2.0),
                                   ),
                                   focusedErrorBorder: const OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10.0)),
-                                    borderSide: BorderSide(
-                                        color: Colors.red, width: 2.0),
+                                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                    borderSide: BorderSide(color: Colors.red, width: 2.0),
                                   ),
                                   errorBorder: OutlineInputBorder(
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(10.0)),
-                                    borderSide: BorderSide(
-                                        color: ktextInputBorderColor,
-                                        width: 2.0),
+                                    borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                                    borderSide: BorderSide(color: ktextInputBorderColor, width: 2.0),
                                   ),
                                   focusedBorder: OutlineInputBorder(
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(10.0)),
-                                    borderSide: BorderSide(
-                                        color: ktextInputBorderColor,
-                                        width: 2.0),
+                                    borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                                    borderSide: BorderSide(color: ktextInputBorderColor, width: 2.0),
                                   ),
                                 )),
-                            SizedBox(
+                            const SizedBox(
                               height: 25,
                             ),
                             CupertinoButton(
-                              child: Text(
+                              child: const Text(
                                 'Pay',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold),
+                                style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
                               ),
                               color: kyellowColor,
                               onPressed: () {
                                 // Navigator.pushNamed(context, PaymentScreen.id);
                                 Navigator.of(context).pop();
 
-                                int? amount =
-                                    int.tryParse(_amountController.text);
+                                int? amount = int.tryParse(_amountController.text);
                                 if (amount != null) {
-                                  payAmount(amount *
-                                      100); // to convert rupees to paise
+                                  payAmount(amount * 100); // to convert rupees to paise
                                 }
                               },
                             ),
@@ -158,8 +132,8 @@ class _DonationScreenState extends State<DonationScreen> {
                   },
                   child: Container(
                     width: MediaQuery.of(context).size.width * 0.8,
-                    margin: EdgeInsets.only(top: 15),
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+                    margin: const EdgeInsets.only(top: 15),
+                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
                     decoration: BoxDecoration(
                       color: kyellowColor,
                       borderRadius: BorderRadius.circular(5.0),

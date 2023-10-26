@@ -1,16 +1,23 @@
 import 'package:community/constants/colors.dart';
 import 'package:community/provider/family_detail_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class EditFamilyDetailsForm extends StatefulWidget {
-  const EditFamilyDetailsForm(
-      {super.key, required this.editOccupationAddress, required this.editHomeAddress, required this.editGotrej});
+  const EditFamilyDetailsForm({
+    super.key,
+    required this.editOccupationAddress,
+    required this.editHomeAddress,
+    required this.editGotrej,
+    required this.editAdditionalHomeAddress,
+  });
 
   final List editOccupationAddress;
   final String editHomeAddress;
   final String editGotrej;
+  final List editAdditionalHomeAddress;
 
   @override
   State<EditFamilyDetailsForm> createState() => _EditFamilyDetailsFormState();
@@ -20,6 +27,7 @@ class _EditFamilyDetailsFormState extends State<EditFamilyDetailsForm> {
   List finalOccupationAddress = [];
   String finalHomeAddress = "";
   String finalGotrej = "";
+  List finalAdditionalAddress = [];
 
   @override
   void initState() {
@@ -28,22 +36,54 @@ class _EditFamilyDetailsFormState extends State<EditFamilyDetailsForm> {
     finalOccupationAddress = widget.editOccupationAddress;
     finalHomeAddress = widget.editHomeAddress;
     finalGotrej = widget.editGotrej;
+    finalAdditionalAddress = widget.editAdditionalHomeAddress;
   }
 
   final TextEditingController homeAddressController = TextEditingController();
   final TextEditingController gotrejController = TextEditingController();
   // final TextEditingController occupation
 
-  InputDecoration _commonInputDecoration(BuildContext context, [int? index]) {
+  InputDecoration _commonInputDecoration(BuildContext context, [int? index, String? field]) {
     final familyDetailService = Provider.of<FamilyDetailProvider>(context);
     return InputDecoration(
       suffixIcon: index != null && index > 0
           ? InkWell(
               child: Icon(Icons.cancel),
-              onTap: () {
-                setState(() {
-                  widget.editOccupationAddress.removeAt(index);
-                });
+              onTap: () async {
+                if (field == "occupationAddress") {
+                  Loader.show(context);
+                  bool status = await familyDetailService.deleteOccupationAddress(
+                      widget.editOccupationAddress[index]["id"], index);
+                  if (status == true) {
+                    Loader.hide();
+                    widget.editOccupationAddress.removeAt(index);
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Error occurred while deleting occupation address"),
+                      ),
+                    );
+                    Loader.hide();
+                  }
+                } else {
+                  Loader.show(context);
+                  bool status = await familyDetailService.deleteAdditionalAddress(
+                      widget.editAdditionalHomeAddress[index]["id"], index);
+                  if (status == true) {
+                    Loader.hide();
+                    widget.editAdditionalHomeAddress.removeAt(index);
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Error occurred while deleting additional address"),
+                      ),
+                    );
+                    Loader.hide();
+                  }
+                }
+                // setState(() {
+                //   widget.editOccupationAddress.removeAt(index);
+                // });
               },
             )
           : null,
@@ -70,7 +110,7 @@ class _EditFamilyDetailsFormState extends State<EditFamilyDetailsForm> {
 
   @override
   Widget build(BuildContext context) {
-    // final familyDetailService = Provider.of<FamilyDetailProvider>(context);
+    final familyDetailService = Provider.of<FamilyDetailProvider>(context);
     return Scaffold(
       backgroundColor: kwhiteColor,
       appBar: AppBar(
@@ -129,17 +169,36 @@ class _EditFamilyDetailsFormState extends State<EditFamilyDetailsForm> {
                             finalHomeAddress = val;
                           });
                         },
-                        // validator: (value) {
-                        //   if (value == null || value.isEmpty) {
-                        //     return 'Please enter your password';
-                        //   }
-                        //   return null;
-                        // },
-                        // onSaved: (value) {
-                        //   _password = value!;
-                        // },
                       ),
                     ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 25),
+                      child: Text(
+                        "Additional Home Address: ",
+                        style: TextStyle(fontFamily: 'Roboto', fontSize: 16, color: kblackColor),
+                      ),
+                    ),
+                    ListView.builder(
+                        itemCount: widget.editAdditionalHomeAddress.length,
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            margin: const EdgeInsets.only(top: 5, bottom: 5),
+                            // height: 40,
+                            child: TextFormField(
+                              // controller: gotrejController,
+                              initialValue: widget.editAdditionalHomeAddress[index]["additional_address"],
+                              decoration: _commonInputDecoration(context, index, "additionalHomeAddress"),
+                              maxLines: 2,
+                              onChanged: (val) {
+                                setState(() {
+                                  finalAdditionalAddress[index]["additional_address"] = val;
+                                });
+                              },
+                            ),
+                          );
+                        }),
                     Container(
                       margin: const EdgeInsets.only(top: 15),
                       child: Text(
@@ -192,7 +251,7 @@ class _EditFamilyDetailsFormState extends State<EditFamilyDetailsForm> {
                             child: TextFormField(
                               // controller: gotrejController,
                               initialValue: widget.editOccupationAddress[index]["occupation_address"],
-                              decoration: _commonInputDecoration(context, index),
+                              decoration: _commonInputDecoration(context, index, "occupationAddress"),
                               maxLines: 2,
                               onChanged: (val) {
                                 setState(() {
@@ -206,10 +265,21 @@ class _EditFamilyDetailsFormState extends State<EditFamilyDetailsForm> {
                 ),
               ),
               InkWell(
-                onTap: () {
-                  print(finalOccupationAddress);
-                  print(finalGotrej);
-                  print(finalHomeAddress);
+                onTap: () async {
+                  Loader.show(context);
+                  bool status = await familyDetailService.editFamilyDetails(
+                      finalHomeAddress, finalGotrej, finalOccupationAddress, finalAdditionalAddress);
+                  if (status == true) {
+                    Loader.hide();
+                    Navigator.pop(context);
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Error occurred while editing family details"),
+                      ),
+                    );
+                    Loader.hide();
+                  }
                 },
                 child: Container(
                   margin: EdgeInsets.only(top: 30.0),
