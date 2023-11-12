@@ -123,42 +123,39 @@ const ContactUs = () => {
                   <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}
                     sx={{ backgroundColor: "rgba(206,245,211,0.95)" }}>
                     <AccordionSummary aria-controls="panel1d-content" id="panel1d-header" >
-                      <div>Collapsible Group Item #1</div>
+                      <div>Fostering Collaboration</div>
                     </AccordionSummary>
                     <AccordionDetails>
                       <div>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                        malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
-                        sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                        sit amet blandit leo lobortis eget.
+                        VSV Gnati Samasta strengthens familial bonds within the community by fostering cultural
+                        unity and providing a platform for shared traditions among individuals of the same caste.
                       </div>
                     </AccordionDetails>
                   </Accordion>
                   <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}
                     sx={{ backgroundColor: "rgba(216,213,237, 0.95)" }}>
                     <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
-                      <div>Collapsible Group Item #2</div>
+                      <div>Uplifting Lives</div>
                     </AccordionSummary>
                     <AccordionDetails>
                       <div>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                        malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
-                        sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                        sit amet blandit leo lobortis eget.
+                        VSV Gnati Samasta uplifts lives by creating a supportive network within the community,
+                        offering educational and skill-building programs, and implementing social initiatives
+                        that enhance overall well-being, fostering a positive and empowered environment for its members.
                       </div>
                     </AccordionDetails>
                   </Accordion>
                   <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}
                     sx={{ backgroundColor: "rgba(179,182,227,0.95)" }}>
                     <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
-                      <div>Collapsible Group Item #3</div>
+                      <div>Facilitating Connections</div>
                     </AccordionSummary>
                     <AccordionDetails>
                       <div>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                        malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
-                        sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                        sit amet blandit leo lobortis eget.
+                        VSV Gnati Samasta facilitates stronger connections through regular community meets,
+                        providing a platform for members to engage, share experiences, and celebrate shared
+                        heritage. These gatherings foster a sense of unity and belonging, strengthening the
+                        social fabric of the community.
                       </div>
                     </AccordionDetails>
                   </Accordion>
@@ -313,37 +310,6 @@ const ContactUs = () => {
           allowFullScreen
         ></iframe>
       </Grid>
-      {/* <Grid item xs={12} sm={12} md={4}>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <Grid container spacing={2}>
-
-              <Grid item xs={12}>
-                <div style={{ textAlign: "left" }}>
-                  <ul style={{ listStyle: 'none', padding: 0 }}>
-                    <li style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-                      <PhoneIcon style={{ fontSize: "2rem" }} /> &nbsp;
-                      <span style={{ marginLeft: '10px', fontSize: "1.25rem" }}> +1234567890</span>
-                    </li>
-                    <li style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-                      <EmailIcon style={{ fontSize: "2rem" }} /> &nbsp;
-                      <span style={{ marginLeft: '10px', fontSize: "1.25rem" }}> example@example.com</span>
-                    </li>
-                    <li style={{ display: 'flex', alignItems: 'center' }}>
-                      <LocationOnIcon style={{ fontSize: "2rem" }} /> &nbsp;
-                      <span style={{ marginLeft: '10px', fontSize: "1.25rem" }}> 803, Natraj Society, Sodawala Lane, Borivali (W), Mumbai - 400092</span>
-                    </li>
-                    <li>
-                      
-                    </li>
-                  </ul>
-                </div>
-              </Grid>
-
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid> */}
     </Box >
   )
 }

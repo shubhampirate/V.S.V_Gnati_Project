@@ -601,14 +601,14 @@ const Login = () => {
                                                         border: "1px solid #000",
                                                         padding: "0.75rem",
                                                         textAlign: "left"
-                                                    }} onClick={() => handleDownload(`http://jenilsavla.pythonanywhere.com` + item.picture)}
+                                                    }} onClick={() => handleDownload(`http://195.35.45.12:8000` + item.picture)}
                                                     >Picture</Td>
                                                     <Td style={{
                                                         border: "1px solid #000",
                                                         padding: "0.75rem",
                                                         textAlign: "left",
                                                         cursor: "pointer"
-                                                    }} onClick={() => handleDownload(`http://jenilsavla.pythonanywhere.com` + item.biodata)}
+                                                    }} onClick={() => handleDownload(`http://195.35.45.12:8000` + item.biodata)}
                                                     >Biodata</Td>
                                                     <Td style={{
                                                         border: "1px solid #000",

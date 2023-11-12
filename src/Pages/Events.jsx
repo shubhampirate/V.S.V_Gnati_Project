@@ -547,7 +547,7 @@ const Events = () => {
                                   }}>
                                     <Grid container spacing={2} sx={{ borderRadius: "2vh", padding: "1rem" }}>
                                       <Grid item xs={12}>
-                                        <img src={`http://jenilsavla.pythonanywhere.com` + item.picture}
+                                        <img src={`http://195.35.45.12:8000` + item.picture}
                                           style={{ width: "100%", height: "43vh", borderRadius: "1.5vh 1.5vh 0vh 0vh" }} />
                                       </Grid>
                                       <Grid item xs={12}

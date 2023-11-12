@@ -239,7 +239,7 @@ const Profile = () => {
             old_password: editoldpass,
             new_password: editnewpass,
         };
-        fetch(`https://jenilsavla.pythonanywhere.com/api/reset-password/`, {
+        fetch(`http://195.35.45.12:8000/api/reset-password/`, {
             method: 'POST',
             headers: {
                 "Authorization": `Token ${pasToken}`,

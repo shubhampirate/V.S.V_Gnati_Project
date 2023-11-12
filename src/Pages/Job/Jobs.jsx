@@ -253,18 +253,14 @@ const Jobs = () => {
                                     border: "1px solid #E0E1DC", width: "100%",
                                     borderRadius: "5px", marginLeft: "0.5rem"
                                   }} />
-                                  {/*<Grid item xs={12}>
-                                  <img src={`http://jenilsavla.pythonanywhere.com` + loadcompany.picture}
-                                    style={{ width: "100%", height: "35vh", borderRadius: "1.5vh " }} />
-                              </Grid>
-                              */}
+
                                   <Grid item xs={12}>
                                     <Grid container spacing={2}>
                                       <Grid item xs={9}>
                                         <div style={{ fontSize: "2rem", fontWeight: "700" }}>{loadcompany.name}</div>
                                       </Grid>
                                       <Grid item xs={3} style={{ textAlign: "right" }}>
-                                        <img src={`http://jenilsavla.pythonanywhere.com` + loadcompany.picture}
+                                        <img src={`http://195.35.45.12:8000` + loadcompany.picture}
                                           style={{ width: "5vh", height: "5vh", borderRadius: "0.5vh " }} />
                                       </Grid>
                                     </Grid>

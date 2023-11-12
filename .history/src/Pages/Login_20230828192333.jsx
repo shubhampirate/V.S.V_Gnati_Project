@@ -36,7 +36,7 @@ const Login = () => {
             const formData = new FormData();
             formData.append("username", values.name);
             formData.append("password", values.password);
-            fetch("http://jenilsavla.pythonanywhere.com/api/login/", {
+            fetch("http://195.35.45.12:8000/api/login/", {
                 method: "POST",
                 body: formData,
 

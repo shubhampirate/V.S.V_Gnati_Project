@@ -23,7 +23,7 @@ const validationSchema = yup.object({
 
 
 const Login = () => {
-    secureLocalStorage.setItem("domainvsv", "http://jenilsavla.pythonanywhere.com/api");
+    secureLocalStorage.setItem("domainvsv", "http://195.35.45.12:8000/api");
     const domain = secureLocalStorage.getItem("domainvsv");
     const navigate = useNavigate();
     const [editoldpass, setEditoldpass] = useState('');
@@ -105,7 +105,7 @@ const Login = () => {
             old_password: editoldpass,
             new_password: editnewpass,
         };
-        fetch(`https://jenilsavla.pythonanywhere.com/api/reset-password/`, {
+        fetch(`http://195.35.45.12:8000/api/reset-password/`, {
             method: 'POST',
             headers: {
                 "Authorization": `Token ${pasToken}`,
