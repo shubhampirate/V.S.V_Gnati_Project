@@ -82,7 +82,7 @@ const CompanyRegister = () => {
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            console.log(values, companylogo);
+            // console.log(values, companylogo);
             const formData = new FormData();
             formData.append("email", values.emailCompany);
             formData.append("name", values.nameCompany);
@@ -133,7 +133,7 @@ const CompanyRegister = () => {
 
 
     const handledelete = async (id) => {
-        console.log(id);
+        // console.log(id);
         fetch(`${domain}/company/${id}`, {
             method: 'DELETE',
             headers: {
@@ -165,7 +165,7 @@ const CompanyRegister = () => {
                 loadListcompany();
             })
             .catch((error) => {
-                // console.error(error);
+                console.error(error);
             });
     }
 
@@ -245,7 +245,7 @@ const CompanyRegister = () => {
     const [show, setShow] = useState(false);
     const showComponent = (e) => { setShow(!show) }
 
-    console.log(loadcompany)
+    // console.log(loadcompany)
     return (
         <div>
             <Grid container spacing={2} style={{ marginLeft: "-0.5rem", padding: "2%", marginBottom: "-5rem" }}>

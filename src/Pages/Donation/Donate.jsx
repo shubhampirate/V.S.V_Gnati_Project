@@ -36,7 +36,7 @@ const Donate = () => {
               <Grid container sapcing={2}>
                 <Grid item xs={12}
                   style={{ fontSize: "3rem", textAlign: "left", paddingLeft: "7%", paddingRight: "10%", marginTop: "2.2rem", marginBottom: "1rem" }}>
-                  <span className='underline-header' >Dontation</span>
+                  <span className='underline-header' >Donation</span>
                 </Grid>
                 <Grid item xs={12} style={{ fontSize: "1.15rem", textAlign: "justify", paddingLeft: "7%", paddingRight: "10%" }}>
                   Enriching the spirit of giving, your support for V.S.V Gnati Samsta is a beacon of hope, fostering progress and unity within

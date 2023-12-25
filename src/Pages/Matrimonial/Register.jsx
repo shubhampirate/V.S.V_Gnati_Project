@@ -94,7 +94,7 @@ const Login = () => {
     const token = secureLocalStorage.getItem("tokenvsv");
     const matrimonyId = secureLocalStorage.getItem("matrimonyvsv");
 
-    console.log(matrimonyId)
+    // console.log(matrimonyId)
 
     const navigate = useNavigate();
     const formik = useFormik({
@@ -111,7 +111,7 @@ const Login = () => {
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            console.log(values);
+            // console.log(values);
             const formData = new FormData();
             formData.append("name", values.name);
             formData.append("about", values.desc);
@@ -198,17 +198,17 @@ const Login = () => {
         // Merge the two arrays
         const mergedArray = [...data1, ...data2];
 
-        console.log(mergedArray);
+        // console.log(mergedArray);
         //setorgArray(result.data.data.matrimonies);
 
         const filteredList = mergedArray.filter((item) => targetIds.includes(item.id));
         setFilteredArray(filteredList);
-        //console.log(filteredList);
+        // console.log(filteredList);
 
     };
 
     const handledelete = async (id) => {
-        console.log(id);
+        // console.log(id);
         fetch(`${domain}/matrimony/${id}`, {
             method: 'DELETE',
             headers: {
@@ -244,12 +244,12 @@ const Login = () => {
     }
 
     const handleedit = async (id) => {
-        console.log(id);
+        // console.log(id);
         setIsOpen(true);
         const result = await axios.get(`${domain}/matrimony/${id}`, {
             headers: { "Authorization": `Token ${token}` },
         });
-        console.log(result.data.data);
+        // console.log(result.data.data);
         setEditArray(result.data.data);
         setEditabout(result.data.data.about);
         setEditfather(result.data.data.fathers_name);
@@ -260,7 +260,7 @@ const Login = () => {
     }
 
     const handleEditsubmit = async () => {
-        console.log(editabout, editfather, editgender, editname, editphone);
+        // console.log(editabout, editfather, editgender, editname, editphone);
         const searchData = {
             name: editname,
             fathers_name: editfather,
@@ -601,14 +601,14 @@ const Login = () => {
                                                         border: "1px solid #000",
                                                         padding: "0.75rem",
                                                         textAlign: "left"
-                                                    }} onClick={() => handleDownload(`http://195.35.45.12:8000` + item.picture)}
+                                                    }} onClick={() => handleDownload(`https://vsvgnatisamasta.in` + item.picture)}
                                                     >Picture</Td>
                                                     <Td style={{
                                                         border: "1px solid #000",
                                                         padding: "0.75rem",
                                                         textAlign: "left",
                                                         cursor: "pointer"
-                                                    }} onClick={() => handleDownload(`http://195.35.45.12:8000` + item.biodata)}
+                                                    }} onClick={() => handleDownload(`https://vsvgnatisamasta.in` + item.biodata)}
                                                     >Biodata</Td>
                                                     <Td style={{
                                                         border: "1px solid #000",
@@ -631,7 +631,12 @@ const Login = () => {
                                                 </Tr>
                                             </Tbody>
                                         )
-                                    })}</> : <><Loader /></>}
+                                    })}</> : <>
+                                    <Grid container spacing={2}>
+                                        <Grid item xs={12} style={{ fontSize: "1.25rem" }}>
+                                            No details
+                                        </Grid>
+                                    </Grid></>}
 
                             </Table>
                             <Modal

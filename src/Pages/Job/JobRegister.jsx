@@ -62,7 +62,7 @@ const Jobadmin = () => {
         },
         validationSchema: validationSchemaJob,
         onSubmit: (values) => {
-            console.log(values);
+            // console.log(values);
             const formData = new FormData();
             formData.append("title", values.job_title);
             formData.append("type", values.job_type);
@@ -134,16 +134,16 @@ const Jobadmin = () => {
         setLoadjob(result.data.data.jobs);
 
     };
-    console.log(loadjob);
+    // console.log(loadjob);
 
     const handleedit = async (id) => {
-        console.log(id);
+        // console.log(id);
         setidjob(id);
         setIsOpen(true);
         const result = await axios.get(`${domain}/job/${id}`, {
             headers: { "Authorization": `Token ${token}` },
         });
-        console.log(result.data.data);
+        // console.log(result.data.data);
         setEditArray(result.data.data);
         setEdittype(result.data.data.type);
         setEdittitle(result.data.data.title);
@@ -152,7 +152,7 @@ const Jobadmin = () => {
     }
 
     const handledelete = async (id) => {
-        console.log(id);
+        // console.log(id);
         fetch(`${domain}/job/${id}`, {
             method: 'DELETE',
             headers: {
@@ -184,7 +184,7 @@ const Jobadmin = () => {
                 setIsOpen(false);
             })
             .catch((error) => {
-                // console.error(error);
+                console.error(error);
             });
     }
 
@@ -223,7 +223,7 @@ const Jobadmin = () => {
                 }
             })
             .catch((error) => {
-                // console.error(error);
+                console.error(error);
             });
         loadListjob();
         loadListjob();
@@ -436,7 +436,11 @@ const Jobadmin = () => {
                                                 </>
                                             )
                                         })}
-                                    </> : <><Loader /></>}
+                                    </> : <><Grid container spacing={2}>
+                                        <Grid item xs={12} style={{ fontSize: "1.25rem" }}>
+                                            No Job has been posted yet
+                                        </Grid>
+                                    </Grid></>}
                                 </> : <>
                                     <div style={{ fontSize: "2.5rem", fontWeight: "700", marginBottom: "2rem" }}>No Company has Registered yet</div>
                                 </>}

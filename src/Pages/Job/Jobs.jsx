@@ -58,7 +58,7 @@ const Jobs = () => {
     validationSchema: validationSchema,
 
     onSubmit: (values) => {
-      console.log(values);
+      // console.log(values);
       fetch(`${domain}/job/0`, {
         method: "POST",
         headers: {
@@ -71,7 +71,7 @@ const Jobs = () => {
       })
         .then(response => response.json())
         .then(data => {
-          console.log(data.data)
+          // console.log(data.data)
           setLoad(data.data)
         })
         .catch(() => {
@@ -87,7 +87,7 @@ const Jobs = () => {
     { value: 'Internship', label: 'Internship' }
   ];
 
-  console.log(load)
+  // console.log(load)
 
   const loadList = async () => {
     if (load.length == 0) {
@@ -260,7 +260,7 @@ const Jobs = () => {
                                         <div style={{ fontSize: "2rem", fontWeight: "700" }}>{loadcompany.name}</div>
                                       </Grid>
                                       <Grid item xs={3} style={{ textAlign: "right" }}>
-                                        <img src={`http://195.35.45.12:8000` + loadcompany.picture}
+                                        <img src={`https://vsvgnatisamasta.in` + loadcompany.picture}
                                           style={{ width: "5vh", height: "5vh", borderRadius: "0.5vh " }} />
                                       </Grid>
                                     </Grid>
@@ -298,7 +298,12 @@ const Jobs = () => {
                     </Grid>
                   </Grid>
                 )
-              })}</> : <><Loader /></>}
+              })}</> : <>
+              <Grid container spacing={2}>
+                <Grid item xs={12} style={{ fontSize: "1.25rem" }}>
+                  No Job has been posted yet
+                </Grid>
+              </Grid></>}
           </Grid>
         </Grid>
       </Grid>

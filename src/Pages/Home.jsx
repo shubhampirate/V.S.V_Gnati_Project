@@ -141,7 +141,7 @@ const Home = () => {
               <Grid container sapcing={2}>
                 <Grid item xs={12}
                   style={{ fontSize: "3rem", textAlign: "left", paddingLeft: "10%", paddingRight: "10%", marginTop: "2rem", marginBottom: "1rem" }}>
-                  <span className='underline-header' style={{ padding: "0rem 0.5rem " }}>Dontation</span>
+                  <span className='underline-header' style={{ padding: "0rem 0.5rem " }}>Donation</span>
                 </Grid>
                 <Grid item xs={12} style={{ fontSize: "1.15rem", textAlign: "justify", paddingLeft: "12%", paddingRight: "10%" }}>
                   Your donation to our society is greatly appreciated.

@@ -239,7 +239,7 @@ const Profile = () => {
             old_password: editoldpass,
             new_password: editnewpass,
         };
-        fetch(`http://195.35.45.12:8000/api/reset-password/`, {
+        fetch(`https://vsvgnatisamasta.in/api/reset-password/`, {
             method: 'POST',
             headers: {
                 "Authorization": `Token ${pasToken}`,
@@ -269,7 +269,7 @@ const Profile = () => {
                 showComponent(false);
             })
             .catch((error) => {
-                // console.error(error);
+                console.error(error);
             });
     }
 
@@ -285,7 +285,7 @@ const Profile = () => {
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            console.log(values);
+            // console.log(values);
             fetch(`${domain}/family/${familyId}`, {
                 method: "POST",
                 headers: {
@@ -340,7 +340,7 @@ const Profile = () => {
         },
         validationSchema: validationSchemamember,
         onSubmit: (values) => {
-            console.log(values);
+            // console.log(values);
             fetch(`${domain}/add-member/${familyId}`, {
                 method: "POST",
                 headers: {
@@ -397,7 +397,7 @@ const Profile = () => {
         },
         validationSchema: validationSchemaAdditionalAddress,
         onSubmit: (values) => {
-            console.log(values);
+            // console.log(values);
             fetch(`${domain}/family-address/${familyId}`, {
                 method: "POST",
                 headers: {
@@ -446,7 +446,7 @@ const Profile = () => {
         const result = await axios.get(`${domain}/family/${familyId}`, {
             headers: { "Authorization": `Token ${token}` },
         });
-        console.log(result.data.data)
+        // console.log(result.data.data)
         setLoad(result.data.data);
         setLoadOccupation(result.data.data.occupations);
         setLoadmember(result.data.data.members);
@@ -458,7 +458,7 @@ const Profile = () => {
     //console.log(loadmember);
 
     const handlehomedit = async () => {
-        console.log(homeedit, load.gotrej, load.native_village);
+        // console.log(homeedit, load.gotrej, load.native_village);
         const searchData = {
             home_address: homeedit,
             gotrej: load.gotrej,
@@ -503,7 +503,7 @@ const Profile = () => {
     }
 
     const handlegotrejedit = async () => {
-        console.log(load.home_address, gotrejedit, load.native_village);
+        // console.log(load.home_address, gotrejedit, load.native_village);
         const searchData = {
             home_address: load.home_address,
             gotrej: gotrejedit,
@@ -543,12 +543,12 @@ const Profile = () => {
                 showGotrejEditComponent(false);
             })
             .catch((error) => {
-                // console.error(error);
+                console.error(error);
             });
     }
 
     const handlenativedit = async () => {
-        console.log(nativeedit)
+        // console.log(nativeedit)
         const searchData = {
             home_address: load.home_address,
             gotrej: load.gotrej,
@@ -588,12 +588,12 @@ const Profile = () => {
                 showEditNativeComponent(false);
             })
             .catch((error) => {
-                // console.error(error);
+                console.error(error);
             });
     }
 
     const handleDelete = async (id) => {
-        console.log(id);
+        // console.log(id);
         const searchData = {
             username: id,
         };
@@ -629,12 +629,12 @@ const Profile = () => {
                 // setShowOccupationedit(false);
             })
             .catch((error) => {
-                // console.error(error);
+                console.error(error);
             });
     }
 
     const handleDeleteoccupation = async (deleteId) => {
-        console.log(deleteId);
+        // console.log(deleteId);
         fetch(`${domain}/family/${deleteId}`, {
             method: 'DELETE',
             headers: {
@@ -665,12 +665,12 @@ const Profile = () => {
                 loadList();
             })
             .catch((error) => {
-                // console.error(error);
+                console.error(error);
             });
     }
 
     const handleDeleteAdditionalAddress = async (deleteIdAdd) => {
-        console.log(deleteIdAdd);
+        // console.log(deleteIdAdd);
         fetch(`${domain}/family-address/${deleteIdAdd}`, {
             method: 'DELETE',
             headers: {
@@ -701,12 +701,12 @@ const Profile = () => {
                 loadList();
             })
             .catch((error) => {
-                // console.error(error);
+                console.error(error);
             });
     }
 
     const handleeditoccupation = async (iduser) => {
-        console.log(iduser);
+        // console.log(iduser);
         // setUseridocc(iduser);
         const searchData = {
             home_address: load.home_address,
@@ -753,12 +753,12 @@ const Profile = () => {
                 showEditOccupationComponent(false);
             })
             .catch((error) => {
-                // console.error(error);
+                console.error(error);
             });
     }
 
     const handleEditAdditionalAddress = async (addressId) => {
-        console.log(addressId);
+        // console.log(addressId);
         // setUseridocc(iduser);
         const searchData = {
             home_address: load.home_address,
@@ -804,17 +804,17 @@ const Profile = () => {
                 showEditAdditionalAddressComponent(false);
             })
             .catch((error) => {
-                // console.error(error);
+                console.error(error);
             });
     }
 
     const handleeditmember = async (editId) => {
-        console.log(editId);
+        // console.log(editId);
         setUsernamemem(editId);
         const result = await axios.get(`${domain}/add-member/${editId}`, {
             headers: { "Authorization": `Token ${token}`, },
         });
-        console.log(result.data.data);
+        // console.log(result.data.data);
         setEditbg(result.data.data.blood_group);
         setEditdob(result.data.data.dob);
         setEditeducation(result.data.data.education);
@@ -878,7 +878,7 @@ const Profile = () => {
                 loadList();
             })
             .catch((error) => {
-                // console.error(error);
+                console.error(error);
             });
     }
 
@@ -897,7 +897,7 @@ const Profile = () => {
         }),
     };
 
-    console.log(load);
+    // console.log(load);
 
 
     return (

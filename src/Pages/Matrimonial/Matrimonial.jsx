@@ -42,7 +42,7 @@ const Matrimonial = () => {
     setLoadMale(result.data.data.matrimonies);
 
   };
-  console.log(loadMale);
+  // console.log(loadMale);
 
   const loadListFemale = async () => {
 
@@ -52,7 +52,7 @@ const Matrimonial = () => {
     setLoadFemale(result.data.data.matrimonies);
 
   };
-  console.log(loadFemale);
+  // console.log(loadFemale);
 
 
 
@@ -120,7 +120,7 @@ const Matrimonial = () => {
                                           </Grid>
                                         </> : <>
                                           <Grid item xs={12}>
-                                            <img src={`http://195.35.45.12:8000` + item.picture}
+                                            <img src={`https://vsvgnatisamasta.in` + item.picture}
                                               style={{ width: "100%", height: "43vh", borderRadius: "1.5vh 1.5vh 0vh 0vh" }} />
                                           </Grid>
                                         </>}
@@ -156,7 +156,7 @@ const Matrimonial = () => {
                                                   <div style={{ fontSize: "1.25rem", marginTop: "0.7rem" }}>{item.dob}</div>
                                                 </Grid>
                                                 <Grid item xs={5} style={{ marginTop: "0.3rem", textAlign: "right", cursor: "pointer" }}
-                                                  onClick={() => handleDownload(`http://195.35.45.12:8000` + item.biodata)}>
+                                                  onClick={() => handleDownload(`https://vsvgnatisamasta.in` + item.biodata)}>
                                                   <DescriptionIcon style={{
                                                     fontSize: "3.5vh", color: "#582C6F",
                                                     backgroundColor: "#C4CFFE", padding: "0.25rem", borderRadius: "0.5rem 0rem 0rem 0.5rem",
@@ -194,7 +194,7 @@ const Matrimonial = () => {
                                           </Grid>
                                         </> : <>
                                           <Grid item xs={12}>
-                                            <img src={`http://195.35.45.12:8000` + item.picture}
+                                            <img src={`https://vsvgnatisamasta.in` + item.picture}
                                               style={{ width: "100%", height: "43vh", borderRadius: "1.5vh 1.5vh 0vh 0vh" }} />
                                           </Grid>
                                         </>}
@@ -230,7 +230,7 @@ const Matrimonial = () => {
                                                   <div style={{ fontSize: "1.25rem", marginTop: "0.7rem" }}>{item.dob}</div>
                                                 </Grid>
                                                 <Grid item xs={5} style={{ marginTop: "0.3rem", textAlign: "right", cursor: "pointer" }}
-                                                  onClick={() => handleDownload(`http://195.35.45.12:8000` + item.biodata)}>
+                                                  onClick={() => handleDownload(`https://vsvgnatisamasta.in` + item.biodata)}>
                                                   <DescriptionIcon style={{
                                                     fontSize: "3.5vh", color: "#582C6F",
                                                     backgroundColor: "#C4CFFE", padding: "0.25rem", borderRadius: "0.5rem 0rem 0rem 0.5rem"

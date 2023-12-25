@@ -54,7 +54,7 @@ const Login = () => {
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            console.log(values);
+            // console.log(values);
             const formData = new FormData();
             formData.append("username", values.name.trim());
             formData.append("password", values.password);
@@ -105,7 +105,7 @@ const Login = () => {
             old_password: editoldpass,
             new_password: editnewpass,
         };
-        fetch(`http://195.35.45.12:8000/api/reset-password/`, {
+        fetch(`https://vsvgnatisamasta.in/api/reset-password/`, {
             method: 'POST',
             headers: {
                 "Authorization": `Token ${pasToken}`,

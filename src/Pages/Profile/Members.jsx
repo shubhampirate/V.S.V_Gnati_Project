@@ -180,7 +180,7 @@ const Members = () => {
 
       return `${day}-${month}-${year}`;
     } catch (error) {
-      console.error("Error parsing date:", error);
+      // console.error("Error parsing date:", error);
       return "Invalid Date";
     }
   }
@@ -229,7 +229,7 @@ const Members = () => {
 
   const loadList = async () => {
     if (load.length === 0 && filterList.length === 0) {
-      const result = await axios.get(`${domain}/members`, {
+      const result = await axios.get(`${domain}/members/`, {
         headers: { "Authorization": `Token ${token}` },
       });
       setLoad(result.data.data);

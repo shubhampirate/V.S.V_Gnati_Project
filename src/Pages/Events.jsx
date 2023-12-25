@@ -26,7 +26,7 @@ const Events = () => {
   const token = secureLocalStorage.getItem("tokenvsv");
   const isAdmin = secureLocalStorage.getItem("isadminvsv");
 
-  console.log(domain, token, isAdmin);
+  // console.log(domain, token, isAdmin);
   // const isAdmin = useState(true);
 
   const [len, setLen] = useState('');
@@ -101,8 +101,8 @@ const Events = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log(values);
-      console.log(values.picture)
+      // console.log(values);
+      // console.log(values.picture)
       const formData = new FormData();
       formData.append('name', values.name);
       formData.append('about', values.about);
@@ -143,7 +143,7 @@ const Events = () => {
           setShowAddEvent(false);
         })
         .catch((error) => {
-          // console.error(error);
+          console.error(error);
         });
     }
   });
@@ -152,7 +152,7 @@ const Events = () => {
     const result = await axios.get(`${domain}/event/${eventId}`, {
       headers: { "Authorization": `Token ${token}`, },
     });
-    console.log(result.data.data);
+    // console.log(result.data.data);
     setEditDate(result.data.data.date);
     setEditEndTime(result.data.data.end_time);
     setEditName(result.data.data.name);
@@ -175,7 +175,7 @@ const Events = () => {
       photos_drive: editPhotos,
     };
 
-    console.log(searchData, eventId);
+    // console.log(searchData, eventId);
     fetch(`${domain}/event/${eventId}`, {
       method: 'PUT',
       headers: {
@@ -208,12 +208,12 @@ const Events = () => {
         showEditEventComponent(false);
       })
       .catch((error) => {
-        // console.error(error);
+        console.error(error);
       });
   }
 
   const handleDeleteEvent = async (id) => {
-    console.log(id);
+    // console.log(id);
     fetch(`${domain}/event/${id}`, {
       method: 'DELETE',
       headers: {
@@ -285,7 +285,7 @@ const Events = () => {
         }
       };
       const response = await axios(config);
-      console.log(response.data.data.events);
+      // console.log(response.data.data.events);
       setLoad(response.data.data.events);
     }
 
@@ -298,9 +298,9 @@ const Events = () => {
         }
       };
       const response = await axios(config);
-      console.log(response.data.data.events);
+      // console.log(response.data.data.events);
       if (response.data.data.events.length == 0) {
-        console.log("empty")
+        // console.log("empty")
       }
       setLen(response.data.data.events.length);
       setLoad(response.data.data.events);
@@ -320,7 +320,7 @@ const Events = () => {
 
       return `${day}-${month}-${year}`;
     } catch (error) {
-      console.error("Error parsing date:", error);
+      // console.error("Error parsing date:", error);
       return "Invalid Date";
     }
   }
@@ -547,7 +547,7 @@ const Events = () => {
                                   }}>
                                     <Grid container spacing={2} sx={{ borderRadius: "2vh", padding: "1rem" }}>
                                       <Grid item xs={12}>
-                                        <img src={`http://195.35.45.12:8000` + item.picture}
+                                        <img src={`https://vsvgnatisamasta.in` + item.picture}
                                           style={{ width: "100%", height: "43vh", borderRadius: "1.5vh 1.5vh 0vh 0vh" }} />
                                       </Grid>
                                       <Grid item xs={12}
@@ -618,7 +618,12 @@ const Events = () => {
                                 <>
                                 </>}
                             </>)
-                        })}</> : <><Loader /></>}
+                        })}</> : <>
+                          <Grid container spacing={2}>
+                            <Grid item xs={12} style={{ fontSize: "1.25rem" }}>
+                              No Events have been added
+                            </Grid>
+                          </Grid></>}
                       </Grid>
                     </TabPanel>
                   )

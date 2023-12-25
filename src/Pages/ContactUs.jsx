@@ -86,7 +86,7 @@ const ContactUs = () => {
   };
 
   const handleSubmit = (values, props) => {
-    console.log(values);
+    // console.log(values);
     alert(JSON.stringify(values));
 
     props.resetForm();
