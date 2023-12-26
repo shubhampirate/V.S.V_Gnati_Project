@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { Modal } from '@mui/material';
 
-const RazorpayModal = ({ setShowRazorpay }) => {
+const RazorpayModal = ({ setShowRazorpay, donationamount }) => {
     useEffect(() => {
         const options = {
             key: 'rzp_test_waIi4wtc88B0tM',
-            amount: 10000, // Amount in paise (e.g., 10000 = ₹100)
+            amount: donationamount * 100, // Amount in paise (e.g., 10000 = ₹100)
             currency: 'INR',
-            name: 'Your Organization',
+            name: 'VSV Gnati Samsta',
             description: 'Donation',
             handler: () => {
                 // Handle success payment

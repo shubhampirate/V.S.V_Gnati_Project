@@ -115,7 +115,7 @@ const Profile = () => {
         { value: 'Business', label: 'Business' },
         { value: 'Job', label: 'Job' },
         { value: 'Student', label: 'Student' },
-        { value: 'Home Baker', label: 'Home Baker' },
+        { value: 'Home Maker', label: 'Home Maker' },
         { value: 'N/A', label: 'N/A' }
     ];
 

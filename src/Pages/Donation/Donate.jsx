@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Grid, Box, Button } from '@mui/material'
+import { Grid, Box, Button, TextField } from '@mui/material'
 import RazorpayModal from './RazorpayModal';
 import donate from "../../images/donation.jpg";
 import CountUp from 'react-countup';
@@ -13,7 +13,16 @@ const Donate = () => {
 
   const [showRazorpay, setShowRazorpay] = useState(false);
 
+
+  const [donationAmount, setDonationAmount] = useState('');
+
+  const handleAmountChange = (event) => {
+    setDonationAmount(event.target.value);
+  };
+
+
   const handleDonation = () => {
+    console.log(donationAmount)
     setShowRazorpay(true);
   };
 
@@ -49,13 +58,30 @@ const Donate = () => {
                   fontSize: "3rem", textAlign: "left", paddingLeft: "7%", paddingRight: "10%",
                   marginBottom: "2rem"
                 }}>
-                  <Button sx={{
-                    color: "black", fontWeight: "650", border: "2px solid black",
-                    "&:hover": {
-                      backgroundColor: "#BDB4E9"
-                    },
-                  }} onClick={handleDonation} >Donate Today</Button>
-                  {showRazorpay && <RazorpayModal setShowRazorpay={setShowRazorpay} />}
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} md={7}>
+                      <TextField
+                        fullWidth
+                        value={donationAmount}
+                        sx={{ marginTop: "1rem" }}
+                        size="small"
+                        onChange={handleAmountChange}
+                        InputProps={{
+                          startAdornment: <span>₹</span>,
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={5}>
+                      <Button sx={{
+                        color: "black", fontWeight: "650", border: "2px solid black",
+                        width: "10rem", height: "2.45rem", marginTop: "-4px",
+                        "&:hover": {
+                          backgroundColor: "#BDB4E9"
+                        },
+                      }} onClick={handleDonation} >Donate Today</Button>
+                      {showRazorpay && <RazorpayModal setShowRazorpay={setShowRazorpay} donationamount={donationAmount} />}
+                    </Grid>
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
