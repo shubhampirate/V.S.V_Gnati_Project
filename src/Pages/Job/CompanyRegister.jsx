@@ -341,7 +341,7 @@ const CompanyRegister = () => {
                                                         backgroundColor: "#018d8d", boxShadow: "none", color: "white",
                                                         fontSize: "1.3rem",
                                                     }
-                                                }}>
+                                                }} >
                                                 Submit
                                             </Button>
                                         </Grid>

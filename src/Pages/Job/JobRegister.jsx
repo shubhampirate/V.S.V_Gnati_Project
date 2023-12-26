@@ -131,6 +131,7 @@ const Jobadmin = () => {
         const result = await axios.get(`${domain}/jobs`, {
             headers: { "Authorization": `Token ${token}` },
         });
+        // console.log(result.data.data);
         setLoadjob(result.data.data.jobs);
 
     };
@@ -395,44 +396,44 @@ const Jobadmin = () => {
                                         {loadjob.map((item) => {
                                             return (
                                                 <>
-                                                    {item.company === companyId ? <>
-                                                        <Tbody>
-                                                            <Tr>
-                                                                <Td style={{
-                                                                    border: "1px solid #000",
-                                                                    padding: "0.75rem",
-                                                                    textAlign: "left"
-                                                                }}>{item.title}</Td>
-                                                                <Td style={{
-                                                                    border: "1px solid #000",
-                                                                    padding: "0.75rem",
-                                                                    textAlign: "left"
-                                                                }}>{item.type}</Td>
-                                                                <Td style={{
-                                                                    border: "1px solid #000",
-                                                                    padding: "0.75rem",
-                                                                    textAlign: "left"
-                                                                }}>{item.phone}</Td>
-                                                                <Td style={{
-                                                                    border: "1px solid #000",
-                                                                    padding: "0.75rem",
-                                                                    textAlign: "left"
-                                                                }}>{item.details}</Td>
-                                                                <Td style={{
-                                                                    border: "1px solid #000",
-                                                                    padding: "0.75rem",
-                                                                    textAlign: "left"
-                                                                }}>
-                                                                    <div >
-                                                                        <EditIcon onClick={() => handleedit(item.id)}
-                                                                            style={{ color: "#018d8d", cursor: "pointer" }} />
-                                                                        &nbsp; &nbsp;
-                                                                        <DeleteIcon onClick={() => handledelete(item.id)}
-                                                                            style={{ color: "#018d8d", cursor: "pointer" }} />
-                                                                    </div>
-                                                                </Td>
-                                                            </Tr>
-                                                        </Tbody></> : <></>}
+
+                                                    <Tbody>
+                                                        <Tr>
+                                                            <Td style={{
+                                                                border: "1px solid #000",
+                                                                padding: "0.75rem",
+                                                                textAlign: "left"
+                                                            }}>{item.title}</Td>
+                                                            <Td style={{
+                                                                border: "1px solid #000",
+                                                                padding: "0.75rem",
+                                                                textAlign: "left"
+                                                            }}>{item.type}</Td>
+                                                            <Td style={{
+                                                                border: "1px solid #000",
+                                                                padding: "0.75rem",
+                                                                textAlign: "left"
+                                                            }}>{item.phone}</Td>
+                                                            <Td style={{
+                                                                border: "1px solid #000",
+                                                                padding: "0.75rem",
+                                                                textAlign: "left"
+                                                            }}>{item.details}</Td>
+                                                            <Td style={{
+                                                                border: "1px solid #000",
+                                                                padding: "0.75rem",
+                                                                textAlign: "left"
+                                                            }}>
+                                                                <div >
+                                                                    <EditIcon onClick={() => handleedit(item.id)}
+                                                                        style={{ color: "#018d8d", cursor: "pointer" }} />
+                                                                    &nbsp; &nbsp;
+                                                                    <DeleteIcon onClick={() => handledelete(item.id)}
+                                                                        style={{ color: "#018d8d", cursor: "pointer" }} />
+                                                                </div>
+                                                            </Td>
+                                                        </Tr>
+                                                    </Tbody>
                                                 </>
                                             )
                                         })}

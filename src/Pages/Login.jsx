@@ -23,7 +23,7 @@ const validationSchema = yup.object({
 
 
 const Login = () => {
-    secureLocalStorage.setItem("domainvsv", "http://195.35.45.12:8000/api");
+    secureLocalStorage.setItem("domainvsv", "https://vsvgnatisamasta.in/api");
     const domain = secureLocalStorage.getItem("domainvsv");
     const navigate = useNavigate();
     const [editoldpass, setEditoldpass] = useState('');
